@@ -1,7 +1,9 @@
 export default function Home() {
     return (
         <section className="text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Hi, I&#39;m Your Name 👋</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Hi, I&#39;m Your Name 👋
+            </h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
                 I&#39;m a software engineer passionate about solving problems, building things, and reading sci-fi.
             </p>
