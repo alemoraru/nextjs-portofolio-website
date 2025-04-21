@@ -45,7 +45,8 @@ export default function Header() {
     return (
         <header
             id="headerPortfolio"
-            className="sticky top-0 z-50 w-full bg-black text-white dark:bg-black transition-colors border-b border-gray-800"
+            className="sticky top-0 z-50 w-full bg-black text-white dark:bg-black transition-colors
+            border-b border-gray-800 opacity-95"
         >
             <div
                 className="max-w-4xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">

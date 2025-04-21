@@ -14,8 +14,19 @@ export default function Home() {
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                     Hi, I&#39;m Your Name 👋
                 </h1>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-left mb-6">
                     I&#39;m a software engineer passionate about solving problems, building things, and reading sci-fi.
+                    Whenever I&#39;m not coding, you can find me exploring the world, playing tennis or skating.
+                    I love to share my knowledge and experiences through my blog, where I write about tech, books, and
+                    life lessons.
+                </p>
+
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-left">
+                    I am currently working at Evil Corp as a software engineer, where I focus on building scalable
+                    applications and improving user experiences. I have a keen interest in full-stack development,
+                    particularly in React and Node.js. I enjoy collaborating with cross-functional teams to deliver
+                    high-quality software solutions.
+
                 </p>
 
                 <div className="mt-10">
