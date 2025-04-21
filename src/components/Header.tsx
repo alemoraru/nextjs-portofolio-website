@@ -48,7 +48,7 @@ export default function Header() {
             className="sticky top-0 z-50 w-full bg-black text-white dark:bg-black transition-colors border-b border-gray-800"
         >
             <div
-                className="max-w-6xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">
+                className="max-w-4xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">
 
                 {/* Left side: logo or current path */}
                 <Link

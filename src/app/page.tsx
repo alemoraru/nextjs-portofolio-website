@@ -8,7 +8,7 @@ import BlogPost from "@/components/BlogPost";
 
 export default function Home() {
     return (
-        <section className="px-4 max-w-6xl mx-auto">
+        <section className="px-4 max-w-4xl mx-auto">
             {/* Intro */}
             <div className="text-center mt-10">
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
