@@ -1,25 +1,40 @@
-const blog = [
+const posts = [
     {
-        company: 'Big Evil Corp',
-        title: 'Senior Software Engineer',
-        start: 'Jan 2021',
-        end: 'Present',
-        description: 'Led a team of 5 building scalable microservices with Node.js and AWS.',
+        slug: 'my-first-post',
+        title: 'My First Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-02',
     },
     {
-        company: 'Medium Evil Corp',
-        title: 'Software Engineer',
-        start: 'Jul 2018',
-        end: 'Dec 2020',
-        description: 'Worked on the core platform, optimizing React apps and APIs.',
+        slug: 'my-second-post',
+        title: 'My Second Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-03',
     },
     {
-        company: 'Less Evil Corp',
-        title: 'Junior Software Engineer',
-        start: 'Jan 2017',
-        end: 'Jun 2018',
-        description: 'Assisted in developing web applications using PHP and MySQL.',
+        slug: 'my-third-post',
+        title: 'My Third Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-04',
+    },
+    {
+        slug: 'my-fourth-post',
+        title: 'My Fourth Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-05',
+    },
+    {
+        slug: 'my-fifth-post',
+        title: 'My Fifth Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-06',
+    },
+    {
+        slug: 'my-sixth-post',
+        title: 'My Sixth Blog Post',
+        summary: 'This is a short preview of what the blog post is about.',
+        date: '2024-11-07',
     },
 ]
 
-export default blog
+export default posts;

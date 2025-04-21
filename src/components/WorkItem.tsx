@@ -1,4 +1,4 @@
-interface WorkExperienceProps {
+interface WorkItemProps {
     company: string
     title: string
     start: string
@@ -6,7 +6,7 @@ interface WorkExperienceProps {
     description: string
 }
 
-export default function WorkExperience({ company, title, start, end, description }: WorkExperienceProps) {
+export default function WorkItem({ company, title, start, end, description }: WorkItemProps) {
     return (
         <div className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition cursor-pointer">
             <h3 className="text-xl font-semibold">{title} @ {company}</h3>

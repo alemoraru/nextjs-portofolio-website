@@ -1,19 +1,5 @@
 import BlogPost from '@/components/BlogPost'
-
-const posts = [
-    {
-        slug: 'my-first-post',
-        title: 'My First Blog Post',
-        summary: 'This is a short preview of what the blog post is about.',
-        date: '2024-11-02',
-    },
-    {
-        slug: 'deep-dive-react',
-        title: 'Deep Dive into React Patterns',
-        summary: 'We explore common patterns and antipatterns in modern React.',
-        date: '2025-01-12',
-    },
-]
+import posts from '@/data/blog'
 
 export default function BlogPage() {
     return (
