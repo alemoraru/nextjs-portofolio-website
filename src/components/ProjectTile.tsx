@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 interface ProjectTileProps {
@@ -13,12 +14,20 @@ export default function ProjectTile({ slug, title, image }: ProjectTileProps) {
     return (
         <Link href={`/projects/${slug}`}>
             <motion.div
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition"
-                whileHover={{ scale: 1.03 }}
+                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition text-black"
+                whileHover={{ scale: 1.04 }}
             >
-                <img src={image} alt={title} className="w-full h-48 object-cover" />
+                <div className="relative w-full h-48">
+                    <Image
+                        src={image}
+                        alt={title}
+                        layout="fill"
+                        priority
+                    />
+                </div>
                 <div className="p-4 text-center font-medium">{title}</div>
             </motion.div>
         </Link>
     )
 }
+

@@ -1,33 +1,33 @@
 const projects = [
     {
-        slug: 'algorithms-java',
-        title: 'Algorithms in Java',
-        image: '/images/projects/algorithms-java/cover.png',
+        slug: 'projectA',
+        title: 'Project A',
+        image: '/projects/pictureA.jpg'
     },
     {
-        slug: 'action-pipeline',
-        title: 'Action Pipeline System',
-        image: '/images/projects/action-pipeline/cover.png',
+        slug: 'projectB',
+        title: 'Project B',
+        image: '/projects/pictureB.jpg'
     },
     {
-        slug: 'web-scraper',
-        title: 'Web Scraper',
-        image: '/images/projects/web-scraper/cover.png',
+        slug: 'projectC',
+        title: 'Project C',
+        image: '/projects/pictureC.jpg'
     },
     {
-        slug: 'portfolio-site',
-        title: 'Portfolio Site',
-        image: '/images/projects/portfolio-site/cover.png',
+        slug: 'projectD',
+        title: 'Project D',
+        image: '/projects/pictureD.jpg'
     },
     {
-        slug: 'personal-website',
-        title: 'Personal Website',
-        image: '/images/projects/personal-website/cover.png',
+        slug: 'projectE',
+        title: 'Project E',
+        image: '/projects/pictureE.jpg'
     },
     {
-        slug: 'blog-website',
-        title: 'Blog Website',
-        image: '/images/projects/blog-website/cover.png',
+        slug: 'projectF',
+        title: 'Project F',
+        image: '/projects/pictureF.jpg'
     },
 ]
 
