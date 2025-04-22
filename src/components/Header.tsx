@@ -19,7 +19,9 @@ export default function Header() {
     const menuRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
-        const index = navItems.findIndex(({path}) => path === pathname)
+        const index = navItems.findIndex(({path}) =>
+            path === '/' ? pathname === '/' : pathname.startsWith(path) // Match `/blog` for `/blog/...`
+        )
         setActiveIndex(index !== -1 ? index : 0)
     }, [pathname])
 
@@ -68,7 +70,7 @@ export default function Header() {
                                 transform: `translateX(${activeIndex * 100}%)`,
                             }}
                         ></div>
-                        {navItems.map(({ name, path }, index) => {
+                        {navItems.map(({name, path}) => {
                             const isActive = pathname === path
                             return (
                                 <li key={name} className="relative z-10 flex justify-center items-center">

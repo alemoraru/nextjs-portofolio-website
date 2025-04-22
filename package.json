@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "^15.3.1",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^12.7.4",
     "next": "15.3.1",
+    "next-mdx-remote": "^5.0.0",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
