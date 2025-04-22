@@ -4,7 +4,6 @@ import "./globals.css";
 import React, {ReactNode} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-// import { ThemeProvider } from "next-themes"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -16,6 +15,8 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
+import {ThemeProvider} from '@/context/theme-context'
+
 export const metadata: Metadata = {
     title: 'My Portfolio',
     description: 'A portfolio site showcasing my work, projects, blog, and books.',
@@ -23,12 +24,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
-        <html lang="en">
+        <html lang="en" data-theme="dark">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-white 
         text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}>
-        <Header/>
-        <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
-        <Footer/>
+
+        {/* 🔵 Dot Background Layer */}
+        <div
+            className={`
+            fixed inset-0 -z-10
+            bg-[radial-gradient(circle,_#d1d5db_1px,_transparent_1px)]
+            dark:bg-[radial-gradient(circle,_#3f3f46_1px,_transparent_1px)]
+            bg-[length:30px_30px]
+            [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]
+          `}
+        />
+        <ThemeProvider>
+            <Header/>
+            <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
+            <Footer/>
+        </ThemeProvider>
         </body>
         </html>
     )
