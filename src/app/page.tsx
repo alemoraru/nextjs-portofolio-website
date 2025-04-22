@@ -46,7 +46,7 @@ export default function Home() {
                     <Link href="/work" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid gap-4">
-                    {work.map((job, i) => (
+                    {work.slice(0, 3).map((job, i) => ( // Limit to 3 items
                         <WorkItem key={i} {...job} />
                     ))}
                 </div>
@@ -59,7 +59,7 @@ export default function Home() {
                     <Link href="/projects" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                    {projects.map((proj) => (
+                    {projects.slice(0, 3).map((proj) => ( // Limit to 3 items
                         <ProjectTile key={proj.slug} {...proj} />
                     ))}
                 </div>
@@ -72,7 +72,7 @@ export default function Home() {
                     <Link href="/blog" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                    {blog.map((post, i) => (
+                    {blog.slice(0, 3).map((post, i) => ( // Limit to 3 items
                         <BlogPost key={i} {...post} />
                     ))}
                 </div>
