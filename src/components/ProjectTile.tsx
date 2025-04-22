@@ -21,7 +21,7 @@ export default function ProjectTile({ slug, title, image }: ProjectTileProps) {
                     <Image
                         src={image}
                         alt={title}
-                        layout="fill"
+                        fill={true}
                         priority
                     />
                 </div>

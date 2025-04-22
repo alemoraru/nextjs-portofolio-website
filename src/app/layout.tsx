@@ -15,8 +15,6 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-import {ThemeProvider} from '@/context/theme-context'
-
 export const metadata: Metadata = {
     title: 'My Portfolio',
     description: 'A portfolio site showcasing my work, projects, blog, and books.',
@@ -24,10 +22,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
-        <html lang="en" data-theme="dark">
+        <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-white 
         text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}>
-
         {/* 🔵 Dot Background Layer */}
         <div
             className={`
@@ -38,11 +35,9 @@ export default function RootLayout({children}: { children: ReactNode }) {
             [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]
           `}
         />
-        <ThemeProvider>
-            <Header/>
-            <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
-            <Footer/>
-        </ThemeProvider>
+        <Header/>
+        <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
+        <Footer/>
         </body>
         </html>
     )

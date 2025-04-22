@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {useTheme} from '@/context/theme-context'
 import {FaMoon, FaSun, FaBars, FaTimes} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 
@@ -11,12 +10,10 @@ const navItems = [
     {name: 'Work', path: '/work'},
     {name: 'Projects', path: '/projects'},
     {name: 'Blog', path: '/blog'}
-    // More later
 ]
 
 export default function Header() {
     const pathname = usePathname()
-    const {theme, toggleTheme} = useTheme()
     const [activeIndex, setActiveIndex] = useState(0)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
@@ -62,43 +59,41 @@ export default function Header() {
                 </Link>
 
                 {/* Center: Segmented navigation - Hidden on mobile */}
-                <nav className="hidden md:flex justify-center gap-8 text-white font-medium flex-1">
-                    <div className="relative flex justify-center items-center w-full">
-                        <ul className="flex items-center justify-center gap-1 border border-gray-600 rounded-full px-1 py-1 relative">
-                            <div
-                                className="absolute top-0 left-0 h-full border-2 border-indigo-500 rounded-full transition-transform duration-300 pointer-events-none"
-                                style={{
-                                    width: `calc(100% / ${navItems.length})`,
-                                    transform: `translateX(${activeIndex * 100}%)`,
-                                }}
-                            ></div>
-                            {navItems.map(({name, path}, index) => {
-                                const isActive = pathname === path
-                                return (
-                                    <li key={name} className="relative z-10 flex justify-center items-center">
-                                        <Link
-                                            href={path}
-                                            className={`px-4 py-2 rounded-full text-sm font-medium text-center transition-all ${
-                                                isActive ? 'text-white' : 'text-white hover:bg-gray-800'
-                                            }`}
-                                        >
-                                            {name}
-                                        </Link>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
+                <nav className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <ul className="flex items-center justify-center gap-1 border border-gray-600 rounded-full px-1 py-1 relative">
+                        <div
+                            className="absolute top-0 left-0 h-full border-2 border-indigo-500 rounded-full transition-transform duration-300 pointer-events-none"
+                            style={{
+                                width: `calc(100% / ${navItems.length})`,
+                                transform: `translateX(${activeIndex * 100}%)`,
+                            }}
+                        ></div>
+                        {navItems.map(({ name, path }, index) => {
+                            const isActive = pathname === path
+                            return (
+                                <li key={name} className="relative z-10 flex justify-center items-center">
+                                    <Link
+                                        href={path}
+                                        className={`px-4 py-2 rounded-full text-sm font-medium text-center transition-all ${
+                                            isActive ? 'text-white' : 'text-white hover:bg-gray-800'
+                                        }`}
+                                    >
+                                        {name}
+                                    </Link>
+                                </li>
+                            )
+                        })}
+                    </ul>
                 </nav>
 
                 {/* Right side: Theme toggle + Mobile Menu Toggle */}
                 <div className="flex items-center gap-4">
                     <button
-                        onClick={toggleTheme}
+                        onClick={() => true}
                         className="p-2 rounded-full hover:bg-gray-800 transition-colors"
                         aria-label="Toggle Dark Mode"
                     >
-                        {theme === 'dark' ? <FaSun/> : <FaMoon/>}
+                        {'dark' === 'dark' ? <FaSun/> : <FaMoon/>}
                     </button>
 
                     {/* Hamburger menu toggle */}
@@ -146,3 +141,4 @@ export default function Header() {
         </header>
     )
 }
+
