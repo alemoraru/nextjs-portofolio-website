@@ -3,7 +3,19 @@ import posts from '@/data/blog'
 import path from 'path'
 import fs from 'fs'
 import {compileMDX} from 'next-mdx-remote/rsc'
+import rehypeHighlight from 'rehype-highlight'
 import Link from 'next/link'
+
+/**
+ * Calculate the reading time of a text based on the number of words.
+ * Assumes an average reading speed of 200 words per minute.
+ * @param text The text to calculate the reading time for.
+ */
+function getReadingTime(text: string): number {
+    const wordsPerMinute = 200
+    const numberOfWords = text.trim().split(/\s+/).length
+    return Math.ceil(numberOfWords / wordsPerMinute)
+}
 
 export default async function BlogPostPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring
@@ -18,7 +30,15 @@ export default async function BlogPostPage({params}: { params: { slug: string } 
 
     const mdxSource = fs.readFileSync(filePath, 'utf-8')
 
-    const {content} = await compileMDX({source: mdxSource})
+    const readingTime = getReadingTime(mdxSource)
+    const {content} = await compileMDX({
+        source: mdxSource,
+        options: {
+            mdxOptions: {
+                rehypePlugins: [rehypeHighlight],
+            },
+        },
+    })
 
     return (
         <article className="mx-auto px-4 max-w-3xl flex flex-col items-center justify-center text-left">
@@ -31,8 +51,10 @@ export default async function BlogPostPage({params}: { params: { slug: string } 
                 </span>
                 Back to blogs
             </Link>
-            <h1 className="text-3xl font-bold text-center mb-4">{post.title}</h1>
-            <p className="text-gray-500 text-center mb-8">{post.date}</p>
+            <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+            <p className="text-gray-500 mb-8">
+                {new Date(post.date).toLocaleDateString()} • {readingTime} min read
+            </p>
             <div className="prose dark:prose-invert">{content}</div>
         </article>
     )
