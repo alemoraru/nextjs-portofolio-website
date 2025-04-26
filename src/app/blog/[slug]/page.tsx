@@ -13,7 +13,7 @@ import AnimatedArticle from "@/components/AnimatedArticle";
  * @param text The text to calculate the reading time for.
  */
 function getReadingTime(text: string): number {
-    const wordsPerMinute = 200
+    const wordsPerMinute = 100
     const numberOfWords = text.trim().split(/\s+/).length
     return Math.ceil(numberOfWords / wordsPerMinute)
 }
