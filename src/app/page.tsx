@@ -9,7 +9,8 @@ import BlogPost from "@/components/BlogPost";
 export default function Home() {
     return (
         <section className="px-4 max-w-4xl mx-auto">
-            {/* Intro */}
+
+            {/* Intro Section */}
             <div className="text-center mt-10">
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                     Hi, I&#39;m Your Name 👋
@@ -22,7 +23,7 @@ export default function Home() {
                 </p>
 
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-left">
-                    I am currently working at Evil Corp as a software engineer, where I focus on building scalable
+                    I am currently working at Big Boss Corp as a software engineer, where I focus on building scalable
                     applications and improving user experiences. I have a keen interest in full-stack development,
                     particularly in React and Node.js. I enjoy collaborating with cross-functional teams to deliver
                     high-quality software solutions.
@@ -32,7 +33,7 @@ export default function Home() {
                 <div className="mt-10">
                     <h2 className="text-2xl sm:text-3xl font-semibold mb-4">Quick Facts</h2>
                     <ul className="space-y-3 text-left max-w-md mx-auto text-sm sm:text-base">
-                        <li>• 🛠️ Currently working at Evil Corp</li>
+                        <li>• 🛠️ Currently working at Big Boss Corp</li>
                         <li>• 📍 Based in Git, Hub</li>
                         <li>• 📚 Love reviewing books on Goodreads</li>
                     </ul>

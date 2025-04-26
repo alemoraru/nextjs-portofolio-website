@@ -1,31 +1,31 @@
 const projects = [
     {
-        slug: 'projectA',
+        slug: 'project-A',
         title: 'Project A',
         image: '/projects/pictureA.jpg'
     },
     {
-        slug: 'projectB',
+        slug: 'project-B',
         title: 'Project B',
         image: '/projects/pictureB.jpg'
     },
     {
-        slug: 'projectC',
+        slug: 'project-C',
         title: 'Project C',
         image: '/projects/pictureC.jpg'
     },
     {
-        slug: 'projectD',
+        slug: 'project-D',
         title: 'Project D',
         image: '/projects/pictureD.jpg'
     },
     {
-        slug: 'projectE',
+        slug: 'project-E',
         title: 'Project E',
         image: '/projects/pictureE.jpg'
     },
     {
-        slug: 'projectF',
+        slug: 'project-F',
         title: 'Project F',
         image: '/projects/pictureF.jpg'
     },

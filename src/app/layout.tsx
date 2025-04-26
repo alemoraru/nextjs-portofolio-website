@@ -16,8 +16,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'My Portfolio',
+    title: 'MyPortfolio',
     description: 'A portfolio site showcasing my work, projects, blog, and books.',
+    robots: {
+        index: false,
+        follow: false
+    },
+    icons: {
+        icon: '/icons/favicon.ico',
+        shortcut: '/icons/favicon.ico',
+        apple: '/icons/favicon.ico',
+    }
 }
 
 export default function RootLayout({children}: { children: ReactNode }) {

@@ -1,6 +1,6 @@
 const posts = [
     {
-        slug: 'first-blog', // Matches the filename `first-blog.mdx`
+        slug: 'first-blog',
         title: 'My First Blog Post',
         summary: 'This is a short preview of what the blog post is about.',
         date: '2024-11-02',

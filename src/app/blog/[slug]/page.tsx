@@ -5,6 +5,7 @@ import fs from 'fs'
 import {compileMDX} from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
 import Link from 'next/link'
+import AnimatedArticle from "@/components/AnimatedArticle";
 
 /**
  * Calculate the reading time of a text based on the number of words.
@@ -41,7 +42,7 @@ export default async function BlogPostPage({params}: { params: { slug: string } 
     })
 
     return (
-        <article className="mx-auto px-4 max-w-3xl flex flex-col items-center justify-center text-left">
+        <AnimatedArticle>
             <Link
                 href="/blog"
                 className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2"
@@ -56,6 +57,6 @@ export default async function BlogPostPage({params}: { params: { slug: string } 
                 {new Date(post.date).toLocaleDateString()} • {readingTime} min read
             </p>
             <div className="prose dark:prose-invert">{content}</div>
-        </article>
+        </AnimatedArticle>
     )
 }
