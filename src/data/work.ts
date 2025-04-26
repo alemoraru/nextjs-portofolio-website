@@ -1,7 +1,7 @@
 const work = [
     {
         slug: 'BigBossCorp',
-        company: 'Big Boss Corp',
+        company: 'Hypernova Labs',
         title: 'Software Engineer',
         start: 'Jan 2021',
         end: 'Present',
@@ -9,7 +9,7 @@ const work = [
     },
     {
         slug: 'MediumBossCorp',
-        company: 'Medium Boss Corp',
+        company: 'Big Brain Technologies',
         title: 'Software Engineer',
         start: 'Jul 2018',
         end: 'Dec 2020',

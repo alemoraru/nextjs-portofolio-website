@@ -7,9 +7,8 @@ import Link from 'next/link'
 import work from "@/data/work";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import StackIcon from "tech-stack-icons";
-import techStackMap from "@/lib/mappings";
+import {techStackMap} from "@/lib/constants";
 import {Timeline, TimelineItem} from '@/components/Timeline'
-import {BsStack} from "react-icons/bs";
 
 export default async function WorkItemPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring

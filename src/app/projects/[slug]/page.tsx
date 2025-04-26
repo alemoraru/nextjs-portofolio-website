@@ -9,7 +9,7 @@ import StackIcon from "tech-stack-icons";
 import {BsStack} from "react-icons/bs";
 import {FaUsers, FaUserTie, FaClock, FaGithub} from "react-icons/fa";
 import AnimatedArticle from "@/components/AnimatedArticle";
-import techStackMap from "@/lib/mappings";
+import {techStackMap} from "@/lib/constants";
 
 export default async function ProjectPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring

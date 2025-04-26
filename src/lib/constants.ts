@@ -1,7 +1,9 @@
+import packageJson from '../../package.json';
+
 /**
  * Temporary mapping for tech stack icons.
  */
-const techStackMap: Record<string, string> = {
+export const techStackMap: Record<string, string> = {
     'React': 'reactjs',
     'TypeScript': 'typescript',
     'TailwindCSS': 'tailwindcss',
@@ -23,4 +25,7 @@ const techStackMap: Record<string, string> = {
     'GraphQL': 'graphql',
 }
 
-export default techStackMap;
+/**
+ * Version of the application from package.json.
+ */
+export const appVersion = packageJson.version
