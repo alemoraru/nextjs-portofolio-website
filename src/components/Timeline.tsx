@@ -1,14 +1,30 @@
 'use client';
 
 import {motion} from 'framer-motion';
-import {FaMapMarkerAlt, FaCalendarAlt} from 'react-icons/fa'; // Icons for location and duration
+import {FaMapMarkerAlt, FaCalendarAlt} from 'react-icons/fa';
 import React from 'react';
+
+const container = {
+    hidden: {opacity: 1},
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.2, // 👈 0.2s delay between items
+        },
+    },
+};
 
 export function Timeline({children}: { children: React.ReactNode }) {
     return (
-        <div className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-4">
+        <motion.div
+            className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-4"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{once: true, amount: 0.2}}
+        >
             {children}
-        </div>
+        </motion.div>
     );
 }
 
@@ -22,9 +38,10 @@ interface TimelineItemProps {
 export function TimelineItem({title, duration, location, children}: TimelineItemProps) {
     return (
         <motion.div
-            initial={{opacity: 0, translateY: 50}}
-            whileInView={{opacity: 1, translateY: 0}}
-            viewport={{once: true, amount: 0.2}}
+            variants={{
+                hidden: {opacity: 0, y: 50},
+                show: {opacity: 1, y: 0},
+            }}
             transition={{duration: 0.5, ease: 'easeOut'}}
             className="relative mb-12 pl-8"
         >
@@ -41,11 +58,11 @@ export function TimelineItem({title, duration, location, children}: TimelineItem
                 <h3 className="text-2xl font-semibold mb-1">{title}</h3>
                 <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
                     <span className="flex items-center gap-1">
-                        <FaCalendarAlt className="w-4 h-4"/>
+                    <FaCalendarAlt className="w-4 h-4"/>
                         {duration}
                     </span>
                     <span className="flex items-center gap-1">
-                        <FaMapMarkerAlt className="w-4 h-4"/>
+                    <FaMapMarkerAlt className="w-4 h-4"/>
                         {location}
                     </span>
                 </div>
