@@ -35,6 +35,7 @@ export default async function BlogPostPage({params}: { params: { slug: string } 
     const {content} = await compileMDX({
         source: mdxSource,
         options: {
+            parseFrontmatter: true,
             mdxOptions: {
                 rehypePlugins: [rehypeHighlight],
             },

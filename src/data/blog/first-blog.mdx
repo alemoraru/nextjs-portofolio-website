@@ -1,38 +1,62 @@
-# Some fancy blog post
+---
+title: "Getting Started with Bash"
+summary: "Learn the basics of Bash scripting and how to automate tasks on Linux and Mac systems."
+date: "2025-04-01"
+tags:
+  - Bash
+  - Shell
+  - Scripting
+  - Linux
+---
 
-## This is a heading
+# Getting Started with Bash
 
-This is a list in Markdown:
+Bash is a powerful command-line shell used on Unix systems like Linux and macOS. It's great for automating tasks, running scripts, and managing servers.
 
-- **Bold**
-- _Italic_
-- ~~Strikethrough~~
+## Why Learn Bash?
 
-### This is a code block
+- Automate repetitive tasks
+- Manage files and directories
+- Create powerful pipelines
 
-```python
-def hello_world():
-    print("Hello, world!")
+## Basic Commands
+
+Here are a few essential Bash commands:
+
+```bash
+# List files
+ls
+
+# Change directory
+cd /path/to/directory
+
+# Copy a file
+cp source.txt destination.txt
+
+# Move or rename a file
+mv oldname.txt newname.txt
 ```
 
-## This is a quote
+## Writing Your First Script
 
-> This is a quote in Markdown
+Create a file called `hello.sh`:
 
-## This is a table
+```bash
+#!/bin/bash
+echo "Hello, World!"
+```
 
-| Header 1 | Header 2 |
-|----------|----------|
-| Row 1    | Row 2    |
-| Row 3    | Row 4    |
+Make it executable:
 
-## This is a link
-[This is a link](https://example.com)
+```bash
+chmod +x hello.sh
+./hello.sh
+```
 
+## Tips for Beginners
 
-Whereas this is normal text with `inline code` in it. Thin about `src/data/blog/first-blog.mdx` as a file
-in the `src/data/blog` directory. The file name is `first-blog.mdx`.
+- Always start your scripts with `#!/bin/bash`
+- Use comments (`#`) to describe what your script does
+- Practice by writing simple automation tasks
 
-The file contains a blog post written in Markdown format.
-The blog post includes various elements such as headings, lists, code blocks, quotes, tables, and links.
-The last line of the file contains a sentence that mentions inline code.
+Happy scripting! 🐧

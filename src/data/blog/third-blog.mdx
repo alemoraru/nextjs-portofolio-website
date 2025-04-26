@@ -1,7 +1,53 @@
-## This is a heading
+---
+title: "Intro to React and How to Use It"
+summary: "Learn what React is, why it's popular, and how to create your first component."
+date: "2025-04-15"
+tags:
+  - React
+  - Frontend
+  - JavaScript
+  - Web Development
+---
 
-This is a list in markdown:
+# Intro to React
 
-- One
-- Two
-- Three
+**React** is a JavaScript library for building user interfaces. It makes it easy to create interactive UIs by using a component-based approach.
+
+## Why Use React?
+
+- **Reusable components** save time and make code cleaner
+- **Virtual DOM** makes updates faster
+- **Strong community** and tons of tools
+
+## Your First React Component
+
+Let's create a simple "Hello, World!" component:
+
+```jsx
+import React from 'react';
+
+function HelloWorld() {
+  return <h1>Hello, World!</h1>;
+}
+
+export default HelloWorld;
+```
+
+## Setting Up a Project (with Vite)
+
+```bash
+# Create a new React project with Vite
+npm create vite@latest my-app -- --template react
+
+cd my-app
+npm install
+npm run dev
+```
+
+## Core Concepts to Learn
+
+- **JSX**: JavaScript + XML syntax
+- **Props**: Passing data into components
+- **State**: Managing local component data
+
+Stay curious, and happy coding! 🎯
