@@ -9,6 +9,7 @@ import StackIcon from "tech-stack-icons";
 import {BsStack} from "react-icons/bs";
 import {FaUsers, FaUserTie, FaClock, FaGithub} from "react-icons/fa";
 import AnimatedArticle from "@/components/AnimatedArticle";
+import techStackMap from "@/lib/mappings";
 
 export default async function ProjectPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring
@@ -39,27 +40,6 @@ export default async function ProjectPage({params}: { params: { slug: string } }
             },
         },
     })
-
-    /**
-     * Temporary mapping for tech stack icons.
-     */
-    const techStackMap: Record<string, string> = {
-        'React': 'reactjs',
-        'TypeScript': 'typescript',
-        'TailwindCSS': 'tailwindcss',
-        'Node.js': 'nodejs',
-        'NextJS': 'nextjs',
-        'aws': 'aws',
-        'MongoDB': 'mongodb',
-        'PostgreSQL': 'postgresql',
-        'Python': 'python',
-        'Flask': 'flask',
-        'Solidity': 'solidity',
-        'C#': 'csharp',
-        'Firebase': 'firebase',
-        'AWS IoT': 'aws',
-        'C++': 'c++'
-    }
 
     return (
         <AnimatedArticle>

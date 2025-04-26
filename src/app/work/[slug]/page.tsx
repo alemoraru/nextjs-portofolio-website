@@ -6,6 +6,8 @@ import rehypeHighlight from 'rehype-highlight'
 import Link from 'next/link'
 import work from "@/data/work";
 import AnimatedArticle from "@/components/AnimatedArticle";
+import StackIcon from "tech-stack-icons";
+import techStackMap from "@/lib/mappings";
 
 export default async function WorkItemPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring
@@ -35,40 +37,36 @@ export default async function WorkItemPage({params}: { params: { slug: string } 
         },
     })
 
-    /**
-     * Temporary mapping for tech stack icons.
-     */
-    const techStackMap: Record<string, string> = {
-        'React': 'reactjs',
-        'TypeScript': 'typescript',
-        'TailwindCSS': 'tailwindcss',
-        'Node.js': 'nodejs',
-        'NextJS': 'nextjs',
-        'aws': 'aws',
-        'MongoDB': 'mongodb',
-        'PostgreSQL': 'postgresql',
-        'Python': 'python',
-        'Flask': 'flask',
-        'Solidity': 'solidity',
-        'C#': 'csharp',
-        'Firebase': 'firebase',
-        'AWS IoT': 'aws',
-        'C++': 'c++',
-        'Azure': 'azure'
-    }
-
     return (
         <AnimatedArticle>
             <Link
                 href="/work"
-                className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2"
+                className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2 group"
             >
-            <span className="inline-block transform transition-transform group-hover:-translate-x-1">
-                ←
-            </span>
+                <span className="inline-block transform transition-transform group-hover:-translate-x-1">
+                    ←
+                </span>
                 Back to work
             </Link>
-            <h1 className="text-3xl font-extrabold mb-4">{frontmatter.name}</h1>
+
+            <h1 className="text-4xl font-bold mb-2">{frontmatter.name}</h1>
+
+            <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
+
+            <div className="flex flex-wrap gap-4 mb-8">
+                {frontmatter.techStack.map((tech) => (
+                    <div
+                        key={tech}
+                        className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
+                    >
+                        <StackIcon
+                            name={techStackMap[tech] || tech}
+                            style={{width: '24px', height: '24px'}}
+                        />
+                        <span>{tech}</span>
+                    </div>
+                ))}
+            </div>
 
             <div className="max-w-4xl prose dark:prose-invert">{content}</div>
         </AnimatedArticle>
