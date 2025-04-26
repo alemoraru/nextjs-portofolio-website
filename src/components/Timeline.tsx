@@ -9,11 +9,16 @@ const container = {
     show: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.2, // 👈 0.2s delay between items
+            staggerChildren: 0.3,
         },
     },
 };
 
+/**
+ * Timeline component that wraps around timeline items.
+ * @param children - The timeline items to be displayed, i.e., job positions, promotions, roles within a company.
+ * @constructor
+ */
 export function Timeline({children}: { children: React.ReactNode }) {
     return (
         <motion.div
@@ -35,6 +40,14 @@ interface TimelineItemProps {
     children: React.ReactNode;
 }
 
+/**
+ * TimelineItem component that represents a single item in the timeline, i.e., a single role within a company.
+ * @param title the title of the role
+ * @param duration the duration of the role, e.g., "Jan 2020 - Present"
+ * @param location the location of the role, e.g., "New York, NY"
+ * @param children the content of the role, e.g., bulleted list of responsibilities
+ * @constructor
+ */
 export function TimelineItem({title, duration, location, children}: TimelineItemProps) {
     return (
         <motion.div
