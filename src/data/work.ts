@@ -6,6 +6,7 @@ const work = [
         start: 'Jan 2021',
         end: 'Present',
         description: 'Led a team of 5 building scalable microservices with Node.js and AWS.',
+        locations: ['Remote', 'New York City (Hybrid)']
     },
     {
         slug: 'MediumBossCorp',
@@ -14,6 +15,7 @@ const work = [
         start: 'Jul 2018',
         end: 'Dec 2020',
         description: 'Worked on the core platform, optimizing React apps and APIs.',
+        locations: ['Remote', 'New York City']
     },
     {
         slug: 'SmallBossCorp',
@@ -22,6 +24,7 @@ const work = [
         start: 'Jan 2017',
         end: 'Jun 2018',
         description: 'Assisted in developing web applications using PHP and MySQL.',
+        locations: ['Remote', 'San Francisco (Hybrid)'],
     },
 ]
 
