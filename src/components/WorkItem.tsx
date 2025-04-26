@@ -15,15 +15,20 @@ interface WorkItemProps {
     locations?: string[]
 }
 
+/**
+ * A functional component that renders a work item with a link, title, company, start and end dates, description, and locations.
+ */
 export default function WorkItem({slug, company, title, start, end, description, locations}: WorkItemProps) {
     return (
-        <Link href={`/work/${slug}`}>
-            <motion.div
+        <Link href={`/work/${slug}`} className="group">
+            <motion.article
                 initial={{opacity: 0, y: 0}}
                 animate={{opacity: 1, y: 0}}
-                transition={{duration: 1.0}}
-                className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition cursor-pointer hover:text-blue-500 bg-white dark:bg-gray-900">
-                <h3 className="text-xl font-semibold">{title} @ {company}</h3>
+                transition={{duration: 0.6, ease: "easeOut"}}
+                whileHover={{scale: 1.02}}
+                whileTap={{scale: 0.98}}
+                className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition cursor-pointerbg-white dark:bg-gray-900">
+                <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">{title} @ {company}</h3>
 
                 {/* Duration and Locations */}
                 <div className="mt-2 text-gray-500 flex flex-col sm:flex-row sm:items-center">
@@ -41,7 +46,7 @@ export default function WorkItem({slug, company, title, start, end, description,
                 </div>
 
                 <p className="mt-2 text-gray-700">{description}</p>
-            </motion.div>
+            </motion.article>
         </Link>
     )
 }
