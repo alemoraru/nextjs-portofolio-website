@@ -10,26 +10,27 @@ techStack:
   - Azure
 ---
 
-# About Small Boss Corp
-
-Small Boss Corp is dedicated to sustainability and ethical business practices...
+import {TimelineItem} from "../../components/Timeline";
+import {Timeline} from "../../components/Timeline";
 
 ## Roles
 
-### Junior Software Engineer
+<Timeline>
+    <TimelineItem
+        title="Junior Software Engineer"
+        duration="11/2022 - 05/2023"
+        location="San Francisco, CA"
+    >
+        - Developed and maintained web applications using **React** and **TypeScript**.
+        - Collaborated with cross-functional teams to design and implement new features.
+    </TimelineItem>
 
-**Duration:** 11/2022 - 05/2023
-**Location:** San Francisco, CA
-
-- Developed and maintained web applications using **React** and **TypeScript**.
-- Collaborated with cross-functional teams to design and implement new features.
-
-### Intern
-
-**Duration:** 06/2022 - 10/2022
-**Location:** Remote
-
-- Helped in the development of web applications.
-- Participated in code reviews.
-- Gained experience in Agile methodologies and version control systems.
-
+    <TimelineItem
+        title="Intern"
+        duration="06/2022 - 10/2022"
+        location="Remote"
+    >
+        - Assisted in development of web applications.
+        - Participated in code reviews and Agile ceremonies.
+    </TimelineItem>
+</Timeline>

@@ -8,6 +8,7 @@ import work from "@/data/work";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import StackIcon from "tech-stack-icons";
 import techStackMap from "@/lib/mappings";
+import {Timeline, TimelineItem} from '@/components/Timeline'
 
 export default async function WorkItemPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring
@@ -26,9 +27,12 @@ export default async function WorkItemPage({params}: { params: { slug: string } 
         name: string
         description: string
         techStack: string[]
-        position: string
     }>({
         source: mdxSource,
+        components: {
+            Timeline,
+            TimelineItem,
+        },
         options: {
             parseFrontmatter: true,
             mdxOptions: {
@@ -54,7 +58,7 @@ export default async function WorkItemPage({params}: { params: { slug: string } 
             <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
 
             <div className="flex flex-wrap gap-4 mb-8">
-                {frontmatter.techStack.map((tech) => (
+                {frontmatter.techStack?.map((tech) => (
                     <div
                         key={tech}
                         className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
