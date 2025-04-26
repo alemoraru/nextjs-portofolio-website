@@ -2,7 +2,7 @@ const work = [
     {
         slug: 'BigBossCorp',
         company: 'Big Boss Corp',
-        title: 'Senior Software Engineer',
+        title: 'Software Engineer',
         start: 'Jan 2021',
         end: 'Present',
         description: 'Led a team of 5 building scalable microservices with Node.js and AWS.',
@@ -18,7 +18,7 @@ const work = [
     {
         slug: 'SmallBossCorp',
         company: 'Small Boss Corp',
-        title: 'Junior Software Engineer',
+        title: 'Software Engineer',
         start: 'Jan 2017',
         end: 'Jun 2018',
         description: 'Assisted in developing web applications using PHP and MySQL.',

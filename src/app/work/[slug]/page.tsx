@@ -9,6 +9,7 @@ import AnimatedArticle from "@/components/AnimatedArticle";
 import StackIcon from "tech-stack-icons";
 import techStackMap from "@/lib/mappings";
 import {Timeline, TimelineItem} from '@/components/Timeline'
+import {BsStack} from "react-icons/bs";
 
 export default async function WorkItemPage({params}: { params: { slug: string } }) {
     const {slug} = await params // Await params before destructuring
@@ -57,6 +58,8 @@ export default async function WorkItemPage({params}: { params: { slug: string } 
 
             <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
 
+            <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
+
             <div className="flex flex-wrap gap-4 mb-8">
                 {frontmatter.techStack?.map((tech) => (
                     <div
@@ -72,7 +75,7 @@ export default async function WorkItemPage({params}: { params: { slug: string } 
                 ))}
             </div>
 
-            <div className="max-w-4xl prose dark:prose-invert">{content}</div>
+            <div className="max-w-5xl prose dark:prose-invert">{content}</div>
         </AnimatedArticle>
     )
 }

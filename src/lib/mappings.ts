@@ -16,8 +16,11 @@ const techStackMap: Record<string, string> = {
     'C#': 'csharp',
     'Firebase': 'firebase',
     'AWS IoT': 'aws',
+    'AWS': 'aws',
     'C++': 'c++',
-    'Azure': 'azure'
+    'Azure': 'azure',
+    'Redis': 'redis',
+    'GraphQL': 'graphql',
 }
 
 export default techStackMap;

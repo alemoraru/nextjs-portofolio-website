@@ -17,7 +17,7 @@ const container = {
 export function Timeline({children}: { children: React.ReactNode }) {
     return (
         <motion.div
-            className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-4"
+            className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-4 mx-w-4xl w-full"
             variants={container}
             initial="hidden"
             whileInView="show"
