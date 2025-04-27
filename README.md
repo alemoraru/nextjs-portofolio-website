@@ -54,11 +54,20 @@ load [Geist](https://vercel.com/font), a modern, legible typeface by Vercel.
 
 Planned improvements and current/future features:
 
-- [ ] 🌙 Add light/dark mode support
-- [ ] 📄 Enable MDX for:
-    - [ ] Individual Work pages
+- [X] 🖥️ Create pages for:
+    - [X] Home
+    - [X] Work
+    - [X] Projects
+    - [X] Blog
+- [X] 📺 Add UI components/elements for:
+    - [X] Header with navigation
+    - [X] Footer
+    - [X] Home page with a hero section
+- [X] 📄 Enable MDX for:
+    - [X] Individual Work pages
     - [X] Blog post pages
     - [X] Project detail pages
+- [ ] 🌙 Add light/dark mode support
 - [ ] 🖼️ Add a Carousel component to display images/highlights of individual:
     - [ ] Project pages
     - [ ] Work Items
@@ -70,6 +79,10 @@ Planned improvements and current/future features:
     - [ ] Work items
     - [ ] Projects
     - [ ] Blog posts
+- [ ] 🖼 Add theme customization options:
+    - [ ] Color palette
+    - [ ] Font options
+    - [ ] Layout options
 
 ---
 
@@ -96,7 +109,9 @@ the [Next.js deployment guide](https://nextjs.org/docs/app/building-your-applica
 
 > **Note:** This does not mean you _have_ to use Vercel. You can deploy this app on any platform that supports
 > Node.js, such as [Netlify](https://www.netlify.com), [Render](https://render.com),
-> [AWS Amplify](https://aws.amazon.com/amplify/), or much more.
+> [AWS Amplify](https://aws.amazon.com/amplify/), or much more. Even [GitHub Pages](https://pages.github.com/) is
+> a viable option, but it requires the use of a static export,
+> see [Next.js docs for that](https://nextjs.org/docs/app/getting-started/deploying#static-export).
 
 ---
 
