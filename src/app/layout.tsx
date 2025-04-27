@@ -13,7 +13,7 @@ const gabarito = Gabarito({
 
 export const metadata: Metadata = {
     title: 'MyPortfolio',
-    description: 'A portfolio site showcasing my work, projects, blog, and books.',
+    description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
     robots: {
         index: false,
         follow: false
