@@ -65,8 +65,16 @@ export default function Home() {
                     <Link href="/work" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid gap-4">
-                    {work.slice(0, 3).map((job, i) => ( // Limit to 3 items
-                        <WorkItem key={i} {...job} />
+                    {work.slice(0, 3).map((job, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{opacity: 0, y: 20}}
+                            whileInView={{opacity: 1, y: 0}}
+                            transition={{duration: 1}}
+                            viewport={{once: true}}
+                        >
+                            <WorkItem {...job} />
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>
@@ -84,8 +92,16 @@ export default function Home() {
                     <Link href="/projects" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                    {projects.slice(0, 4).map((proj) => ( // Limit to 3 items
-                        <ProjectTile key={proj.slug} {...proj} />
+                    {projects.slice(0, 4).map((proj) => (
+                        <motion.div
+                            key={proj.slug}
+                            initial={{opacity: 0, y: 20}}
+                            whileInView={{opacity: 1, y: 0}}
+                            transition={{duration: 1}}
+                            viewport={{once: true}}
+                        >
+                            <ProjectTile key={proj.slug} {...proj} />
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>
@@ -103,8 +119,16 @@ export default function Home() {
                     <Link href="/blog" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                    {blog.slice(0, 3).map((post, i) => ( // Limit to 3 items
-                        <BlogPost key={i} {...post} />
+                    {blog.slice(0, 3).map((post, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{opacity: 0, y: 20}}
+                            whileInView={{opacity: 1, y: 0}}
+                            transition={{duration: 1}}
+                            viewport={{once: true}}
+                        >
+                            <BlogPost {...post} />
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>
