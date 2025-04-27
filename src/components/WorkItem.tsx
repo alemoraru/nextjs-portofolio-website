@@ -22,11 +22,22 @@ export default function WorkItem({slug, company, title, start, end, description,
     return (
         <Link href={`/work/${slug}`} className="group">
             <motion.article
-                initial={{opacity: 0, y: 0}}
+                initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.6, ease: "easeOut"}}
-                whileHover={{scale: 1.02}}
-                whileTap={{scale: 0.98}}
+                transition={{
+                    opacity: {duration: 0.8},
+                    y: {type: "spring", stiffness: 100, damping: 25}
+                }}
+                whileHover={{
+                    scale: 1.05,
+                    filter: 'brightness(1.15)',
+                    transition: {
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 30,
+                        duration: 0.4
+                    }
+                }}
                 className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition cursor-pointerbg-white dark:bg-gray-900">
                 <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">{title} @ {company}</h3>
 

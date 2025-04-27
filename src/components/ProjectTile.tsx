@@ -20,14 +20,23 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
     return (
         <Link href={`/projects/${slug}`} className="block group">
             <motion.div
-                initial={{opacity: 0, y: 20}}
+                initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
-                transition={{duration: 1.0}}
-                className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition text-white hover:border-blue-500 border-2"
-                whileHover={{
-                    scale: 1.04,
-                    filter: 'brightness(1.1)'
+                transition={{
+                    opacity: {duration: 0.8},
+                    y: {type: "spring", stiffness: 100, damping: 25}
                 }}
+                whileHover={{
+                    scale: 1.05,
+                    filter: 'brightness(1.15)',
+                    transition: {
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 30,
+                        duration: 0.4
+                    }
+                }}
+                className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all text-white hover:border-blue-500 border-2"
             >
                 {/* Image */}
                 <div className="relative w-full h-48 overflow-hidden">
@@ -40,7 +49,7 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                     />
                     <div
                         className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-white text-lg font-semibold">View Project ➔</span>
+                        <span className="text-white text-lg font-semibold">Explore {title} ➔</span>
                     </div>
                 </div>
 
