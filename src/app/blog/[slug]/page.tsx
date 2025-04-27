@@ -19,6 +19,15 @@ function getReadingTime(text: string): number {
     return Math.ceil(numberOfWords / wordsPerMinute)
 }
 
+/**
+ * Generate static parameters for the blog post pages to be pre-rendered.
+ */
+export async function generateStaticParams() {
+    return posts.map((post) => ({
+        slug: post.slug,
+    }))
+}
+
 export default async function BlogPostPage(props: { params: pageParams }) {
     const {slug} = await props.params
     const post = posts.find(p => p.slug === slug)

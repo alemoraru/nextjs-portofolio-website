@@ -12,6 +12,15 @@ import AnimatedArticle from "@/components/AnimatedArticle";
 import {techStackMap} from "@/lib/constants";
 import {pageParams} from "@/lib/types";
 
+/**
+ * Generate static parameters for the blog post pages to be pre-rendered.
+ */
+export async function generateStaticParams() {
+    return projects.map((project) => ({
+        slug: project.slug,
+    }))
+}
+
 export default async function ProjectPage(props: { params: pageParams }) {
     const {slug} = await props.params
     const post = projects.find(p => p.slug === slug)
