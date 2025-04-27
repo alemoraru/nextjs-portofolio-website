@@ -24,17 +24,26 @@ export default function ProjectTile({slug, title, image}: ProjectTileProps) {
                 transition={{duration: 1.0}}
                 className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition text-white
                 hover:border-blue-500 border-2"
-                whileHover={{scale: 1.04}}
+                whileHover={{
+                    scale: 1.04,
+                    filter: 'brightness(1.1)'
+                }}
             >
+                {/* Image section */}
                 <div className="relative w-full h-48">
                     <Image
                         src={image}
                         alt={title}
                         fill={true}
-                        priority
+                        loading="lazy"
                     />
                 </div>
-                <div className="p-4 text-center font-medium">{title}</div>
+
+                {/* Title section */}
+                <div
+                    className="p-4 text-center font-semibold bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                    {title}
+                </div>
             </motion.div>
         </Link>
     )
