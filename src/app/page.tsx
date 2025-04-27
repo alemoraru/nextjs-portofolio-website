@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import blog from "@/data/blog";
 import projects from "@/data/projects";
@@ -5,6 +7,7 @@ import work from "@/data/work";
 import WorkItem from "@/components/WorkItem";
 import ProjectTile from "@/components/ProjectTile";
 import BlogPost from "@/components/BlogPost";
+import {motion} from "framer-motion";
 
 /**
  * Home component that serves as the main landing page for the portfolio.
@@ -15,7 +18,13 @@ export default function Home() {
         <section className="px-4 max-w-4xl mx-auto">
 
             {/* Intro Section */}
-            <div className="text-center mt-10">
+            <motion.div
+                initial={{opacity: 0, y: 20}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 1}}
+                viewport={{once: true}}
+                className="text-center mt-10"
+            >
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                     Hi, I&#39;m Your Name 👋
                 </h1>
@@ -31,7 +40,6 @@ export default function Home() {
                     applications and improving user experiences. I have a keen interest in full-stack development,
                     particularly in React and Node.js. I enjoy collaborating with cross-functional teams to deliver
                     high-quality software solutions.
-
                 </p>
 
                 <div className="mt-10">
@@ -42,10 +50,16 @@ export default function Home() {
                         <li>• 📚 Love reviewing books on Goodreads</li>
                     </ul>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Recent Work */}
-            <div className="mt-16">
+            <motion.div
+                initial={{opacity: 0, y: 20}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 1}}
+                viewport={{once: true}}
+                className="mt-16"
+            >
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Recent Work</h2>
                     <Link href="/work" className="text-blue-500 hover:underline text-sm">View all</Link>
@@ -55,10 +69,16 @@ export default function Home() {
                         <WorkItem key={i} {...job} />
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             {/* Recent Projects */}
-            <div className="mt-16">
+            <motion.div
+                initial={{opacity: 0, y: 20}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 1}}
+                viewport={{once: true}}
+                className="mt-16"
+            >
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Recent Projects</h2>
                     <Link href="/projects" className="text-blue-500 hover:underline text-sm">View all</Link>
@@ -68,10 +88,16 @@ export default function Home() {
                         <ProjectTile key={proj.slug} {...proj} />
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             {/* Recent Blog Posts */}
-            <div className="mt-16 mb-12">
+            <motion.div
+                initial={{opacity: 0, y: 20}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 1}}
+                viewport={{once: true}}
+                className="mt-16 mb-12"
+            >
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Recent Blog Posts</h2>
                     <Link href="/blog" className="text-blue-500 hover:underline text-sm">View all</Link>
@@ -81,7 +107,8 @@ export default function Home() {
                         <BlogPost key={i} {...post} />
                     ))}
                 </div>
-            </div>
+            </motion.div>
+
         </section>
     )
 }
