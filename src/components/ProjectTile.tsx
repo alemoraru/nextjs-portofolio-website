@@ -17,26 +17,30 @@ interface ProjectTileProps {
  */
 export default function ProjectTile({slug, title, image}: ProjectTileProps) {
     return (
-        <Link href={`/projects/${slug}`}>
+        <Link href={`/projects/${slug}`} className="block group">
             <motion.div
-                initial={{opacity: 0, y: 0}}
+                initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 1.0}}
-                className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition text-white
-                hover:border-blue-500 border-2"
+                className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition text-white hover:border-blue-500 border-2"
                 whileHover={{
                     scale: 1.04,
                     filter: 'brightness(1.1)'
                 }}
             >
-                {/* Image section */}
-                <div className="relative w-full h-48">
+                {/* Image + Hover Overlay */}
+                <div className="relative w-full h-48 overflow-hidden">
                     <Image
                         src={image}
                         alt={title}
-                        fill={true}
+                        fill
                         loading="lazy"
+                        className="object-cover"
                     />
+                    <div
+                        className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-white text-lg font-semibold">View Project ➔</span>
+                    </div>
                 </div>
 
                 {/* Title section */}
@@ -46,5 +50,5 @@ export default function ProjectTile({slug, title, image}: ProjectTileProps) {
                 </div>
             </motion.div>
         </Link>
-    )
+    );
 }
