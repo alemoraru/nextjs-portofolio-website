@@ -6,6 +6,7 @@ import {compileMDX} from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
 import Link from 'next/link'
 import AnimatedArticle from "@/components/AnimatedArticle";
+import {pageParams} from "@/lib/types";
 
 /**
  * Calculate the reading time of a text based on the number of words.
@@ -18,8 +19,8 @@ function getReadingTime(text: string): number {
     return Math.ceil(numberOfWords / wordsPerMinute)
 }
 
-export default async function BlogPostPage({params}: { params: { slug: string } }) {
-    const {slug} = await params // Await params before destructuring
+export default async function BlogPostPage(props: { params: pageParams }) {
+    const {slug} = await props.params
     const post = posts.find(p => p.slug === slug)
     if (!post) return notFound()
 

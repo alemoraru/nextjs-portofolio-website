@@ -10,9 +10,10 @@ import {BsStack} from "react-icons/bs";
 import {FaUsers, FaUserTie, FaClock, FaGithub} from "react-icons/fa";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import {techStackMap} from "@/lib/constants";
+import {pageParams} from "@/lib/types";
 
-export default async function ProjectPage({params}: { params: { slug: string } }) {
-    const {slug} = await params // Await params before destructuring
+export default async function ProjectPage(props: { params: pageParams }) {
+    const {slug} = await props.params
     const post = projects.find(p => p.slug === slug)
     if (!post) return notFound()
 
