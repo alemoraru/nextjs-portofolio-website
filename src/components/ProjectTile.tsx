@@ -52,7 +52,7 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
 
                 {/* Description */}
                 {description && (
-                    <div className="p-4 text-center text-sm text-gray-200 max-h-24 overflow-hidden">
+                    <div className="p-4 text-center text-sm text-gray-200">
                         <p className="line-clamp-3">{description}</p>
                     </div>
                 )}

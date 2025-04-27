@@ -1,32 +1,32 @@
 const projects = [
     {
         slug: 'project-A',
-        title: 'Project A',
-        image: '/projects/pictureA.jpg',
+        title: 'YouNovate',
+        image: '/projects/pictureA.jpg'
     },
     {
         slug: 'project-B',
-        title: 'Project B',
+        title: 'VoteChain',
         image: '/projects/pictureB.jpg'
     },
     {
         slug: 'project-C',
-        title: 'Project C',
+        title: 'FinAI',
         image: '/projects/pictureC.jpg'
     },
     {
         slug: 'project-D',
-        title: 'Project D',
+        title: 'AeroDeliver',
         image: '/projects/pictureD.jpg'
     },
     {
         slug: 'project-E',
-        title: 'Project E',
+        title: 'FitVR',
         image: '/projects/pictureE.jpg'
     },
     {
         slug: 'project-F',
-        title: 'Project F',
+        title: 'SmartHive',
         image: '/projects/pictureF.jpg'
     },
 ]
