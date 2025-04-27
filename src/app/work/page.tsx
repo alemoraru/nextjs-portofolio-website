@@ -1,6 +1,10 @@
 import WorkItem from '@/components/WorkItem'
 import work from '@/data/work'
 
+/**
+ * WorkPage component that serves as the main page for displaying work experience.
+ * This is accessed at the "/work" URL of the application.
+ */
 export default function WorkPage() {
     return (
         <section className="px-4 max-w-4xl mx-auto">

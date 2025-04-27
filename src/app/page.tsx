@@ -6,6 +6,10 @@ import WorkItem from "@/components/WorkItem";
 import ProjectTile from "@/components/ProjectTile";
 import BlogPost from "@/components/BlogPost";
 
+/**
+ * Home component that serves as the main landing page for the portfolio.
+ * This is accessed at the root URL ("/") of the application.
+ */
 export default function Home() {
     return (
         <section className="px-4 max-w-4xl mx-auto">
@@ -59,8 +63,8 @@ export default function Home() {
                     <h2 className="text-2xl font-semibold">Recent Projects</h2>
                     <Link href="/projects" className="text-blue-500 hover:underline text-sm">View all</Link>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                    {projects.slice(0, 3).map((proj) => ( // Limit to 3 items
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                    {projects.slice(0, 4).map((proj) => ( // Limit to 3 items
                         <ProjectTile key={proj.slug} {...proj} />
                     ))}
                 </div>

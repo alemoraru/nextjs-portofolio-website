@@ -8,6 +8,7 @@ interface ProjectTileProps {
     slug: string
     title: string
     image: string
+    description?: string
 }
 
 /**
@@ -15,7 +16,7 @@ interface ProjectTileProps {
  *
  * @param {Object} props - The prop object for the component, containing slug, title, and image.
  */
-export default function ProjectTile({slug, title, image}: ProjectTileProps) {
+export default function ProjectTile({slug, title, image, description}: ProjectTileProps) {
     return (
         <Link href={`/projects/${slug}`} className="block group">
             <motion.div
@@ -28,7 +29,7 @@ export default function ProjectTile({slug, title, image}: ProjectTileProps) {
                     filter: 'brightness(1.1)'
                 }}
             >
-                {/* Image + Hover Overlay */}
+                {/* Image */}
                 <div className="relative w-full h-48 overflow-hidden">
                     <Image
                         src={image}
@@ -43,11 +44,18 @@ export default function ProjectTile({slug, title, image}: ProjectTileProps) {
                     </div>
                 </div>
 
-                {/* Title section */}
+                {/* Title */}
                 <div
                     className="p-4 text-center font-semibold bg-gradient-to-t from-black/80 via-black/50 to-transparent">
                     {title}
                 </div>
+
+                {/* Description */}
+                {description && (
+                    <div className="p-4 text-center text-sm text-gray-200 max-h-24 overflow-hidden">
+                        <p className="line-clamp-3">{description}</p>
+                    </div>
+                )}
             </motion.div>
         </Link>
     );

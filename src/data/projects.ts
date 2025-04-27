@@ -2,7 +2,7 @@ const projects = [
     {
         slug: 'project-A',
         title: 'Project A',
-        image: '/projects/pictureA.jpg'
+        image: '/projects/pictureA.jpg',
     },
     {
         slug: 'project-B',
