@@ -44,18 +44,12 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                     </div>
                 </div>
 
-                {/* Title */}
+                {/* Title with optional description */}
                 <div
                     className="p-4 text-center font-semibold bg-gradient-to-t from-black/80 via-black/50 to-transparent">
                     {title}
+                    {description && <span className="font-normal">: {description}</span>}
                 </div>
-
-                {/* Description */}
-                {description && (
-                    <div className="p-4 text-center text-sm text-gray-200">
-                        <p className="line-clamp-3">{description}</p>
-                    </div>
-                )}
             </motion.div>
         </Link>
     );
