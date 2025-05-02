@@ -4,9 +4,9 @@ import path from 'path'
 import fs from 'fs'
 import {compileMDX} from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
-import Link from 'next/link'
 import AnimatedArticle from "@/components/AnimatedArticle";
 import {pageParams} from "@/lib/types";
+import BackToPageButton from "@/components/BackToPageButton";
 
 /**
  * Calculate the reading time of a text based on the number of words.
@@ -54,15 +54,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
 
     return (
         <AnimatedArticle>
-            <Link
-                href="/blog"
-                className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2"
-            >
-                <span className="inline-block transform transition-transform group-hover:-translate-x-1">
-                    ←
-                </span>
-                Back to blogs
-            </Link>
+            <BackToPageButton pageUrl="/blog"/>
             <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
             <p className="text-gray-500 mb-8">
                 {new Date(post.date).toLocaleDateString()} • {readingTime} min read

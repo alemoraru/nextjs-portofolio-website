@@ -9,6 +9,9 @@ interface ProjectTileProps {
     title: string
     image: string
     description?: string
+    techStack?: string[]
+    startDate?: string
+    endDate?: string
 }
 
 /**

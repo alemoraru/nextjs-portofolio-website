@@ -3,13 +3,13 @@ import path from 'path'
 import fs from 'fs'
 import {compileMDX} from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
-import Link from 'next/link'
 import work from "@/data/work";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import StackIcon from "tech-stack-icons";
 import {techStackMap} from "@/lib/constants";
 import {Timeline, TimelineItem} from '@/components/Timeline'
 import {pageParams} from "@/lib/types";
+import BackToPageButton from "@/components/BackToPageButton";
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
@@ -53,16 +53,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
 
     return (
         <AnimatedArticle>
-            <Link
-                href="/work"
-                className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2 group"
-            >
-                <span className="inline-block transform transition-transform group-hover:-translate-x-1">
-                    ←
-                </span>
-                Back to work
-            </Link>
-
+            <BackToPageButton pageUrl="/work"/>
             <h1 className="text-4xl font-bold mb-2">{frontmatter.name}</h1>
 
             <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>

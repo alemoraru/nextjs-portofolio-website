@@ -11,6 +11,7 @@ import {FaUsers, FaUserTie, FaClock, FaGithub} from "react-icons/fa";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import {techStackMap} from "@/lib/constants";
 import {pageParams} from "@/lib/types";
+import BackToPageButton from "@/components/BackToPageButton";
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.
@@ -53,15 +54,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
     return (
         <AnimatedArticle>
-            <Link
-                href="/projects"
-                className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2"
-            >
-            <span className="inline-block transform transition-transform group-hover:-translate-x-1">
-                ←
-            </span>
-                Back to projects
-            </Link>
+            <BackToPageButton pageUrl="/projects"/>
             <h1 className="text-3xl font-extrabold mb-4">{frontmatter.title}</h1>
 
             {/* GitHub Link Section */}
