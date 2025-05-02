@@ -77,8 +77,8 @@ Planned improvements and current/future features:
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 - [ ] 🔢 Add sorting/filtering functionality for:
     - [ ] Work items
-    - [ ] Projects
-    - [ ] Blog posts
+    - [X] Projects
+    - [X] Blog posts
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
     - [ ] Font options
@@ -124,7 +124,6 @@ This project uses:
 - 🧱 [TypeScript](https://www.typescriptlang.org) – Static typing
 - 🔤 [next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) – Font optimization
   with [Geist](https://vercel.com/font)
-- 📦 Package manager of your choice: `npm`, `yarn`, `pnpm`, or `bun`
 
 ---
 

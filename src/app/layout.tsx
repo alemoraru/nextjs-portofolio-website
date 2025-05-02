@@ -1,14 +1,18 @@
 import type {Metadata} from "next";
-import {Gabarito} from "next/font/google";
+import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import React, {ReactNode} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const gabarito = Gabarito({
+const geistSans = Geist({
+    variable: "--font-geist-sans",
     subsets: ["latin"],
-    variable: "--font-gabarito",
-    weight: ["400", "500", "700"]
+});
+
+const geistMono = Geist_Mono({
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -28,7 +32,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html lang="en">
-        <body className={`${gabarito.variable} antialiased flex flex-col min-h-screen bg-white 
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-white 
         text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}>
 
         {/* Dot Background Layer */}
