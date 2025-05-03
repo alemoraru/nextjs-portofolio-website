@@ -38,9 +38,37 @@ const posts = [
         slug: 'post6',
         title: 'Why TypeScript?',
         summary: 'Understand the benefits of using TypeScript for writing safer, more maintainable JavaScript code.',
-        date: '2025-04-22',
+        date: '2022-04-22',
         tags: ['typescript', 'javascript', 'programming', 'web development']
     },
+    {
+        slug: 'post7',
+        title: 'Getting Started with Java',
+        summary: 'A beginner-friendly introduction to Java, its syntax, features, and how to write your first Java program.',
+        date: '2022-01-30',
+        tags: ['java', 'programming', 'basics', 'getting started']
+    },
+    {
+        slug: 'post8',
+        title: 'Introduction to Spring Boot',
+        summary: 'Learn what Spring Boot is and how it simplifies the development of Java-based web applications.',
+        date: '2022-04-01',
+        tags: ['java', 'spring boot', 'backend', 'web development']
+    },
+    {
+        slug: 'post9',
+        title: 'Concurrency in Java',
+        summary: 'Learn the basics and advanced concepts of multithreading and concurrency in Java.',
+        date: '2022-04-12',
+        tags: ['java', 'concurrency', 'threads', 'multithreading']
+    },
+    {
+        slug: 'post10',
+        title: 'Understanding JVM Internals',
+        summary: 'Take a deep dive into the architecture and components of the Java Virtual Machine.',
+        date: '2022-02-20',
+        tags: ['java', 'jvm', 'internals', 'performance']
+    }
 ]
 
 export default posts

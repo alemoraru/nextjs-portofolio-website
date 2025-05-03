@@ -1,0 +1,86 @@
+---
+title: "Concurrency in Java"
+summary: "Learn the basics and advanced concepts of multithreading and concurrency in Java."
+date: "2022-04-12"
+tags:
+  - Java
+  - Concurrency
+  - Threads
+  - Multithreading
+---
+
+# Concurrency in Java
+
+Java provides rich APIs for handling **multithreading** and **concurrent programming**. These allow programs to make better use of system resources and handle multiple tasks simultaneously.
+
+> ⚠️ Concurrency is powerful but **hard to get right** — race conditions and deadlocks can ruin your day!
+
+## Creating Threads
+
+```java
+public class MyThread extends Thread {
+    public void run() {
+        System.out.println("Running in thread: " + Thread.currentThread().getName());
+    }
+}
+```
+
+```java
+Thread t = new MyThread();
+t.start();
+```
+
+### Using `Runnable`
+
+```java
+Runnable task = () -> System.out.println("Runnable Task");
+new Thread(task).start();
+```
+
+## Thread Lifecycle
+
+1. New
+2. Runnable
+3. Running
+4. Blocked/Waiting
+5. Terminated
+
+## Synchronization
+
+```java
+public synchronized void increment() {
+    count++;
+}
+```
+
+## Locks and Executors
+
+```java
+Lock lock = new ReentrantLock();
+lock.lock();
+try {
+    // critical section
+} finally {
+    lock.unlock();
+}
+```
+
+```java
+ExecutorService executor = Executors.newFixedThreadPool(2);
+executor.submit(() -> doWork());
+executor.shutdown();
+```
+
+## Common Pitfalls
+
+- **Race Conditions**
+- **Deadlocks**
+- **Starvation**
+
+> ❗ Always consider thread safety when working with shared resources.
+
+## Summary
+
+Java offers both high-level and low-level concurrency APIs. Learn to use them effectively to build performant, responsive apps.
+
+> 🔍 _“Concurrency is not parallelism.”_ – Rob Pike

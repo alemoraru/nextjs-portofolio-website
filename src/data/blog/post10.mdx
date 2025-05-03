@@ -1,0 +1,79 @@
+---
+title: "Understanding JVM Internals"
+summary: "Take a deep dive into the architecture and components of the Java Virtual Machine."
+date: "2022-02-20"
+tags:
+  - Java
+  - JVM
+  - Internals
+  - Performance
+---
+
+# Understanding JVM Internals
+
+The **Java Virtual Machine (JVM)** is the backbone of the Java ecosystem. It abstracts the hardware and operating system, allowing Java applications to run on any platform.
+
+## JVM Architecture
+
+```
++-----------------------------+
+|    Class Loader Subsystem  |
++-----------------------------+
+|     Runtime Data Areas      |
+|  - Method Area              |
+|  - Heap                     |
+|  - Java Stack               |
+|  - PC Register              |
+|  - Native Method Stack      |
++-----------------------------+
+|     Execution Engine        |
++-----------------------------+
+|     Native Interface (JNI) |
++-----------------------------+
+|     Native Method Libraries |
++-----------------------------+
+```
+
+## Class Loading
+
+- **Bootstrap ClassLoader**
+- **Extension ClassLoader**
+- **Application ClassLoader**
+
+```java
+ClassLoader classLoader = MyClass.class.getClassLoader();
+System.out.println(classLoader.getClass().getName());
+```
+
+## Memory Areas
+
+- **Heap**: For all class instances and arrays.
+- **Stack**: For method calls and local variables.
+- **Method Area**: Stores class-level data like method definitions.
+
+> ⚠️ Heap and Stack are managed differently—stack is LIFO and thread-confined; heap is shared.
+
+## JIT Compiler
+
+The **Just-In-Time Compiler** improves performance by compiling bytecode to native machine code at runtime.
+
+```text
+Interpret → Profile → Compile → Inline → Optimize
+```
+
+## Garbage Collection
+
+Java automates memory management via **Garbage Collection** (GC). Common GC algorithms include:
+
+- Serial GC
+- Parallel GC
+- G1 GC
+- ZGC
+
+> 💬 You can tune GC via JVM options like `-XX:+UseG1GC`
+
+## Conclusion
+
+Understanding JVM internals is crucial for writing efficient, scalable Java applications.
+
+> 🧠 **Remember**: What runs your code matters just as much as the code itself.
