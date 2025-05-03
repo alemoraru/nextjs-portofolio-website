@@ -67,6 +67,7 @@ Planned improvements and current/future features:
     - [X] Individual Work pages
     - [X] Blog post pages
     - [X] Project detail pages
+- [X] 👨🏻‍💻 MDX Syntax Highlighting for code blocks
 - [ ] 🌙 Add light/dark mode support
 - [ ] 🖼️ Add a Carousel component to display images/highlights of individual:
     - [ ] Project pages
