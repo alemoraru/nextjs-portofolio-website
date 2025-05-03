@@ -23,6 +23,13 @@ export const techStackMap: Record<string, string> = {
     'Azure': 'azure',
     'Redis': 'redis',
     'GraphQL': 'graphql',
+    'Docker': 'docker',
+    'Java': 'java',
+    'MySQL': 'mysql',
+    'Spring': 'spring',
+    'Spring Boot': 'spring',
+    'Git': 'git',
+    'GitLab': 'gitlab'
 }
 
 /**

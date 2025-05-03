@@ -26,6 +26,15 @@ const work = [
         description: 'Assisted in developing web applications using PHP and MySQL.',
         locations: ['Remote', 'San Francisco (Hybrid)'],
     },
+    {
+        slug: 'InternBossCorp',
+        company: 'CodeNest',
+        title: 'Software Engineer Intern',
+        start: 'Mar 2021',
+        end: 'Sep 2021',
+        description: 'Building Java applications and learning about cloud technologies.',
+        locations: ['Vienna', 'Austra']
+    }
 ]
 
 export default work
