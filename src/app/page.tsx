@@ -98,7 +98,7 @@ export default function Home() {
                 viewport={{once: true}}
                 className="mt-16"
             >
-                <ViewAllHeader title={"Recent Work"} pageUrl={"/work"}/>
+                <ViewAllHeader title="Recent Work" pageUrl="/work" itemCount={work.length}/>
                 <div className="grid gap-4">
                     {work.slice(0, 3).map((job, i) => (
                         <motion.div
@@ -122,7 +122,7 @@ export default function Home() {
                 viewport={{once: true}}
                 className="mt-16"
             >
-                <ViewAllHeader title={"Recent Projects"} pageUrl={"/projects"}/>
+                <ViewAllHeader title="Recent Projects" pageUrl="/projects" itemCount={projects.length}/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                     {projects.slice(0, 4).map((proj) => (
                         <motion.div
@@ -146,7 +146,7 @@ export default function Home() {
                 viewport={{once: true}}
                 className="mt-16 mb-12"
             >
-                <ViewAllHeader title={"Recent Blog Posts"} pageUrl={"/blog"}/>
+                <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length}/>
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                     {blog
                         .slice()
@@ -169,3 +169,4 @@ export default function Home() {
         </section>
     )
 }
+
