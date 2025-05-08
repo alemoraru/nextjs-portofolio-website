@@ -1,5 +1,5 @@
 import {useState, useRef, useEffect} from 'react';
-import {FaChevronDown, FaBroom} from 'react-icons/fa';
+import {FaChevronDown, FaBroom, FaCheck} from 'react-icons/fa';
 
 interface FilterDropdownProps {
     items: { name: string; count: number }[];
@@ -92,6 +92,9 @@ export default function FilterDropdown(
                                 <span
                                     className="block w-full h-full rounded border border-gray-400 dark:border-gray-500 peer-checked:bg-blue-600 peer-checked:border-blue-600 transition duration-200"
                                 ></span>
+                                <FaCheck
+                                    className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                                />
                             </span>
                             <span
                                 className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition"
@@ -121,4 +124,3 @@ export default function FilterDropdown(
         </div>
     );
 }
-
