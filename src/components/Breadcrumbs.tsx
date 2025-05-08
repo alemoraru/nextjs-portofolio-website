@@ -21,14 +21,14 @@ export default function Breadcrumbs() {
 
         return (
             <span key={href} className="flex items-center gap-1">
-        <span className="text-gray-500">/</span>
-        <Link href={href} className="hover:text-blue-400 transition-colors">{label}</Link>
-      </span>
+                <span className="text-gray-500">/</span>
+                <Link href={href} className="hover:text-blue-400 transition-colors">{label}</Link>
+            </span>
         )
     })
 
     return (
-        <div className="flex items-center gap-1 text-sm text-white">
+        <div className="flex items-center gap-1 text-lg text-white">
             <Link href="/" className="hover:text-blue-400 font-semibold">MyCV</Link>
             {crumbs}
         </div>
