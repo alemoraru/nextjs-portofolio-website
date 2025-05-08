@@ -76,10 +76,11 @@ export default function ProjectsPage() {
         };
     }, []);
 
+    // Memoized filtered projects based on selected tech stack and sort order
     const filteredProjects = useMemo(() => {
         const filtered = projects.filter(project =>
             selectedTechStack.length === 0 ||
-            (project.techStack && selectedTechStack.every(tech => project.techStack.includes(tech)))
+            (project.techStack && selectedTechStack.some(tech => project.techStack.includes(tech)))
         );
 
         return filtered.sort((a, b) => {
