@@ -66,7 +66,7 @@ export default function ProjectsPage() {
         <section className="px-4 max-w-4xl mx-auto">
             <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
 
-                {/* Tech Stack Filter Dropdown */}
+                {/* Tech Stack Filter Dropdown - Left */}
                 <div className="relative flex-grow md:flex-grow-0">
                     <FilterDropdown
                         items={uniqueTechStack.map(({tech, count}) => ({name: tech, count}))}
@@ -78,7 +78,7 @@ export default function ProjectsPage() {
                     />
                 </div>
 
-                {/* Sort Dropdown */}
+                {/* Sort Order Dropdown - Right */}
                 <div className="relative flex-grow md:flex-grow-0 z-20" ref={sortDropdownRef}>
                     <button
                         onClick={() => setIsSortDropdownOpen((prev) => !prev)}

@@ -62,7 +62,7 @@ export default function BlogPage() {
         <section className="px-4 max-w-4xl mx-auto">
             <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
 
-                {/* Tag Filter Dropdown - Left Aligned */}
+                {/* Tag Filter Dropdown - Left */}
                 <div className="relative flex-grow md:flex-grow-0">
                     <FilterDropdown
                         items={uniqueTags.map(({tag, count}) => ({name: tag, count}))}
@@ -74,7 +74,7 @@ export default function BlogPage() {
                     />
                 </div>
 
-                {/* Sort Dropdown - Right Aligned */}
+                {/* Sort Order Dropdown - Right */}
                 <div className="relative flex-grow md:flex-grow-0" ref={sortDropdownRef}>
                     <button
                         onClick={() => {
