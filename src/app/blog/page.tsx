@@ -45,31 +45,6 @@ export default function BlogPage() {
         setTagDrafts([]);
     };
 
-    // Handle outside click and Escape
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (
-                sortDropdownRef.current &&
-                !sortDropdownRef.current.contains(e.target as Node)
-            ) {
-                setIsSortDropdownOpen(false);
-            }
-        };
-
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                setIsSortDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleEscape);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleEscape);
-        };
-    }, []);
-
     const filteredPosts = useMemo(() => {
         return posts
             .filter(post =>
