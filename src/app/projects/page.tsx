@@ -1,11 +1,12 @@
 'use client';
 
-import {useState, useMemo, useRef, useEffect} from 'react';
-import {FaChevronDown, FaFrown} from 'react-icons/fa';
+import {useState, useMemo} from 'react';
+import {FaFrown} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
 import ProjectTile from '@/components/ProjectTile';
 import projects from '@/data/projects';
+import SortDropdown from '@/components/SortDropdown';
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.
@@ -15,8 +16,6 @@ export default function ProjectsPage() {
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
     const [techStackDrafts, setTechStackDrafts] = useState<string[]>([]);
     const [sortOrder, setSortOrder] = useState<'oldest' | 'newest'>('newest');
-    const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-    const sortDropdownRef = useRef<HTMLDivElement>(null);
 
     // Memoized unique tech stack list with counts to avoid recalculating on every render
     const uniqueTechStack = useMemo(() => {
@@ -79,44 +78,15 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Sort Order Dropdown - Right */}
-                <div className="relative flex-grow md:flex-grow-0 z-20" ref={sortDropdownRef}>
-                    <button
-                        onClick={() => setIsSortDropdownOpen((prev) => !prev)}
-                        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
-                        dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
-                    >
-                        <span>{sortOrder === 'newest' ? 'Newest First' : 'Oldest First'}</span>
-                        <FaChevronDown className="ml-2 text-sm"/>
-                    </button>
-
-                    <div
-                        className={
-                            "origin-top-right absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg text-sm z-50" +
-                            (isSortDropdownOpen
-                                ? " scale-y-100 opacity-100"
-                                : " scale-y-0 opacity-0 pointer-events-none")
-                        }
-                        style={{transformOrigin: 'top right'}}
-                    >
-                        <button
-                            onClick={() => {
-                                setSortOrder('newest');
-                                setIsSortDropdownOpen(false);
-                            }}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
-                        >
-                            Newest First
-                        </button>
-                        <button
-                            onClick={() => {
-                                setSortOrder('oldest');
-                                setIsSortDropdownOpen(false);
-                            }}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
-                        >
-                            Oldest First
-                        </button>
-                    </div>
+                <div className="relative flex-grow md:flex-grow-0 z-20">
+                    <SortDropdown
+                        sortOrder={sortOrder}
+                        onChange={(order) => setSortOrder(order as 'newest' | 'oldest')}
+                        options={[
+                            {label: 'Newest First', value: 'newest'},
+                            {label: 'Oldest First', value: 'oldest'},
+                        ]}
+                    />
                 </div>
             </div>
 

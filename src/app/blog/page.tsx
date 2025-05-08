@@ -6,6 +6,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
 import BlogPost from '@/components/BlogPost';
 import posts from '@/data/blog';
+import SortDropdown from '@/components/SortDropdown';
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.
@@ -75,47 +76,15 @@ export default function BlogPage() {
                 </div>
 
                 {/* Sort Order Dropdown - Right */}
-                <div className="relative flex-grow md:flex-grow-0" ref={sortDropdownRef}>
-                    <button
-                        onClick={() => {
-                            setIsSortDropdownOpen(prev => !prev);
-                        }}
-                        className="flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
-                    >
-                        <span>
-                            {sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}
-                        </span>
-                        <FaChevronDown className="ml-2 text-sm"/>
-                    </button>
-
-                    <div
-                        className={
-                            "origin-top transition-all duration-200 ease-out transform absolute z-10 mt-2 right-0 max-w-full w-44 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg text-sm" +
-                            (isSortDropdownOpen
-                                ? " scale-y-100 opacity-100"
-                                : " scale-y-0 opacity-0 pointer-events-none")
-                        }
-                        style={{transformOrigin: 'top'}}
-                    >
-                        <button
-                            onClick={() => {
-                                setSortOrder('desc');
-                                setIsSortDropdownOpen(false);
-                            }}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
-                        >
-                            Newest First
-                        </button>
-                        <button
-                            onClick={() => {
-                                setSortOrder('asc');
-                                setIsSortDropdownOpen(false);
-                            }}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
-                        >
-                            Oldest First
-                        </button>
-                    </div>
+                <div className="relative flex-grow md:flex-grow-0">
+                    <SortDropdown
+                        sortOrder={sortOrder}
+                        onChange={(order) => setSortOrder(order as 'asc' | 'desc')}
+                        options={[
+                            {label: 'Newest First', value: 'desc'},
+                            {label: 'Oldest First', value: 'asc'},
+                        ]}
+                    />
                 </div>
             </div>
 
