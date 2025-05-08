@@ -14,11 +14,8 @@ import projects from '@/data/projects';
 export default function ProjectsPage() {
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
     const [techStackDrafts, setTechStackDrafts] = useState<string[]>([]);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [sortOrder, setSortOrder] = useState<'oldest' | 'newest'>('newest');
     const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-
-    const dropdownRef = useRef<HTMLDivElement>(null);
     const sortDropdownRef = useRef<HTMLDivElement>(null);
 
     // Memoized unique tech stack list with counts to avoid recalculating on every render
@@ -42,21 +39,16 @@ export default function ProjectsPage() {
 
     const applyFilters = () => {
         setSelectedTechStack([...techStackDrafts]);
-        setIsDropdownOpen(false);
     };
 
     const clearFilters = () => {
         setSelectedTechStack([]);
         setTechStackDrafts([]);
-        setIsDropdownOpen(false);
     };
 
     // Effect to handle clicks outside the dropdowns and escape key
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-                setIsDropdownOpen(false);
-            }
             if (sortDropdownRef.current && !sortDropdownRef.current.contains(e.target as Node)) {
                 setIsSortDropdownOpen(false);
             }
@@ -64,7 +56,6 @@ export default function ProjectsPage() {
 
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setIsDropdownOpen(false);
                 setIsSortDropdownOpen(false);
             }
         };

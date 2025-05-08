@@ -15,11 +15,7 @@ export default function BlogPage() {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tagDrafts, setTagDrafts] = useState<string[]>([]);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-
-    const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
     const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-
-    const tagDropdownRef = useRef<HTMLDivElement>(null);
     const sortDropdownRef = useRef<HTMLDivElement>(null);
 
     const uniqueTags = useMemo(() => {
@@ -42,24 +38,16 @@ export default function BlogPage() {
 
     const applyFilters = () => {
         setSelectedTags([...tagDrafts]);
-        setIsTagDropdownOpen(false);
     };
 
     const clearFilters = () => {
         setSelectedTags([]);
         setTagDrafts([]);
-        setIsTagDropdownOpen(false);
     };
 
     // Handle outside click and Escape
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (
-                tagDropdownRef.current &&
-                !tagDropdownRef.current.contains(e.target as Node)
-            ) {
-                setIsTagDropdownOpen(false);
-            }
             if (
                 sortDropdownRef.current &&
                 !sortDropdownRef.current.contains(e.target as Node)
@@ -70,7 +58,6 @@ export default function BlogPage() {
 
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setIsTagDropdownOpen(false);
                 setIsSortDropdownOpen(false);
             }
         };
@@ -117,7 +104,6 @@ export default function BlogPage() {
                     <button
                         onClick={() => {
                             setIsSortDropdownOpen(prev => !prev);
-                            setIsTagDropdownOpen(false);
                         }}
                         className="flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
                     >
