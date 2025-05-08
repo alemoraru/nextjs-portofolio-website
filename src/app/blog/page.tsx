@@ -1,8 +1,9 @@
 'use client';
 
 import {useEffect, useState, useMemo, useRef} from 'react';
-import {FaBroom, FaChevronDown, FaFrown} from 'react-icons/fa';
+import {FaChevronDown, FaFrown} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
+import FilterDropdown from '@/components/FilterDropdown';
 import BlogPost from '@/components/BlogPost';
 import posts from '@/data/blog';
 
@@ -100,86 +101,15 @@ export default function BlogPage() {
             <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
 
                 {/* Tag Filter Dropdown - Left Aligned */}
-                <div className="relative flex-grow md:flex-grow-0" ref={tagDropdownRef}>
-                    <button
-                        onClick={() => {
-                            setIsTagDropdownOpen(prev => !prev);
-                            setIsSortDropdownOpen(false);
-                        }}
-                        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
-                        dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
-                    >
-                        <span className="truncate">
-                            {selectedTags.length === 0
-                                ? 'Filter by Tag'
-                                : `${selectedTags.length} Tag(s)`}
-                        </span>
-                        <FaChevronDown className="ml-2 text-sm"/>
-                    </button>
-
-                    <div
-                        className={
-                            "origin-top transition-all duration-200 ease-out transform absolute z-10 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 space-y-3" +
-                            (isTagDropdownOpen
-                                ? " scale-y-100 opacity-100"
-                                : " scale-y-0 opacity-0 pointer-events-none")
-                        }
-                        style={{transformOrigin: 'top'}}
-                    >
-                        <div className="max-h-48 overflow-y-auto">
-                            {uniqueTags.map(({tag, count}) => (
-                                <label
-                                    key={tag}
-                                    className="flex items-center space-x-3 cursor-pointer group py-1"
-                                >
-                                    <span className="relative inline-block w-5 h-5">
-                                        <input
-                                            type="checkbox"
-                                            checked={tagDrafts.includes(tag)}
-                                            onChange={() => toggleTagDraft(tag)}
-                                            className="peer absolute opacity-0 w-full h-full z-10 cursor-pointer"
-                                        />
-                                        <span
-                                            className="block w-full h-full rounded border border-gray-400 dark:border-gray-500 peer-checked:bg-blue-600 peer-checked:border-blue-600 transition duration-200"
-                                        ></span>
-                                        <svg
-                                            className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
-                                            viewBox="0 0 20 20"
-                                            fill="none"
-                                        >
-                                        <path
-                                            d="M6 10l3 3 6-6"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                      </svg>
-                                    </span>
-                                    <span
-                                        className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                                      {tag} <span className="text-gray-500">({count})</span>
-                                    </span>
-                                </label>
-                            ))}
-                        </div>
-                        <div className="flex justify-between items-center pt-2">
-                            <button
-                                onClick={applyFilters}
-                                className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"
-                            >
-                                Apply
-                            </button>
-                            <button
-                                onClick={clearFilters}
-                                className="flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 cursor-pointer"
-                                title="Clear filters"
-                            >
-                                <FaBroom className="mr-1"/>
-                                Clear
-                            </button>
-                        </div>
-                    </div>
+                <div className="relative flex-grow md:flex-grow-0">
+                    <FilterDropdown
+                        items={uniqueTags.map(({tag, count}) => ({name: tag, count}))}
+                        selectedItems={tagDrafts}
+                        onToggle={toggleTagDraft}
+                        onApply={applyFilters}
+                        onClear={clearFilters}
+                        placeholder="Filter by Tag"
+                    />
                 </div>
 
                 {/* Sort Dropdown - Right Aligned */}
@@ -263,7 +193,6 @@ export default function BlogPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
-
         </section>
     );
 }
