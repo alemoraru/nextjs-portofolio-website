@@ -22,9 +22,15 @@ export default function BlogPage() {
     const sortDropdownRef = useRef<HTMLDivElement>(null);
 
     const uniqueTags = useMemo(() => {
-        return Array.from(new Set(posts.flatMap(post => post.tags || []))).sort((a, b) =>
-            a.localeCompare(b)
-        );
+        const tagCounts: Record<string, number> = {};
+        posts.forEach(post => {
+            (post.tags || []).forEach(tag => {
+                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            });
+        });
+        return Object.entries(tagCounts)
+            .map(([tag, count]) => ({tag, count}))
+            .sort((a, b) => a.tag.localeCompare(b.tag));
     }, []);
 
     const toggleTagDraft = (tag: string) => {
@@ -80,7 +86,7 @@ export default function BlogPage() {
         return posts
             .filter(post =>
                 selectedTags.length === 0 ||
-                (post.tags && selectedTags.every(tag => post.tags.includes(tag)))
+                (post.tags && selectedTags.some(tag => post.tags.includes(tag)))
             )
             .sort((a, b) => {
                 const dateA = new Date(a.date || '').getTime();
@@ -100,7 +106,8 @@ export default function BlogPage() {
                             setIsTagDropdownOpen(prev => !prev);
                             setIsSortDropdownOpen(false);
                         }}
-                        className="flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
+                        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
+                        dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
                     >
                         <span className="truncate">
                             {selectedTags.length === 0
@@ -120,7 +127,7 @@ export default function BlogPage() {
                         style={{transformOrigin: 'top'}}
                     >
                         <div className="max-h-48 overflow-y-auto">
-                            {uniqueTags.map(tag => (
+                            {uniqueTags.map(({tag, count}) => (
                                 <label
                                     key={tag}
                                     className="flex items-center space-x-3 cursor-pointer group py-1"
@@ -151,7 +158,7 @@ export default function BlogPage() {
                                     </span>
                                     <span
                                         className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                                      {tag}
+                                      {tag} <span className="text-gray-500">({count})</span>
                                     </span>
                                 </label>
                             ))}
