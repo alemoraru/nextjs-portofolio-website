@@ -20,10 +20,17 @@ export default function ProjectsPage() {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const sortDropdownRef = useRef<HTMLDivElement>(null);
 
+    // Memoized unique tech stack list with counts to avoid recalculating on every render
     const uniqueTechStack = useMemo(() => {
-        return Array.from(new Set(projects.flatMap(project => project.techStack || []))).sort((a, b) =>
-            a.localeCompare(b)
-        );
+        const techStackCounts: Record<string, number> = {};
+        projects.forEach(project => {
+            (project.techStack || []).forEach(tech => {
+                techStackCounts[tech] = (techStackCounts[tech] || 0) + 1;
+            });
+        });
+        return Object.entries(techStackCounts)
+            .map(([tech, count]) => ({tech, count}))
+            .sort((a, b) => a.tech.localeCompare(b.tech));
     }, []);
 
     const toggleTechStackDraft = (tech: string) => {
@@ -43,6 +50,7 @@ export default function ProjectsPage() {
         setIsDropdownOpen(false);
     };
 
+    // Effect to handle clicks outside the dropdowns and escape key
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -91,7 +99,8 @@ export default function ProjectsPage() {
                 <div className="relative flex-grow md:flex-grow-0" ref={dropdownRef}>
                     <button
                         onClick={() => setIsDropdownOpen(prev => !prev)}
-                        className="flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
+                        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
+                        dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
                     >
                         <span className="truncate">
                             {selectedTechStack.length === 0
@@ -103,7 +112,8 @@ export default function ProjectsPage() {
 
                     <div
                         className={
-                            "origin-top transition-all duration-200 ease-out transform absolute z-10 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 space-y-3" +
+                            "origin-top transition-all duration-200 ease-out transform absolute z-10 mt-2 w-64 bg-white " +
+                            "dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 space-y-3" +
                             (isDropdownOpen
                                 ? " scale-y-100 opacity-100"
                                 : " scale-y-0 opacity-0 pointer-events-none")
@@ -111,7 +121,7 @@ export default function ProjectsPage() {
                         style={{transformOrigin: 'top'}}
                     >
                         <div className="max-h-48 overflow-y-auto">
-                            {uniqueTechStack.map(tech => (
+                            {uniqueTechStack.map(({tech, count}) => (
                                 <label
                                     key={tech}
                                     className="flex items-center space-x-3 cursor-pointer group py-1"
@@ -142,7 +152,7 @@ export default function ProjectsPage() {
                                     </span>
                                     <span
                                         className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                                        {tech}
+                                        {tech} ({count})
                                     </span>
                                 </label>
                             ))}
@@ -170,7 +180,8 @@ export default function ProjectsPage() {
                 <div className="relative flex-grow md:flex-grow-0 z-20" ref={sortDropdownRef}>
                     <button
                         onClick={() => setIsSortDropdownOpen((prev) => !prev)}
-                        className="flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
+                        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
+                        dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
                     >
                         <span>{sortOrder === 'newest' ? 'Newest First' : 'Oldest First'}</span>
                         <FaChevronDown className="ml-2 text-sm"/>
