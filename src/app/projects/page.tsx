@@ -153,7 +153,7 @@ export default function ProjectsPage() {
                                     </span>
                                     <span
                                         className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                                        {tech} ({count})
+                                        {tech} <span className="text-gray-500">({count})</span>
                                     </span>
                                 </label>
                             ))}
