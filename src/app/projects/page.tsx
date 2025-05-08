@@ -4,9 +4,9 @@ import {useState, useMemo} from 'react';
 import {FaFrown} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
+import SortDropdown from '@/components/SortDropdown';
 import ProjectTile from '@/components/ProjectTile';
 import projects from '@/data/projects';
-import SortDropdown from '@/components/SortDropdown';
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.
@@ -74,6 +74,7 @@ export default function ProjectsPage() {
                         onApply={applyFilters}
                         onClear={clearFilters}
                         placeholder="Filter by Tech"
+                        resultCount={filteredProjects.length}
                     />
                 </div>
 

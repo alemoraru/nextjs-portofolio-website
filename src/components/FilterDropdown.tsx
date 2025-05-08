@@ -8,6 +8,7 @@ interface FilterDropdownProps {
     onApply: () => void;
     onClear: () => void;
     placeholder: string;
+    resultCount: number;
 }
 
 /**
@@ -22,6 +23,7 @@ export default function FilterDropdown(
         onApply,
         onClear,
         placeholder,
+        resultCount,
     }: FilterDropdownProps) {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -59,12 +61,21 @@ export default function FilterDropdown(
             <button
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
                 className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
-                dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
+                dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 relative"
             >
                 <span className="truncate">
                     {selectedItems.length === 0 ? placeholder : `${selectedItems.length} Selected`}
                 </span>
                 <FaChevronDown className="ml-2 text-sm"/>
+                {resultCount > 0 && (
+                    <span
+                        className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white
+                        text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+                        title={`${resultCount} results`}
+                    >
+                        {resultCount}
+                    </span>
+                )}
             </button>
 
             <div

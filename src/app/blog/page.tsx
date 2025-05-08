@@ -1,12 +1,12 @@
 'use client';
 
-import {useEffect, useState, useMemo, useRef} from 'react';
-import {FaChevronDown, FaFrown} from 'react-icons/fa';
+import {useState, useMemo} from 'react';
+import {FaFrown} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
+import SortDropdown from '@/components/SortDropdown';
 import BlogPost from '@/components/BlogPost';
 import posts from '@/data/blog';
-import SortDropdown from '@/components/SortDropdown';
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.
@@ -16,8 +16,6 @@ export default function BlogPage() {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [tagDrafts, setTagDrafts] = useState<string[]>([]);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-    const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-    const sortDropdownRef = useRef<HTMLDivElement>(null);
 
     const uniqueTags = useMemo(() => {
         const tagCounts: Record<string, number> = {};
@@ -72,6 +70,7 @@ export default function BlogPage() {
                         onApply={applyFilters}
                         onClear={clearFilters}
                         placeholder="Filter by Tag"
+                        resultCount={filteredPosts.length}
                     />
                 </div>
 
