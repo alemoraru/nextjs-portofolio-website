@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {FaMoon, FaSun, FaBars, FaTimes} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const navItems = [
     {name: 'Home', path: '/'},
@@ -51,14 +52,7 @@ export default function Header() {
                 className="max-w-4xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">
 
                 {/* Left side: logo or current path */}
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 font-bold text-xl md:justify-start"
-                    onClick={() => window.scrollTo({top: 0, left: 0, behavior: 'smooth'})}
-                >
-                    <span className="hidden md:inline">MyCV/</span>
-                    <span className="md:hidden">MyCV{pathname}</span>
-                </Link>
+                <Breadcrumbs/>
 
                 {/* Center: Segmented navigation - Hidden on mobile */}
                 <nav className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
