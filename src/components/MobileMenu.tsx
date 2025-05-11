@@ -47,7 +47,7 @@ export default function MobileMenu({isOpen, setIsOpenAction}: {
                             href={path}
                             className={`block w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                                 pathname === path
-                                    ? 'bg-indigo-600 text-black dark:text-white'
+                                    ? 'bg-blue-500 dark:bg-blue-600 text-black dark:text-white'
                                     : 'text-black dark:text-white hover:bg-gray-800'
                             }`}
                             onClick={() => setIsOpenAction(false)}

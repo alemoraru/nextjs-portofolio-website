@@ -26,6 +26,27 @@ export const metadata: Metadata = {
         icon: '/icons/favicon.ico',
         shortcut: '/icons/favicon.ico',
         apple: '/icons/favicon.ico',
+    },
+    metadataBase: new URL('https://nextjs-portofolio-website.vercel.app'),
+    openGraph: {
+        title: 'My Developer Portfolio',
+        description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
+        url: 'https://nextjs-portofolio-website.vercel.app',
+        siteName: 'My Developer Portfolio',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'My Developer Portfolio',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'My Developer Portfolio',
+        description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
+        images: ['/og-image.png']
     }
 }
 
