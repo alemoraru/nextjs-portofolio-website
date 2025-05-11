@@ -39,7 +39,8 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                         duration: 0.4
                     }
                 }}
-                className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all text-black dark:text-white hover:border-blue-500 border-1"
+                className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all
+                text-black dark:text-white hover:border-blue-500 border-1"
             >
                 {/* Image */}
                 <div className="relative w-full h-48 overflow-hidden">
