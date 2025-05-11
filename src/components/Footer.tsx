@@ -61,7 +61,7 @@ export default function Footer() {
             </div>
 
             {/* Copyright section */}
-            <p className="text-xs sm:text-sm">© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+            <p className="text-xs sm:text-sm">© {new Date().getFullYear()} John Doe. All rights reserved.</p>
 
             {/* Display version & Link to GitHub Repo */}
             {/* You can update or remove this for your own template */}

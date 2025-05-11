@@ -34,7 +34,7 @@ export default function Home() {
             >
                 {/* Introductory Text */}
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                    Hi, I&#39;m Your Name 👋
+                    Hi, I&#39;m John Doe 👋
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-left mb-6">
                     I&#39;m a software engineer passionate about solving problems, building things, and reading sci-fi.
