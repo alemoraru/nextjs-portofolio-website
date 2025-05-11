@@ -39,7 +39,7 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                         duration: 0.4
                     }
                 }}
-                className="bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all text-white hover:border-blue-500 border-2"
+                className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all text-black dark:text-white hover:border-blue-500 border-1"
             >
                 {/* Image */}
                 <div className="relative w-full h-48 overflow-hidden">
@@ -58,7 +58,7 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
 
                 {/* Title with optional description */}
                 <div
-                    className="p-4 text-center font-semibold bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                    className="p-4 text-center font-semibold bg-gradient-to-t dark:from-black/80 dark:via-black/50 to-transparent">
                     {title}
                     {description && <span className="font-normal">: {description}</span>}
                 </div>

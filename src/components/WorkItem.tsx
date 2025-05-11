@@ -38,7 +38,7 @@ export default function WorkItem({slug, company, title, start, end, description,
                         duration: 0.4
                     }
                 }}
-                className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition cursor-pointerbg-white dark:bg-gray-900">
+                className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer">
                 <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">{title} @ {company}</h3>
 
                 {/* Duration and Locations */}
