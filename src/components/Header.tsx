@@ -92,7 +92,7 @@ export default function Header() {
                 <div className="flex items-center gap-4">
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
+                        className="p-2 rounded-full transition-colors cursor-pointer dark:hover:bg-gray-800 hover:bg-gray-200"
                         aria-label="Toggle Dark Mode"
                     >
                         {theme === 'dark' ? <FaSun/> : <FaMoon/>}
