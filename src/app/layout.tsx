@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'My Developer Portfolio',
+    title: 'Next.js Developer Portfolio Template',
     description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
     robots: {
         index: false,
@@ -29,22 +29,22 @@ export const metadata: Metadata = {
     },
     metadataBase: new URL('https://nextjs-portofolio-website.vercel.app'),
     openGraph: {
-        title: 'My Developer Portfolio',
+        title: 'Next.js Developer Portfolio Template',
         description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
         url: 'https://nextjs-portofolio-website.vercel.app',
-        siteName: 'My Developer Portfolio',
+        siteName: 'Next.js Developer Portfolio Template',
         images: [
             {
                 url: '/og-image.png',
                 width: 1200,
                 height: 630,
-                alt: 'My Developer Portfolio',
+                alt: 'Next.js Developer Portfolio Template'
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'My Developer Portfolio',
+        title: 'Next.js Developer Portfolio Template',
         description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
         images: ['/og-image.png']
     }
