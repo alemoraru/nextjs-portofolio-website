@@ -3,14 +3,12 @@
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {useEffect, useState} from 'react'
+import {navItems} from '@/lib/constants'
 
-const navItems = [
-    {name: 'Home', path: '/'},
-    {name: 'Work', path: '/work'},
-    {name: 'Projects', path: '/projects'},
-    {name: 'Blog', path: '/blog'}
-]
-
+/**
+ * NavigationMenu component that displays a horizontal navigation menu.
+ * This component is to be used in the header of the application on desktop devices.
+ */
 export default function NavigationMenu() {
     const pathname = usePathname()
     const [activeIndex, setActiveIndex] = useState(0)

@@ -1,42 +1,14 @@
 'use client'
 
-import Link from 'next/link'
-import {usePathname} from 'next/navigation'
-import {FaMoon, FaSun, FaBars, FaTimes} from 'react-icons/fa'
-import {useState, useEffect, useRef} from 'react'
+import {useState} from 'react'
 import Breadcrumbs from "@/components/Breadcrumbs";
-import {useTheme} from "@/hooks/useTheme";
 import NavigationMenu from "@/components/NavigationMenu";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 import MobileMenuToggle from "@/components/MobileMenuToggle";
-
-const navItems = [
-    {name: 'Home', path: '/'},
-    {name: 'Work', path: '/work'},
-    {name: 'Projects', path: '/projects'},
-    {name: 'Blog', path: '/blog'}
-]
+import MobileMenu from "@/components/MobileMenu";
 
 export default function Header() {
-    const pathname = usePathname()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const menuRef = useRef<HTMLDivElement | null>(null)
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setMobileMenuOpen(false)
-            }
-        }
-        if (mobileMenuOpen) {
-            document.addEventListener('mousedown', handleClickOutside)
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-    }, [mobileMenuOpen])
 
     return (
         <header
@@ -67,31 +39,7 @@ export default function Header() {
             </div>
 
             {/* Mobile Menu */}
-            <div
-                ref={menuRef}
-                className={`md:hidden px-4 overflow-hidden transition-all duration-300 ease-in-out ${
-                    mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-            >
-                <ul className="flex flex-col gap-2 mt-2">
-                    {navItems.map(({name, path}) => (
-                        <li key={name}>
-                            <Link
-                                href={path}
-                                className={`block w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                                    pathname === path
-                                        ? 'bg-indigo-600 text-black dark:text-white'
-                                        : 'text-black dark:text-white hover:bg-gray-800'
-                                }`}
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                {name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <MobileMenu isOpen={mobileMenuOpen} setIsOpenAction={setMobileMenuOpen}/>
         </header>
     )
 }
-

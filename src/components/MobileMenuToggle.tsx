@@ -2,6 +2,9 @@
 
 import {FaBars, FaTimes} from 'react-icons/fa'
 
+/**
+ * A functional component that renders a mobile menu toggle button with an icon.
+ */
 export default function MobileMenuToggle({isOpen, onToggleAction}: {
     isOpen: boolean,
     onToggleAction: () => void
