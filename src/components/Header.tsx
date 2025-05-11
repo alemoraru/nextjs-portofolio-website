@@ -7,6 +7,7 @@ import {useState, useEffect, useRef} from 'react'
 import Breadcrumbs from "@/components/Breadcrumbs";
 import {useTheme} from "@/hooks/useTheme";
 import NavigationMenu from "@/components/NavigationMenu";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
 
 const navItems = [
     {name: 'Home', path: '/'},
@@ -19,11 +20,6 @@ export default function Header() {
     const pathname = usePathname()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
-    const [theme, setTheme] = useTheme()
-
-    const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark')
-    }
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -58,13 +54,8 @@ export default function Header() {
 
                 {/* Right side: Theme toggle + Mobile Menu Toggle */}
                 <div className="flex items-center gap-4">
-                    <button
-                        onClick={toggleTheme}
-                        className="p-2 rounded-full transition-colors cursor-pointer dark:hover:bg-gray-800 hover:bg-gray-200"
-                        aria-label="Toggle Dark Mode"
-                    >
-                        {theme === 'dark' ? <FaSun/> : <FaMoon/>}
-                    </button>
+                    {/* Theme toggle button */}
+                    <ThemeToggleButton/>
 
                     {/* Hamburger menu toggle */}
                     <button
