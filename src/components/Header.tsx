@@ -5,6 +5,7 @@ import {usePathname} from 'next/navigation'
 import {FaMoon, FaSun, FaBars, FaTimes} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 import Breadcrumbs from "@/components/Breadcrumbs";
+import {useTheme} from "@/hooks/useTheme";
 
 const navItems = [
     {name: 'Home', path: '/'},
@@ -18,6 +19,11 @@ export default function Header() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
+    const [theme, setTheme] = useTheme()
+
+    const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark')
+    }
 
     useEffect(() => {
         const index = navItems.findIndex(({path}) =>
@@ -45,7 +51,7 @@ export default function Header() {
     return (
         <header
             id="headerPortfolio"
-            className="sticky top-0 z-50 w-full bg-black text-white dark:bg-black transition-colors
+            className="sticky top-0 z-50 w-full bg-white text-black dark:bg-black dark:text-white transition-colors
             border-b border-gray-800 opacity-95"
         >
             <div
@@ -71,7 +77,7 @@ export default function Header() {
                                     <Link
                                         href={path}
                                         className={`px-4 py-2 rounded-full text-sm font-medium text-center transition-all ${
-                                            isActive ? 'text-white' : 'text-white hover:bg-gray-800'
+                                            isActive ? 'text-black dark:text-white' : 'text-black dark:text-white dark:hover:bg-gray-800 hover:bg-gray-200'
                                         }`}
                                     >
                                         {name}
@@ -85,11 +91,11 @@ export default function Header() {
                 {/* Right side: Theme toggle + Mobile Menu Toggle */}
                 <div className="flex items-center gap-4">
                     <button
-                        onClick={() => true}
-                        className="p-2 rounded-full hover:bg-gray-800 transition-colors"
+                        onClick={toggleTheme}
+                        className="p-2 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
                         aria-label="Toggle Dark Mode"
                     >
-                        {'dark' === 'dark' ? <FaSun/> : <FaMoon/>}
+                        {theme === 'dark' ? <FaSun/> : <FaMoon/>}
                     </button>
 
                     {/* Hamburger menu toggle */}
@@ -123,8 +129,8 @@ export default function Header() {
                                 href={path}
                                 className={`block w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                                     pathname === path
-                                        ? 'bg-indigo-600 text-white'
-                                        : 'text-white hover:bg-gray-800'
+                                        ? 'bg-indigo-600 text-black dark:text-white'
+                                        : 'text-black dark:text-white hover:bg-gray-800'
                                 }`}
                                 onClick={() => setMobileMenuOpen(false)}
                             >
