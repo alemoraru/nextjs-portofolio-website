@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import {useTheme} from "@/hooks/useTheme";
 import NavigationMenu from "@/components/NavigationMenu";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
+import MobileMenuToggle from "@/components/MobileMenuToggle";
 
 const navItems = [
     {name: 'Home', path: '/'},
@@ -57,20 +58,11 @@ export default function Header() {
                     {/* Theme toggle button */}
                     <ThemeToggleButton/>
 
-                    {/* Hamburger menu toggle */}
-                    <button
-                        className="md:hidden p-2 rounded-full hover:bg-gray-800 transition-colors"
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        aria-label="Toggle Navigation Menu"
-                    >
-                      <span
-                          className={`inline-block transform transition-transform duration-300 ease-in-out ${
-                              mobileMenuOpen ? 'rotate-90' : 'rotate-0'
-                          }`}
-                      >
-                        {mobileMenuOpen ? <FaTimes/> : <FaBars/>}
-                      </span>
-                    </button>
+                    {/* Hamburger Mobile Menu toggle */}
+                    <MobileMenuToggle
+                        isOpen={mobileMenuOpen}
+                        onToggleAction={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    />
                 </div>
             </div>
 
