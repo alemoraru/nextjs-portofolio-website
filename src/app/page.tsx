@@ -98,7 +98,7 @@ export default function Home() {
                 viewport={{once: true}}
                 className="mt-16"
             >
-                <ViewAllHeader title="Recent Work Experience" pageUrl="/work" itemCount={work.length}/>
+                <ViewAllHeader title="Work Experience" pageUrl="/work" itemCount={work.length}/>
                 <div className="grid gap-4">
                     {work.slice(0, 3).map((job, i) => (
                         <motion.div
@@ -154,7 +154,7 @@ export default function Home() {
                         .slice(0, 3)
                         .map((post) => (
                             <motion.div
-                                key={post.slug} // Use a unique key instead of index
+                                key={post.slug}
                                 initial={{opacity: 0, y: 20}}
                                 whileInView={{opacity: 1, y: 0}}
                                 transition={{duration: 1}}
