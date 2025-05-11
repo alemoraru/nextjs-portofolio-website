@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'MyPortfolio',
+    title: 'My Developer Portfolio',
     description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
     robots: {
         index: false,
@@ -29,9 +29,26 @@ export const metadata: Metadata = {
     }
 }
 
+// This script initializes the theme based on user preference or saved settings
+// And is used to avoid FOUC (Flash of Unstyled Content) on the initial load
+const themeInitScript = `
+(function() {
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.classList.add(theme);
+    if (theme === 'dark') document.documentElement.classList.add('dark');
+  } catch(e) {}
+})();`
+
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html lang="en">
+        <head>
+            <script dangerouslySetInnerHTML={{__html: themeInitScript}}/>
+            <title>My Developer Portfolio</title>
+        </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-white 
         text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}>
 
