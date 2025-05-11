@@ -44,14 +44,15 @@ const themeInitScript = `
 
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
         <head>
             <script dangerouslySetInnerHTML={{__html: themeInitScript}}/>
             <title>My Developer Portfolio</title>
         </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-white 
-        text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}>
-
+        <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased flex 
+            flex-col min-h-screen transition-colors`}
+        >
         {/* Dot Background Layer */}
         <div
             className={`
