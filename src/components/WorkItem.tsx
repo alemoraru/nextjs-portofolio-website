@@ -30,7 +30,6 @@ export default function WorkItem({slug, company, title, start, end, description,
                 }}
                 whileHover={{
                     scale: 1.05,
-                    filter: 'brightness(1.15)',
                     transition: {
                         type: "spring",
                         stiffness: 200,

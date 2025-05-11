@@ -27,7 +27,6 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
                 }}
                 whileHover={{
                     scale: 1.05,
-                    filter: 'brightness(1.15)',
                     transition: {
                         type: "spring",
                         stiffness: 200,
@@ -35,7 +34,8 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
                         duration: 0.4
                     }
                 }}
-                className="group border rounded-xl p-4 shadow-sm hover:border-blue-500 hover:shadow-md transition-all duration-300 cursor-pointer bg-gray-100 dark:bg-gray-900"
+                className="group border rounded-xl p-4 shadow-sm hover:border-blue-500 hover:shadow-md transition-all
+                duration-300 cursor-pointer bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800"
             >
                 {/* Title */}
                 <h3 className="text-lg font-semibold text-black dark:text-white group-hover:text-blue-500 transition-colors">
@@ -60,7 +60,8 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
                         {tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="flex items-center text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-2 py-1 rounded-full"
+                                className="flex items-center text-xs bg-blue-100 text-blue-700 dark:bg-blue-900
+                                dark:text-blue-300 px-2 py-1 rounded-full group-hover:bg-blue-200 dark:hover:bg-blue-900 transition duration-300"
                             >
                                 <FaTag className="w-3 h-3 mr-1"/>
                                 {tag}

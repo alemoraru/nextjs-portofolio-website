@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import {FaGithub, FaLinkedin, FaGoodreads, FaEnvelope, FaInstagram, FaTwitter, FaReddit} from 'react-icons/fa'
+import {FaGithub, FaLinkedin, FaGoodreads, FaEnvelope, FaInstagram, FaReddit} from 'react-icons/fa'
+import {FaXTwitter} from "react-icons/fa6";
 import {appVersion} from "@/lib/constants";
 
 export default function Footer() {
@@ -37,10 +38,10 @@ export default function Footer() {
                 </Link>
                 <Link
                     href="/"
-                    aria-label="Twitter"
+                    aria-label="X"
                     className="hover:text-blue-500 transition-transform hover:scale-125 duration-200"
                 >
-                    <FaTwitter/>
+                    <FaXTwitter/>
                 </Link>
                 <Link
                     href="/"
