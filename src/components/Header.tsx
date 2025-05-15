@@ -14,7 +14,7 @@ export default function Header() {
         <header
             id="headerPortfolio"
             className="sticky top-0 z-50 w-full bg-gray-50 text-black dark:bg-black dark:text-white transition-colors
-            border-b border-gray-800 dark:opacity-95"
+            border-b dark:border-gray-800 dark:opacity-95 border-gray-300 backdrop-blur-sm shadow-md"
         >
             <div
                 className="max-w-4xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">

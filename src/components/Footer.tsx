@@ -6,7 +6,10 @@ import {appVersion} from "@/lib/constants";
 export default function Footer() {
 
     return (
-        <footer className="border-t mt-10 py-6 text-center text-sm text-gray-500 px-4 border-gray-800">
+        <footer
+            className="mt-4 py-6 text-center text-sm text-gray-500 px-4 border-t dark:border-gray-800 border-gray-300"
+            id="footerPortfolio"
+        >
             <div className="flex justify-center gap-6 mb-2 text-lg">
                 <Link
                     href="/"
@@ -74,7 +77,7 @@ export default function Footer() {
                         v{appVersion}
                     </span>
                 </Link>
-                &nbsp; built by &nbsp;
+                &nbsp;built by&nbsp;
                 <Link href="https://github.com/alemoraru" rel="noopener noreferrer">
                     <span
                         className="font-semibold hover:text-blue-500 transition-colors duration-200"
