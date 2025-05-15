@@ -39,7 +39,7 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                         duration: 0.4
                     }
                 }}
-                className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all
+                className="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all
                 text-black dark:text-white hover:border-blue-500 border-1"
             >
                 {/* Image */}
@@ -52,14 +52,14 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
                         className="object-cover"
                     />
                     <div
-                        className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        className="absolute inset-0 bg-zinc-900/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="text-white text-lg font-semibold">Explore {title} ➔</span>
                     </div>
                 </div>
 
                 {/* Title with optional description */}
                 <div
-                    className="p-4 text-center font-semibold bg-gradient-to-t dark:from-black/80 dark:via-black/50 to-transparent">
+                    className="p-4 text-center font-semibold bg-gradient-to-t dark:from-zinc-900/80 dark:via-zinc-900/50 to-transparent">
                     {title}
                     {description && <span className="font-normal">: {description}</span>}
                 </div>
