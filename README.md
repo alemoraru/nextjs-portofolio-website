@@ -50,9 +50,6 @@ bun dev
 Once the server is running, open [http://localhost:3000](http://localhost:3000) in your browser to view the
 homepage.
 
-The project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to
-load [Geist](https://vercel.com/font), a modern, legible typeface by Vercel.
-
 ---
 
 ## 🧭 Roadmap
@@ -87,7 +84,6 @@ Planned improvements and current/future features:
     - [X] Blog posts
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
-    - [ ] Font options
     - [ ] Layout options
 
 ---
@@ -128,8 +124,6 @@ This project uses:
 - ⚛️ [Next.js](https://nextjs.org) – React-based framework
 - 💅 [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
 - 🧱 [TypeScript](https://www.typescriptlang.org) – Static typing
-- 🔤 [next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) – Font optimization
-  with [Geist](https://vercel.com/font)
 
 ---
 
