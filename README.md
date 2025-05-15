@@ -1,7 +1,7 @@
 # Next.js Personal Website Theme
 
-This is a custom personal website theme built using [Next.js](https://nextjs.org), bootstrapped with [
-`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It’s designed as a minimal,
+This is a custom personal website theme built using [Next.js](https://nextjs.org), bootstrapped with 
+[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It’s designed as a minimal,
 performance-focused starting point for showcasing your **work**, **writing**, and **projects**.
 
 > **Note:** This theme is generally aimed at developers and designers who want to create a personal website
@@ -15,7 +15,7 @@ performance-focused starting point for showcasing your **work**, **writing**, an
 
 ![Screenshot Pages Desktop](public/homepage-screenshot-desktop.png)
 
-![Screenshot Pages Phone](public/pages-screenshots-phone.png)
+![Screenshot Pages Phone](public/pages-screenshots-mobile.png)
 
 ---
 
