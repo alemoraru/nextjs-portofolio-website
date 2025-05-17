@@ -1,6 +1,6 @@
 # Next.js Personal Website Theme
 
-This is a custom personal website theme built using [Next.js](https://nextjs.org), bootstrapped with 
+This is a custom personal website theme built using [Next.js](https://nextjs.org), bootstrapped with
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It’s designed as a minimal,
 performance-focused starting point for showcasing your **work**, **writing**, and **projects**.
 
@@ -75,7 +75,7 @@ Planned improvements and current/future features:
     - [ ] Project pages
     - [ ] Work Items
     - [ ] Blog posts
-- [ ] 🔍 Improve content structure, accessibility, and SEO
+- [X] 🔍 Improve content structure, accessibility, and SEO
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 - [X] 🔢 Add sorting/filtering functionality for:
@@ -85,6 +85,9 @@ Planned improvements and current/future features:
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
     - [ ] Layout options
+- [ ] 📄 Add recommended similar blog posts items to the bottom of each blog post
+- [ ] 📄 Add blog post categories pages
+- [ ] 📄 Add pagination to blog posts
 
 ---
 
