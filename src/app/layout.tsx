@@ -13,10 +13,6 @@ const gabarito = Gabarito({
 export const metadata: Metadata = {
     title: 'Next.js Developer Portfolio Template',
     description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
-    robots: {
-        index: false,
-        follow: false
-    },
     icons: {
         icon: '/icons/favicon.ico',
         shortcut: '/icons/favicon.ico',
