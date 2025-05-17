@@ -13,7 +13,7 @@ export default function Header() {
     return (
         <header
             id="headerPortfolio"
-            className="sticky top-0 z-50 w-full bg-zinc-50 text-black dark:bg-zinc-900 dark:text-white transition-colors
+            className="sticky top-0 z-50 w-full bg-zinc-50 text-black dark:bg-black dark:text-white transition-colors
             border-b dark:border-gray-800 border-gray-300 backdrop-blur-sm shadow-md"
         >
             <div

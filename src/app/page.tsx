@@ -30,7 +30,7 @@ export default function Home() {
                 whileInView={{opacity: 1, y: 0}}
                 transition={{duration: 1}}
                 viewport={{once: true}}
-                className="text-center mt-10"
+                className="text-center mt-2"
             >
                 {/* Introductory Text */}
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
