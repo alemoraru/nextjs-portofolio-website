@@ -125,9 +125,8 @@ export default function BlogPage() {
                     <motion.div
                         key="no-results"
                         className="flex flex-col items-center text-center text-gray-600 dark:text-gray-300 mt-12 px-4"
-                        initial={{opacity: 0, y: 10}}
-                        animate={{opacity: 1, y: 0}}
-                        exit={{opacity: 0, y: 10}}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
                         transition={{duration: 0.3, ease: 'easeOut'}}
                     >
                         <FaFrown className="text-4xl md:text-5xl mb-3 text-gray-400 dark:text-gray-500"/>

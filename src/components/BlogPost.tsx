@@ -19,11 +19,10 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
     return (
         <Link href={`/blog/${slug}`}>
             <motion.div
-                initial={{opacity: 0, y: 30}}
-                animate={{opacity: 1, y: 0}}
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
                 transition={{
                     opacity: {duration: 0.8},
-                    y: {type: "spring", stiffness: 100, damping: 25}
                 }}
                 whileHover={{
                     scale: 1.05,
