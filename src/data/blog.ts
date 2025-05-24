@@ -68,6 +68,34 @@ const posts = [
         summary: 'Take a deep dive into the architecture and components of the Java Virtual Machine.',
         date: '2022-02-20',
         tags: ['java', 'jvm', 'internals', 'performance']
+    },
+    {
+        slug: 'post11',
+        title: 'System Design Fundamentals',
+        summary: 'Explore the core principles and patterns of system design for scalable, reliable applications.',
+        date: '2022-03-01',
+        tags: ['system design', 'architecture', 'scalability', 'reliability']
+    },
+    {
+        slug: 'post12',
+        title: 'Load Balancers: Deep Dive',
+        summary: 'Understand load balancers, their types, drawbacks, implementation, and how they differ from reverse proxies.',
+        date: '2022-03-10',
+        tags: ['load balancer', 'reverse proxy', 'networking', 'system design']
+    },
+    {
+        slug: 'post13',
+        title: 'SQL vs NoSQL: Trade-offs and Applications',
+        summary: 'Explore the differences, trade-offs, and use cases for SQL and NoSQL databases.',
+        date: '2022-03-20',
+        tags: ['sql', 'nosql', 'databases', 'system design']
+    },
+    {
+        slug: 'post14',
+        title: 'Caching in System Design: Redis, Memcached, and More',
+        summary: 'Learn about caching strategies, tools like Redis and Memcached, and their role in scalable system design.',
+        date: '2022-03-30',
+        tags: ['caching', 'redis', 'memcached', 'performance', 'system design']
     }
 ]
 

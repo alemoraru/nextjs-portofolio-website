@@ -1,0 +1,109 @@
+---
+title: "Load Balancers: Deep Dive"
+summary: "Understand load balancers, their types, drawbacks, implementation, and how they differ from reverse proxies."
+date: "2022-03-10"
+tags:
+  - Load Balancer
+  - Reverse Proxy
+  - Networking
+  - System Design
+---
+
+# Load Balancers: Deep Dive
+
+A **load balancer** is a critical component in modern distributed systems, responsible for distributing incoming network traffic across multiple servers to ensure reliability, performance, and scalability.
+
+## Why Use a Load Balancer?
+
+- **High Availability**: Prevents a single server from becoming a point of failure.
+- **Scalability**: Allows you to add or remove servers as demand changes.
+- **Performance**: Distributes requests to avoid overloading any single server.
+- **Security**: Can hide internal server details and provide SSL termination.
+
+## Types of Load Balancers
+
+### 1. Layer 4 (Transport Layer)
+- Operates at the TCP/UDP level.
+- Routes traffic based on IP address and port.
+- Examples: AWS Network Load Balancer, HAProxy (TCP mode).
+
+### 2. Layer 7 (Application Layer)
+- Operates at the HTTP/HTTPS level.
+- Can make routing decisions based on URL, headers, cookies, etc.
+- Examples: NGINX, AWS Application Load Balancer, Traefik.
+
+## Load Balancing Algorithms
+
+- **Round Robin**: Distributes requests sequentially across servers.
+- **Least Connections**: Sends traffic to the server with the fewest active connections.
+- **IP Hash**: Routes requests based on client IP, useful for session persistence.
+- **Weighted Round Robin**: Assigns more traffic to more powerful servers.
+
+## Health Checks
+
+Load balancers regularly check the health of backend servers. If a server fails, it is temporarily removed from the pool until it recovers.
+
+## Drawbacks and Challenges
+
+- **Single Point of Failure**: If the load balancer itself fails, the whole system can go down. Use multiple load balancers and DNS failover for redundancy.
+- **Complexity**: Adds configuration and operational overhead.
+- **Latency**: Introduces an extra network hop, which can add slight delays.
+- **Cost**: Managed load balancers (cloud) can be expensive at scale.
+
+## Implementation Example: NGINX as a Load Balancer
+
+```nginx
+http {
+  upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+  }
+  server {
+    listen 80;
+    location / {
+      proxy_pass http://backend;
+    }
+  }
+}
+```
+
+## Load Balancer vs Reverse Proxy
+
+- **Load Balancer**: Distributes traffic across multiple backend servers, often for scaling and redundancy.
+- **Reverse Proxy**: Forwards client requests to one or more backend servers, often for caching, SSL termination, or security. Can also act as a load balancer.
+- **Overlap**: Many tools (e.g., NGINX, HAProxy) can serve as both.
+
+### Key Differences
+- **Purpose**: Load balancer focuses on distribution; reverse proxy focuses on abstraction and security.
+- **Session Persistence**: Load balancers may need sticky sessions; reverse proxies often do not.
+
+## Advanced Topics
+
+### Global Load Balancing
+- Use DNS-based or Anycast routing to distribute traffic across regions or data centers.
+
+### SSL Termination
+- Offload SSL decryption at the load balancer to reduce backend server load.
+
+### Autoscaling
+- Integrate with orchestration tools (Kubernetes, AWS ASG) to automatically add/remove backend servers.
+
+## Best Practices
+
+- Always deploy at least two load balancers for redundancy.
+- Monitor health and performance metrics.
+- Use configuration management for reproducible setups.
+- Regularly test failover and recovery scenarios.
+
+## Real-World Example: E-commerce Platform
+
+- **User Traffic**: Hits DNS, routed to the nearest load balancer.
+- **Load Balancer**: Distributes requests to web servers.
+- **Web Servers**: Communicate with application and database layers.
+- **Failover**: If a web server or load balancer fails, traffic is rerouted automatically.
+
+## Conclusion
+
+Load balancers are essential for building robust, scalable, and high-performance systems. Understanding their types, algorithms, and best practices is key to designing resilient architectures.
+
+> 🧠 **Remember**: Always avoid single points of failure and plan for growth and failure from day one.

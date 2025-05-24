@@ -1,0 +1,96 @@
+---
+title: "Caching in System Design: Redis, Memcached, and More"
+summary: "Learn about caching strategies, tools like Redis and Memcached, and their role in scalable system design."
+date: "2022-03-30"
+tags:
+  - Caching
+  - Redis
+  - Memcached
+  - Performance
+  - System Design
+---
+
+# Caching in System Design: Redis, Memcached, and More
+
+Caching is a technique to store frequently accessed data in a fast storage layer to reduce latency and load on primary databases. Effective caching can dramatically improve system performance and scalability.
+
+## Why Cache?
+
+- **Reduce Latency**: Serve data faster by avoiding slow database or API calls.
+- **Decrease Load**: Offload backend databases and services.
+- **Improve Scalability**: Handle more requests efficiently with the same infrastructure.
+- **Enhance User Experience**: Faster response times lead to happier users.
+
+## Common Caching Strategies
+
+- **Read-Through**: Application reads from cache first; if not found, loads from database and populates cache.
+- **Write-Through**: Writes go to cache and database simultaneously, keeping them in sync.
+- **Write-Back (Write-Behind)**: Writes go to cache and are asynchronously written to the database.
+- **Cache Aside (Lazy Loading)**: Application manages cache population and invalidation explicitly.
+- **Time-to-Live (TTL)**: Cached data expires after a set period.
+
+## Tools: Redis vs Memcached
+
+| Feature      | Redis         | Memcached     |
+|--------------|--------------|--------------|
+| Data Types   | Strings, Lists, Sets, Hashes | Strings only |
+| Persistence  | Yes          | No           |
+| Replication  | Yes          | No           |
+| Pub/Sub      | Yes          | No           |
+| Use Cases    | Sessions, Queues, Leaderboards | Simple cache |
+| Scripting    | Lua scripts  | No           |
+
+### Redis
+- In-memory data structure store with persistence options.
+- Supports advanced data types and atomic operations.
+- Can be used for caching, pub/sub, queues, rate limiting, and more.
+
+### Memcached
+- Simple, high-performance, distributed memory object caching system.
+- Focused on speed and simplicity.
+- No persistence or advanced data types.
+
+## Example: Redis Caching in Python
+
+```python
+import redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+r.set('key', 'value', ex=60)  # Set with 60s TTL
+print(r.get('key'))
+```
+
+## Drawbacks and Considerations
+
+- **Stale Data**: Cached data may become outdated if not invalidated properly.
+- **Cache Invalidation**: One of the hardest problems in computer science. Strategies include TTL, explicit invalidation, and event-driven updates.
+- **Memory Limits**: Caches are typically in-memory and limited by available RAM.
+- **Consistency**: Risk of serving outdated or inconsistent data.
+- **Cold Starts**: Cache misses can cause spikes in backend load.
+
+## Beyond Redis/Memcached
+
+- **CDNs (Content Delivery Networks)**: Cache static assets closer to users for faster delivery.
+- **Local Caching**: In-process memory for ultra-fast access (e.g., LRU caches in application code).
+- **Distributed Caching**: Share cache across multiple servers for consistency and scalability.
+- **Hybrid Approaches**: Combine local, distributed, and CDN caching for optimal performance.
+
+## Real-World Use Cases
+
+- **Web Applications**: Cache rendered HTML, API responses, or session data.
+- **E-commerce**: Cache product details, inventory, and pricing.
+- **Social Media**: Cache user profiles, timelines, and trending topics.
+- **Analytics**: Cache query results and dashboards.
+
+## Best Practices
+
+- Cache only what is expensive to compute or fetch.
+- Set appropriate TTLs to balance freshness and performance.
+- Monitor cache hit/miss rates and adjust strategies as needed.
+- Plan for cache failures—always have a fallback to the source of truth.
+- Secure your cache (authentication, network restrictions).
+
+## Conclusion
+
+Caching is vital for high-performance systems, but must be used judiciously to avoid consistency issues and stale data. A well-designed caching strategy can be the difference between a sluggish app and a lightning-fast user experience.
+
+> 💡 **Remember**: Always plan for cache invalidation and data consistency. Test your caching strategy under real-world conditions.
