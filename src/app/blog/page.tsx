@@ -17,6 +17,7 @@ export default function BlogPage() {
     const [tagDrafts, setTagDrafts] = useState<string[]>([]);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
+    // Determines the set of unique blog post tags and their count
     const uniqueTags = useMemo(() => {
         const tagCounts: Record<string, number> = {};
         posts.forEach(post => {
@@ -29,21 +30,25 @@ export default function BlogPage() {
             .sort((a, b) => a.tag.localeCompare(b.tag));
     }, []);
 
+    // Function to toggle a tag in the draft state
     const toggleTagDraft = (tag: string) => {
         setTagDrafts(prev =>
             prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
         );
     };
 
+    // Function to apply the selected tags as filters
     const applyFilters = () => {
         setSelectedTags([...tagDrafts]);
     };
 
+    // Function to clear all selected filters
     const clearFilters = () => {
         setSelectedTags([]);
         setTagDrafts([]);
     };
 
+    // Filter and sort the posts based on selected tags and sort order
     const filteredPosts = useMemo(() => {
         return posts
             .filter(post =>
