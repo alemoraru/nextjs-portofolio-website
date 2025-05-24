@@ -7,6 +7,9 @@ import ThemeToggleButton from "@/components/ThemeToggleButton";
 import MobileMenuToggle from "@/components/MobileMenuToggle";
 import MobileMenu from "@/components/MobileMenu";
 
+/**
+ * Header component that serves as the top navigation bar for the portfolio.
+ */
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
