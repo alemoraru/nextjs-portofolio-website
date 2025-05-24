@@ -21,9 +21,7 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
             <motion.div
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
-                transition={{
-                    opacity: {duration: 0.8},
-                }}
+                transition={{opacity: {duration: 0.8}}}
                 whileHover={{
                     scale: 1.05,
                     transition: {
