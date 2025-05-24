@@ -87,7 +87,7 @@ Planned improvements and current/future features:
     - [ ] Layout options
 - [ ] 📄 Add recommended similar blog posts items to the bottom of each blog post
 - [ ] 📄 Add blog post categories pages
-- [ ] 📄 Add pagination to blog posts
+- [X] 📄 Add pagination to blog posts
 
 ---
 
