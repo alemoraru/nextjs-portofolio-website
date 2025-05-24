@@ -23,12 +23,9 @@ export default function ProjectTile({slug, title, image, description}: ProjectTi
     return (
         <Link href={`/projects/${slug}`} className="block group">
             <motion.div
-                initial={{opacity: 0, y: 30}}
-                animate={{opacity: 1, y: 0}}
-                transition={{
-                    opacity: {duration: 0.8},
-                    y: {type: "spring", stiffness: 100, damping: 25}
-                }}
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                transition={{opacity: {duration: 0.8}}}
                 whileHover={{
                     scale: 1.05,
                     filter: 'brightness(1.15)',
