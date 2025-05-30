@@ -3,14 +3,7 @@
 import Link from 'next/link'
 import {motion} from 'framer-motion'
 import {FaRegCalendarAlt, FaTag} from 'react-icons/fa';
-
-interface BlogPostProps {
-    slug: string
-    title: string
-    summary: string
-    date?: string,
-    tags?: string[]
-}
+import {BlogPostProps} from "@/lib/types";
 
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
