@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {motion} from 'framer-motion'
 import {FaRegCalendarAlt, FaTag} from 'react-icons/fa';
 import {BlogPostProps} from "@/lib/types";
+import BlogTag from "@/components/BlogTag";
 
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
@@ -47,17 +48,8 @@ export default function BlogPost({slug, title, summary, date, tags}: BlogPostPro
                 {/* Tags */}
                 {tags && tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-3 mt-2">
-                        {tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className="flex items-center text-xs bg-blue-100 text-blue-700 dark:bg-blue-900
-                                dark:text-blue-300 px-2 py-1 rounded-full group-hover:bg-blue-200 dark:hover:bg-blue-900
-                                dark:group-hover:bg-blue-900
-                                transition duration-300"
-                            >
-                                <FaTag className="w-3 h-3 mr-1"/>
-                                {tag}
-                            </span>
+                        {tags.map(tag => (
+                            <BlogTag key={tag} tag={tag}/>
                         ))}
                     </div>
                 )}
