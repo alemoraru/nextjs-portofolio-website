@@ -30,7 +30,7 @@ export function CodeBlock({className = '', children}: CodeBlockProps) {
     };
 
     return (
-        <div className="my-6 rounded-md border border-gray-700/50 bg-[#0d1117] text-sm w-full max-w-full">
+        <div className="rounded-md border border-gray-700/50 bg-[#0d1117] text-sm w-full max-w-full">
             {/* Code Block Header */}
             <div className="flex items-center justify-between px-4 py-2 bg-gray-800 text-gray-100 text-xs font-mono">
                 <span className="uppercase tracking-wide">{language}</span>
