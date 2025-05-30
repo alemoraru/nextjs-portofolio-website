@@ -7,7 +7,8 @@ export default function Footer() {
 
     return (
         <footer
-            className="mt-4 py-6 text-center text-sm text-gray-500 px-4 border-t dark:border-gray-800 border-gray-300"
+            className="mt-4 py-6 text-center text-sm text-gray-500 px-4 border-t
+            dark:border-gray-800 border-gray-300 dark:bg-black"
             id="footerPortfolio"
         >
             <div className="flex justify-center gap-6 mb-2 text-lg">
