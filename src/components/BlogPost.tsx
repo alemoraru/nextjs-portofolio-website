@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import {motion} from 'framer-motion'
-import {FaRegCalendarAlt, FaTag} from 'react-icons/fa';
+import {FaRegCalendarAlt} from 'react-icons/fa';
 import {BlogPostProps} from "@/lib/types";
 import BlogTag from "@/components/BlogTag";
 

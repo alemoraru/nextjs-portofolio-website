@@ -10,6 +10,7 @@ import BackToPageButton from "@/components/BackToPageButton";
 import {CodeBlock} from "@/components/mdx/CodeBlock";
 import {InlineCode} from "@/components/mdx/InlineCode";
 import SimilarBlogPosts from "@/components/SimilarBlogPosts";
+import BlogTag from "@/components/BlogTag";
 import {ReactElement} from "react";
 import {MDXComponents} from "mdx/types";
 
@@ -96,6 +97,14 @@ export default async function BlogPostPage(props: { params: pageParams }) {
             <p className="text-gray-500 mb-8">
                 {new Date(post.date).toLocaleDateString()} • {readingTime} min read
             </p>
+            {/* Display blog post tags */}
+            {post.tags && post.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-8 mt-2">
+                    {post.tags.map(tag => (
+                        <BlogTag key={tag} tag={tag}/>
+                    ))}
+                </div>
+            )}
             <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
             <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3}/>
         </AnimatedArticle>
