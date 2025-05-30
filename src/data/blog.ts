@@ -101,7 +101,7 @@ const posts: BlogPostProps[] = [
     },
     {
         slug: 'post15',
-        title: 'Tailwind CSS: A Utility-First Approach',
+        title: 'Tailwind CSS: Modern Styling',
         summary: 'Explore how Tailwind CSS simplifies styling in modern web apps.',
         date: '2025-04-15',
         tags: ['tailwind css', 'css', 'web design', 'frontend']

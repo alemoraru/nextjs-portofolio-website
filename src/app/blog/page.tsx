@@ -60,7 +60,7 @@ export default function BlogPage() {
         return posts
             .filter(post =>
                 selectedTags.length === 0 ||
-                (post.tags && selectedTags.some(tag => post.tags.includes(tag)))
+                (post.tags && selectedTags.some(tag => post.tags && post.tags.includes(tag)))
             )
             .sort((a, b) => {
                 const dateA = new Date(a.date || '').getTime();
