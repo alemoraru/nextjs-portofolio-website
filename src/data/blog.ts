@@ -1,4 +1,6 @@
-const posts = [
+import {BlogPostProps} from "@/lib/types";
+
+const posts: BlogPostProps[] = [
     {
         slug: 'post1',
         title: 'Getting Started with Bash',
