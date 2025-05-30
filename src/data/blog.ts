@@ -98,6 +98,13 @@ const posts: BlogPostProps[] = [
         summary: 'Learn about caching strategies, tools like Redis and Memcached, and their role in scalable system design.',
         date: '2022-03-30',
         tags: ['caching', 'redis', 'memcached', 'performance', 'system design']
+    },
+    {
+        slug: 'post15',
+        title: 'Tailwind CSS: A Utility-First Approach',
+        summary: 'Explore how Tailwind CSS simplifies styling in modern web apps.',
+        date: '2025-04-15',
+        tags: ['tailwind css', 'css', 'web design', 'frontend']
     }
 ]
 
