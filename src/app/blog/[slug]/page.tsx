@@ -9,6 +9,7 @@ import {pageParams} from "@/lib/types";
 import BackToPageButton from "@/components/BackToPageButton";
 import {CodeBlock} from "@/components/mdx/CodeBlock";
 import {InlineCode} from "@/components/mdx/InlineCode";
+import SimilarBlogPosts from "@/components/SimilarBlogPosts";
 import {ReactElement} from "react";
 import {MDXComponents} from "mdx/types";
 
@@ -32,6 +33,9 @@ export async function generateStaticParams() {
     }))
 }
 
+/**
+ * BlogPostPage component that renders a single blog post based on the slug.
+ */
 export default async function BlogPostPage(props: { params: pageParams }) {
     const {slug} = await props.params
     const post = posts.find(p => p.slug === slug)
@@ -93,6 +97,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
                 {new Date(post.date).toLocaleDateString()} • {readingTime} min read
             </p>
             <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
+            <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3}/>
         </AnimatedArticle>
     )
 }
