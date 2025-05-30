@@ -10,6 +10,6 @@ export interface BlogPostProps {
     slug: string;
     title: string;
     summary: string;
-    date?: string;
+    date: string;
     tags?: string[];
 }
