@@ -22,7 +22,7 @@ export default function SimilarBlogPosts(
         allPosts,
         currentPostPlug,
         maxPosts = 3,
-        heading = "You might also like",
+        heading = "Other posts that might interest you...",
     }: SimilarBlogPostsProps) {
 
     const currentPost = allPosts.find(p => p.slug === currentPostPlug);
@@ -40,7 +40,7 @@ export default function SimilarBlogPosts(
 
     return (
         <section className="mt-12 border-t pt-8">
-            <h2 className="text-2xl font-semibold mb-6">{heading}</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-center">{heading}</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {similar.map(sim => (
                     <BlogPost
