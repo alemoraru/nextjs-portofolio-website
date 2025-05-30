@@ -85,7 +85,7 @@ Planned improvements and current/future features:
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
     - [ ] Layout options
-- [ ] 📄 Add recommended similar blog posts items to the bottom of each blog post
+- [X] 📄 Add recommended similar blog posts items to the bottom of each blog post
 - [ ] 📄 Add blog post categories pages
 - [X] 📄 Add pagination to blog posts
 
