@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 
 // Create MDX configuration
 const withMDX = createMDX({
-    extension: /\.mdx$/,
+    extension: /\.(md|mdx)$/,
     options: {
         remarkPlugins: [remarkGfm],
         rehypePlugins: []

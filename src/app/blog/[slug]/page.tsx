@@ -13,6 +13,7 @@ import SimilarBlogPosts from "@/components/SimilarBlogPosts";
 import BlogTag from "@/components/BlogTag";
 import {ReactElement} from "react";
 import {MDXComponents} from "mdx/types";
+import remark_gfm from "remark-gfm";
 
 /**
  * Calculate the reading time of a text based on the number of words.
@@ -84,6 +85,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
         options: {
             parseFrontmatter: true,
             mdxOptions: {
+                remarkPlugins: [remark_gfm],
                 rehypePlugins: [[rehypeHighlight, {ignoreMissing: true}]]
             },
         },
