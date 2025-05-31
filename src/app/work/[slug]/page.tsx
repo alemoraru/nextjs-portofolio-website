@@ -10,6 +10,7 @@ import {techStackMap} from "@/lib/constants";
 import {Timeline, TimelineItem} from '@/components/mdx/Timeline'
 import {pageParams} from "@/lib/types";
 import BackToPageButton from "@/components/BackToPageButton";
+import remark_gfm from "remark-gfm";
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
@@ -20,6 +21,9 @@ export async function generateStaticParams() {
     }))
 }
 
+/**
+ * WorkItemPage component that renders a single work item based on the slug.
+ */
 export default async function WorkItemPage(props: { params: pageParams }) {
     const {slug} = await props.params
     const post = work.find(w => w.slug === slug)
@@ -46,6 +50,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
         options: {
             parseFrontmatter: true,
             mdxOptions: {
+                remarkPlugins: [remark_gfm],
                 rehypePlugins: [rehypeHighlight],
             },
         },
@@ -55,11 +60,8 @@ export default async function WorkItemPage(props: { params: pageParams }) {
         <AnimatedArticle>
             <BackToPageButton pageUrl="/work"/>
             <h1 className="text-4xl font-bold mb-2">{frontmatter.name}</h1>
-
             <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
-
             <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
-
             <div className="flex flex-wrap gap-4 mb-8">
                 {frontmatter.techStack?.map((tech) => (
                     <div
@@ -74,7 +76,6 @@ export default async function WorkItemPage(props: { params: pageParams }) {
                     </div>
                 ))}
             </div>
-
             <div className="max-w-5xl prose dark:prose-invert">{content}</div>
         </AnimatedArticle>
     )
