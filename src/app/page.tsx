@@ -8,7 +8,15 @@ import ProjectTile from "@/components/ProjectTile";
 import BlogPost from "@/components/BlogPost";
 import ViewAllHeader from "@/components/ViewAllHeader";
 import {motion} from "framer-motion";
-import {HiCheckCircle} from 'react-icons/hi'
+import {
+    FaMapMarkerAlt,
+    FaBook,
+    FaLanguage,
+    FaLightbulb,
+    FaGamepad,
+    FaUniversity,
+    FaSkiing, FaBuilding
+} from "react-icons/fa";
 
 /**
  * Home component that serves as the main landing page for the portfolio.
@@ -36,7 +44,7 @@ export default function Home() {
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                     Hi, I&#39;m John Doe 👋
                 </h1>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-left mb-6">
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto text-left mb-6">
                     I&#39;m a software engineer passionate about solving problems, building things, and reading sci-fi.
                     Whenever I&#39;m not coding, you can find me exploring the world, playing tennis or skating.
                     I love to share my knowledge and experiences through my blog, where I write about tech, books, and
@@ -44,47 +52,41 @@ export default function Home() {
                 </p>
 
                 {/* Current Work Description or other highlights */}
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-left">
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto text-left">
                     I am currently working at Hypernova Labs as a software engineer, where I focus on building scalable
                     applications and improving user experiences. I have a keen interest in full-stack development,
                     particularly in React and Node.js. I enjoy collaborating with cross-functional teams to deliver
                     high-quality software solutions.
                 </p>
 
-                {/* Quick Facts and Languages */}
-                <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-10 text-sm sm:text-base">
-                    {/* Quick Facts */}
-                    <div className="flex flex-col items-center">
-                        <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-center">Quick Facts</h2>
-                        <ul className="space-y-3 w-3/4 max-w-xs sm:max-w-sm">
-                            {[
-                                "🛠️ Currently working at Big Boss Corp",
-                                "📍 Based in Git, Hub",
-                                "📚 Love reviewing books",
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-start gap-3">
-                                    <HiCheckCircle className="mt-1 text-blue-500 dark:text-blue-400 text-lg"/>
-                                    <span className="text-left">{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
 
-                    {/* Languages */}
-                    <div className="flex flex-col items-center">
-                        <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-center">Languages</h2>
-                        <ul className="space-y-3 w-3/4 max-w-xs sm:max-w-sm">
-                            {[
-                                "🇺🇸 English (Fluent)",
-                                "🇪🇸 Spanish (Fluent)",
-                                "🇩🇪 German (Intermediate)",
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-start gap-3">
-                                    <HiCheckCircle className="mt-1 text-blue-500 dark:text-blue-400 text-lg"/>
-                                    <span className="text-left">{item}</span>
-                                </li>
-                            ))}
-                        </ul>
+                {/* Quick Facts Section */}
+                <div className="mt-8 text-center">
+                    <h2 className="text-3xl font-bold mb-4">Quick & Fun Facts</h2>
+
+                    <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
+                        {[
+                            {icon: FaBuilding, label: "Hypernova Labs"},
+                            {icon: FaUniversity, label: "Computer Science Grad @ VuA"},
+                            {icon: FaMapMarkerAlt, label: "Lille, France"},
+                            {icon: FaBook, label: "Book Reviewer"},
+                            {icon: FaLanguage, label: "EN / ES / DE"},
+                            {icon: FaLightbulb, label: "React + Node.js"},
+                            {icon: FaGamepad, label: "Sci-fi Fan"},
+                            {icon: FaSkiing, label: "Skiing Enthusiast"},
+                        ].map((fact, i) => {
+                            const Icon = fact.icon;
+                            return (
+                                <div
+                                    key={i}
+                                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800
+                                    text-sm text-gray-700 dark:text-gray-300 rounded-full shadow-md transition"
+                                >
+                                    <Icon className="text-blue-500 dark:text-blue-400 text-base"/>
+                                    <span>{fact.label}</span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
