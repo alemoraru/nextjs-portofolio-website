@@ -64,7 +64,8 @@ export default function SortDropdown({sortOrder, onChange, options}: SortDropdow
                             onChange(value);
                             setIsDropdownOpen(false);
                         }}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
+                        className="cursor-pointer block w-full text-left px-4 py-2 hover:bg-gray-100
+                        dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
                     >
                         {label}
                     </button>
