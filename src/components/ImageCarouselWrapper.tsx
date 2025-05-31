@@ -25,6 +25,9 @@ function getImageNamesFromDir(imageDir: string): string[] {
     }
 }
 
+/**
+ * ImageCarouselWrapper component that wraps the ImageCarousel component.
+ */
 export default function ImageCarouselWrapper({imageDir, altPrefix}: Props) {
     const imageNames = getImageNamesFromDir(imageDir);
     if (!imageNames.length) return null;
