@@ -9,13 +9,9 @@ import BlogPost from "@/components/BlogPost";
 import ViewAllHeader from "@/components/ViewAllHeader";
 import {motion} from "framer-motion";
 import {
-    FaMapMarkerAlt,
-    FaBook,
-    FaLanguage,
-    FaLightbulb,
-    FaGamepad,
-    FaUniversity,
-    FaSkiing, FaBuilding
+    FaMapMarkerAlt, FaBook, FaLanguage,
+    FaGamepad, FaUniversity,
+    FaSkiing, FaBuilding, FaTools
 } from "react-icons/fa";
 
 /**
@@ -71,7 +67,7 @@ export default function Home() {
                             {icon: FaMapMarkerAlt, label: "Lille, France"},
                             {icon: FaBook, label: "Book Reviewer"},
                             {icon: FaLanguage, label: "EN / ES / DE"},
-                            {icon: FaLightbulb, label: "React + Node.js"},
+                            {icon: FaTools, label: "Full-Stack Dev"},
                             {icon: FaGamepad, label: "Sci-fi Fan"},
                             {icon: FaSkiing, label: "Skiing Enthusiast"},
                         ].map((fact, i) => {
