@@ -30,6 +30,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = (
 
     if (total === 0) return null;
 
+    // Navigation functions (circular navigation)
     const goPrev = () => setCurrent((prev) => (prev - 1 + total) % total);
     const goNext = () => setCurrent((prev) => (prev + 1) % total);
 
