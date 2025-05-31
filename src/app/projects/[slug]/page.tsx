@@ -117,7 +117,6 @@ export default async function ProjectPage(props: { params: pageParams }) {
             {/* Image Carousel at the top */}
             <ImageCarouselWrapper
                 imageDir="projects"
-                imageNames={["pictureA.jpg", "pictureB.jpg", "pictureC.jpg", "pictureD.jpg", "pictureE.jpg", "pictureF.jpg"]}
                 altPrefix={frontmatter.title}
             />
 
