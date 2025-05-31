@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import Link from 'next/link'
 import projects from "@/data/projects";
 import StackIcon from "tech-stack-icons";
-import {BsStack} from "react-icons/bs";
+import {BsStack, BsCardImage} from "react-icons/bs";
 import {FaUsers, FaUserTie, FaClock, FaGithub} from "react-icons/fa";
 import AnimatedArticle from "@/components/AnimatedArticle";
 import {techStackMap} from "@/lib/constants";
@@ -33,6 +33,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
     if (!post) return notFound()
 
     const filePath = path.join(process.cwd(), 'src', 'data', 'projects', `${slug}.mdx`)
+    const projectPhotoDir = path.join(process.cwd(), 'public', 'projects', slug)
 
     if (!fs.existsSync(filePath)) {
         return notFound()
@@ -78,7 +79,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
             )}
 
             {/* Project Metadata */}
-            <div className="w-full mb-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+            <div className="w-full mb-6 bg-gray-50 dark:bg-gray-800 p-5 rounded-xl shadow-md">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base">
                     <div className="flex items-center gap-2">
                         <FaUsers className="text-blue-500"/>
@@ -96,7 +97,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
             </div>
 
             {/* Tech Stack Section */}
-            <div className="w-full mb-6">
+            <div className="w-full mb-8">
                 <div className="flex items-center gap-2 mb-4" style={{fontSize: '1.25rem'}}>
                     <BsStack></BsStack>
                     <h2 className="text-xl font-semibold">Tech Stack</h2>
@@ -114,13 +115,23 @@ export default async function ProjectPage(props: { params: pageParams }) {
                 </ul>
             </div>
 
-            {/* Image Carousel at the top */}
-            <ImageCarouselWrapper
-                imageDir="projects"
-                altPrefix={frontmatter.title}
-            />
+            {/* Image Carousel - Display project photos if available */}
+            {fs.existsSync(projectPhotoDir) && fs.readdirSync(projectPhotoDir).length > 0 && (
+                <div className="w-full">
+                    <div className="flex items-center gap-2 mb-4" style={{fontSize: '1.25rem'}}>
+                        <BsCardImage></BsCardImage>
+                        <h2 className="text-xl font-semibold">Project Gallery</h2>
+                    </div>
+                    <ImageCarouselWrapper
+                        imageDir={`projects/${slug}`}
+                        altPrefix={frontmatter.title}
+                    />
+                </div>
+            )}
 
+            {/* Display the actual content of the .mdx file */}
             <div className="max-w-4xl prose dark:prose-invert">{content}</div>
+
         </AnimatedArticle>
     )
 }
