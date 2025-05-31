@@ -13,6 +13,7 @@ import {techStackMap} from "@/lib/constants";
 import {pageParams} from "@/lib/types";
 import BackToPageButton from "@/components/BackToPageButton";
 import remark_gfm from "remark-gfm";
+import ImageCarouselWrapper from "@/components/ImageCarouselWrapper";
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.
@@ -112,6 +113,13 @@ export default async function ProjectPage(props: { params: pageParams }) {
                     ))}
                 </ul>
             </div>
+
+            {/* Image Carousel at the top */}
+            <ImageCarouselWrapper
+                imageDir="projects"
+                imageNames={["pictureA.jpg", "pictureB.jpg", "pictureC.jpg", "pictureD.jpg", "pictureE.jpg", "pictureF.jpg"]}
+                altPrefix={frontmatter.title}
+            />
 
             <div className="max-w-4xl prose dark:prose-invert">{content}</div>
         </AnimatedArticle>
