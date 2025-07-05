@@ -20,7 +20,7 @@ export default function Header() {
             border-b dark:border-gray-800 border-gray-300 backdrop-blur-sm shadow-md"
         >
             <div
-                className="max-w-4xl mx-auto w-full px-4 py-4 transition-all duration-300 flex items-center justify-between">
+                className="max-w-4xl mx-auto w-full px-4 py-5 transition-all duration-300 flex items-center justify-between">
 
                 {/* Left side: logo or current path */}
                 <Breadcrumbs/>
