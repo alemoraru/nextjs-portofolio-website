@@ -6,6 +6,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
 import SortDropdown from '@/components/SortDropdown';
 import BlogPost from '@/components/BlogPost';
+import PaginationControls from '@/components/PaginationControls';
 import posts from '@/data/blog';
 
 /**
@@ -142,87 +143,11 @@ export default function BlogPage() {
             </AnimatePresence>
 
             {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 mt-8">
-                    {/* Prev Button */}
-                    <button
-                        className={`px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === 1 ? 'cursor-default opacity-60' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
-                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                        disabled={currentPage === 1}
-                    >
-                        Prev
-                    </button>
-
-                    {/* First page */}
-                    <button
-                        className={`px-3 py-1 rounded transition-colors duration-150 ${currentPage === 1 ? 'bg-blue-500 text-white cursor-default' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                        onClick={() => setCurrentPage(1)}
-                        disabled={currentPage === 1}
-                    >
-                        1
-                    </button>
-
-                    {/* Left Ellipsis */}
-                    {currentPage > 3 && (
-                        <span className="px-2 select-none">...</span>
-                    )}
-
-                    {/* Previous page number (if not 1 and not already shown) */}
-                    {currentPage > 2 && (
-                        <button
-                            className={`px-3 py-1 rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                        >
-                            {currentPage - 1}
-                        </button>
-                    )}
-
-                    {/* Current page (not 1 or last) */}
-                    {currentPage !== 1 && currentPage !== totalPages && (
-                        <button
-                            className={`px-3 py-1 rounded bg-blue-500 text-white transition-colors duration-150 cursor-default`}
-                            disabled
-                        >
-                            {currentPage}
-                        </button>
-                    )}
-
-                    {/* Next page number (if not last and not already shown) */}
-                    {currentPage < totalPages - 1 && (
-                        <button
-                            className={`px-3 py-1 rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                        >
-                            {currentPage + 1}
-                        </button>
-                    )}
-
-                    {/* Right Ellipsis */}
-                    {currentPage < totalPages - 2 && (
-                        <span className="px-2 select-none">...</span>
-                    )}
-
-                    {/* Last page */}
-                    {totalPages > 1 && (
-                        <button
-                            className={`px-3 py-1 rounded transition-colors duration-150 ${currentPage === totalPages ? 'bg-blue-500 text-white cursor-default' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                            onClick={() => setCurrentPage(totalPages)}
-                            disabled={currentPage === totalPages}
-                        >
-                            {totalPages}
-                        </button>
-                    )}
-
-                    {/* Next Button */}
-                    <button
-                        className={`px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === totalPages ? 'cursor-default opacity-60' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
-                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                        disabled={currentPage === totalPages}
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                setCurrentPage={setCurrentPage}
+            />
         </section>
     );
 }
