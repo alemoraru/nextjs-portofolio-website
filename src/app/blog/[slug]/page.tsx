@@ -99,12 +99,14 @@ export default async function BlogPostPage(props: { params: pageParams }) {
             <p className="text-gray-500 mb-8">
                 {new Date(post.date).toLocaleDateString()} • {readingTime} min read
             </p>
+
             {/* Display current blog post tags */}
             <div className="flex flex-wrap gap-2 mb-8 mt-2 justify-center items-center text-center">
                 {post.tags && post.tags.map(tag => (
-                    <BlogTag key={tag} tag={tag}/>
+                    <BlogTag key={tag} tag={tag} href={`/blog/tag/${encodeURIComponent(tag)}`}/>
                 ))}
             </div>
+
             <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
             <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3}/>
         </AnimatedArticle>
