@@ -5,6 +5,7 @@ import {useMemo} from "react";
  * NotFound component that displays a 404 error message when a page is not found.
  */
 export default function NotFound() {
+
     // Fun bash commands or dev quotes, all indicating a page is not found
     const funLines = [
         'echo "Oops! This page is 404 not found-ish"',
@@ -20,6 +21,8 @@ export default function NotFound() {
         'echo "// TODO: Implement this page"',
         'echo "¯\\_(ツ)_/¯ # 404 not found"',
     ];
+
+    // Select a random line from the funLines array to display
     const randomLine = useMemo(() => funLines[Math.floor(Math.random() * funLines.length)], []);
 
     return (

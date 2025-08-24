@@ -4,12 +4,16 @@ import {Gabarito} from "next/font/google";
 import React, {ReactNode} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import {ThemeProvider} from "next-themes";
 
 const gabarito = Gabarito({
     variable: "--font-gabarito",
     subsets: ["latin"]
 });
 
+/**
+ * Metadata for the application, including SEO and social media sharing information.
+ */
 export const metadata: Metadata = {
     title: 'Next.js Developer Portfolio Template',
     description: 'Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.',
@@ -41,44 +45,36 @@ export const metadata: Metadata = {
     }
 }
 
-// This script initializes the theme based on user preference or saved settings
-// And is used to avoid FOUC (Flash of Unstyled Content) on the initial load
-const themeInitScript = `
-(function() {
-  try {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-    document.documentElement.classList.add(theme);
-    if (theme === 'dark') document.documentElement.classList.add('dark');
-  } catch(e) {}
-})();`
-
+/**
+ * RootLayout component that wraps the entire application.
+ * It includes global styles, fonts, and layout structure.
+ * @param children - The child components to be rendered within the layout.
+ */
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html lang="en" className={`${gabarito.className} ${gabarito.variable}`} suppressHydrationWarning>
-        <head>
-            <script dangerouslySetInnerHTML={{__html: themeInitScript}}/>
-            <title>My Developer Portfolio</title>
-        </head>
-        <body
-            className={`antialiased flex flex-col min-h-screen transition-colors ${gabarito.className} ${gabarito.variable}`}
-        >
-        {/* Dot Background Layer */}
-        <div
-            className={`
-            fixed inset-0 -z-10
-            bg-[radial-gradient(circle,_#d1d5db_1px,_transparent_1px)]
-            dark:bg-[radial-gradient(circle,_#3f3f46_1px,_transparent_1px)]
-            bg-[length:30px_30px]
-            [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]
-          `}
-        />
-
-        <Header/>
-        <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
-        <Footer/>
-        </body>
+            <head>
+                <title>Next.js Developer Portfolio Template</title>
+            </head>
+            <body
+                className={`antialiased flex flex-col min-h-screen transition-colors ${gabarito.className} ${gabarito.variable}`}
+            >
+                <ThemeProvider attribute="class" defaultTheme="system">
+                    {/* Dot Background Layer */}
+                    <div
+                        className={`
+                        fixed inset-0 -z-10
+                        bg-[radial-gradient(circle,_#d1d5db_1px,_transparent_1px)]
+                        dark:bg-[radial-gradient(circle,_#3f3f46_1px,_transparent_1px)]
+                        bg-[length:30px_30px]
+                        [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]
+                      `}
+                    />
+                    <Header/>
+                    <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
+                    <Footer/>
+                </ThemeProvider>
+            </body>
         </html>
     )
 }
