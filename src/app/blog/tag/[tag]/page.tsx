@@ -20,7 +20,12 @@ export default function BlogTagPage({params}: { params: pageParams & { tag: stri
         post.tags && post.tags.some(t => t.toLowerCase() === decodedTag.toLowerCase())
     );
 
-    // Dice coefficient for string similarity
+    /**
+     * Compute the Dice Coefficient similarity between two strings.
+     * @param a the first string
+     * @param b the second string
+     * @returns a similarity score between 0 and 1 (1 = identical, 0 = no similarity)
+     */
     function diceCoefficient(a: string, b: string): number {
         if (!a.length || !b.length) return 0;
         if (a === b) return 1;
@@ -42,7 +47,13 @@ export default function BlogTagPage({params}: { params: pageParams & { tag: stri
         return (2 * matches) / (pairsA.length + pairsB.length);
     }
 
-    // Find top N posts with tags closest to the requested tag
+    /**
+     * Find posts with tags that are most similar to the target tag using Dice Coefficient.
+     * @param posts the list of blog posts to search
+     * @param targetTag the tag to compare against
+     * @param maxPosts the maximum number of similar posts to return
+     * @returns an array of posts with their best matching tag and similarity score
+     */
     function getClosestTagPosts(posts: BlogPostProps[], targetTag: string, maxPosts: number = 3): Array<{
         post: BlogPostProps;
         bestScore: number;
@@ -88,15 +99,23 @@ export default function BlogTagPage({params}: { params: pageParams & { tag: stri
                     Back to all blog posts
                 </Link>
                 {closestTagPosts.length > 0 && (
-                    <div className="mt-4 w-full max-w-4xl">
-                        <h2 className="text-lg font-semibold mb-2 text-center">You might be interested in these posts
-                            with similar tags:</h2>
+                    <div className="mt-8 w-full max-w-4xl">
+                        <h2 className="text-xl font-bold mb-4 text-center flex flex-col items-center">
+                            <span className="mb-1">You might be interested in these posts
+                            with similar tags:</span>
+                        </h2>
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-left">
-                            {closestTagPosts.map(({post, bestTag}) => (
-                                <div key={post.slug}>
+                            {closestTagPosts.map(({post, bestTag, bestScore}) => (
+                                <div key={post.slug} className="relative">
                                     <BlogPost {...post} />
-                                    <div className="mt-2 text-xs text-gray-500">Most similar tag: <span
-                                        className="font-semibold text-blue-600">{bestTag}</span></div>
+                                    <div className="mt-4 ml-3 flex items-center gap-2 text-xs text-gray-600">
+                                        <span className="dark:text-white text-black">Reason: </span>
+                                        <FaTag className="w-3 h-3 text-blue-400"/>
+                                        <span
+                                            className="px-2 py-1 rounded-full dark:bg-blue-50 text-blue-700 font-semibold bg-blue-200">{bestTag}
+                                        </span>
+                                        <span className="dark:text-gray-300 text-gray-500">{Math.round(bestScore * 100)}% match</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
