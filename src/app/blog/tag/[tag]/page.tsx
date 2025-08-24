@@ -1,15 +1,17 @@
 import Link from "next/link";
 import posts from '@/data/blog';
 import BlogPost from '@/components/BlogPost';
-import {pageParams} from '@/lib/types';
-import {FaTag, FaArrowLeft} from "react-icons/fa";
+import {BlogPostProps, pageParams} from '@/lib/types';
+import {FaArrowLeft, FaTag} from "react-icons/fa";
 
 /**
  * BlogTagPage component that displays blog posts filtered by a specific tag.
+ * We display posts that have the exact tag (case-insensitive), or suggest similar tags if none found.
  * This page is accessed via the "/blog/tag/[tag]" URL.
  * @param params - The route parameters including the tag to filter by.
  */
 export default function BlogTagPage({params}: { params: pageParams & { tag: string } }) {
+
     // Decode the tag value to handle spaces and special characters
     const decodedTag = decodeURIComponent(params.tag);
 
@@ -18,26 +20,60 @@ export default function BlogTagPage({params}: { params: pageParams & { tag: stri
         post.tags && post.tags.some(t => t.toLowerCase() === decodedTag.toLowerCase())
     );
 
-    // Similarity function
-    function computeTagSimilarity(postTags: string[], targetTag: string): number {
-        if (!postTags || postTags.length === 0) return 0;
-        // Jaccard similarity: 1 if tag is present, 0 otherwise (since only one tag)
-        return postTags.includes(targetTag) ? 1 : 0;
+    // Dice coefficient for string similarity
+    function diceCoefficient(a: string, b: string): number {
+        if (!a.length || !b.length) return 0;
+        if (a === b) return 1;
+        const bigrams = (str: string) => {
+            const s = str.toLowerCase();
+            const pairs = [];
+            for (let i = 0; i < s.length - 1; i++) {
+                pairs.push(s.slice(i, i + 2));
+            }
+            return pairs;
+        };
+        const pairsA = bigrams(a);
+        const pairsB = bigrams(b);
+        const setB = new Set(pairsB);
+        let matches = 0;
+        for (const pair of pairsA) {
+            if (setB.has(pair)) matches++;
+        }
+        return (2 * matches) / (pairsA.length + pairsB.length);
     }
 
-    // For suggestions: score posts by tag similarity (excluding exact matches)
-    const similarPosts = posts
-        .filter(post =>
+    // Find top N posts with tags closest to the requested tag
+    function getClosestTagPosts(posts: BlogPostProps[], targetTag: string, maxPosts: number = 3): Array<{
+        post: BlogPostProps;
+        bestScore: number;
+        bestTag: string
+    }> {
+        return posts.map((post: BlogPostProps) => {
+            const tags: string[] = post.tags ?? [];
+            let bestScore = 0;
+            let bestTag = '';
+            for (const tag of tags) {
+                const score = diceCoefficient(tag, targetTag);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestTag = tag;
+                }
+            }
+            return {post, bestScore, bestTag};
+        })
+            .filter(({bestScore}) => bestScore > 0)
+            .sort((a, b) => b.bestScore - a.bestScore)
+            .slice(0, maxPosts);
+    }
+
+    // For suggestions: find posts with tags closest to the requested tag
+    const closestTagPosts = getClosestTagPosts(
+        posts.filter(post =>
             post.tags && !post.tags.some(t => t.toLowerCase() === decodedTag.toLowerCase())
-        )
-        .map(post => ({
-            post,
-            score: computeTagSimilarity((post.tags ?? []).map(t => t.toLowerCase()), decodedTag.toLowerCase())
-        }))
-        .filter(({score}) => score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3)
-        .map(({post}) => post);
+        ),
+        decodedTag,
+        3
+    );
 
     // If no posts are found for the tag, display a friendly message, link, and suggestions
     if (filteredPosts.length === 0) {
@@ -46,21 +82,22 @@ export default function BlogTagPage({params}: { params: pageParams & { tag: stri
                 <FaTag className="w-8 h-8 text-blue-500 mb-2"/>
                 <h1 className="text-2xl font-bold mb-2">No posts found for tag: <span
                     className="text-blue-600">{decodedTag}</span></h1>
-
-                {/* Back to main page for blog posts */}
                 <Link href="/blog"
                       className="inline-flex items-center gap-2 text-blue-500 hover:underline font-medium mb-4">
                     <FaArrowLeft className="w-4 h-4"/>
                     Back to all blog posts
-
                 </Link>
-                {similarPosts.length > 0 && (
-                    <div className="mt-4 w-full max-w-2xl">
-                        <h2 className="text-lg font-semibold mb-2">You might be interested in these posts with similar
-                            tags:</h2>
-                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                            {similarPosts.map(post => (
-                                <BlogPost key={post.slug} {...post} />
+                {closestTagPosts.length > 0 && (
+                    <div className="mt-4 w-full max-w-4xl">
+                        <h2 className="text-lg font-semibold mb-2 text-center">You might be interested in these posts
+                            with similar tags:</h2>
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-left">
+                            {closestTagPosts.map(({post, bestTag}) => (
+                                <div key={post.slug}>
+                                    <BlogPost {...post} />
+                                    <div className="mt-2 text-xs text-gray-500">Most similar tag: <span
+                                        className="font-semibold text-blue-600">{bestTag}</span></div>
+                                </div>
                             ))}
                         </div>
                     </div>
