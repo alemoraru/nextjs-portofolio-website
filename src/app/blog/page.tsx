@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, useMemo, useEffect} from 'react';
-import {FaFrown} from 'react-icons/fa';
+import {FaFrown, FaTimes, FaTrashAlt} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
 import SortDropdown from '@/components/SortDropdown';
@@ -77,6 +77,18 @@ export default function BlogPage() {
         return filteredPosts.slice(start, start + POSTS_PER_PAGE);
     }, [filteredPosts, currentPage]);
 
+    // Handler to remove a single tag from filters
+    const removeTag = (tag: string) => {
+        setSelectedTags(prev => prev.filter(t => t !== tag));
+        setTagDrafts(prev => prev.filter(t => t !== tag));
+    };
+
+    // Handler to clear all tags
+    const clearAllTags = () => {
+        setSelectedTags([]);
+        setTagDrafts([]);
+    };
+
     return (
         <section className="px-4 max-w-4xl mx-auto">
             <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
@@ -106,6 +118,41 @@ export default function BlogPage() {
                     />
                 </div>
             </div>
+
+            {/* Active Filter Chips */}
+            {selectedTags.length > 0 && (
+                <div
+                    className="flex flex-row flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent"
+                >
+                    {selectedTags.map(tag => (
+                        <span
+                            key={tag}
+                            className="flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm"
+                        >
+                            {tag}
+                            <button
+                                onClick={() => removeTag(tag)}
+                                aria-label={`Remove filter ${tag}`}
+                                className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none cursor-pointer flex items-center"
+                                tabIndex={0}
+                            >
+                                <FaTimes className="w-4 h-4 md:w-4 md:h-4"/>
+                            </button>
+                        </span>
+                    ))}
+                    {selectedTags.length > 1 && (
+                        <button
+                            onClick={clearAllTags}
+                            className="flex items-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm hover:bg-gray-300 dark:hover:bg-gray-600 ml-2 cursor-pointer"
+                            aria-label="Clear all filters"
+                            tabIndex={0}
+                        >
+                            <FaTrashAlt className="w-4 h-4 md:w-4 md:h-4 mr-1"/>
+                            Clear All
+                        </button>
+                    )}
+                </div>
+            )}
 
             {/* Blog Posts */}
             <AnimatePresence mode="wait">
