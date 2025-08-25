@@ -1,11 +1,12 @@
 'use client';
 
 import {useState, useMemo} from 'react';
-import {FaFrown, FaTimes, FaTrashAlt} from 'react-icons/fa';
+import {FaFrown} from 'react-icons/fa';
 import {motion, AnimatePresence} from 'framer-motion';
 import FilterDropdown from '@/components/FilterDropdown';
 import SortDropdown from '@/components/SortDropdown';
 import ProjectTile from '@/components/ProjectTile';
+import ActiveFilterChips from '@/components/ActiveFilterChips';
 import projects from '@/data/projects';
 
 /**
@@ -104,36 +105,11 @@ export default function ProjectsPage() {
             </div>
 
             {/* Active Filter Chips */}
-            {selectedTechStack.length > 0 && (
-                <div
-                    className="flex flex-row flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
-                    {selectedTechStack.map(tech => (
-                        <span key={tech}
-                              className="flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm">
-                            {tech}
-                            <button
-                                onClick={() => removeTech(tech)}
-                                aria-label={`Remove filter ${tech}`}
-                                className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none cursor-pointer flex items-center"
-                                tabIndex={0}
-                            >
-                                <FaTimes className="w-4 h-4 md:w-4 md:h-4"/>
-                            </button>
-                        </span>
-                    ))}
-                    {selectedTechStack.length > 1 && (
-                        <button
-                            onClick={clearAllTech}
-                            className="flex items-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm hover:bg-gray-300 dark:hover:bg-gray-600 ml-2 cursor-pointer"
-                            aria-label="Clear all filters"
-                            tabIndex={0}
-                        >
-                            <FaTrashAlt className="w-4 h-4 md:w-4 md:h-4 mr-1"/>
-                            Clear All
-                        </button>
-                    )}
-                </div>
-            )}
+            <ActiveFilterChips
+                filters={selectedTechStack}
+                onRemove={removeTech}
+                onClearAll={selectedTechStack.length > 1 ? clearAllTech : undefined}
+            />
 
             <AnimatePresence mode="wait">
                 {filteredProjects.length > 0 ? (
