@@ -1,6 +1,7 @@
 import ProjectsClientUI from './ProjectsClientUI';
 import ProjectsNotFound from './ProjectsNotFound';
 import projects from '@/data/projects';
+import {redirect} from 'next/navigation';
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.
@@ -18,9 +19,30 @@ export default async function ProjectsPage({searchParams}: {
     const PROJECTS_PER_PAGE = 6;
 
     // Sort param (default: newest)
+    const allowedSorts = ['newest', 'oldest'];
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    if (sort === 'newest' || sort === 'oldest') {
+    let sortIsValid = false;
+    if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'newest' | 'oldest';
+        sortIsValid = true;
+    } else {
+        sortOrder = 'newest';
+        sortIsValid = false;
+    }
+
+    // If sort is invalid, rewrite the URL
+    if (sort && !sortIsValid) {
+        const params = new URLSearchParams();
+        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (tech) {
+            if (Array.isArray(tech)) {
+                params.set('tech', tech.join(','));
+            } else {
+                params.set('tech', tech);
+            }
+        }
+        params.set('sort', sortOrder);
+        redirect(`/projects${params.toString() ? '?' + params.toString() : ''}`);
     }
 
     // Tech param (handle string or string[])

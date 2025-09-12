@@ -1,6 +1,7 @@
 import WorkClientUI from './WorkClientUI';
 import WorkNotFound from './WorkNotFound';
 import work from '@/data/work';
+import {redirect} from 'next/navigation';
 
 /**
  * WorkPage component that serves as the main page for displaying work experience.
@@ -18,9 +19,30 @@ export default async function WorkPage({searchParams}: {
     const WORK_PER_PAGE = 6;
 
     // Sort param (default: newest)
+    const allowedSorts = ['newest', 'oldest'];
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    if (sort === 'newest' || sort === 'oldest') {
+    let sortIsValid = false;
+    if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'newest' | 'oldest';
+        sortIsValid = true;
+    } else {
+        sortOrder = 'newest';
+        sortIsValid = false;
+    }
+
+    // If sort is invalid, rewrite the URL
+    if (sort && !sortIsValid) {
+        const params = new URLSearchParams();
+        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (company) {
+            if (Array.isArray(company)) {
+                params.set('company', company.join(','));
+            } else {
+                params.set('company', company);
+            }
+        }
+        params.set('sort', sortOrder);
+        redirect(`/work${params.toString() ? '?' + params.toString() : ''}`);
     }
 
     // Company param (handle string or string[])

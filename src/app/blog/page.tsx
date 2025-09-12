@@ -1,6 +1,7 @@
 import BlogClientUI from './BlogClientUI';
 import BlogNotFound from './BlogNotFound';
 import posts from '@/data/blog';
+import {redirect} from 'next/navigation';
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.
@@ -18,9 +19,30 @@ export default async function BlogPage({searchParams}: {
     const POSTS_PER_PAGE = 5;
 
     // Sort param (default: desc)
+    const allowedSorts = ['asc', 'desc'];
     let sortOrder: 'asc' | 'desc' = 'desc';
-    if (sort === 'asc' || sort === 'desc') {
+    let sortIsValid = false;
+    if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'asc' | 'desc';
+        sortIsValid = true;
+    } else {
+        sortOrder = 'desc';
+        sortIsValid = false;
+    }
+
+    // If sort is invalid, rewrite the URL
+    if (sort && !sortIsValid) {
+        const params = new URLSearchParams();
+        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (tags) {
+            if (Array.isArray(tags)) {
+                params.set('tags', tags.join(','));
+            } else {
+                params.set('tags', tags);
+            }
+        }
+        params.set('sort', sortOrder);
+        redirect(`/blog${params.toString() ? '?' + params.toString() : ''}`);
     }
 
     // Tags param (handle string or string[])
