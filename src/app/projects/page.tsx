@@ -5,27 +5,30 @@ import projects from '@/data/projects';
  * ProjectsPage component that serves as the main page for displaying projects.
  * This is accessed at the "/projects" URL of the application.
  */
-export default function ProjectsPage({searchParams}: {
+export default async function ProjectsPage({searchParams}: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
-    // Get page from query param
-    const pageParam = Array.isArray(searchParams?.page) ? searchParams.page[0] : searchParams?.page;
+    // Destructure all query params at the top (Promise style, but not required)
+    const {page, sort, tech} = await Promise.resolve(searchParams);
+
+    // Page param
+    const pageParam = Array.isArray(page) ? page[0] : page;
     let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
     const PROJECTS_PER_PAGE = 6;
 
-    // Get sort order from query param (default: newest)
+    // Sort param (default: newest)
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    if (searchParams?.sort === 'newest' || searchParams?.sort === 'oldest') {
-        sortOrder = searchParams.sort as 'newest' | 'oldest';
+    if (sort === 'newest' || sort === 'oldest') {
+        sortOrder = sort as 'newest' | 'oldest';
     }
 
-    // Get selected tech stack from query param
+    // Tech param (handle string or string[])
     let selectedTechStack: string[] = [];
-    if (searchParams?.tech) {
-        if (Array.isArray(searchParams.tech)) {
-            selectedTechStack = searchParams.tech;
+    if (tech) {
+        if (Array.isArray(tech)) {
+            selectedTechStack = tech.flatMap(t => t.split(','));
         } else {
-            selectedTechStack = searchParams.tech.split(',');
+            selectedTechStack = tech.split(',');
         }
     }
 

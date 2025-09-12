@@ -5,25 +5,30 @@ import work from '@/data/work';
  * WorkPage component that serves as the main page for displaying work experience.
  * This is accessed at the "/work" URL of the application.
  */
-export default function WorkPage({searchParams}: { searchParams: { [key: string]: string | string[] | undefined } }) {
-    // Get page from query param
-    const pageParam = Array.isArray(searchParams?.page) ? searchParams.page[0] : searchParams?.page;
+export default async function WorkPage({searchParams}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    // Destructure all query params at the top (Promise style, but not required)
+    const {page, sort, company} = await Promise.resolve(searchParams);
+
+    // Page param
+    const pageParam = Array.isArray(page) ? page[0] : page;
     let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
     const WORK_PER_PAGE = 6;
 
-    // Get sort order from query param (default: newest)
+    // Sort param (default: newest)
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    if (searchParams?.sort === 'newest' || searchParams?.sort === 'oldest') {
-        sortOrder = searchParams.sort as 'newest' | 'oldest';
+    if (sort === 'newest' || sort === 'oldest') {
+        sortOrder = sort as 'newest' | 'oldest';
     }
 
-    // Get selected companies from query param
+    // Company param (handle string or string[])
     let selectedCompanies: string[] = [];
-    if (searchParams?.company) {
-        if (Array.isArray(searchParams.company)) {
-            selectedCompanies = searchParams.company;
+    if (company) {
+        if (Array.isArray(company)) {
+            selectedCompanies = company.flatMap(c => c.split(','));
         } else {
-            selectedCompanies = searchParams.company.split(',');
+            selectedCompanies = company.split(',');
         }
     }
 
@@ -56,7 +61,7 @@ export default function WorkPage({searchParams}: { searchParams: { [key: string]
     if (currentPage < 1) currentPage = 1;
     if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
 
-    // Paginate the filtered work items
+    // Paginate
     const start = (currentPage - 1) * WORK_PER_PAGE;
     const paginatedWorkItems = filteredWorkItems.slice(start, start + WORK_PER_PAGE);
 

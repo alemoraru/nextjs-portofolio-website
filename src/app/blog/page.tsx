@@ -5,25 +5,30 @@ import posts from '@/data/blog';
  * BlogPage component that serves as the main page for displaying blog posts.
  * This is accessed at the "/blog" URL of the application.
  */
-export default function BlogPage({searchParams}: { searchParams: { [key: string]: string | string[] | undefined } }) {
-    // Get page from query param
-    const pageParam = Array.isArray(searchParams?.page) ? searchParams.page[0] : searchParams?.page;
+export default async function BlogPage({searchParams}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    // Destructure all query params at once
+    const {page, sort, tags} = await Promise.resolve(searchParams);
+
+    // Page param
+    const pageParam = Array.isArray(page) ? page[0] : page;
     let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
     const POSTS_PER_PAGE = 5;
 
-    // Get sort order from query param (default: desc, meaning newest)
+    // Sort param (default: desc)
     let sortOrder: 'asc' | 'desc' = 'desc';
-    if (searchParams?.sort === 'asc' || searchParams?.sort === 'desc') {
-        sortOrder = searchParams.sort as 'asc' | 'desc';
+    if (sort === 'asc' || sort === 'desc') {
+        sortOrder = sort as 'asc' | 'desc';
     }
 
-    // Get selected tags from query param
+    // Tags param (handle string or string[])
     let selectedTags: string[] = [];
-    if (searchParams?.tags) {
-        if (Array.isArray(searchParams.tags)) {
-            selectedTags = searchParams.tags;
+    if (tags) {
+        if (Array.isArray(tags)) {
+            selectedTags = tags.flatMap(tag => tag.split(','));
         } else {
-            selectedTags = searchParams.tags.split(',');
+            selectedTags = tags.split(',');
         }
     }
 
