@@ -73,18 +73,19 @@ Planned improvements and current/future features:
 - [X] 🌙 Add light/dark mode support
 - [X] 🖼️ Add a Carousel component to display images/highlights for work/projects/blog posts
 - [X] 🔍 Improve content structure, accessibility, and SEO
-- [ ] 🧪 Add tests and linting support for better maintainability
-- [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 - [X] 🔢 Add sorting/filtering functionality for:
     - [X] Work items
     - [X] Projects
     - [X] Blog posts
+- [X] 📄 Add recommended similar blog posts items to the bottom of each blog post
+- [X] 📄 Add blog post categories pages
+- [X] 📄 Add pagination to blog posts
+- [X] 📄 Add SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
     - [ ] Layout options
-- [X] 📄 Add recommended similar blog posts items to the bottom of each blog post
-- [ ] 📄 Add blog post categories pages
-- [X] 📄 Add pagination to blog posts
+- [ ] 🧪 Add tests and linting support for better maintainability
+- [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
 ---
 
