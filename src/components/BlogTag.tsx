@@ -11,7 +11,7 @@ export default function BlogTag({tag, href}: { tag: string, href?: string }) {
     // Base styles for the tag
     const baseClasses = `
         flex items-center text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 group-hover:bg-blue-200
-        dark:text-blue-300 px-3 py-1 rounded-full transition duration-300 cursor-pointer
+        dark:group-hover:bg-blue-800 dark:text-blue-300 px-3 py-1 rounded-full transition duration-300 cursor-pointer
     `;
 
     // Hover effects for the tag (if it's a link)
