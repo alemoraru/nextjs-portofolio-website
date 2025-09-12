@@ -1,41 +1,55 @@
 import React from 'react';
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa';
+import Link from 'next/link';
 
 interface PaginationControlsProps {
     currentPage: number;
     totalPages: number;
-    setCurrentPage: (page: number | ((prev: number) => number)) => void;
+    baseUrl: string;
+    searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-/**
- * PaginationControls component provides navigation controls for paginated content.
- * @param currentPage - The current page number.
- * @param totalPages - The total number of pages available.
- * @param setCurrentPage - Function to update the current page number.
- */
-const PaginationControls: React.FC<PaginationControlsProps> = ({currentPage, totalPages, setCurrentPage}) => {
+function buildPageUrl(baseUrl: string, page: number, searchParams?: { [key: string]: string | string[] | undefined }) {
+    const params = new URLSearchParams();
+    if (searchParams) {
+        Object.entries(searchParams).forEach(([key, value]) => {
+            if (key === 'page') return; // We'll set page below
+            if (Array.isArray(value)) {
+                value.forEach(v => params.append(key, v));
+            } else if (value !== undefined) {
+                params.set(key, value);
+            }
+        });
+    }
+    if (page > 1) {
+        params.set('page', page.toString());
+    }
+    const query = params.toString();
+    return query ? `${baseUrl}?${query}` : baseUrl;
+}
+
+const PaginationControls: React.FC<PaginationControlsProps> = ({currentPage, totalPages, baseUrl, searchParams}) => {
     if (totalPages <= 1) return null;
 
     return (
         <div className="flex justify-center items-center gap-2 mt-8">
             {/* Prev Button */}
-            <button
-                className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === 1 ? 'cursor-default opacity-60' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
-                onClick={() => setCurrentPage((p: number) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
+            <Link
+                href={buildPageUrl(baseUrl, Math.max(1, currentPage - 1), searchParams)}
+                className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === 1 ? 'cursor-default opacity-60 pointer-events-none' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
                 aria-label="Previous page"
             >
                 <FaChevronLeft className="w-4 h-4"/>
-            </button>
+            </Link>
 
             {/* First page */}
-            <button
-                className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === 1 ? 'bg-blue-500 text-white cursor-default' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                onClick={() => setCurrentPage(1)}
-                disabled={currentPage === 1}
+            <Link
+                href={buildPageUrl(baseUrl, 1, searchParams)}
+                className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === 1 ? 'bg-blue-500 text-white cursor-default pointer-events-none' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                aria-current={currentPage === 1 ? 'page' : undefined}
             >
                 1
-            </button>
+            </Link>
 
             {/* Left Ellipsis */}
             {currentPage > 3 && (
@@ -44,32 +58,31 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({currentPage, tot
 
             {/* Previous page number (if not 1 and not already shown) */}
             {currentPage > 2 && (
-                <button
+                <Link
+                    href={buildPageUrl(baseUrl, currentPage - 1, searchParams)}
                     className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
-                    onClick={() => setCurrentPage(currentPage - 1)}
                 >
                     {currentPage - 1}
-                </button>
+                </Link>
             )}
 
             {/* Current page (not 1 or last) */}
             {currentPage !== 1 && currentPage !== totalPages && (
-                <button
+                <span
                     className={`w-8 h-8 flex items-center justify-center rounded bg-blue-500 text-white transition-colors duration-150 cursor-default`}
-                    disabled
                 >
                     {currentPage}
-                </button>
+                </span>
             )}
 
             {/* Next page number (if not last and not already shown) */}
             {currentPage < totalPages - 1 && (
-                <button
+                <Link
+                    href={buildPageUrl(baseUrl, currentPage + 1, searchParams)}
                     className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
-                    onClick={() => setCurrentPage(currentPage + 1)}
                 >
                     {currentPage + 1}
-                </button>
+                </Link>
             )}
 
             {/* Right Ellipsis */}
@@ -79,24 +92,23 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({currentPage, tot
 
             {/* Last page */}
             {totalPages > 1 && (
-                <button
-                    className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === totalPages ? 'bg-blue-500 text-white cursor-default' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                    onClick={() => setCurrentPage(totalPages)}
-                    disabled={currentPage === totalPages}
+                <Link
+                    href={buildPageUrl(baseUrl, totalPages, searchParams)}
+                    className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === totalPages ? 'bg-blue-500 text-white cursor-default pointer-events-none' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                    aria-current={currentPage === totalPages ? 'page' : undefined}
                 >
                     {totalPages}
-                </button>
+                </Link>
             )}
 
             {/* Next Button */}
-            <button
-                className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === totalPages ? 'cursor-default opacity-60' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
-                onClick={() => setCurrentPage((p: number) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
+            <Link
+                href={buildPageUrl(baseUrl, Math.min(totalPages, currentPage + 1), searchParams)}
+                className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === totalPages ? 'cursor-default opacity-60 pointer-events-none' : 'cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600'}`}
                 aria-label="Next page"
             >
                 <FaChevronRight className="w-4 h-4"/>
-            </button>
+            </Link>
         </div>
     );
 };

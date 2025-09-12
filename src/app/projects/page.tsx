@@ -1,150 +1,111 @@
-'use client';
-
-import {useState, useMemo} from 'react';
-import {FaFrown} from 'react-icons/fa';
-import {motion, AnimatePresence} from 'framer-motion';
-import FilterDropdown from '@/components/FilterDropdown';
-import SortDropdown from '@/components/SortDropdown';
-import ProjectTile from '@/components/ProjectTile';
-import ActiveFilterChips from '@/components/ActiveFilterChips';
+import ProjectsClientUI from './ProjectsClientUI';
+import ProjectsNotFound from './ProjectsNotFound';
 import projects from '@/data/projects';
+import {redirect} from 'next/navigation';
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.
  * This is accessed at the "/projects" URL of the application.
  */
-export default function ProjectsPage() {
-    const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
-    const [techStackDrafts, setTechStackDrafts] = useState<string[]>([]);
-    const [sortOrder, setSortOrder] = useState<'oldest' | 'newest'>('newest');
+export default async function ProjectsPage({searchParams}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    // Destructure all query params at the top (Promise style, but not required)
+    const {page, sort, tech} = await Promise.resolve(searchParams);
 
-    // Memoized unique tech stack list with counts to avoid recalculating on every render
-    const uniqueTechStack = useMemo(() => {
-        const techStackCounts: Record<string, number> = {};
-        projects.forEach(project => {
-            (project.techStack || []).forEach(tech => {
-                techStackCounts[tech] = (techStackCounts[tech] || 0) + 1;
-            });
+    // Page param
+    const pageParam = Array.isArray(page) ? page[0] : page;
+    let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
+    const PROJECTS_PER_PAGE = 6;
+
+    // Sort param (default: newest)
+    const allowedSorts = ['newest', 'oldest'];
+    let sortOrder: 'newest' | 'oldest' = 'newest';
+    let sortIsValid = false;
+    if (sort && allowedSorts.includes(sort as string)) {
+        sortOrder = sort as 'newest' | 'oldest';
+        sortIsValid = true;
+    } else {
+        sortOrder = 'newest';
+        sortIsValid = false;
+    }
+
+    // If sort is invalid, rewrite the URL
+    if (sort && !sortIsValid) {
+        const params = new URLSearchParams();
+        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (tech) {
+            if (Array.isArray(tech)) {
+                params.set('tech', tech.join(','));
+            } else {
+                params.set('tech', tech);
+            }
+        }
+        params.set('sort', sortOrder);
+        redirect(`/projects${params.toString() ? '?' + params.toString() : ''}`);
+    }
+
+    // Tech param (handle string or string[])
+    let selectedTechStack: string[] = [];
+    if (tech) {
+        if (Array.isArray(tech)) {
+            selectedTechStack = tech.flatMap(t => t.split(','));
+        } else {
+            selectedTechStack = tech.split(',');
+        }
+    }
+
+    // Unique tech stack for filter dropdown
+    const techStackCounts: Record<string, number> = {};
+    projects.forEach(project => {
+        (project.techStack || []).forEach(tech => {
+            techStackCounts[tech] = (techStackCounts[tech] || 0) + 1;
         });
-        return Object.entries(techStackCounts)
-            .map(([tech, count]) => ({tech, count}))
-            .sort((a, b) => a.tech.localeCompare(b.tech));
-    }, []);
+    });
+    const uniqueTechStack = Object.entries(techStackCounts)
+        .map(([tech, count]) => ({tech, count}))
+        .sort((a, b) => a.tech.localeCompare(b.tech));
 
-    const toggleTechStackDraft = (tech: string) => {
-        setTechStackDrafts(prev =>
-            prev.includes(tech) ? prev.filter(t => t !== tech) : [...prev, tech]
-        );
-    };
-
-    const applyFilters = () => {
-        setSelectedTechStack([...techStackDrafts]);
-    };
-
-    const clearFilters = () => {
-        setSelectedTechStack([]);
-        setTechStackDrafts([]);
-    };
-
-    // Handler to remove a single tech from filters
-    const removeTech = (tech: string) => {
-        setSelectedTechStack(prev => prev.filter(t => t !== tech));
-        setTechStackDrafts(prev => prev.filter(t => t !== tech));
-    };
-
-    // Handler to clear all tech filters
-    const clearAllTech = () => {
-        setSelectedTechStack([]);
-        setTechStackDrafts([]);
-    };
-
-    // Memoized filtered projects based on selected tech stack and sort order
-    const filteredProjects = useMemo(() => {
-        const filtered = projects.filter(project =>
+    // Filter and sort projects
+    const filteredProjects = projects
+        .filter(project =>
             selectedTechStack.length === 0 ||
             (project.techStack && selectedTechStack.some(tech => project.techStack.includes(tech)))
-        );
-
-        return filtered.sort((a, b) => {
+        )
+        .sort((a, b) => {
             if (sortOrder === 'newest') {
                 return new Date(b.endDate || '').getTime() - new Date(a.endDate || '').getTime();
             } else {
                 return new Date(a.startDate || '').getTime() - new Date(b.startDate || '').getTime();
             }
         });
-    }, [selectedTechStack, sortOrder]);
+
+    // Calculate total pages and clamp currentPage
+    const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
+
+    // If page is out of bounds, show not-found
+    if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
+        return <ProjectsNotFound/>;
+    }
+
+    currentPage = Math.min(currentPage, totalPages || 1);
+    if (currentPage < 1) currentPage = 1;
+    if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
+
+    // Paginate the filtered projects
+    const start = (currentPage - 1) * PROJECTS_PER_PAGE;
+    const paginatedProjects = filteredProjects.slice(start, start + PROJECTS_PER_PAGE);
 
     return (
-        <section className="px-4 max-w-4xl mx-auto">
-            <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
-
-                {/* Tech Stack Filter Dropdown - Left */}
-                <div className="relative flex-grow md:flex-grow-0">
-                    <FilterDropdown
-                        items={uniqueTechStack.map(({tech, count}) => ({name: tech, count}))}
-                        selectedItems={techStackDrafts}
-                        onToggle={toggleTechStackDraft}
-                        onApply={applyFilters}
-                        onClear={clearFilters}
-                        placeholder="Filter by Tech"
-                        resultCount={filteredProjects.length}
-                    />
-                </div>
-
-                {/* Sort Order Dropdown - Right */}
-                <div className="relative flex-grow md:flex-grow-0 z-20">
-                    <SortDropdown
-                        sortOrder={sortOrder}
-                        onChange={(order) => setSortOrder(order as 'newest' | 'oldest')}
-                        options={[
-                            {label: 'Newest First', value: 'newest'},
-                            {label: 'Oldest First', value: 'oldest'},
-                        ]}
-                    />
-                </div>
-            </div>
-
-            {/* Active Filter Chips */}
-            <ActiveFilterChips
-                filters={selectedTechStack}
-                onRemove={removeTech}
-                onClearAll={selectedTechStack.length > 1 ? clearAllTech : undefined}
-            />
-
-            <AnimatePresence mode="wait">
-                {filteredProjects.length > 0 ? (
-                    <motion.div
-                        key="projects"
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        transition={{duration: 0.2}}
-                    >
-                        {filteredProjects.map((project) => (
-                            <ProjectTile key={project.slug} {...project} />
-                        ))}
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        key="no-results"
-                        className="flex flex-col items-center text-center text-gray-600 dark:text-gray-300 mt-12 px-4"
-                        initial={{opacity: 0, y: 10}}
-                        animate={{opacity: 1, y: 0}}
-                        exit={{opacity: 0, y: 10}}
-                        transition={{duration: 0.3, ease: 'easeOut'}}
-                    >
-                        <FaFrown className="text-4xl md:text-5xl mb-3 text-gray-400 dark:text-gray-500"/>
-                        <p className="text-lg md:text-xl lg:text-2xl font-semibold">
-                            No projects found
-                        </p>
-                        <p className="text-sm md:text-base lg:text-lg mt-2 max-w-2xl">
-                            The combination of selected tech stack filters didn&apos;t match any projects.
-                            Try changing or clearing your filters.
-                        </p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </section>
+        <ProjectsClientUI
+            uniqueTechStack={uniqueTechStack}
+            selectedTechStack={selectedTechStack}
+            sortOrder={sortOrder}
+            filteredProjects={filteredProjects}
+            paginatedProjects={paginatedProjects}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            baseUrl="/projects"
+        />
     );
 }

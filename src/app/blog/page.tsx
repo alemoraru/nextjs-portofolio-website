@@ -1,173 +1,109 @@
-'use client';
-
-import {useState, useMemo, useEffect} from 'react';
-import {FaFrown} from 'react-icons/fa';
-import {motion, AnimatePresence} from 'framer-motion';
-import FilterDropdown from '@/components/FilterDropdown';
-import SortDropdown from '@/components/SortDropdown';
-import BlogPost from '@/components/BlogPost';
-import PaginationControls from '@/components/PaginationControls';
-import ActiveFilterChips from '@/components/ActiveFilterChips';
+import BlogClientUI from './BlogClientUI';
+import BlogNotFound from './BlogNotFound';
 import posts from '@/data/blog';
+import {redirect} from 'next/navigation';
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.
  * This is accessed at the "/blog" URL of the application.
  */
-export default function BlogPage() {
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const [tagDrafts, setTagDrafts] = useState<string[]>([]);
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-    const [currentPage, setCurrentPage] = useState(1);
+export default async function BlogPage({searchParams}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    // Destructure all query params at once
+    const {page, sort, tags} = await Promise.resolve(searchParams);
+
+    // Page param
+    const pageParam = Array.isArray(page) ? page[0] : page;
+    let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
     const POSTS_PER_PAGE = 5;
 
-    // Determines the set of unique blog post tags and their count
-    const uniqueTags = useMemo(() => {
-        const tagCounts: Record<string, number> = {};
-        posts.forEach(post => {
-            (post.tags || []).forEach(tag => {
-                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-            });
+    // Sort param (default: desc)
+    const allowedSorts = ['asc', 'desc'];
+    let sortOrder: 'asc' | 'desc' = 'desc';
+    let sortIsValid = false;
+    if (sort && allowedSorts.includes(sort as string)) {
+        sortOrder = sort as 'asc' | 'desc';
+        sortIsValid = true;
+    } else {
+        sortOrder = 'desc';
+        sortIsValid = false;
+    }
+
+    // If sort is invalid, rewrite the URL
+    if (sort && !sortIsValid) {
+        const params = new URLSearchParams();
+        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (tags) {
+            if (Array.isArray(tags)) {
+                params.set('tags', tags.join(','));
+            } else {
+                params.set('tags', tags);
+            }
+        }
+        params.set('sort', sortOrder);
+        redirect(`/blog${params.toString() ? '?' + params.toString() : ''}`);
+    }
+
+    // Tags param (handle string or string[])
+    let selectedTags: string[] = [];
+    if (tags) {
+        if (Array.isArray(tags)) {
+            selectedTags = tags.flatMap(tag => tag.split(','));
+        } else {
+            selectedTags = tags.split(',');
+        }
+    }
+
+    // Unique tags for filter dropdown
+    const tagCounts: Record<string, number> = {};
+    posts.forEach(post => {
+        (post.tags || []).forEach(tag => {
+            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
         });
-        return Object.entries(tagCounts)
-            .map(([tag, count]) => ({tag, count}))
-            .sort((a, b) => a.tag.localeCompare(b.tag));
-    }, []);
+    });
+    const uniqueTags = Object.entries(tagCounts)
+        .map(([tag, count]) => ({tag, count}))
+        .sort((a, b) => a.tag.localeCompare(b.tag));
 
-    // Function to toggle a tag in the draft state
-    const toggleTagDraft = (tag: string) => {
-        setTagDrafts(prev =>
-            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-        );
-    };
+    // Filter and sort posts
+    const filteredPosts = posts
+        .filter(post =>
+            selectedTags.length === 0 ||
+            (post.tags && selectedTags.some(tag => post.tags && post.tags.includes(tag)))
+        )
+        .sort((a, b) => {
+            const dateA = new Date(a.date || '').getTime();
+            const dateB = new Date(b.date || '').getTime();
+            return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+        });
 
-    // Function to apply the selected tags as filters
-    const applyFilters = () => {
-        setSelectedTags([...tagDrafts]);
-    };
-
-    // Function to clear all selected filters
-    const clearFilters = () => {
-        setSelectedTags([]);
-        setTagDrafts([]);
-    };
-
-    // Reset to the first page when filters or sort order change
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [selectedTags, sortOrder]);
-
-    // Filter and sort the posts based on selected tags and sort order
-    const filteredPosts = useMemo(() => {
-        return posts
-            .filter(post =>
-                selectedTags.length === 0 ||
-                (post.tags && selectedTags.some(tag => post.tags && post.tags.includes(tag)))
-            )
-            .sort((a, b) => {
-                const dateA = new Date(a.date || '').getTime();
-                const dateB = new Date(b.date || '').getTime();
-                return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-            });
-    }, [selectedTags, sortOrder]);
-
-    // Calculate total pages and paginate the posts
+    // Calculate total pages and clamp currentPage
     const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-    const paginatedPosts = useMemo(() => {
-        const start = (currentPage - 1) * POSTS_PER_PAGE;
-        return filteredPosts.slice(start, start + POSTS_PER_PAGE);
-    }, [filteredPosts, currentPage]);
 
-    // Handler to remove a single tag from filters
-    const removeTag = (tag: string) => {
-        setSelectedTags(prev => prev.filter(t => t !== tag));
-        setTagDrafts(prev => prev.filter(t => t !== tag));
-    };
+    // If page is out of bounds, show not-found
+    if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
+        return <BlogNotFound/>;
+    }
 
-    // Handler to clear all tags
-    const clearAllTags = () => {
-        setSelectedTags([]);
-        setTagDrafts([]);
-    };
+    currentPage = Math.min(currentPage, totalPages || 1);
+    if (currentPage < 1) currentPage = 1;
+    if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
+
+    // Paginate
+    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    const paginatedPosts = filteredPosts.slice(start, start + POSTS_PER_PAGE);
 
     return (
-        <section className="px-4 max-w-4xl mx-auto">
-            <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
-
-                {/* Tag Filter Dropdown - Left */}
-                <div className="relative flex-grow md:flex-grow-0">
-                    <FilterDropdown
-                        items={uniqueTags.map(({tag, count}) => ({name: tag, count}))}
-                        selectedItems={tagDrafts}
-                        onToggle={toggleTagDraft}
-                        onApply={applyFilters}
-                        onClear={clearFilters}
-                        placeholder="Filter by Tag"
-                        resultCount={filteredPosts.length}
-                    />
-                </div>
-
-                {/* Sort Order Dropdown - Right */}
-                <div className="relative flex-grow md:flex-grow-0">
-                    <SortDropdown
-                        sortOrder={sortOrder}
-                        onChange={(order) => setSortOrder(order as 'asc' | 'desc')}
-                        options={[
-                            {label: 'Newest First', value: 'desc'},
-                            {label: 'Oldest First', value: 'asc'},
-                        ]}
-                    />
-                </div>
-            </div>
-
-            {/* Active Filter Chips */}
-            <ActiveFilterChips
-                filters={selectedTags}
-                onRemove={removeTag}
-                onClearAll={selectedTags.length > 1 ? clearAllTags : undefined}
-            />
-
-            {/* Blog Posts */}
-            <AnimatePresence mode="wait">
-                {filteredPosts.length > 0 ? (
-                    <motion.div
-                        key="posts"
-                        className="grid gap-6"
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        transition={{duration: 0.2}}
-                    >
-                        {paginatedPosts.map(post => (
-                            <BlogPost key={post.slug} {...post} />
-                        ))}
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        key="no-results"
-                        className="flex flex-col items-center text-center text-gray-600 dark:text-gray-300 mt-12 px-4"
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        transition={{duration: 0.3, ease: 'easeOut'}}
-                    >
-                        <FaFrown className="text-4xl md:text-5xl mb-3 text-gray-400 dark:text-gray-500"/>
-                        <p className="text-lg md:text-xl lg:text-2xl font-semibold">
-                            No results found
-                        </p>
-                        <p className="text-sm md:text-base lg:text-lg mt-2 max-w-2xl">
-                            The combination of selected tags didn&apos;t match any blog posts.
-                            Try changing or clearing your filters.
-                        </p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Pagination Controls */}
-            <PaginationControls
-                currentPage={currentPage}
-                totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
-            />
-        </section>
+        <BlogClientUI
+            uniqueTags={uniqueTags}
+            selectedTags={selectedTags}
+            sortOrder={sortOrder}
+            filteredPosts={filteredPosts}
+            paginatedPosts={paginatedPosts}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            baseUrl="/blog"
+        />
     );
 }
