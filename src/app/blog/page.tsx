@@ -1,4 +1,5 @@
 import BlogClientUI from './BlogClientUI';
+import BlogNotFound from './BlogNotFound';
 import posts from '@/data/blog';
 
 /**
@@ -57,6 +58,12 @@ export default async function BlogPage({searchParams}: {
 
     // Calculate total pages and clamp currentPage
     const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+
+    // If page is out of bounds, show not-found
+    if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
+        return <BlogNotFound/>;
+    }
+
     currentPage = Math.min(currentPage, totalPages || 1);
     if (currentPage < 1) currentPage = 1;
     if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;

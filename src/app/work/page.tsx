@@ -1,4 +1,5 @@
 import WorkClientUI from './WorkClientUI';
+import WorkNotFound from './WorkNotFound';
 import work from '@/data/work';
 
 /**
@@ -57,6 +58,12 @@ export default async function WorkPage({searchParams}: {
 
     // Calculate total pages and clamp currentPage
     const totalPages = Math.ceil(filteredWorkItems.length / WORK_PER_PAGE);
+
+    // If page is out of bounds, show not-found
+    if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
+        return <WorkNotFound/>;
+    }
+
     currentPage = Math.min(currentPage, totalPages || 1);
     if (currentPage < 1) currentPage = 1;
     if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
