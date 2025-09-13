@@ -52,38 +52,26 @@ homepage.
 
 ---
 
+## 💎Key Features
+
+* Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
+* MDX support for blog posts, projects, and work items
+* Syntax highlighting for code blocks in MDX files
+* Light/dark mode toggle
+* Responsive design for mobile and desktop
+* SEO-friendly structure and metadata
+* SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
+* Similar blog posts recommendations
+* Blog post categories pages
+
 ## 🧭 Roadmap
 
 Planned improvements and current/future features:
 
-- [X] 🖥️ Create pages for:
-    - [X] Home
-    - [X] Work
-    - [X] Projects
-    - [X] Blog
-- [X] 📺 Add UI components/elements for:
-    - [X] Header with navigation
-    - [X] Footer
-    - [X] Home page with a hero section
-- [X] 📄 Enable MDX for:
-    - [X] Individual Work pages
-    - [X] Blog post pages
-    - [X] Project detail pages
-- [X] 👨🏻‍💻 MDX Syntax Highlighting for code blocks
-- [X] 🌙 Add light/dark mode support
-- [X] 🖼️ Add a Carousel component to display images/highlights for work/projects/blog posts
-- [X] 🔍 Improve content structure, accessibility, and SEO
-- [X] 🔢 Add sorting/filtering functionality for:
-    - [X] Work items
-    - [X] Projects
-    - [X] Blog posts
-- [X] 📄 Add recommended similar blog posts items to the bottom of each blog post
-- [X] 📄 Add blog post categories pages
-- [X] 📄 Add pagination to blog posts
-- [X] 📄 Add SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
 - [ ] 🖼 Add theme customization options:
     - [ ] Color palette
     - [ ] Layout options
+    - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
@@ -128,7 +116,11 @@ This project uses:
 
 ---
 
+## 🪪 License
+
+This project is licensed under the [MIT License](LICENSE).
+
 ## 💬 Feedback & Contributions
 
-Got suggestions, issues, or ideas for improvement? Feel free to open an issue or submit a pull request — contributions
-are always welcome!
+Got suggestions, issues, or ideas for improvement? Feel free to open an issue or submit a pull request.
+Contributions are always welcome! Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
