@@ -7,21 +7,25 @@ import {redirect} from 'next/navigation';
  * ProjectsPage component that serves as the main page for displaying projects.
  * This is accessed at the "/projects" URL of the application.
  */
-export default async function ProjectsPage({searchParams}: {
-    searchParams: { [key: string]: string | string[] | undefined }
+export default async function ProjectsPage(props: {
+    searchParams?: Promise<{
+        page?: string;
+        sort?: string;
+        tech?: string | string[];
+    }>
 }) {
-    // Destructure all query params at the top (Promise style, but not required)
-    const {page, sort, tech} = await Promise.resolve(searchParams);
+    // Destructure all query params at once
+    const searchParams = await props.searchParams;
 
     // Page param
-    const pageParam = Array.isArray(page) ? page[0] : page;
-    let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
+    const currentPage = Number(searchParams?.page) || 1;
+    const {sort, tech} = searchParams || {};
     const PROJECTS_PER_PAGE = 6;
 
     // Sort param (default: newest)
     const allowedSorts = ['newest', 'oldest'];
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    let sortIsValid = false;
+    let sortIsValid: boolean;
     if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'newest' | 'oldest';
         sortIsValid = true;
@@ -33,7 +37,7 @@ export default async function ProjectsPage({searchParams}: {
     // If sort is invalid, rewrite the URL
     if (sort && !sortIsValid) {
         const params = new URLSearchParams();
-        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (searchParams?.page) params.set('page', String(currentPage));
         if (tech) {
             if (Array.isArray(tech)) {
                 params.set('tech', tech.join(','));
@@ -87,10 +91,6 @@ export default async function ProjectsPage({searchParams}: {
     if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
         return <ProjectsNotFound/>;
     }
-
-    currentPage = Math.min(currentPage, totalPages || 1);
-    if (currentPage < 1) currentPage = 1;
-    if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
 
     // Paginate the filtered projects
     const start = (currentPage - 1) * PROJECTS_PER_PAGE;
