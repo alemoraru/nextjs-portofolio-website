@@ -15,17 +15,17 @@ export default async function WorkPage(props: {
     }>
 }) {
     // Destructure all query params at once
-    const {page, sort, company} = await props.searchParams || {};
+    const searchParams = await props.searchParams;
 
     // Page param
-    const pageParam = Array.isArray(page) ? page[0] : page;
-    let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
+    const currentPage = Number(searchParams?.page) || 1;
+    const {sort, company} = searchParams || {};
     const WORK_PER_PAGE = 6;
 
     // Sort param (default: newest)
     const allowedSorts = ['newest', 'oldest'];
     let sortOrder: 'newest' | 'oldest' = 'newest';
-    let sortIsValid = false;
+    let sortIsValid: boolean;
     if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'newest' | 'oldest';
         sortIsValid = true;
@@ -37,7 +37,7 @@ export default async function WorkPage(props: {
     // If sort is invalid, rewrite the URL
     if (sort && !sortIsValid) {
         const params = new URLSearchParams();
-        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (searchParams?.page) params.set('page', String(currentPage));
         if (company) {
             if (Array.isArray(company)) {
                 params.set('company', company.join(','));
@@ -89,10 +89,6 @@ export default async function WorkPage(props: {
     if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
         return <WorkNotFound/>;
     }
-
-    currentPage = Math.min(currentPage, totalPages || 1);
-    if (currentPage < 1) currentPage = 1;
-    if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
 
     // Paginate
     const start = (currentPage - 1) * WORK_PER_PAGE;

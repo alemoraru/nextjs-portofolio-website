@@ -15,17 +15,17 @@ export default async function BlogPage(props: {
     }>
 }) {
     // Destructure all query params at once
-    const {page, sort, tags} = await props.searchParams || {};
+    const searchParams = await props.searchParams;
 
     // Page param
-    const pageParam = Array.isArray(page) ? page[0] : page;
-    let currentPage = Math.max(1, parseInt(pageParam || '1', 10));
+    const currentPage = Number(searchParams?.page) || 1;
+    const {sort, tags} = searchParams || {};
     const POSTS_PER_PAGE = 5;
 
     // Sort param (default: desc)
     const allowedSorts = ['asc', 'desc'];
     let sortOrder: 'asc' | 'desc' = 'desc';
-    let sortIsValid = false;
+    let sortIsValid: boolean;
     if (sort && allowedSorts.includes(sort as string)) {
         sortOrder = sort as 'asc' | 'desc';
         sortIsValid = true;
@@ -37,7 +37,7 @@ export default async function BlogPage(props: {
     // If sort is invalid, rewrite the URL
     if (sort && !sortIsValid) {
         const params = new URLSearchParams();
-        if (page) params.set('page', Array.isArray(page) ? page[0] : page);
+        if (searchParams?.page) params.set('page', String(currentPage));
         if (tags) {
             if (Array.isArray(tags)) {
                 params.set('tags', tags.join(','));
@@ -89,10 +89,6 @@ export default async function BlogPage(props: {
     if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
         return <BlogNotFound/>;
     }
-
-    currentPage = Math.min(currentPage, totalPages || 1);
-    if (currentPage < 1) currentPage = 1;
-    if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
 
     // Paginate
     const start = (currentPage - 1) * POSTS_PER_PAGE;
