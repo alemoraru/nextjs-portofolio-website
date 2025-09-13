@@ -16,11 +16,11 @@ export default function MobileMenuToggle({isOpen, onToggleAction}: {
             onClick={onToggleAction}
             aria-label="Toggle Navigation Menu"
         >
-        <span className={`inline-block transform transition-transform duration-300 ease-in-out ${
-            isOpen ? 'rotate-90' : 'rotate-0'}`}
-        >
-            {isOpen ? <FaXmark className="w-5 h-5"/> : <FaBars className="w-5 h-5"/>}
-        </span>
+            <span className={`inline-block transform transition-transform duration-300 ease-in-out ${
+                isOpen ? 'rotate-90' : 'rotate-0'}`}
+            >
+                {isOpen ? <FaXmark className="w-5 h-5"/> : <FaBars className="w-5 h-5"/>}
+            </span>
         </button>
     )
 }
