@@ -22,7 +22,8 @@ export default function NavigationMenu() {
 
     return (
         <nav className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ul className="flex items-center justify-center gap-0.5 border border-gray-600 bg-white/80 dark:bg-black/40 rounded-full px-1.5 py-1.5 relative shadow-lg min-h-0">
+            <ul className="flex items-center justify-center gap-0.5 border border-gray-600 bg-white
+            dark:bg-black rounded-full px-1.5 py-1.5 relative shadow-lg min-h-0">
                 {/* Animated active indicator as the border only */}
                 <div
                     className="absolute top-0 left-0 h-full transition-all duration-300 pointer-events-none z-0 flex"
