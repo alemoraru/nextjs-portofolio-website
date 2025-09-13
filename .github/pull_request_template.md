@@ -21,3 +21,7 @@
 - [ ] Documentation and comments added
 - [ ] No console warnings or errors
 - [ ] No ESLint warnings or errors
+
+## Supplementary Information
+
+[//]: # (Any other information that is important to this PR, such as screenshots of a UI change)
