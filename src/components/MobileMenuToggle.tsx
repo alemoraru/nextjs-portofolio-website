@@ -11,7 +11,8 @@ export default function MobileMenuToggle({isOpen, onToggleAction}: {
 }) {
     return (
         <button
-            className="md:hidden p-2 rounded-full hover:bg-gray-800 transition-colors mt-1"
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200
+            dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors mt-1"
             onClick={onToggleAction}
             aria-label="Toggle Navigation Menu"
         >
