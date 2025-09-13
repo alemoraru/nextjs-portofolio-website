@@ -52,7 +52,7 @@ homepage.
 
 ---
 
-## 💎Key Features
+## 💎 Key Features
 
 * Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
 * MDX support for blog posts, projects, and work items
