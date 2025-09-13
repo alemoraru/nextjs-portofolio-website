@@ -7,11 +7,15 @@ import {redirect} from 'next/navigation';
  * WorkPage component that serves as the main page for displaying work experience.
  * This is accessed at the "/work" URL of the application.
  */
-export default async function WorkPage({searchParams}: {
-    searchParams: { [key: string]: string | string[] | undefined }
+export default async function WorkPage(props: {
+    searchParams?: Promise<{
+        page?: string;
+        sort?: string;
+        company?: string | string[];
+    }>
 }) {
-    // Destructure all query params at the top (Promise style, but not required)
-    const {page, sort, company} = await Promise.resolve(searchParams);
+    // Destructure all query params at once
+    const {page, sort, company} = await props.searchParams || {};
 
     // Page param
     const pageParam = Array.isArray(page) ? page[0] : page;

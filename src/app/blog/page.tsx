@@ -7,11 +7,15 @@ import {redirect} from 'next/navigation';
  * BlogPage component that serves as the main page for displaying blog posts.
  * This is accessed at the "/blog" URL of the application.
  */
-export default async function BlogPage({searchParams}: {
-    searchParams: { [key: string]: string | string[] | undefined }
+export default async function BlogPage(props: {
+    searchParams?: Promise<{
+        page?: string;
+        sort?: string;
+        tags?: string | string[];
+    }>
 }) {
     // Destructure all query params at once
-    const {page, sort, tags} = await Promise.resolve(searchParams);
+    const {page, sort, tags} = await props.searchParams || {};
 
     // Page param
     const pageParam = Array.isArray(page) ? page[0] : page;

@@ -7,11 +7,15 @@ import {redirect} from 'next/navigation';
  * ProjectsPage component that serves as the main page for displaying projects.
  * This is accessed at the "/projects" URL of the application.
  */
-export default async function ProjectsPage({searchParams}: {
-    searchParams: { [key: string]: string | string[] | undefined }
+export default async function ProjectsPage(props: {
+    searchParams?: Promise<{
+        page?: string;
+        sort?: string;
+        tech?: string | string[];
+    }>
 }) {
-    // Destructure all query params at the top (Promise style, but not required)
-    const {page, sort, tech} = await Promise.resolve(searchParams);
+    // Destructure all query params at once
+    const {page, sort, tech} = await props.searchParams || {};
 
     // Page param
     const pageParam = Array.isArray(page) ? page[0] : page;
