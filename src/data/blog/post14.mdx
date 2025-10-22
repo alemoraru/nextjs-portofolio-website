@@ -31,21 +31,23 @@ Caching is a technique to store frequently accessed data in a fast storage layer
 
 ## Tools: Redis vs Memcached
 
-| Feature      | Redis         | Memcached     |
-|--------------|--------------|--------------|
-| Data Types   | Strings, Lists, Sets, Hashes | Strings only |
-| Persistence  | Yes          | No           |
-| Replication  | Yes          | No           |
-| Pub/Sub      | Yes          | No           |
-| Use Cases    | Sessions, Queues, Leaderboards | Simple cache |
-| Scripting    | Lua scripts  | No           |
+| Feature     | Redis                          | Memcached    |
+| ----------- | ------------------------------ | ------------ |
+| Data Types  | Strings, Lists, Sets, Hashes   | Strings only |
+| Persistence | Yes                            | No           |
+| Replication | Yes                            | No           |
+| Pub/Sub     | Yes                            | No           |
+| Use Cases   | Sessions, Queues, Leaderboards | Simple cache |
+| Scripting   | Lua scripts                    | No           |
 
 ### Redis
+
 - In-memory data structure store with persistence options.
 - Supports advanced data types and atomic operations.
 - Can be used for caching, pub/sub, queues, rate limiting, and more.
 
 ### Memcached
+
 - Simple, high-performance, distributed memory object caching system.
 - Focused on speed and simplicity.
 - No persistence or advanced data types.

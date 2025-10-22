@@ -54,24 +54,24 @@ homepage.
 
 ## 💎 Key Features
 
-* Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
-* MDX support for blog posts, projects, and work items
-* Syntax highlighting for code blocks in MDX files
-* Light/dark mode toggle
-* Responsive design for mobile and desktop
-* SEO-friendly structure and metadata
-* SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
-* Similar blog posts recommendations
-* Blog post categories pages
+- Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
+- MDX support for blog posts, projects, and work items
+- Syntax highlighting for code blocks in MDX files
+- Light/dark mode toggle
+- Responsive design for mobile and desktop
+- SEO-friendly structure and metadata
+- SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
+- Similar blog posts recommendations
+- Blog post categories pages
 
 ## 🧭 Roadmap
 
 Planned improvements and current/future features:
 
 - [ ] 🖼 Add theme customization options:
-    - [ ] Color palette
-    - [ ] Layout options
-    - [ ] Consistent color scheme across pages in tailwind.config.js
+  - [ ] Color palette
+  - [ ] Layout options
+  - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
