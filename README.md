@@ -116,6 +116,17 @@ This project uses:
 
 ---
 
+## 💎 Code Quality & Guidelines
+
+This project follows best practices for code quality and style:
+
+- Consistent code formatting using [Prettier](https://prettier.io)
+- Linting with [ESLint](https://eslint.org) to ensure code quality
+- Modular and reusable (React) components
+
+> **Note**: For prettier, you can run `npx prettier --check .` to check formatting,
+> and `npx prettier --write .` to automatically format the code.
+
 ## 🪪 License
 
 This project is licensed under the [MIT License](LICENSE).
