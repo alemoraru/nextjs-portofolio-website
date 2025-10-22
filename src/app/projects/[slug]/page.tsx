@@ -107,7 +107,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
                         <li key={tech} className="flex items-center gap-2">
                             <StackIcon
                                 name={techStackMap[tech] || tech}
-                                style={{width: '24px', height: '24px'}}
+                                className={"w-[24px] h-[24px]"}
                             />
                             <span>{tech}</span>
                         </li>

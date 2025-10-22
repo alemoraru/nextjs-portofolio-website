@@ -14,7 +14,7 @@ export const navItems = [
  * Temporary mapping for tech stack icons.
  */
 export const techStackMap: Record<string, string> = {
-    'React': 'reactjs',
+    'React': 'react',
     'TypeScript': 'typescript',
     'TailwindCSS': 'tailwindcss',
     'Node.js': 'nodejs',
