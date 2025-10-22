@@ -1,6 +1,6 @@
 {
   "name": "nextjs-portofolio-website",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -24,7 +24,7 @@
     "react-icons": "^5.5.0",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
-    "tech-stack-icons": "^2.1.0"
+    "tech-stack-icons": "^3.3.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -35,6 +35,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
+    "prettier": "3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

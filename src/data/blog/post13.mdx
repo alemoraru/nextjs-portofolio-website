@@ -21,12 +21,14 @@ Choosing between **SQL** and **NoSQL** databases is a fundamental system design 
 - **Examples**: MySQL, PostgreSQL, Oracle, Microsoft SQL Server.
 
 ### SQL Strengths
+
 - Complex queries (JOINs, aggregations)
 - Data integrity and validation
 - Mature tooling and ecosystem
 - Transactional support
 
 ### SQL Weaknesses
+
 - Harder to scale horizontally (sharding is complex)
 - Schema changes can be disruptive
 - Not ideal for unstructured or rapidly evolving data
@@ -39,27 +41,29 @@ Choosing between **SQL** and **NoSQL** databases is a fundamental system design 
 - **Examples**: MongoDB (document), Cassandra (column), DynamoDB (key-value), Neo4j (graph), Redis (key-value).
 
 ### NoSQL Strengths
+
 - Horizontal scalability (easy to add nodes)
 - Flexible, dynamic schemas
 - High throughput for large-scale workloads
 - Suited for unstructured or semi-structured data
 
 ### NoSQL Weaknesses
+
 - Limited support for complex queries and transactions
 - Weaker consistency guarantees (eventual consistency)
 - Less mature tooling for some databases
 
 ## Trade-offs
 
-| Feature         | SQL                | NoSQL                |
-|-----------------|--------------------|----------------------|
-| Schema          | Fixed              | Flexible             |
-| Transactions    | Strong (ACID)      | Limited/None         |
-| Scalability     | Vertical           | Horizontal           |
-| Joins           | Supported          | Rare/Not supported   |
-| Consistency     | Strong             | Eventual             |
-| Query Language  | SQL                | Varies (JSON, CQL)   |
-| Use Cases       | OLTP, analytics    | Big data, real-time  |
+| Feature        | SQL             | NoSQL               |
+| -------------- | --------------- | ------------------- |
+| Schema         | Fixed           | Flexible            |
+| Transactions   | Strong (ACID)   | Limited/None        |
+| Scalability    | Vertical        | Horizontal          |
+| Joins          | Supported       | Rare/Not supported  |
+| Consistency    | Strong          | Eventual            |
+| Query Language | SQL             | Varies (JSON, CQL)  |
+| Use Cases      | OLTP, analytics | Big data, real-time |
 
 ## When to Use SQL
 
@@ -80,18 +84,22 @@ Choosing between **SQL** and **NoSQL** databases is a fundamental system design 
 ## Deep Dive: Application Scenarios
 
 ### E-commerce
+
 - **SQL**: Orders, payments, inventory (strong consistency, transactions)
 - **NoSQL**: Product catalog, user sessions, recommendations (flexible, scalable)
 
 ### Analytics
+
 - **NoSQL**: Event logs, clickstreams, time-series data (high write throughput)
 - **SQL**: Aggregated reports, dashboards (complex queries)
 
 ### Social Networks
+
 - **NoSQL**: User feeds, messages, relationships (graph or document DBs)
 - **SQL**: User profiles, authentication (structured, transactional)
 
 ### IoT and Real-Time Apps
+
 - **NoSQL**: Sensor data, telemetry (high-volume, flexible schema)
 
 ## Polyglot Persistence

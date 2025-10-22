@@ -1,10 +1,10 @@
 ## Description
 
-[//]: # (Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.)
+[//]: # "Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context."
 
 ## Type of Change
 
-[//]: # (Please select one)
+[//]: # "Please select one"
 
 - [ ] Feature
 - [ ] Bugfix
@@ -14,7 +14,7 @@
 
 ## Checklist
 
-[//]: # (Please check all that apply)
+[//]: # "Please check all that apply"
 
 - [ ] Manually tested by running `npm run dev` and viewing all pages
 - [ ] It can build a prod build with `npm run build`
@@ -24,4 +24,4 @@
 
 ## Supplementary Information
 
-[//]: # (Any other information that is important to this PR, such as screenshots of a UI change)
+[//]: # "Any other information that is important to this PR, such as screenshots of a UI change"

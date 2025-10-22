@@ -23,11 +23,13 @@ A **load balancer** is a critical component in modern distributed systems, respo
 ## Types of Load Balancers
 
 ### 1. Layer 4 (Transport Layer)
+
 - Operates at the TCP/UDP level.
 - Routes traffic based on IP address and port.
 - Examples: AWS Network Load Balancer, HAProxy (TCP mode).
 
 ### 2. Layer 7 (Application Layer)
+
 - Operates at the HTTP/HTTPS level.
 - Can make routing decisions based on URL, headers, cookies, etc.
 - Examples: NGINX, AWS Application Load Balancer, Traefik.
@@ -74,18 +76,22 @@ http {
 - **Overlap**: Many tools (e.g., NGINX, HAProxy) can serve as both.
 
 ### Key Differences
+
 - **Purpose**: Load balancer focuses on distribution; reverse proxy focuses on abstraction and security.
 - **Session Persistence**: Load balancers may need sticky sessions; reverse proxies often do not.
 
 ## Advanced Topics
 
 ### Global Load Balancing
+
 - Use DNS-based or Anycast routing to distribute traffic across regions or data centers.
 
 ### SSL Termination
+
 - Offload SSL decryption at the load balancer to reduce backend server load.
 
 ### Autoscaling
+
 - Integrate with orchestration tools (Kubernetes, AWS ASG) to automatically add/remove backend servers.
 
 ## Best Practices

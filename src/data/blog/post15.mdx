@@ -27,9 +27,7 @@ Tailwind CSS is a utility-first CSS framework that provides low-level utility cl
 Unlike traditional CSS or BEM, Tailwind encourages small, reusable classes:
 
 ```html
-<button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-  Submit
-</button>
+<button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
 ```
 
 This enables developers to prototype quickly and apply styles inline without writing custom CSS files.
@@ -44,7 +42,7 @@ This enables developers to prototype quickly and apply styles inline without wri
 ## Tailwind vs Traditional CSS
 
 | Feature           | Tailwind CSS         | Traditional CSS       |
-|-------------------|----------------------|-----------------------|
+| ----------------- | -------------------- | --------------------- |
 | Style Location    | In markup            | In separate files     |
 | Reusability       | Utilities everywhere | Components or classes |
 | Naming Convention | None required        | BEM, OOCSS, etc.      |
@@ -72,15 +70,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: '#1DA1F2'
+        brand: "#1DA1F2",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif']
-      }
-    }
+        sans: ["Inter", "sans-serif"],
+      },
+    },
   },
-  plugins: []
-};
+  plugins: [],
+}
 ```
 
 ## Considerations

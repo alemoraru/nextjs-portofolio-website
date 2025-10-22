@@ -24,22 +24,26 @@ System design is the process of defining the architecture, components, modules, 
 ## Key Principles
 
 ### 1. Scalability
+
 - **Vertical Scaling**: Adding more power (CPU, RAM) to a single machine.
 - **Horizontal Scaling**: Adding more machines to distribute the load.
 - **Elasticity**: Ability to automatically scale up/down based on demand.
 
 ### 2. Reliability & Availability
+
 - **Redundancy**: Duplicate components to avoid single points of failure.
 - **Failover**: Automatic switching to a standby system in case of failure.
 - **Replication**: Copying data across multiple nodes for durability.
 - **Monitoring & Alerting**: Detect and respond to issues quickly.
 
 ### 3. Maintainability
+
 - **Modularity**: Break system into independent, replaceable modules.
 - **Documentation**: Keep architecture and APIs well documented.
 - **Testing**: Automated tests for components and integration.
 
 ### 4. Performance
+
 - **Caching**: Store frequently accessed data in memory.
 - **Load Balancing**: Distribute requests evenly across servers.
 - **Asynchronous Processing**: Use queues and background jobs for heavy tasks.
@@ -55,30 +59,43 @@ System design is the process of defining the architecture, components, modules, 
 ## System Design Process
 
 1. **Requirement Gathering**
+
 - Functional: What should the system do?
 - Non-functional: Performance, reliability, scalability, security, etc.
+
 2. **High-Level Architecture**
+
 - Identify major components and their interactions.
 - Draw diagrams (e.g., block diagrams, sequence diagrams).
+
 3. **Component Design**
+
 - Define APIs, data contracts, and responsibilities.
 - Consider failure modes and recovery.
+
 4. **Data Modeling**
+
 - Choose between SQL/NoSQL, normalization, indexing, partitioning.
+
 5. **Scalability & Reliability Planning**
+
 - Plan for load balancing, replication, sharding, and failover.
+
 6. **Trade-off Analysis**
+
 - Evaluate the pros and cons of different approaches.
 
 ## Example: Designing a URL Shortener
 
 ### Requirements
+
 - Shorten long URLs
 - Redirect to original URL
 - Track analytics (clicks, referrers)
 - High availability and low latency
 
 ### High-Level Components
+
 - **API Server**: Handles requests to shorten and redirect URLs.
 - **Database**: Stores mappings from short codes to original URLs.
 - **Cache**: Speeds up redirection by caching popular URLs.
@@ -86,17 +103,20 @@ System design is the process of defining the architecture, components, modules, 
 - **Load Balancer**: Distributes incoming requests.
 
 ### Scalability Considerations
+
 - **Sharding**: Split database by hash of short code.
 - **Replication**: Use master-slave or multi-master replication.
 - **Caching**: Use Redis/Memcached for hot URLs.
 - **CDN**: Cache static assets and redirect logic at the edge.
 
 ### Reliability Considerations
+
 - **Failover**: Use multiple API servers and databases.
 - **Backups**: Regularly backup database.
 - **Monitoring**: Track errors, latency, and traffic spikes.
 
 ### Security Considerations
+
 - **Rate Limiting**: Prevent abuse of the API.
 - **Validation**: Ensure URLs are valid and safe.
 - **Authentication**: For analytics and admin endpoints.

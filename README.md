@@ -54,24 +54,24 @@ homepage.
 
 ## 💎 Key Features
 
-* Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
-* MDX support for blog posts, projects, and work items
-* Syntax highlighting for code blocks in MDX files
-* Light/dark mode toggle
-* Responsive design for mobile and desktop
-* SEO-friendly structure and metadata
-* SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
-* Similar blog posts recommendations
-* Blog post categories pages
+- Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
+- MDX support for blog posts, projects, and work items
+- Syntax highlighting for code blocks in MDX files
+- Light/dark mode toggle
+- Responsive design for mobile and desktop
+- SEO-friendly structure and metadata
+- SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
+- Similar blog posts recommendations
+- Blog post categories pages
 
 ## 🧭 Roadmap
 
 Planned improvements and current/future features:
 
 - [ ] 🖼 Add theme customization options:
-    - [ ] Color palette
-    - [ ] Layout options
-    - [ ] Consistent color scheme across pages in tailwind.config.js
+  - [ ] Color palette
+  - [ ] Layout options
+  - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
@@ -115,6 +115,17 @@ This project uses:
 - 🧱 [TypeScript](https://www.typescriptlang.org) – Static typing
 
 ---
+
+## 💎 Code Quality & Guidelines
+
+This project follows best practices for code quality and style:
+
+- Consistent code formatting using [Prettier](https://prettier.io)
+- Linting with [ESLint](https://eslint.org) to ensure code quality
+- Modular and reusable (React) components
+
+> **Note**: For prettier, you can run `npx prettier --check .` to check formatting,
+> and `npx prettier --write .` to automatically format the code.
 
 ## 🪪 License
 
