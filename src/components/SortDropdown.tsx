@@ -43,7 +43,7 @@ export default function SortDropdown({ sortOrder, onChange, options }: SortDropd
                 dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
       >
         <span>{options.find(option => option.value === sortOrder)?.label || "Sort"}</span>
-        <FaChevronDown className="ml-2 text-sm" />
+        <FaChevronDown className={`ml-2 text-sm duration-300 ${isDropdownOpen && "-rotate-180"}`} />
       </button>
 
       <div

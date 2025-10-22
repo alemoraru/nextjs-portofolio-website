@@ -64,7 +64,7 @@ export default function FilterDropdown({
         <span className="truncate">
           {selectedItems.length === 0 ? placeholder : `${selectedItems.length} Selected`}
         </span>
-        <FaChevronDown className="ml-2 text-sm" />
+        <FaChevronDown className={`ml-2 text-sm duration-300 ${isDropdownOpen && "-rotate-180"}`} />
         {resultCount > 0 && (
           <span
             className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white
