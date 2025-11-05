@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
 import React from "react"
+import Image from "next/image"
 
 interface WorkItemProps {
   slug: string
@@ -13,6 +14,7 @@ interface WorkItemProps {
   end: string
   description: string
   locations?: string[]
+  logoUrl?: string
 }
 
 /**
@@ -26,6 +28,7 @@ export default function WorkItem({
   end,
   description,
   locations,
+  logoUrl,
 }: WorkItemProps) {
   return (
     <Link href={`/work/${slug}`} className="block group">
@@ -45,9 +48,23 @@ export default function WorkItem({
         className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition bg-gray-100
                 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
       >
-        <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">
-          {title} @ {company}
-        </h3>
+        <div className="flex items-center">
+          {/* Company Logo */}
+          {logoUrl && (
+            <div className="mr-4 flex items-center">
+              <Image
+                src={logoUrl}
+                alt={`${company} logo`}
+                width={25}
+                height={25}
+                className="rounded-full"
+              />
+            </div>
+          )}
+          <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">
+            {title} @ {company}
+          </h3>
+        </div>
 
         {/* Duration and Locations */}
         <div className="mt-2 text-gray-500 flex flex-col sm:flex-row sm:items-center">

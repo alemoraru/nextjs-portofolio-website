@@ -7,6 +7,7 @@ const work = [
     end: "Present",
     description: "Led a team of 5 building scalable microservices with Node.js and AWS.",
     locations: ["Remote", "New York City (Hybrid)"],
+    logoUrl: "/work/eclipse.svg",
   },
   {
     slug: "MediumBossCorp",
@@ -16,6 +17,7 @@ const work = [
     end: "Dec 2020",
     description: "Worked on the core platform, optimizing React apps and APIs.",
     locations: ["Remote", "New York City"],
+    logoUrl: "/work/brain-circuit.svg",
   },
   {
     slug: "SmallBossCorp",
@@ -25,6 +27,7 @@ const work = [
     end: "Jun 2018",
     description: "Assisted in developing web applications using PHP and MySQL.",
     locations: ["Remote", "San Francisco (Hybrid)"],
+    logoUrl: "/work/shuffle.svg",
   },
   {
     slug: "InternBossCorp",
@@ -34,6 +37,7 @@ const work = [
     end: "Sep 2021",
     description: "Building Java applications and learning about cloud technologies.",
     locations: ["Vienna", "Austra"],
+    logoUrl: "/work/square-dashed-mouse-pointer.svg",
   },
 ]
 
