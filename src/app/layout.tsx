@@ -5,6 +5,8 @@ import React, { ReactNode } from "react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { ThemeProvider } from "next-themes"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 /**
  * Import and configure the Gabarito font from Google Fonts.
@@ -82,7 +84,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                       `}
           />
           <Header />
-          <main className="flex-grow container mx-auto px-4 py-6">{children}</main>
+          <main className="flex-grow container mx-auto px-4 py-6">
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </main>
           <Footer />
         </ThemeProvider>
       </body>
