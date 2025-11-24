@@ -34,21 +34,28 @@ Each page is intentionally _simple_ and _clean_, making it easy to customize and
 
 ## 🚀 Getting Started
 
-To start your development environment locally, after cloning the repository, run one of the following commands
+To start your development environment locally, after cloning the repository, run the following command
 in the root directory of the project:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Once the server is running, open [http://localhost:3000](http://localhost:3000) in your browser to view the
-homepage.
+homepage. Running this command starts the app in development mode with hot-reloading enabled, so any changes you make to
+the code will automatically reflect in the browser without needing to restart the server.
+
+You can also build the project for production using:
+
+```bash
+npm run build
+```
+
+And then start the production server with:
+
+```bash
+npm start
+```
 
 ---
 
@@ -69,9 +76,9 @@ homepage.
 Planned improvements and current/future features:
 
 - [ ] 🖼 Add theme customization options:
-  - [ ] Color palette
-  - [ ] Layout options
-  - [ ] Consistent color scheme across pages in tailwind.config.js
+    - [ ] Color palette
+    - [ ] Layout options
+    - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
@@ -81,11 +88,12 @@ Planned improvements and current/future features:
 
 Want to dig deeper into `Next.js`, or other resources, and see how this theme works?
 
-- [📘 Next.js Documentation](https://nextjs.org/docs) – Core concepts and API
-- [🎓 Learn Next.js](https://nextjs.org/learn) – Interactive tutorial
-- [🔗 GitHub – Next.js](https://github.com/nextjs) – Source code and community discussion
-- [📖 React Documentation](https://reactjs.org/docs/getting-started.html) – Learn React
-- [🌎 MDN Web Docs](https://developer.mozilla.org/en-US/) – Comprehensive web development resources
+- [📘 Next.js Documentation](https://nextjs.org/docs): Core concepts and API
+- [🎓 Learn Next.js](https://nextjs.org/learn): Interactive tutorial
+- [🔗 GitHub – Next.js](https://github.com/nextjs): Source code and community discussion
+- [📖 React Documentation](https://reactjs.org/docs/getting-started.html): Learn React
+- [🎨 Tailwind CSS Documentation](https://tailwindcss.com/docs): Utility-first CSS framework
+- [🌎 MDN Web Docs](https://developer.mozilla.org/en-US/): Comprehensive web development resources
 
 ---
 
@@ -97,12 +105,11 @@ the platform made by the creators of Next.js.
 
 For more detailed instructions, check out
 the [Next.js deployment guide](https://nextjs.org/docs/app/building-your-application/deploying).
+If you do decide to use Vercel, this repository includes by default Analytics and Speed Insights integration.
 
 > **Note:** This does not mean you _have_ to use Vercel. You can deploy this app on any platform that supports
 > Node.js, such as [Netlify](https://www.netlify.com), [Render](https://render.com),
-> [AWS Amplify](https://aws.amazon.com/amplify/), or much more. Even [GitHub Pages](https://pages.github.com/) is
-> a viable option, but it requires the use of a static export,
-> see [Next.js docs for that](https://nextjs.org/docs/app/getting-started/deploying#static-export).
+> [AWS Amplify](https://aws.amazon.com/amplify/), or much more.
 
 ---
 
