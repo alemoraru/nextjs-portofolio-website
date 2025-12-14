@@ -15,7 +15,7 @@ interface TocItem {
  */
 export default function TableOfContents() {
   const [headings, setHeadings] = useState<TocItem[]>([])
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const article = document.querySelector("article")
