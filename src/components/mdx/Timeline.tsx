@@ -1,8 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa"
 import React from "react"
+import { FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa"
 
 const container = {
   hidden: { opacity: 1 },

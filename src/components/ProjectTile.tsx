@@ -1,8 +1,8 @@
 "use client"
 
-import Link from "next/link"
-import Image from "next/image"
 import { motion } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
 
 interface ProjectTileProps {
   slug: string

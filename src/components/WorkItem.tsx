@@ -1,10 +1,10 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Link from "next/link"
-import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
-import React from "react"
 import Image from "next/image"
+import Link from "next/link"
+import React from "react"
+import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
 
 interface WorkItemProps {
   slug: string

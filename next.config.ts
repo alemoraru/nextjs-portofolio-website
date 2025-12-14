@@ -1,6 +1,6 @@
-import type { NextConfig } from "next"
 import createMDX from "@next/mdx"
 import remarkGfm from "remark-gfm"
+import type { NextConfig } from "next"
 
 // Create MDX configuration
 const withMDX = createMDX({

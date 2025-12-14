@@ -7,7 +7,12 @@
     "build": "next build --webpack",
     "start": "next start",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint . --max-warnings=0",
+    "lint-format": "eslint --fix . && prettier --write .",
+    "format-lint": "prettier --write . && eslint --fix .",
+    "types:check": "tsc --noEmit"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
@@ -32,8 +37,9 @@
     "@types/node": "^20",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "eslint": "^9",
+    "eslint": "9.39.2",
     "eslint-config-next": "16.0.10",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"

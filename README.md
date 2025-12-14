@@ -147,11 +147,17 @@ This project uses:
 This project follows best practices for code quality and style:
 
 - Consistent code formatting using [Prettier](https://prettier.io)
+  - For prettier, you can run `pnpm format:check` to check for formatting issues, and `pnpm format` to
+  automatically format the code according to the defined style guidelines.
+  - Check out the `.prettierrc.json` & `.prettierignore` files for configuration details
 - Linting with [ESLint](https://eslint.org) to ensure code quality
+  - For ESLint, you can run `pnpm lint:check` to check for linting issues, and `pnpm lint` to
+    automatically fix linting issues where possible.  
+  - Check out the `eslint.config.mjs` file for configuration details
 - Modular and reusable (React) components
 
-> **Note**: For prettier, you can run `pnpm format:check` to check for formatting issues, and `pnpm format` to
-> automatically format the code according to the defined style guidelines.
+> **Note**: To run both prettier and ESLint checks together, you can use the command:
+> `pnpm format-lint` or `pnpm lint-format`. 
 
 ## 🪪 License
 

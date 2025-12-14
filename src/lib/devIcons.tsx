@@ -1,5 +1,5 @@
-import DevIcon from "@/components/DevIcon"
 import { FiCpu } from "react-icons/fi"
+import DevIcon from "@/components/DevIcon"
 
 /**
  * Normalizes a technology name into a standardized format.

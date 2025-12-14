@@ -1,14 +1,14 @@
 "use client"
 
-import { Suspense, useState, useEffect } from "react"
-import FilterDropdown from "@/components/FilterDropdown"
-import SortDropdown from "@/components/SortDropdown"
-import ActiveFilterChips from "@/components/ActiveFilterChips"
-import ProjectTile from "@/components/ProjectTile"
-import PaginationControls from "@/components/PaginationControls"
 import { AnimatePresence, motion } from "framer-motion"
-import { FaFrown } from "react-icons/fa"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useState, useEffect } from "react"
+import { FaFrown } from "react-icons/fa"
+import ActiveFilterChips from "@/components/ActiveFilterChips"
+import FilterDropdown from "@/components/FilterDropdown"
+import PaginationControls from "@/components/PaginationControls"
+import ProjectTile from "@/components/ProjectTile"
+import SortDropdown from "@/components/SortDropdown"
 import { ProjectProps } from "@/lib/types"
 
 /**

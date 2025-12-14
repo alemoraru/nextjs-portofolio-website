@@ -1,15 +1,15 @@
-import { notFound } from "next/navigation"
-import path from "path"
 import fs from "fs"
+import path from "path"
+import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import rehypeHighlight from "rehype-highlight"
-import work from "@/data/work"
-import AnimatedArticle from "@/components/AnimatedArticle"
-import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
-import { pageParams } from "@/lib/types"
-import BackToPageButton from "@/components/BackToPageButton"
 import remark_gfm from "remark-gfm"
+import AnimatedArticle from "@/components/AnimatedArticle"
+import BackToPageButton from "@/components/BackToPageButton"
+import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
+import work from "@/data/work"
 import { techToIcon } from "@/lib/devIcons"
+import { pageParams } from "@/lib/types"
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.

@@ -1,14 +1,14 @@
 "use client"
 
+import { AnimatePresence, motion } from "framer-motion"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useState, useEffect } from "react"
-import FilterDropdown from "@/components/FilterDropdown"
-import SortDropdown from "@/components/SortDropdown"
+import { FaFrown } from "react-icons/fa"
 import ActiveFilterChips from "@/components/ActiveFilterChips"
 import BlogPost from "@/components/BlogPost"
+import FilterDropdown from "@/components/FilterDropdown"
 import PaginationControls from "@/components/PaginationControls"
-import { AnimatePresence, motion } from "framer-motion"
-import { FaFrown } from "react-icons/fa"
-import { useRouter, useSearchParams } from "next/navigation"
+import SortDropdown from "@/components/SortDropdown"
 import { BlogPostProps } from "@/lib/types"
 
 /**

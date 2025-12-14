@@ -1,7 +1,7 @@
+import { redirect } from "next/navigation"
+import work from "@/data/work"
 import WorkClientUI from "./WorkClientUI"
 import WorkNotFound from "./WorkNotFound"
-import work from "@/data/work"
-import { redirect } from "next/navigation"
 
 /**
  * WorkPage component that serves as the main page for displaying work experience.

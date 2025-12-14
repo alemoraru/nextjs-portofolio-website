@@ -1,12 +1,5 @@
 "use client"
 
-import blog from "@/data/blog"
-import projects from "@/data/projects"
-import work from "@/data/work"
-import WorkItem from "@/components/WorkItem"
-import ProjectTile from "@/components/ProjectTile"
-import BlogPost from "@/components/BlogPost"
-import ViewAllHeader from "@/components/ViewAllHeader"
 import { motion } from "framer-motion"
 import {
   FaMapMarkerAlt,
@@ -18,6 +11,13 @@ import {
   FaBuilding,
   FaTools,
 } from "react-icons/fa"
+import BlogPost from "@/components/BlogPost"
+import ProjectTile from "@/components/ProjectTile"
+import ViewAllHeader from "@/components/ViewAllHeader"
+import WorkItem from "@/components/WorkItem"
+import blog from "@/data/blog"
+import projects from "@/data/projects"
+import work from "@/data/work"
 
 /**
  * Home component that serves as the main landing page for the portfolio.
