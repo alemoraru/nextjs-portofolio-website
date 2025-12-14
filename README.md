@@ -41,6 +41,12 @@ in the root directory of the project:
 npm run dev
 ```
 
+or via `pnpm` (recommended):
+
+```bash
+pnpm dev
+```
+
 Once the server is running, open [http://localhost:3000](http://localhost:3000) in your browser to view the
 homepage. Running this command starts the app in development mode with hot-reloading enabled, so any changes you make to
 the code will automatically reflect in the browser without needing to restart the server.
@@ -51,10 +57,22 @@ You can also build the project for production using:
 npm run build
 ```
 
+or via `pnpm`:
+
+```bash
+pnpm build
+```
+
 And then start the production server with:
 
 ```bash
 npm start
+```
+
+or via `pnpm`:
+
+```bash
+pnpm start
 ```
 
 ---

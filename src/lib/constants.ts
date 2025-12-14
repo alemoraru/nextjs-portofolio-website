@@ -11,38 +11,6 @@ export const navItems = [
 ]
 
 /**
- * Temporary mapping for tech stack icons.
- */
-export const techStackMap: Record<string, string> = {
-  React: "react",
-  TypeScript: "typescript",
-  TailwindCSS: "tailwindcss",
-  "Node.js": "nodejs",
-  NextJS: "nextjs",
-  aws: "aws",
-  MongoDB: "mongodb",
-  PostgreSQL: "postgresql",
-  Python: "python",
-  Flask: "flask",
-  Solidity: "solidity",
-  "C#": "csharp",
-  Firebase: "firebase",
-  "AWS IoT": "aws",
-  AWS: "aws",
-  "C++": "c++",
-  Azure: "azure",
-  Redis: "redis",
-  GraphQL: "graphql",
-  Docker: "docker",
-  Java: "java",
-  MySQL: "mysql",
-  Spring: "spring",
-  "Spring Boot": "spring",
-  Git: "git",
-  GitLab: "gitlab",
-}
-
-/**
  * Version of the application from package.json.
  */
 export const appVersion = packageJson.version
