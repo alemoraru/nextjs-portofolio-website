@@ -14,6 +14,7 @@ import { pageParams } from "@/lib/types"
 import BackToPageButton from "@/components/BackToPageButton"
 import remark_gfm from "remark-gfm"
 import ImageCarouselWrapper from "@/components/ImageCarouselWrapper"
+import {techToIcon} from "@/lib/devIcons";
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.
@@ -109,10 +110,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
           <h2 className="text-xl font-semibold">Tech Stack</h2>
         </div>
         <ul className="flex flex-wrap gap-4">
-          {frontmatter.techStack?.map(tech => (
-            <li key={tech} className="flex items-center gap-2">
-              <StackIcon name={techStackMap[tech] || tech} className={"w-[24px] h-[24px]"} />
-              <span>{tech}</span>
+          {frontmatter.techStack?.map(TechName => (
+            <li key={TechName} className="flex items-center gap-2">
+              {techToIcon(TechName)}
+              <span>{TechName}</span>
             </li>
           ))}
         </ul>
