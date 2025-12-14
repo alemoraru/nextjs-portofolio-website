@@ -2,6 +2,22 @@ import DevIcon from "@/components/DevIcon"
 import { FiCpu } from "react-icons/fi"
 
 /**
+ * Normalizes a technology name into a standardized format.
+ * @param techName - The technology name to normalize.
+ * @returns The normalized technology name.
+ */
+function normalizeTechName(techName: string): string {
+  return techName
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[._]/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+}
+
+/**
  * Maps a technology name to its corresponding icon component.
  * @param techName - Name of the technology (e.g., "typescript").
  * @param iconClassName - Optional CSS class names for the icon.
@@ -21,6 +37,12 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "React":
     case "reactjs":
     case "ReactJS":
+    case "react-native":
+    case "React-Native":
+    case "reactnative":
+    case "ReactNative":
+    case "react native":
+    case "React Native":
       return <DevIcon name={"reactjs"} iconClassName={iconClassName} />
     case "nextjs":
     case "NextJS":
@@ -59,6 +81,11 @@ export function techToIcon(techName: string, iconClassName?: string) {
       return <DevIcon name={"jenkins"} iconClassName={iconClassName} />
     case "aws":
     case "AWS":
+    case "aws IOT":
+    case "AWS IOT":
+    case "AWS IoT":
+    case "aws-iot":
+    case "AWS-IOT":
       return <DevIcon name={"aws"} iconClassName={iconClassName} />
     case "azure":
     case "Azure":
@@ -111,6 +138,9 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "php":
     case "PHP":
       return <DevIcon name={"php"} iconClassName={iconClassName} />
+    case "flask":
+    case "Flask":
+      return <DevIcon name={"flask-dark"} iconClassName={iconClassName} />
     case "ruby":
     case "Ruby":
       return <DevIcon name={"ruby"} iconClassName={iconClassName} />
@@ -182,6 +212,13 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "grafana":
       return <DevIcon name={"grafana"} iconClassName={iconClassName} />
     default:
+      // Try to use the provided tech name as a filename fallback. DevIcon will attempt to load
+      // `/dev/{normalized}.svg` and will render FiCpu if the asset doesn't exist.
+      const normalized = normalizeTechName(techName)
+      if (normalized.length > 0) {
+        return <DevIcon name={normalized} iconClassName={iconClassName} />
+      }
+
       return <FiCpu className={iconClassName} />
   }
 }
