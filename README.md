@@ -138,6 +138,7 @@ This project uses:
 - ⚛️ [Next.js](https://nextjs.org) – React-based framework
 - 💅 [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
 - 🧱 [TypeScript](https://www.typescriptlang.org) – Static typing
+- 📝 [MDX](https://mdxjs.com) – Markdown with JSX support
 
 ---
 
@@ -149,8 +150,8 @@ This project follows best practices for code quality and style:
 - Linting with [ESLint](https://eslint.org) to ensure code quality
 - Modular and reusable (React) components
 
-> **Note**: For prettier, you can run `npx prettier --check .` to check formatting,
-> and `npx prettier --write .` to automatically format the code.
+> **Note**: For prettier, you can run `pnpm format:check` to check for formatting issues, and `pnpm format` to
+> automatically format the code according to the defined style guidelines.
 
 ## 🪪 License
 
