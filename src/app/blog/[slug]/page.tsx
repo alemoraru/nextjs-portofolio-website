@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
 import rehypeHighlight from "rehype-highlight"
+import rehypeSlug from "rehype-slug"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
@@ -12,6 +13,7 @@ import BlogTag from "@/components/BlogTag"
 import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
+import TableOfContents from "@/components/TableOfContents"
 import posts from "@/data/blog"
 import { pageParams } from "@/lib/types"
 
@@ -86,7 +88,10 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remark_gfm],
-        rehypePlugins: [[rehypeHighlight, { ignoreMissing: true }]],
+        rehypePlugins: [
+          rehypeSlug, // Automatically adds IDs to headings
+          [rehypeHighlight, { ignoreMissing: true }],
+        ],
       },
     },
     components: mdxComponents,
@@ -95,7 +100,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
   return (
     <AnimatedArticle>
       <BackToPageButton pageUrl="/blog" />
-      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+      <div className="text-3xl font-bold mb-4">{post.title}</div>
       <p className="text-gray-500 mb-8">
         {new Date(post.date).toLocaleDateString()} • {readingTime} min read
       </p>
@@ -107,6 +112,9 @@ export default async function BlogPostPage(props: { params: pageParams }) {
             <BlogTag key={tag} tag={tag} href={`/blog/tag/${encodeURIComponent(tag)}`} />
           ))}
       </div>
+
+      {/* Table of Contents */}
+      <TableOfContents />
 
       <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
       <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3} />

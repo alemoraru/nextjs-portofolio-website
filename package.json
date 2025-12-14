@@ -30,6 +30,7 @@
     "react-dom": "19.2.3",
     "react-icons": "5.5.0",
     "rehype-highlight": "^7.0.2",
+    "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
