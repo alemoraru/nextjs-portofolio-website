@@ -76,9 +76,9 @@ npm start
 Planned improvements and current/future features:
 
 - [ ] 🖼 Add theme customization options:
-    - [ ] Color palette
-    - [ ] Layout options
-    - [ ] Consistent color scheme across pages in tailwind.config.js
+  - [ ] Color palette
+  - [ ] Layout options
+  - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 

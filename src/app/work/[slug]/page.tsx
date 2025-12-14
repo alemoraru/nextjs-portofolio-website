@@ -11,7 +11,7 @@ import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
 import { pageParams } from "@/lib/types"
 import BackToPageButton from "@/components/BackToPageButton"
 import remark_gfm from "remark-gfm"
-import {techToIcon} from "@/lib/devIcons";
+import { techToIcon } from "@/lib/devIcons"
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
