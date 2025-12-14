@@ -17,6 +17,9 @@ importers:
       '@next/mdx':
         specifier: 16.0.10
         version: 16.0.10(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.7)(react@19.2.3))
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       '@vercel/analytics':
         specifier: 1.5.0
         version: 1.5.0(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
