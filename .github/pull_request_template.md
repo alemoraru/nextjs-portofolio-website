@@ -16,11 +16,12 @@
 
 [//]: # "Please check all that apply"
 
-- [ ] Manually tested by running `npm run dev` and viewing all pages
-- [ ] It can build a prod build with `npm run build`
+- [ ] Manually tested by running `pnpm dev` and viewing all pages
+- [ ] It can build a prod build with `pnpm build`
 - [ ] Documentation and comments added
 - [ ] No console warnings or errors
 - [ ] No ESLint warnings or errors
+- [ ] No prettier warnings or errors
 
 ## Supplementary Information
 
