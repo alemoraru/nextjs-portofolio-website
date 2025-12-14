@@ -1,7 +1,7 @@
-import ImageCarousel from "./ImageCarousel"
-import React from "react"
-import path from "path"
 import fs from "fs"
+import path from "path"
+import React from "react"
+import ImageCarousel from "./ImageCarousel"
 
 /**
  * Props for the ImageCarouselWrapper component.

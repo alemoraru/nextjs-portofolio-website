@@ -36,7 +36,7 @@ const work = [
     start: "Mar 2021",
     end: "Sep 2021",
     description: "Building Java applications and learning about cloud technologies.",
-    locations: ["Vienna", "Austra"],
+    locations: ["Vienna", "Austria"],
     logoUrl: "/work/square-dashed-mouse-pointer.svg",
   },
 ]

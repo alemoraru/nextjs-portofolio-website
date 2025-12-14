@@ -1,6 +1,6 @@
+import Link from "next/link"
 import React from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
-import Link from "next/link"
 
 interface PaginationControlsProps {
   currentPage: number

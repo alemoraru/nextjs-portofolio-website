@@ -1,8 +1,8 @@
 import Link from "next/link"
-import posts from "@/data/blog"
-import BlogPost from "@/components/BlogPost"
-import { BlogPostProps, tagPageParams } from "@/lib/types"
 import { FaArrowLeft, FaTag } from "react-icons/fa"
+import BlogPost from "@/components/BlogPost"
+import posts from "@/data/blog"
+import { BlogPostProps, tagPageParams } from "@/lib/types"
 
 /**
  * BlogTagPage component that displays blog posts filtered by a specific tag.

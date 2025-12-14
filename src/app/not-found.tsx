@@ -22,6 +22,7 @@ export default function NotFound() {
   ]
 
   // Select a random line from the funLines array to display
+  // eslint-disable-next-line react-hooks/purity
   const randomLine = useMemo(() => funLines[Math.floor(Math.random() * funLines.length)], [])
 
   return (

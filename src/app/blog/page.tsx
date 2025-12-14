@@ -1,7 +1,7 @@
+import { redirect } from "next/navigation"
+import posts from "@/data/blog"
 import BlogClientUI from "./BlogClientUI"
 import BlogNotFound from "./BlogNotFound"
-import posts from "@/data/blog"
-import { redirect } from "next/navigation"
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.

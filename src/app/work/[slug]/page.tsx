@@ -1,16 +1,15 @@
-import { notFound } from "next/navigation"
-import path from "path"
 import fs from "fs"
+import path from "path"
+import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import rehypeHighlight from "rehype-highlight"
-import work from "@/data/work"
-import AnimatedArticle from "@/components/AnimatedArticle"
-import StackIcon from "tech-stack-icons"
-import { techStackMap } from "@/lib/constants"
-import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
-import { pageParams } from "@/lib/types"
-import BackToPageButton from "@/components/BackToPageButton"
 import remark_gfm from "remark-gfm"
+import AnimatedArticle from "@/components/AnimatedArticle"
+import BackToPageButton from "@/components/BackToPageButton"
+import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
+import work from "@/data/work"
+import { techToIcon } from "@/lib/devIcons"
+import { pageParams } from "@/lib/types"
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
@@ -63,16 +62,13 @@ export default async function WorkItemPage(props: { params: pageParams }) {
       <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
       <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
       <div className="flex flex-wrap gap-4 mb-8">
-        {frontmatter.techStack?.map(tech => (
+        {frontmatter.techStack?.map(techName => (
           <div
-            key={tech}
+            key={techName}
             className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
           >
-            <StackIcon
-              name={techStackMap[tech] || tech}
-              style={{ width: "24px", height: "24px" }}
-            />
-            <span>{tech}</span>
+            {techToIcon(techName)}
+            <span>{techName}</span>
           </div>
         ))}
       </div>

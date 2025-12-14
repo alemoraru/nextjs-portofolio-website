@@ -1,5 +1,5 @@
-import { FaTimes, FaTrashAlt } from "react-icons/fa"
 import React from "react"
+import { FaTimes, FaTrashAlt } from "react-icons/fa"
 
 interface ActiveFilterChipsProps {
   filters: string[]

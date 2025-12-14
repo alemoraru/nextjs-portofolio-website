@@ -41,6 +41,12 @@ in the root directory of the project:
 npm run dev
 ```
 
+or via `pnpm` (recommended):
+
+```bash
+pnpm dev
+```
+
 Once the server is running, open [http://localhost:3000](http://localhost:3000) in your browser to view the
 homepage. Running this command starts the app in development mode with hot-reloading enabled, so any changes you make to
 the code will automatically reflect in the browser without needing to restart the server.
@@ -51,10 +57,22 @@ You can also build the project for production using:
 npm run build
 ```
 
+or via `pnpm`:
+
+```bash
+pnpm build
+```
+
 And then start the production server with:
 
 ```bash
 npm start
+```
+
+or via `pnpm`:
+
+```bash
+pnpm start
 ```
 
 ---
@@ -76,9 +94,9 @@ npm start
 Planned improvements and current/future features:
 
 - [ ] 🖼 Add theme customization options:
-    - [ ] Color palette
-    - [ ] Layout options
-    - [ ] Consistent color scheme across pages in tailwind.config.js
+  - [ ] Color palette
+  - [ ] Layout options
+  - [ ] Consistent color scheme across pages in tailwind.config.js
 - [ ] 🧪 Add tests and linting support for better maintainability
 - [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
@@ -120,6 +138,7 @@ This project uses:
 - ⚛️ [Next.js](https://nextjs.org) – React-based framework
 - 💅 [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
 - 🧱 [TypeScript](https://www.typescriptlang.org) – Static typing
+- 📝 [MDX](https://mdxjs.com) – Markdown with JSX support
 
 ---
 
@@ -128,11 +147,17 @@ This project uses:
 This project follows best practices for code quality and style:
 
 - Consistent code formatting using [Prettier](https://prettier.io)
+  - For prettier, you can run `pnpm format:check` to check for formatting issues, and `pnpm format` to
+  automatically format the code according to the defined style guidelines.
+  - Check out the `.prettierrc.json` & `.prettierignore` files for configuration details
 - Linting with [ESLint](https://eslint.org) to ensure code quality
+  - For ESLint, you can run `pnpm lint:check` to check for linting issues, and `pnpm lint` to
+    automatically fix linting issues where possible.  
+  - Check out the `eslint.config.mjs` file for configuration details
 - Modular and reusable (React) components
 
-> **Note**: For prettier, you can run `npx prettier --check .` to check formatting,
-> and `npx prettier --write .` to automatically format the code.
+> **Note**: To run both prettier and ESLint checks together, you can use the command:
+> `pnpm format-lint` or `pnpm lint-format`. 
 
 ## 🪪 License
 

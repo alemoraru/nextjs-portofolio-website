@@ -1,19 +1,18 @@
-import { notFound } from "next/navigation"
-import path from "path"
 import fs from "fs"
-import { compileMDX } from "next-mdx-remote/rsc"
-import rehypeHighlight from "rehype-highlight"
+import path from "path"
 import Link from "next/link"
-import projects from "@/data/projects"
-import StackIcon from "tech-stack-icons"
+import { notFound } from "next/navigation"
+import { compileMDX } from "next-mdx-remote/rsc"
 import { BsStack, BsCardImage } from "react-icons/bs"
 import { FaUsers, FaUserTie, FaClock, FaGithub } from "react-icons/fa"
-import AnimatedArticle from "@/components/AnimatedArticle"
-import { techStackMap } from "@/lib/constants"
-import { pageParams } from "@/lib/types"
-import BackToPageButton from "@/components/BackToPageButton"
+import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
+import AnimatedArticle from "@/components/AnimatedArticle"
+import BackToPageButton from "@/components/BackToPageButton"
 import ImageCarouselWrapper from "@/components/ImageCarouselWrapper"
+import projects from "@/data/projects"
+import { techToIcon } from "@/lib/devIcons"
+import { pageParams } from "@/lib/types"
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.
@@ -109,10 +108,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
           <h2 className="text-xl font-semibold">Tech Stack</h2>
         </div>
         <ul className="flex flex-wrap gap-4">
-          {frontmatter.techStack?.map(tech => (
-            <li key={tech} className="flex items-center gap-2">
-              <StackIcon name={techStackMap[tech] || tech} className={"w-[24px] h-[24px]"} />
-              <span>{tech}</span>
+          {frontmatter.techStack?.map(TechName => (
+            <li key={TechName} className="flex items-center gap-2">
+              {techToIcon(TechName)}
+              <span>{TechName}</span>
             </li>
           ))}
         </ul>

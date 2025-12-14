@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import Breadcrumbs from "@/components/Breadcrumbs"
+import MobileMenu from "@/components/MobileMenu"
+import MobileMenuToggle from "@/components/MobileMenuToggle"
 import NavigationMenu from "@/components/NavigationMenu"
 import ThemeToggleButton from "@/components/ThemeToggleButton"
-import MobileMenuToggle from "@/components/MobileMenuToggle"
-import MobileMenu from "@/components/MobileMenu"
 
 /**
  * Header component that serves as the top navigation bar for the portfolio.

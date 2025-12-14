@@ -1,12 +1,12 @@
-import type { Metadata } from "next"
 import "./globals.css"
-import { Gabarito } from "next/font/google"
-import React, { ReactNode } from "react"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import { ThemeProvider } from "next-themes"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Gabarito } from "next/font/google"
+import { ThemeProvider } from "next-themes"
+import React, { ReactNode } from "react"
+import Footer from "@/components/Footer"
+import Header from "@/components/Header"
+import type { Metadata } from "next"
 
 /**
  * Import and configure the Gabarito font from Google Fonts.
