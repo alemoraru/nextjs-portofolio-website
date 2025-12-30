@@ -15,6 +15,16 @@ export interface BlogPostProps {
 }
 
 /**
+ * @description This interface defines the frontmatter structure in MDX blog post files.
+ */
+export interface BlogPostFrontmatter {
+  title: string
+  summary: string
+  date: string
+  tags?: string[]
+}
+
+/**
  * @description This interface defines the structure (i.e., contents) of a project card.
  */
 export interface ProjectProps {

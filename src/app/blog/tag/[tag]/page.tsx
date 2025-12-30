@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { FaArrowLeft, FaTag } from "react-icons/fa"
 import BlogPost from "@/components/BlogPost"
-import posts from "@/data/blog"
+import { getAllBlogPosts } from "@/lib/mdx"
 import { BlogPostProps, tagPageParams } from "@/lib/types"
 
 /**
@@ -13,6 +13,9 @@ import { BlogPostProps, tagPageParams } from "@/lib/types"
 export default async function BlogTagPage({ params }: { params: tagPageParams }) {
   const { tag } = await params
   const decodedTag = decodeURIComponent(tag)
+
+  // Get all blog posts from MDX files
+  const posts = await getAllBlogPosts()
 
   // Filter posts by tag (case-insensitive, exact match)
   const filteredPosts = posts.filter(

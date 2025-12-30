@@ -14,7 +14,7 @@ import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
-import posts from "@/data/blog"
+import { getAllBlogPosts } from "@/lib/mdx"
 import { pageParams } from "@/lib/types"
 
 /**
@@ -32,6 +32,7 @@ function getReadingTime(text: string): number {
  * Generate static parameters for the blog post pages to be pre-rendered.
  */
 export async function generateStaticParams() {
+  const posts = await getAllBlogPosts()
   return posts.map(post => ({
     slug: post.slug,
   }))
@@ -42,6 +43,7 @@ export async function generateStaticParams() {
  */
 export default async function BlogPostPage(props: { params: pageParams }) {
   const { slug } = await props.params
+  const posts = await getAllBlogPosts()
   const post = posts.find(p => p.slug === slug)
   if (!post) return notFound()
 

@@ -2,9 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import blog from "@/data/blog"
-import projects from "@/data/projects"
-import work from "@/data/work"
 
 /**
  * The "breadcrumbs" component that displays the current path as a series of links.
@@ -16,24 +13,10 @@ export default function Breadcrumbs() {
 
   // Only show breadcrumbs for /blog, /projects, /work and their subpaths
   const allowedRoots = ["blog", "projects", "work"]
-  const isAllowed = segments.length > 0 && allowedRoots.includes(segments[0])
 
-  // Validate subpath: only show breadcrumbs if the root path exists
-  let showBreadcrumbs = false
-  if (isAllowed) {
-    if (segments.length === 1) {
-      // Only /blog, /projects, /work
-      showBreadcrumbs = true
-    } else if (segments.length === 2) {
-      // Dynamically get valid slugs from imported data
-      const validSlugs: Record<string, string[]> = {
-        blog: blog.map(item => item.slug),
-        projects: projects.map(item => item.slug),
-        work: work.map(item => item.slug),
-      }
-      showBreadcrumbs = validSlugs[segments[0]]?.includes(segments[1]) ?? false
-    }
-  }
+  // Show breadcrumbs for allowed root paths and their subpaths
+  // Note: We don't validate slugs here as invalid slugs will 404 at the page level
+  const showBreadcrumbs = segments.length > 0 && allowedRoots.includes(segments[0])
 
   return (
     <div className="flex items-center gap-1 text-lg text-black dark:text-white my-auto">
