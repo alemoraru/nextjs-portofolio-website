@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import posts from "@/data/blog"
+import { getAllBlogPosts } from "@/lib/mdx"
 import BlogClientUI from "./BlogClientUI"
 import BlogNotFound from "./BlogNotFound"
 
@@ -14,6 +14,9 @@ export default async function BlogPage(props: {
     tags?: string | string[]
   }>
 }) {
+  // Get all blog posts from MDX files
+  const posts = await getAllBlogPosts()
+
   // Destructure all query params at once
   const searchParams = await props.searchParams
 

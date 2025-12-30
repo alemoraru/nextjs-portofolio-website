@@ -7,14 +7,15 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
-import work from "@/data/work"
 import { techToIcon } from "@/lib/devIcons"
-import { pageParams } from "@/lib/types"
+import { getAllWorkItems } from "@/lib/mdx"
+import { pageParams, WorkItemFrontmatter } from "@/lib/types"
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
  */
 export async function generateStaticParams() {
+  const work = await getAllWorkItems()
   return work.map(item => ({
     slug: item.slug,
   }))
@@ -25,6 +26,7 @@ export async function generateStaticParams() {
  */
 export default async function WorkItemPage(props: { params: pageParams }) {
   const { slug } = await props.params
+  const work = await getAllWorkItems()
   const post = work.find(w => w.slug === slug)
   if (!post) return notFound()
 
@@ -36,11 +38,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
 
   const mdxSource = fs.readFileSync(filePath, "utf-8")
 
-  const { content, frontmatter } = await compileMDX<{
-    name: string
-    description: string
-    techStack: string[]
-  }>({
+  const { content, frontmatter } = await compileMDX<WorkItemFrontmatter>({
     source: mdxSource,
     components: {
       Timeline,
@@ -58,7 +56,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
   return (
     <AnimatedArticle>
       <BackToPageButton pageUrl="/work" />
-      <h1 className="text-4xl font-bold mb-2">{frontmatter.name}</h1>
+      <h1 className="text-4xl font-bold mb-2">{frontmatter.company}</h1>
       <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
       <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
       <div className="flex flex-wrap gap-4 mb-8">

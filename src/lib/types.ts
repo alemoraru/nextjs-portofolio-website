@@ -15,6 +15,16 @@ export interface BlogPostProps {
 }
 
 /**
+ * @description This interface defines the frontmatter structure in MDX blog post files.
+ */
+export interface BlogPostFrontmatter {
+  title: string
+  summary: string
+  date: string
+  tags?: string[]
+}
+
+/**
  * @description This interface defines the structure (i.e., contents) of a project card.
  */
 export interface ProjectProps {
@@ -28,6 +38,21 @@ export interface ProjectProps {
 }
 
 /**
+ * @description This interface defines the frontmatter structure in MDX project files.
+ */
+export interface ProjectFrontmatter {
+  title: string
+  image: string
+  description: string
+  startDate: string
+  endDate: string
+  techStack: string[]
+  teamSize?: number
+  role?: string
+  githubUrl?: string
+}
+
+/**
  * @description This interface defines the structure (i.e., contents) of a work experience item.
  */
 export interface WorkItemProps {
@@ -38,6 +63,21 @@ export interface WorkItemProps {
   end: string
   description: string
   locations: string[]
+  logoUrl?: string
+}
+
+/**
+ * @description This interface defines the frontmatter structure in MDX work item files.
+ */
+export interface WorkItemFrontmatter {
+  company: string
+  title: string
+  start: string
+  end: string
+  description: string
+  locations: string[]
+  logoUrl?: string
+  techStack?: string[]
 }
 
 /**

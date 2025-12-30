@@ -10,14 +10,15 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import ImageCarouselWrapper from "@/components/ImageCarouselWrapper"
-import projects from "@/data/projects"
 import { techToIcon } from "@/lib/devIcons"
-import { pageParams } from "@/lib/types"
+import { getAllProjects } from "@/lib/mdx"
+import { pageParams, ProjectFrontmatter } from "@/lib/types"
 
 /**
- * Generate static parameters for the blog post pages to be pre-rendered.
+ * Generate static parameters for the project pages to be pre-rendered.
  */
 export async function generateStaticParams() {
+  const projects = await getAllProjects()
   return projects.map(project => ({
     slug: project.slug,
   }))
@@ -28,6 +29,7 @@ export async function generateStaticParams() {
  */
 export default async function ProjectPage(props: { params: pageParams }) {
   const { slug } = await props.params
+  const projects = await getAllProjects()
   const post = projects.find(p => p.slug === slug)
   if (!post) return notFound()
 
@@ -40,14 +42,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
   const mdxSource = fs.readFileSync(filePath, "utf-8")
 
-  const { content, frontmatter } = await compileMDX<{
-    title: string
-    techStack: string[]
-    teamSize: string
-    role: string
-    duration: string
-    githubUrl?: string
-  }>({
+  const { content, frontmatter } = await compileMDX<ProjectFrontmatter>({
     source: mdxSource,
     options: {
       parseFrontmatter: true,
@@ -57,6 +52,9 @@ export default async function ProjectPage(props: { params: pageParams }) {
       },
     },
   })
+
+  // Format duration from startDate and endDate
+  const duration = `${frontmatter.startDate}–${frontmatter.endDate}`
 
   return (
     <AnimatedArticle>
@@ -80,22 +78,26 @@ export default async function ProjectPage(props: { params: pageParams }) {
       {/* Project Metadata */}
       <div className="w-full mb-6 bg-gray-50 dark:bg-gray-800 p-5 rounded-xl shadow-md">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base">
-          <div className="flex items-center gap-2">
-            <FaUsers className="text-blue-500" />
-            <span>
-              <strong>Team Size:</strong> {frontmatter.teamSize}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <FaUserTie className="text-green-500" />
-            <span>
-              <strong>Role:</strong> {frontmatter.role}
-            </span>
-          </div>
+          {frontmatter.teamSize && (
+            <div className="flex items-center gap-2">
+              <FaUsers className="text-blue-500" />
+              <span>
+                <strong>Team Size:</strong> {frontmatter.teamSize}
+              </span>
+            </div>
+          )}
+          {frontmatter.role && (
+            <div className="flex items-center gap-2">
+              <FaUserTie className="text-green-500" />
+              <span>
+                <strong>Role:</strong> {frontmatter.role}
+              </span>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <FaClock className="text-purple-500" />
             <span>
-              <strong>Duration:</strong> {frontmatter.duration}
+              <strong>Duration:</strong> {duration}
             </span>
           </div>
         </div>
