@@ -15,21 +15,24 @@ import BlogPost from "@/components/BlogPost"
 import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
-import projects from "@/data/projects"
 import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
+
+interface HomeContentProps {
+  blog: BlogPostProps[]
+  work: WorkItemProps[]
+  projects: ProjectProps[]
+}
 
 /**
  * HomeContent component that renders the main content of the landing page.
  * This is a client component to support framer-motion animations.
  */
-export default function HomeContent({
-  blog,
-  work,
-}: {
-  blog: BlogPostProps[]
-  work: WorkItemProps[]
-  projects?: ProjectProps[]
-}) {
+export default function HomeContent({ blog, work, projects }: HomeContentProps) {
+  /**
+   * Get time in milliseconds safely from a date string.
+   * @param dateStr - Date string
+   * @returns Time in milliseconds or 0 if invalid
+   */
   const getTimeSafe = (dateStr: string | undefined) => {
     const date = new Date(dateStr ?? "")
     return isNaN(date.getTime()) ? 0 : date.getTime()

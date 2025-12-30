@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import projects from "@/data/projects"
+import { getAllProjects } from "@/lib/mdx"
 import ProjectsClientUI from "./ProjectsClientUI"
 import ProjectsNotFound from "./ProjectsNotFound"
 
@@ -14,6 +14,9 @@ export default async function ProjectsPage(props: {
     tech?: string | string[]
   }>
 }) {
+  // Get all projects from MDX files
+  const projects = await getAllProjects()
+
   // Destructure all query params at once
   const searchParams = await props.searchParams
 

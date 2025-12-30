@@ -38,6 +38,21 @@ export interface ProjectProps {
 }
 
 /**
+ * @description This interface defines the frontmatter structure in MDX project files.
+ */
+export interface ProjectFrontmatter {
+  title: string
+  image: string
+  description: string
+  startDate: string
+  endDate: string
+  techStack: string[]
+  teamSize?: number
+  role?: string
+  githubUrl?: string
+}
+
+/**
  * @description This interface defines the structure (i.e., contents) of a work experience item.
  */
 export interface WorkItemProps {

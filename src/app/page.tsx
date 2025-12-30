@@ -1,5 +1,5 @@
 import HomeContent from "@/components/content/HomeContent"
-import { getAllBlogPosts, getAllWorkItems } from "@/lib/mdx"
+import { getAllBlogPosts, getAllProjects, getAllWorkItems } from "@/lib/mdx"
 
 /**
  * Home component that serves as the main landing page for the portfolio.
@@ -7,9 +7,10 @@ import { getAllBlogPosts, getAllWorkItems } from "@/lib/mdx"
  * This is a server component wrapper that fetches data and passes it to the client HomeContent component.
  */
 export default async function Home() {
-  // Fetch all blog posts and work items from MDX files
+  // Fetch all blog posts, work items, and projects from MDX files
   const blog = await getAllBlogPosts()
   const work = await getAllWorkItems()
+  const projects = await getAllProjects()
 
-  return <HomeContent blog={blog} work={work} />
+  return <HomeContent blog={blog} work={work} projects={projects} />
 }
