@@ -1,10 +1,13 @@
 import fs from "fs"
 import path from "path"
 import { compileMDX } from "next-mdx-remote/rsc"
-import { BlogPostFrontmatter, BlogPostProps } from "./types"
+import { BlogPostFrontmatter, BlogPostProps, WorkItemFrontmatter, WorkItemProps } from "./types"
 
 // Cache to store parsed blog posts for performance
 let cachedPosts: BlogPostProps[] | null = null
+
+// Cache to store parsed work items for performance
+let cachedWorkItems: WorkItemProps[] | null = null
 
 /**
  * Validates that the frontmatter has all required fields and correct format.
@@ -133,4 +136,132 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
 export async function getBlogPost(slug: string): Promise<BlogPostProps | undefined> {
   const posts = await getAllBlogPosts()
   return posts.find(post => post.slug === slug)
+}
+
+/**
+ * Validates that the work item frontmatter has all required fields and correct format.
+ * @param frontmatter - The frontmatter object to validate
+ * @param filename - The filename for error reporting
+ * @throws Error if validation fails
+ */
+function validateWorkItemFrontmatter(
+  frontmatter: unknown,
+  filename: string
+): asserts frontmatter is WorkItemFrontmatter {
+  if (!frontmatter || typeof frontmatter !== "object") {
+    throw new Error(`Invalid frontmatter in ${filename}: frontmatter is missing or not an object`)
+  }
+
+  const fm = frontmatter as Record<string, unknown>
+
+  if (!fm.company || typeof fm.company !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: company is missing or not a string`)
+  }
+
+  if (!fm.title || typeof fm.title !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: title is missing or not a string`)
+  }
+
+  if (!fm.start || typeof fm.start !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: start is missing or not a string`)
+  }
+
+  if (!fm.end || typeof fm.end !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: end is missing or not a string`)
+  }
+
+  if (!fm.description || typeof fm.description !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: description is missing or not a string`)
+  }
+
+  if (!fm.locations || !Array.isArray(fm.locations)) {
+    throw new Error(`Invalid frontmatter in ${filename}: locations must be an array`)
+  }
+
+  if (!fm.locations.every(loc => typeof loc === "string")) {
+    throw new Error(`Invalid frontmatter in ${filename}: all locations must be strings`)
+  }
+
+  // logoUrl is optional
+  if (fm.logoUrl !== undefined && typeof fm.logoUrl !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: logoUrl must be a string`)
+  }
+}
+
+/**
+ * Scans the work directory, parses all MDX files, and returns an array of work items.
+ * Results are cached for performance.
+ * @returns Promise resolving to an array of WorkItemProps
+ */
+export async function getAllWorkItems(): Promise<WorkItemProps[]> {
+  // Return cached work items if available
+  if (cachedWorkItems) {
+    return cachedWorkItems
+  }
+
+  const workDir = path.join(process.cwd(), "src", "data", "work")
+
+  // Read all files in the work directory
+  const files = fs.readdirSync(workDir)
+
+  // Filter for .mdx files only
+  const mdxFiles = files.filter(file => file.endsWith(".mdx"))
+
+  // Parse each MDX file and extract frontmatter
+  const workItems = await Promise.all(
+    mdxFiles.map(async file => {
+      const filePath = path.join(workDir, file)
+      const fileContent = fs.readFileSync(filePath, "utf-8")
+
+      // Extract slug from filename (remove .mdx extension)
+      const slug = path.basename(file, ".mdx")
+
+      try {
+        // Parse frontmatter using compileMDX
+        const { frontmatter } = await compileMDX<WorkItemFrontmatter>({
+          source: fileContent,
+          options: {
+            parseFrontmatter: true,
+          },
+        })
+
+        // Validate frontmatter
+        validateWorkItemFrontmatter(frontmatter, file)
+
+        // Return WorkItemProps object
+        return {
+          slug,
+          company: frontmatter.company,
+          title: frontmatter.title,
+          start: frontmatter.start,
+          end: frontmatter.end,
+          description: frontmatter.description,
+          locations: frontmatter.locations,
+          logoUrl: frontmatter.logoUrl,
+        } as WorkItemProps
+      } catch (error) {
+        throw new Error(
+          `Failed to parse ${file}: ${error instanceof Error ? error.message : String(error)}`
+        )
+      }
+    })
+  )
+
+  // No sorting needed for work items (can keep file order or sort by start date if needed)
+  // For now, keeping the order as-is
+
+  // Cache the results
+  cachedWorkItems = workItems
+
+  return workItems
+}
+
+/**
+ * Gets a single work item by slug.
+ * @param slug - The slug of the work item to retrieve
+ * @returns Promise resolving to the work item or undefined if not found
+ */
+export async function getWorkItem(slug: string): Promise<WorkItemProps | undefined> {
+  const workItems = await getAllWorkItems()
+  return workItems.find(item => item.slug === slug)
 }

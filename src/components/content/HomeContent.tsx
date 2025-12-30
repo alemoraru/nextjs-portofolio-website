@@ -16,7 +16,6 @@ import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
 import projects from "@/data/projects"
-import work from "@/data/work"
 import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 
 /**
@@ -25,10 +24,11 @@ import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
  */
 export default function HomeContent({
   blog,
+  work,
 }: {
   blog: BlogPostProps[]
+  work: WorkItemProps[]
   projects?: ProjectProps[]
-  work?: WorkItemProps[]
 }) {
   const getTimeSafe = (dateStr: string | undefined) => {
     const date = new Date(dateStr ?? "")

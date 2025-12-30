@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import work from "@/data/work"
+import { getAllWorkItems } from "@/lib/mdx"
 import WorkClientUI from "./WorkClientUI"
 import WorkNotFound from "./WorkNotFound"
 
@@ -14,6 +14,9 @@ export default async function WorkPage(props: {
     company?: string | string[]
   }>
 }) {
+  // Get all work items from MDX files
+  const work = await getAllWorkItems()
+
   // Destructure all query params at once
   const searchParams = await props.searchParams
 

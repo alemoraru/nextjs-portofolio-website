@@ -48,6 +48,21 @@ export interface WorkItemProps {
   end: string
   description: string
   locations: string[]
+  logoUrl?: string
+}
+
+/**
+ * @description This interface defines the frontmatter structure in MDX work item files.
+ */
+export interface WorkItemFrontmatter {
+  company: string
+  title: string
+  start: string
+  end: string
+  description: string
+  locations: string[]
+  logoUrl?: string
+  techStack?: string[]
 }
 
 /**
