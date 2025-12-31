@@ -23,14 +23,13 @@ body {
 /* Custom scrollbar */
 .custom-scrollbar {
   overflow: auto;
-  scrollbar-width: thin;
   scrollbar-color: hsl(215 15% 80%) transparent;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -41,7 +40,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: hsl(215 15% 80%);
   border-radius: 10px;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   background-clip: padding-box;
 }
 

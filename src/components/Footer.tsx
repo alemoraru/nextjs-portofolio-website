@@ -29,10 +29,10 @@ export default function Footer() {
   return (
     <footer
       className="relative mt-6 py-6 text-center text-sm text-gray-600 dark:text-gray-400
-                 px-4 border-t-2 border-gray-300 dark:border-gray-800
+                 px-4 border-t border-gray-200 dark:border-gray-900
                  bg-zinc-50/80 dark:bg-black/80 backdrop-blur-sm
                  before:content-[''] before:absolute before:top-0 before:left-0 before:right-0
-                 before:h-[1px] before:bg-gradient-to-r before:from-transparent
+                 before:h-px before:bg-linear-to-r before:from-transparent
                  before:via-blue-500/30 before:to-transparent"
       id="footerPortfolio"
     >
@@ -63,7 +63,7 @@ export default function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="max-w-xs mx-auto mb-4 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent" />
+      <div className="max-w-xs mx-auto mb-4 h-px bg-linear-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent" />
 
       {/* Copyright */}
       <p className="text-sm mb-2 text-gray-600 dark:text-gray-400">
