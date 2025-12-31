@@ -1,5 +1,6 @@
 "use client"
 
+import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa6"
@@ -16,16 +17,49 @@ export default function ThemeToggleButton() {
   }, [])
 
   if (!mounted) {
-    return null
+    return (
+      <div
+        className="w-11 h-11 rounded-lg border-2 border-gray-300 dark:border-gray-700
+                      bg-gray-100 dark:bg-gray-800 animate-pulse"
+      />
+    )
   }
 
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="p-2 mt-1 rounded-full transition-colors cursor-pointer dark:hover:bg-gray-800 hover:bg-gray-200"
-      aria-label="Toggle Dark Mode"
+      className="relative w-11 h-11 rounded-lg transition-all duration-200
+                 border-2 border-gray-300 dark:border-gray-700
+                 bg-gray-100 dark:bg-gray-800
+                 hover:bg-gray-200 dark:hover:bg-gray-700
+                 hover:border-gray-400 dark:hover:border-gray-600
+                 active:scale-95
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black
+                 flex items-center justify-center
+                 cursor-pointer shadow-sm hover:shadow-md"
+      aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
-      {resolvedTheme === "dark" ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={resolvedTheme}
+          initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+          animate={{ rotate: 0, opacity: 1, scale: 1 }}
+          exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          }}
+          className="absolute pointer-events-none"
+        >
+          {resolvedTheme === "dark" ? (
+            <FaSun className="w-5 h-5 text-yellow-400" />
+          ) : (
+            <FaMoon className="w-5 h-5 text-blue-600" />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </button>
   )
 }
