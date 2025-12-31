@@ -51,11 +51,11 @@ body {
 
 /* Dark mode support */
 .dark .custom-scrollbar {
-  scrollbar-color: hsl(215 27.9% 16.9%) transparent;
+  scrollbar-color: hsl(215 27.9% 10.9%) transparent;
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: hsl(215 27.9% 16.9%);
+  background: hsl(215 27.9% 10.9%);
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {

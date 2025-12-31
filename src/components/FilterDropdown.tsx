@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import { FaChevronDown, FaBroom, FaCheck } from "react-icons/fa"
 
@@ -58,17 +59,35 @@ export default function FilterDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownOpen(prev => !prev)}
-        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
-                dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 relative"
+        className="cursor-pointer flex items-center justify-between
+                   border border-gray-300 dark:border-gray-700
+                   px-4 py-2.5 rounded-lg
+                   bg-gray-100 dark:bg-gray-800
+                   hover:bg-gray-200 dark:hover:bg-gray-700
+                   hover:border-gray-400 dark:hover:border-gray-600
+                   w-full shadow-sm hover:shadow-md
+                   text-sm font-medium text-gray-800 dark:text-gray-200
+                   transition-all duration-200
+                   active:scale-98
+                   focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                   focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black
+                   relative"
       >
         <span className="truncate">
           {selectedItems.length === 0 ? placeholder : `${selectedItems.length} Selected`}
         </span>
-        <FaChevronDown className={`ml-2 text-sm duration-300 ${isDropdownOpen && "-rotate-180"}`} />
+        <motion.div
+          animate={{ rotate: isDropdownOpen ? -180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="ml-2"
+        >
+          <FaChevronDown className="text-sm" />
+        </motion.div>
         {resultCount > 0 && (
           <span
-            className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white
-                        text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+            className="absolute -top-2 -right-2 bg-blue-600 dark:bg-blue-500 text-white
+                        text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center
+                        shadow-md border border-white dark:border-black"
             title={`${resultCount} results`}
           >
             {resultCount}
@@ -76,49 +95,83 @@ export default function FilterDropdown({
         )}
       </button>
 
-      <div
-        className={
-          "origin-top transition-all duration-200 ease-out transform absolute z-10 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 space-y-3" +
-          (isDropdownOpen ? " scale-y-100 opacity-100" : " scale-y-0 opacity-0 pointer-events-none")
-        }
-        style={{ transformOrigin: "top" }}
-      >
-        <div className="max-h-48 overflow-y-auto">
-          {items.map(({ name, count }) => (
-            <label key={name} className="flex items-center space-x-3 cursor-pointer group py-1">
-              <span className="relative inline-block w-5 h-5">
-                <input
-                  type="checkbox"
-                  checked={selectedItems.includes(name)}
-                  onChange={() => onToggle(name)}
-                  className="peer absolute opacity-0 w-full h-full z-10 cursor-pointer"
-                />
-                <span className="block w-full h-full rounded border border-gray-400 dark:border-gray-500 peer-checked:bg-blue-600 peer-checked:border-blue-600 transition duration-200"></span>
-                <FaCheck className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200" />
-              </span>
-              <span className="text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
-                {name} <span className="text-gray-500">({count})</span>
-              </span>
-            </label>
-          ))}
-        </div>
-        <div className="flex justify-between items-center pt-2">
-          <button
-            onClick={handleApply}
-            className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"
+      <AnimatePresence>
+        {isDropdownOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="origin-top absolute z-10 mt-2 w-64
+                       bg-white dark:bg-gray-800
+                       border border-gray-300 dark:border-gray-700
+                       rounded-lg shadow-xl backdrop-blur-sm
+                       p-4 space-y-3"
           >
-            Apply
-          </button>
-          <button
-            onClick={onClear}
-            className="flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 cursor-pointer"
-            title="Clear filters"
-          >
-            <FaBroom className="mr-1" />
-            Clear
-          </button>
-        </div>
-      </div>
+            <div className="max-h-48 overflow-y-auto pr-2 space-y-1 custom-scrollbar">
+              {items.map(({ name, count }) => (
+                <motion.label
+                  key={name}
+                  whileHover={{ x: 4 }}
+                  className="flex items-center space-x-3 cursor-pointer group py-2 px-2
+                             rounded-md hover:bg-gray-100 dark:hover:bg-gray-700/50
+                             transition-colors duration-200"
+                >
+                  <span className="relative inline-block w-5 h-5 shrink-0">
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.includes(name)}
+                      onChange={() => onToggle(name)}
+                      className="peer absolute opacity-0 w-full h-full z-10 cursor-pointer"
+                    />
+                    <span
+                      className="block w-full h-full rounded border border-gray-400 dark:border-gray-500
+                                 peer-checked:bg-blue-600 peer-checked:border-blue-600
+                                 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-1
+                                 transition-all duration-200"
+                    ></span>
+                    <FaCheck className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none" />
+                  </span>
+                  <span className="text-gray-800 dark:text-gray-200 text-sm font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {name}{" "}
+                    <span className="text-gray-500 dark:text-gray-400 font-normal">({count})</span>
+                  </span>
+                </motion.label>
+              ))}
+            </div>
+            <div className="flex justify-between items-center pt-3 border-t-2 border-gray-200 dark:border-gray-700">
+              <button
+                onClick={handleApply}
+                className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg
+                           hover:bg-blue-700 dark:hover:bg-blue-600
+                           text-sm font-medium cursor-pointer
+                           transition-all duration-200
+                           active:scale-95
+                           focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                           focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800
+                           shadow-sm hover:shadow-md"
+              >
+                Apply
+              </button>
+              <button
+                onClick={onClear}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg
+                           text-sm font-medium text-gray-600 dark:text-gray-300
+                           hover:text-red-500 dark:hover:text-red-400
+                           hover:bg-red-50 dark:hover:bg-red-950/30
+                           cursor-pointer transition-all duration-200
+                           active:scale-95
+                           focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500
+                           focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                title="Clear filters"
+              >
+                <FaBroom />
+                Clear
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

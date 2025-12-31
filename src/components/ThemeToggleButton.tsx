@@ -19,7 +19,7 @@ export default function ThemeToggleButton() {
   if (!mounted) {
     return (
       <div
-        className="w-11 h-11 rounded-lg border-2 border-gray-300 dark:border-gray-700
+        className="w-11 h-11 rounded-lg border border-gray-300 dark:border-gray-700
                       bg-gray-100 dark:bg-gray-800 animate-pulse"
       />
     )
@@ -29,7 +29,7 @@ export default function ThemeToggleButton() {
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       className="relative w-11 h-11 rounded-lg transition-all duration-200
-                 border-2 border-gray-300 dark:border-gray-700
+                 border border-gray-300 dark:border-gray-700
                  bg-gray-100 dark:bg-gray-800
                  hover:bg-gray-200 dark:hover:bg-gray-700
                  hover:border-gray-400 dark:hover:border-gray-600

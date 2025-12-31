@@ -1,5 +1,6 @@
+import { motion, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
-import { FaChevronDown } from "react-icons/fa"
+import { FaChevronDown, FaCheck } from "react-icons/fa"
 
 interface SortDropdownProps {
   sortOrder: "newest" | "oldest" | "asc" | "desc"
@@ -39,34 +40,70 @@ export default function SortDropdown({ sortOrder, onChange, options }: SortDropd
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownOpen(prev => !prev)}
-        className="cursor-pointer flex items-center justify-between border px-4 py-2 rounded bg-white dark:bg-gray-800
-                dark:border-gray-600 w-full shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-800 dark:text-gray-200"
+        className="cursor-pointer flex items-center justify-between
+                   border border-gray-300 dark:border-gray-700
+                   px-4 py-2.5 rounded-lg
+                   bg-gray-100 dark:bg-gray-800
+                   hover:bg-gray-200 dark:hover:bg-gray-700
+                   hover:border-gray-400 dark:hover:border-gray-600
+                   w-full shadow-sm hover:shadow-md
+                   text-sm font-medium text-gray-800 dark:text-gray-200
+                   transition-all duration-200
+                   active:scale-98
+                   focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                   focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
       >
         <span>{options.find(option => option.value === sortOrder)?.label || "Sort"}</span>
-        <FaChevronDown className={`ml-2 text-sm duration-300 ${isDropdownOpen && "-rotate-180"}`} />
+        <motion.div
+          animate={{ rotate: isDropdownOpen ? -180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="ml-2"
+        >
+          <FaChevronDown className="text-sm" />
+        </motion.div>
       </button>
 
-      <div
-        className={
-          "origin-top-right absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg text-sm z-50" +
-          (isDropdownOpen ? " scale-y-100 opacity-100" : " scale-y-0 opacity-0 pointer-events-none")
-        }
-        style={{ transformOrigin: "top right" }}
-      >
-        {options.map(({ label, value }) => (
-          <button
-            key={value}
-            onClick={() => {
-              onChange(value)
-              setIsDropdownOpen(false)
-            }}
-            className="cursor-pointer block w-full text-left px-4 py-2 hover:bg-gray-100
-                        dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
+      <AnimatePresence>
+        {isDropdownOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="origin-top-right absolute right-0 mt-2 w-48
+                       bg-white dark:bg-gray-800
+                       border border-gray-300 dark:border-gray-700
+                       rounded-lg shadow-xl backdrop-blur-sm
+                       overflow-hidden text-sm z-50"
           >
-            {label}
-          </button>
-        ))}
-      </div>
+            {options.map(({ label, value }) => {
+              const isSelected = sortOrder === value
+              return (
+                <motion.button
+                  key={value}
+                  onClick={() => {
+                    onChange(value)
+                    setIsDropdownOpen(false)
+                  }}
+                  className={`cursor-pointer flex items-center justify-between w-full text-left
+                             px-4 py-2.5
+                             transition-colors duration-200
+                             focus:outline-none focus-visible:ring-2 focus-visible:ring-inset
+                             focus-visible:ring-blue-500
+                             ${
+                               isSelected
+                                 ? "bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-semibold"
+                                 : "text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700/50"
+                             }`}
+                >
+                  <span>{label}</span>
+                  {isSelected && <FaCheck className="w-3.5 h-3.5" />}
+                </motion.button>
+              )
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

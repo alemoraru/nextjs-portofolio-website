@@ -18,23 +18,69 @@ const gabarito = Gabarito({
 })
 
 /**
+ * Viewport configuration for optimal mobile experience.
+ */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+}
+
+/**
  * Metadata for the application, including SEO and social media sharing information.
+ *
+ * IMPORTANT: Customize this metadata for your own portfolio!
+ * Replace descriptions, and URLs with your actual information.
+ * See README.md for detailed customization instructions.
  */
 export const metadata: Metadata = {
   title: "Next.js Developer Portfolio Template",
   description:
-    "Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.",
+    "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
+  keywords: [
+    "Developer",
+    "Software Engineer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Web Development",
+    "Portfolio",
+  ],
+  authors: [{ name: "Alexandru Moraru", url: "https://alexradumoraru.com" }],
+  creator: "Alexandru Moraru",
+  publisher: "Alexandru Moraru",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/icons/favicon.ico",
     shortcut: "/icons/favicon.ico",
     apple: "/icons/favicon.ico",
   },
   metadataBase: new URL("https://nextjs-portofolio-website.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    type: "website",
+    locale: "en_US",
     title: "Next.js Developer Portfolio Template",
     description:
-      "Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.",
-    url: "https://nextjs-portofolio-website.vercel.app",
+      "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
+    url: "https://yourwebsite.com",
     siteName: "Next.js Developer Portfolio Template",
     images: [
       {
@@ -49,9 +95,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Next.js Developer Portfolio Template",
     description:
-      "Developer-focused portfolio starter built with Next.js, TypeScript, TailwindCSS, and optimized for SEO.",
+      "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
+    creator: "@alexradumoraru",
     images: ["/og-image.png"],
   },
+  category: "technology",
 }
 
 /**
@@ -66,9 +114,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${gabarito.className} ${gabarito.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <title>Next.js Developer Portfolio Template</title>
-      </head>
       <body
         className={`antialiased flex flex-col min-h-screen transition-colors ${gabarito.className} ${gabarito.variable}`}
       >

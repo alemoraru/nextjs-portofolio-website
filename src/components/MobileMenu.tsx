@@ -96,8 +96,7 @@ export default function MobileMenu({
                   href={path}
                   className={`block w-full px-4 py-3.5 rounded-lg text-base font-medium
                              transition-all duration-200
-                             border-2
-                             active:scale-98
+                             border active:scale-98
                              ${
                                pathname === path
                                  ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-600 dark:border-blue-500 shadow-md"

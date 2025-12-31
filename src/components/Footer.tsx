@@ -45,7 +45,7 @@ export default function Footer() {
             aria-label={label}
             target={href.startsWith("mailto") ? "_blank" : undefined}
             className="group relative flex items-center justify-center w-11 h-11
-                       rounded-lg border-2 border-gray-300 dark:border-gray-700
+                       rounded-lg border border-gray-300 dark:border-gray-700
                        bg-gray-100 dark:bg-gray-800
                        text-gray-700 dark:text-gray-300
                        hover:border-blue-500 dark:hover:border-blue-400
