@@ -1,6 +1,7 @@
 import Link from "next/link"
 import React from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 interface PaginationControlsProps {
   currentPage: number
@@ -41,33 +42,71 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   if (totalPages <= 1) return null
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-8">
+    <nav aria-label="Pagination" className="flex justify-center items-center gap-2 mt-10">
       {/* Prev Button */}
       <Link
         href={buildPageUrl(baseUrl, Math.max(1, currentPage - 1), searchParams)}
-        className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === 1 ? "cursor-default opacity-60 pointer-events-none" : "cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600"}`}
+        className={cn(
+          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "border border-gray-300 dark:border-gray-700",
+          "bg-gray-100 dark:bg-gray-800",
+          "text-gray-700 dark:text-gray-200",
+          "transition-all duration-200",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-offset-black",
+          currentPage === 1
+            ? "opacity-40 cursor-not-allowed pointer-events-none"
+            : "hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
+        )}
         aria-label="Previous page"
+        aria-disabled={currentPage === 1}
       >
-        <FaChevronLeft className="w-4 h-4" />
+        <FaChevronLeft className="w-3.5 h-3.5" />
       </Link>
 
       {/* First page */}
       <Link
         href={buildPageUrl(baseUrl, 1, searchParams)}
-        className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === 1 ? "bg-blue-500 text-white cursor-default pointer-events-none" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"}`}
+        className={cn(
+          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "border transition-all duration-200 text-sm font-semibold",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-offset-black",
+          currentPage === 1
+            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-500 cursor-default pointer-events-none shadow-sm"
+            : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
+        )}
         aria-current={currentPage === 1 ? "page" : undefined}
       >
         1
       </Link>
 
       {/* Left Ellipsis */}
-      {currentPage > 3 && <span className="px-2 select-none">...</span>}
+      {currentPage > 3 && (
+        <span className="px-2 text-gray-500 dark:text-gray-400 select-none" aria-hidden="true">
+          ···
+        </span>
+      )}
 
       {/* Previous page number (if not 1 and not already shown) */}
       {currentPage > 2 && (
         <Link
           href={buildPageUrl(baseUrl, currentPage - 1, searchParams)}
-          className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "border border-gray-300 dark:border-gray-700",
+            "bg-gray-100 dark:bg-gray-800",
+            "text-gray-700 dark:text-gray-200",
+            "text-sm font-semibold transition-all duration-200",
+            "hover:bg-gray-200 dark:hover:bg-gray-700",
+            "hover:border-gray-400 dark:hover:border-gray-600",
+            "active:scale-95",
+            "focus-visible:outline-none focus-visible:ring-2",
+            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "dark:focus-visible:ring-offset-black"
+          )}
         >
           {currentPage - 1}
         </Link>
@@ -76,7 +115,13 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       {/* Current page (not 1 or last) */}
       {currentPage !== 1 && currentPage !== totalPages && (
         <span
-          className={`w-8 h-8 flex items-center justify-center rounded bg-blue-500 text-white transition-colors duration-150 cursor-default`}
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "bg-blue-600 dark:bg-blue-500 text-white",
+            "border border-blue-600 dark:border-blue-500",
+            "text-sm font-semibold cursor-default shadow-sm"
+          )}
+          aria-current="page"
         >
           {currentPage}
         </span>
@@ -86,20 +131,45 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       {currentPage < totalPages - 1 && (
         <Link
           href={buildPageUrl(baseUrl, currentPage + 1, searchParams)}
-          className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "border border-gray-300 dark:border-gray-700",
+            "bg-gray-100 dark:bg-gray-800",
+            "text-gray-700 dark:text-gray-200",
+            "text-sm font-semibold transition-all duration-200",
+            "hover:bg-gray-200 dark:hover:bg-gray-700",
+            "hover:border-gray-400 dark:hover:border-gray-600",
+            "active:scale-95",
+            "focus-visible:outline-none focus-visible:ring-2",
+            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "dark:focus-visible:ring-offset-black"
+          )}
         >
           {currentPage + 1}
         </Link>
       )}
 
       {/* Right Ellipsis */}
-      {currentPage < totalPages - 2 && <span className="px-2 select-none">...</span>}
+      {currentPage < totalPages - 2 && (
+        <span className="px-2 text-gray-500 dark:text-gray-400 select-none" aria-hidden="true">
+          ···
+        </span>
+      )}
 
       {/* Last page */}
       {totalPages > 1 && (
         <Link
           href={buildPageUrl(baseUrl, totalPages, searchParams)}
-          className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 ${currentPage === totalPages ? "bg-blue-500 text-white cursor-default pointer-events-none" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"}`}
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "border transition-all duration-200 text-sm font-semibold",
+            "focus-visible:outline-none focus-visible:ring-2",
+            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "dark:focus-visible:ring-offset-black",
+            currentPage === totalPages
+              ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-500 cursor-default pointer-events-none shadow-sm"
+              : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
+          )}
           aria-current={currentPage === totalPages ? "page" : undefined}
         >
           {totalPages}
@@ -109,12 +179,25 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       {/* Next Button */}
       <Link
         href={buildPageUrl(baseUrl, Math.min(totalPages, currentPage + 1), searchParams)}
-        className={`w-8 h-8 flex items-center justify-center px-0 py-0 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 transition-transform duration-150 ${currentPage === totalPages ? "cursor-default opacity-60 pointer-events-none" : "cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600"}`}
+        className={cn(
+          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "border border-gray-300 dark:border-gray-700",
+          "bg-gray-100 dark:bg-gray-800",
+          "text-gray-700 dark:text-gray-200",
+          "transition-all duration-200",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-offset-black",
+          currentPage === totalPages
+            ? "opacity-40 cursor-not-allowed pointer-events-none"
+            : "hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
+        )}
         aria-label="Next page"
+        aria-disabled={currentPage === totalPages}
       >
-        <FaChevronRight className="w-4 h-4" />
+        <FaChevronRight className="w-3.5 h-3.5" />
       </Link>
-    </div>
+    </nav>
   )
 }
 
