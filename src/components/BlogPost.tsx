@@ -5,13 +5,14 @@ import Link from "next/link"
 import { FaRegCalendarAlt } from "react-icons/fa"
 import BlogTag from "@/components/BlogTag"
 import { BlogPostProps } from "@/lib/types"
+import { cn } from "@/lib/utils"
 
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
  */
 export default function BlogPost({ slug, title, summary, date, tags }: BlogPostProps) {
   return (
-    <Link href={`/blog/${slug}`} className="block">
+    <Link href={`/blog/${slug}`} className="block h-full">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -26,22 +27,26 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
           },
         }}
         whileTap={{ scale: 0.98 }}
-        className="group relative border border-gray-300 dark:border-gray-700
-                   rounded-lg p-5 shadow-sm
-                   hover:border-blue-500 dark:hover:border-blue-500
-                   hover:shadow-xl hover:shadow-blue-500/10
-                   transition-all duration-200 cursor-pointer
-                   bg-gray-50 dark:bg-gray-900
-                   hover:bg-white dark:hover:bg-gray-800
-                   focus-visible:outline-none focus-visible:ring-2
-                   focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                   dark:focus-visible:ring-offset-black"
+        className={cn(
+          "group relative h-full flex flex-col",
+          "border border-gray-300 dark:border-gray-700 rounded-lg p-5 shadow-sm",
+          "hover:border-blue-500 dark:hover:border-blue-500",
+          "hover:shadow-xl hover:shadow-blue-500/10",
+          "transition-all duration-200 cursor-pointer",
+          "bg-gray-50 dark:bg-gray-900",
+          "hover:bg-white dark:hover:bg-gray-800",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-offset-black"
+        )}
       >
         {/* Title */}
         <h3
-          className="text-lg font-bold text-gray-900 dark:text-white
-                       group-hover:text-blue-600 dark:group-hover:text-blue-400
-                       transition-colors duration-200"
+          className={cn(
+            "text-lg font-bold text-gray-900 dark:text-white",
+            "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+            "transition-colors duration-200"
+          )}
         >
           {title}
         </h3>
@@ -70,16 +75,12 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
         )}
 
         {/* Summary */}
-        <p className="text-gray-700 dark:text-gray-300 mt-3 line-clamp-2 leading-relaxed">
+        <p className="text-gray-700 dark:text-gray-300 mt-3 line-clamp-2 leading-relaxed grow">
           {summary}
         </p>
 
         {/* Read More Hint */}
-        <div
-          className="flex items-center gap-1 mt-4 text-sm font-semibold
-                        text-blue-600 dark:text-blue-400
-                        group-hover:gap-2 transition-all duration-200"
-        >
+        <div className="flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all duration-200">
           <span>Read article</span>
           <motion.span
             initial={{ x: 0 }}

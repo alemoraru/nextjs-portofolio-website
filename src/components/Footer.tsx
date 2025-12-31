@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import { appVersion } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 
 export default function Footer() {
   const socialLinks = [
@@ -44,18 +45,20 @@ export default function Footer() {
             href={href}
             aria-label={label}
             target={href.startsWith("mailto") ? "_blank" : undefined}
-            className="group relative flex items-center justify-center w-11 h-11
-                       rounded-lg border border-gray-300 dark:border-gray-700
-                       bg-gray-100 dark:bg-gray-800
-                       text-gray-700 dark:text-gray-300
-                       hover:border-blue-500 dark:hover:border-blue-400
-                       hover:bg-blue-50 dark:hover:bg-blue-950/30
-                       hover:text-blue-600 dark:hover:text-blue-400
-                       transition-all duration-200
-                       hover:scale-110 hover:shadow-md
-                       active:scale-95
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                       focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+            className={cn(
+              "group relative flex items-center justify-center w-11 h-11",
+              "rounded-lg border border-gray-300 dark:border-gray-700",
+              "bg-gray-100 dark:bg-gray-800",
+              "text-gray-700 dark:text-gray-300",
+              "hover:border-blue-500 dark:hover:border-blue-400",
+              "hover:bg-blue-50 dark:hover:bg-blue-950/30",
+              "hover:text-blue-600 dark:hover:text-blue-400",
+              "transition-all duration-200",
+              "hover:scale-110 hover:shadow-md",
+              "active:scale-95",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+            )}
           >
             <Icon className="w-5 h-5" />
           </Link>

@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 interface WorkItemProps {
   slug: string
@@ -45,8 +46,12 @@ export default function WorkItem({
             duration: 0.4,
           },
         }}
-        className="border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:border-blue-500 transition bg-gray-100
-                dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
+        className={cn(
+          "border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm",
+          "hover:border-blue-500 transition cursor-pointer",
+          "bg-gray-100 dark:bg-gray-900",
+          "hover:bg-gray-200 dark:hover:bg-gray-800"
+        )}
       >
         <div className="flex items-center">
           {/* Company Logo */}

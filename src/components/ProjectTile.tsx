@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface ProjectTileProps {
   slug: string
@@ -37,15 +38,17 @@ export default function ProjectTile({ slug, title, image, description }: Project
           },
         }}
         whileTap={{ scale: 0.98 }}
-        className="group relative overflow-hidden rounded-lg
-                   border border-gray-300 dark:border-gray-700
-                   bg-white dark:bg-gray-900
-                   shadow-sm hover:shadow-2xl hover:shadow-blue-500/20
-                   hover:border-blue-500 dark:hover:border-blue-500
-                   transition-all duration-200
-                   focus-visible:outline-none focus-visible:ring-2
-                   focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                   dark:focus-visible:ring-offset-black"
+        className={cn(
+          "group relative overflow-hidden rounded-lg",
+          "border border-gray-300 dark:border-gray-700",
+          "bg-white dark:bg-gray-900",
+          "shadow-sm hover:shadow-2xl hover:shadow-blue-500/20",
+          "hover:border-blue-500 dark:hover:border-blue-500",
+          "transition-all duration-200",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "dark:focus-visible:ring-offset-black"
+        )}
       >
         {/* Image Container */}
         <div className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -62,8 +65,10 @@ export default function ProjectTile({ slug, title, image, description }: Project
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 bg-linear-to-t from-blue-600/90 via-blue-500/70 to-transparent
-                       flex flex-col items-center justify-center gap-2 p-4"
+            className={cn(
+              "absolute inset-0 bg-linear-to-t from-blue-600/70 via-blue-500/70 to-transparent",
+              "flex flex-col items-center justify-center gap-2 p-4"
+            )}
           >
             <span className="text-white text-lg font-bold tracking-tight">Explore Project</span>
             <motion.span
@@ -79,9 +84,11 @@ export default function ProjectTile({ slug, title, image, description }: Project
 
         {/* Title and Description */}
         <div
-          className="p-3 border-t border-gray-200 dark:border-gray-800
-                        bg-linear-to-b from-white to-gray-50
-                        dark:from-gray-900 dark:to-gray-900/80"
+          className={cn(
+            "p-3 border-t border-gray-200 dark:border-gray-800",
+            "bg-linear-to-b from-white to-gray-50",
+            "dark:from-gray-900 dark:to-gray-900/80"
+          )}
         >
           <h3
             className="text-lg font-bold text-gray-900 dark:text-white

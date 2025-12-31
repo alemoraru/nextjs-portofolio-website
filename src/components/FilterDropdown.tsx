@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import { FaChevronDown, FaBroom, FaCheck } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 interface FilterDropdownProps {
   items: { name: string; count: number }[]
@@ -59,19 +60,17 @@ export default function FilterDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownOpen(prev => !prev)}
-        className="cursor-pointer flex items-center justify-between
-                   border border-gray-300 dark:border-gray-700
-                   px-4 py-2.5 rounded-lg
-                   bg-gray-100 dark:bg-gray-800
-                   hover:bg-gray-200 dark:hover:bg-gray-700
-                   hover:border-gray-400 dark:hover:border-gray-600
-                   w-full shadow-sm hover:shadow-md
-                   text-sm font-medium text-gray-800 dark:text-gray-200
-                   transition-all duration-200
-                   active:scale-98
-                   focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                   focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black
-                   relative"
+        className={cn(
+          "cursor-pointer flex items-center justify-between relative w-full",
+          "border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5",
+          "bg-gray-100 dark:bg-gray-800",
+          "hover:bg-gray-200 dark:hover:bg-gray-700",
+          "hover:border-gray-400 dark:hover:border-gray-600",
+          "shadow-sm hover:shadow-md transition-all duration-200 active:scale-98",
+          "text-sm font-medium text-gray-800 dark:text-gray-200",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+          "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+        )}
       >
         <span className="truncate">
           {selectedItems.length === 0 ? placeholder : `${selectedItems.length} Selected`}
@@ -102,11 +101,12 @@ export default function FilterDropdown({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="origin-top absolute z-10 mt-2 w-64
-                       bg-white dark:bg-gray-800
-                       border border-gray-300 dark:border-gray-700
-                       rounded-lg shadow-xl backdrop-blur-sm
-                       p-4 space-y-3"
+            className={cn(
+              "origin-top absolute z-10 mt-2 w-64 p-4 space-y-3",
+              "bg-white dark:bg-gray-800",
+              "border border-gray-300 dark:border-gray-700",
+              "rounded-lg shadow-xl backdrop-blur-sm"
+            )}
           >
             <div className="max-h-48 overflow-y-auto pr-2 space-y-1 custom-scrollbar">
               {items.map(({ name, count }) => (
@@ -139,30 +139,31 @@ export default function FilterDropdown({
                 </motion.label>
               ))}
             </div>
-            <div className="flex justify-between items-center pt-3 border-t-2 border-gray-200 dark:border-gray-700">
+            <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={handleApply}
-                className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg
-                           hover:bg-blue-700 dark:hover:bg-blue-600
-                           text-sm font-medium cursor-pointer
-                           transition-all duration-200
-                           active:scale-95
-                           focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                           focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800
-                           shadow-sm hover:shadow-md"
+                className={cn(
+                  "px-4 py-2 rounded-lg cursor-pointer text-sm font-medium",
+                  "bg-blue-600 dark:bg-blue-500 text-white",
+                  "hover:bg-blue-700 dark:hover:bg-blue-600",
+                  "shadow-sm hover:shadow-md transition-all duration-200 active:scale-95",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                )}
               >
                 Apply
               </button>
               <button
                 onClick={onClear}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg
-                           text-sm font-medium text-gray-600 dark:text-gray-300
-                           hover:text-red-500 dark:hover:text-red-400
-                           hover:bg-red-50 dark:hover:bg-red-950/30
-                           cursor-pointer transition-all duration-200
-                           active:scale-95
-                           focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500
-                           focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-2 rounded-lg cursor-pointer",
+                  "text-sm font-medium text-gray-600 dark:text-gray-300",
+                  "hover:text-red-500 dark:hover:text-red-400",
+                  "hover:bg-red-50 dark:hover:bg-red-950/30",
+                  "transition-all duration-200 active:scale-95",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500",
+                  "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                )}
                 title="Clear filters"
               >
                 <FaBroom />

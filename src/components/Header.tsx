@@ -6,6 +6,7 @@ import MobileMenu from "@/components/MobileMenu"
 import MobileMenuToggle from "@/components/MobileMenuToggle"
 import NavigationMenu from "@/components/NavigationMenu"
 import ThemeToggleButton from "@/components/ThemeToggleButton"
+import { cn } from "@/lib/utils"
 
 /**
  * Header component that serves as the top navigation bar for the portfolio.
@@ -16,18 +17,24 @@ export default function Header() {
   return (
     <header
       id="headerPortfolio"
-      className="sticky top-0 z-50 w-full text-black bg-zinc-50/90 dark:bg-black/90
-                 dark:text-white transition-all duration-300
-                 border-b dark:border-gray-800 border-gray-300
-                 backdrop-blur-md backdrop-saturate-150
-                 shadow-sm hover:shadow-md
-                 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0
-                 before:h-px before:bg-linear-to-r before:from-transparent
-                 before:via-blue-500/50 before:to-transparent"
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        "text-black dark:text-white",
+        "bg-zinc-50/90 dark:bg-black/90",
+        "border-b border-gray-300 dark:border-gray-800",
+        "backdrop-blur-md backdrop-saturate-150",
+        "shadow-sm hover:shadow-md",
+        "before:content-[''] before:absolute before:top-0 before:left-0 before:right-0",
+        "before:h-px before:bg-gradient-to-r before:from-transparent",
+        "before:via-blue-500/50 before:to-transparent"
+      )}
     >
       <div
-        className="max-w-4xl mx-auto w-full px-5 py-4 md:py-5 transition-all duration-300
-                      flex items-center justify-between gap-4"
+        className={cn(
+          "max-w-4xl mx-auto w-full px-5 py-4 md:py-5",
+          "flex items-center justify-between gap-4",
+          "transition-all duration-300"
+        )}
       >
         {/* Left side: logo or current path */}
         <Breadcrumbs />
