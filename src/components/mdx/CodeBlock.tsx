@@ -1,7 +1,9 @@
 "use client"
 
-import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import React, { useState, useRef } from "react"
 import { FiClipboard, FiCheck } from "react-icons/fi"
+import { cn } from "@/lib/utils"
 
 type CodeBlockProps = {
   className?: string
@@ -15,52 +17,90 @@ type CodeBlockProps = {
  */
 export function CodeBlock({ className = "", children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
+  const codeRef = useRef<HTMLElement>(null)
 
   const classParts = className.split(" ").filter(Boolean)
   const langPart = classParts.find(cls => cls.startsWith("language-"))
   const language = langPart ? langPart.replace("language-", "") : "text"
 
-  const code = typeof children === "string" ? children.trim() : String(children).trim()
-
   // Copy to clipboard functionality
   const handleCopy = async () => {
+    const code = codeRef.current?.textContent || ""
     await navigator.clipboard.writeText(code)
     setCopied(true)
     setTimeout(() => setCopied(false), 2500)
   }
 
   return (
-    <div className="rounded-md border border-gray-700/50 bg-[#0d1117] text-sm w-full max-w-full">
+    <div
+      className={cn(
+        "rounded-lg overflow-hidden w-full max-w-full",
+        "border border-gray-700/50 bg-[#0d1117]",
+        "shadow-lg text-sm"
+      )}
+    >
       {/* Code Block Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-gray-800 text-gray-100 text-xs font-mono">
-        <span className="uppercase tracking-wide">{language}</span>
+      <div
+        className={cn(
+          "flex items-center justify-between px-4 py-2.5",
+          "bg-gray-800/90 border-b border-gray-700/50",
+          "text-gray-100"
+        )}
+      >
+        <span className="text-xs font-mono font-semibold uppercase tracking-wider text-gray-300">
+          {language}
+        </span>
         <button
           onClick={handleCopy}
-          className={`flex items-center gap-1 text-xs px-2 py-1 cursor-pointer rounded-md transition-all duration-200 
-                    ${
-                      copied
-                        ? "text-blue-400"
-                        : "text-gray-300 hover:text-white hover:bg-gray-500/20"
-                    }`}
-        >
-          {copied ? (
-            <>
-              <FiCheck className="w-4 h-4" />
-              Copied
-            </>
-          ) : (
-            <>
-              <FiClipboard className="w-4 h-4" />
-              Copy
-            </>
+          className={cn(
+            "flex items-center gap-1.5 px-2.5 py-1.5 rounded-md cursor-pointer",
+            "text-xs font-medium transition-all duration-200",
+            "focus-visible:outline-none focus-visible:ring-2",
+            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-offset-gray-800",
+            "active:scale-95",
+            copied
+              ? "text-blue-400 bg-blue-400/10"
+              : "text-gray-300 hover:text-white hover:bg-gray-700/50"
           )}
+          aria-label={copied ? "Copied to clipboard" : "Copy code to clipboard"}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {copied ? (
+              <motion.div
+                key="check"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.15 }}
+                className="flex items-center gap-1.5"
+              >
+                <FiCheck className="w-4 h-4" />
+                <span>Copied!</span>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="clipboard"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.15 }}
+                className="flex items-center gap-1.5"
+              >
+                <FiClipboard className="w-4 h-4" />
+                <span>Copy</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 
       {/* Scrollable code container */}
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full custom-scrollbar">
         <pre className="min-w-full p-0 whitespace-pre">
-          <code className={`${className} block`}>{children}</code>
+          <code ref={codeRef} className={`${className} block`}>
+            {children}
+          </code>
         </pre>
       </div>
     </div>

@@ -1,4 +1,8 @@
+"use client"
+
+import { motion } from "framer-motion"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface BackToPageButtonProps {
   pageUrl: string
@@ -9,15 +13,31 @@ interface BackToPageButtonProps {
  * @param pageUrl - The URL to which the button should link (e.g., "/projects").
  */
 export default function BackToPageButton({ pageUrl }: BackToPageButtonProps) {
+  const pageName = pageUrl.split("/").filter(Boolean).pop() || "page"
+  const capitalizedName = pageName.charAt(0).toUpperCase() + pageName.slice(1)
+
   return (
     <Link
       href={pageUrl}
-      className="mb-8 text-blue-500 hover:text-blue-700 transition-all flex items-center gap-2 group"
+      className={cn(
+        "group inline-flex items-center gap-2 mb-8",
+        "text-sm font-semibold text-blue-600 dark:text-blue-400",
+        "hover:gap-3 transition-all duration-200",
+        "focus-visible:outline-none focus-visible:ring-2",
+        "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        "dark:focus-visible:ring-offset-black rounded-sm"
+      )}
     >
-      <span className="inline-block transform transition-transform group-hover:-translate-x-1">
+      <motion.span
+        initial={{ x: 0 }}
+        animate={{ x: 0 }}
+        whileHover={{ x: -2 }}
+        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+        className="text-base"
+      >
         ←
-      </span>
-      Back to {pageUrl.split("/").pop() || "page"}
+      </motion.span>
+      <span>Back to {capitalizedName}</span>
     </Link>
   )
 }

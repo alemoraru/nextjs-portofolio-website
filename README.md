@@ -106,6 +106,40 @@ pnpm start
 
 ---
 
+## 🎨 Customization
+
+Before using this template for your own portfolio, you'll want to personalize it with your information:
+
+### 1. Update Site Metadata (`src/app/layout.tsx`)
+
+Replace the placeholder metadata with your actual information:
+
+- **Name**: Change names and descriptions to your own
+- **Description**: Update with your own professional summary
+- **Keywords**: Add relevant keywords for SEO
+- **URLs**: Replace `https://yourwebsite.com` with your actual domain
+- **Social**: Update Twitter/X handle (`@yourhandle`)
+
+### 2. Update Personal Information
+
+- **Components**: Update name references in `src/components/Breadcrumbs.tsx`, `src/components/Footer.tsx`
+- **Favicon**: Replace `/public/icons/favicon.ico` with your own icon
+- **OG Image**: Create a 1200x630px image at `/public/og-image.png` for social media previews
+- **Social Links**: Update social media URLs in `src/components/Footer.tsx`
+
+### 3. Content
+
+- Add your blog posts in `src/data/blog/`
+- Add your projects in `src/data/projects/`
+- Add your work experience in `src/data/work/`
+
+That's it! The template will automatically use your information and .mdx files throughout the site.
+
+> **Note**: Future versions will include a centralized configuration file for easier customization of site-wide
+> settings, instead of having to modify multiple files.
+
+---
+
 ## 💎 Key Features
 
 - Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
