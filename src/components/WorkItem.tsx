@@ -45,7 +45,7 @@ export default function WorkItem({
             duration: 0.4,
           },
         }}
-        className="border rounded-xl p-4 shadow-sm hover:border-blue-500 transition bg-gray-100
+        className="border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:border-blue-500 transition bg-gray-100
                 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
       >
         <div className="flex items-center">
