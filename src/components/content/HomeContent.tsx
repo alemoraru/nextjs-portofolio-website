@@ -16,6 +16,7 @@ import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
 import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
+import { cn } from "@/lib/utils"
 
 interface HomeContentProps {
   blog: BlogPostProps[]
@@ -44,32 +45,44 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.6 }}
         viewport={{ once: true }}
         className="text-center mt-2"
       >
         {/* Introductory Text */}
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Hi, I&#39;m John Doe 👋
+          Hi, I&#39;m John Doe{" "}
+          <motion.span
+            initial={{ rotate: 0 }}
+            animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+            transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+            className="inline-block"
+          >
+            👋
+          </motion.span>
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto text-left mb-6">
-          I&#39;m a software engineer passionate about solving problems, building things, and
-          reading sci-fi. Whenever I&#39;m not coding, you can find me exploring the world, playing
-          tennis or skating. I love to share my knowledge and experiences through my blog, where I
-          write about tech, books, and life lessons.
-        </p>
 
-        {/* Current Work Description or other highlights */}
-        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto text-left">
-          I am currently working at Hypernova Labs as a software engineer, where I focus on building
-          scalable applications and improving user experiences. I have a keen interest in full-stack
-          development, particularly in React and Node.js. I enjoy collaborating with
-          cross-functional teams to deliver high-quality software solutions.
-        </p>
+        <div className="space-y-4 max-w-3xl mx-auto mb-8">
+          <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-left">
+            I&#39;m a software engineer passionate about solving problems, building things, and
+            reading sci-fi. Whenever I&#39;m not coding, you can find me exploring the world,
+            playing tennis or skating. I love to share my knowledge and experiences through my blog,
+            where I write about tech, books, and life lessons.
+          </p>
+
+          <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-left">
+            I am currently working at Hypernova Labs as a software engineer, where I focus on
+            building scalable applications and improving user experiences. I have a keen interest in
+            full-stack development, particularly in React and Node.js. I enjoy collaborating with
+            cross-functional teams to deliver high-quality software solutions.
+          </p>
+        </div>
 
         {/* Quick Facts Section */}
         <div className="mt-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Quick & Fun Facts</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+            Quick & Fun Facts
+          </h2>
 
           <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
             {[
@@ -84,14 +97,30 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
             ].map((fact, i) => {
               const Icon = fact.icon
               return (
-                <div
+                <motion.div
                   key={i}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800
-                                    text-sm text-gray-700 dark:text-gray-300 rounded-full shadow-md transition"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.3,
+                    delay: i * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-full",
+                    "border border-gray-300 dark:border-gray-700",
+                    "bg-gray-50 dark:bg-gray-800",
+                    "text-sm font-medium text-gray-700 dark:text-gray-300",
+                    "shadow-sm hover:shadow-md",
+                    "hover:border-blue-400 dark:hover:border-blue-600",
+                    "transition-all duration-200 cursor-default"
+                  )}
                 >
-                  <Icon className="text-blue-500 dark:text-blue-400 text-base" />
+                  <Icon className="text-blue-600 dark:text-blue-400 text-base shrink-0" />
                   <span>{fact.label}</span>
-                </div>
+                </motion.div>
               )
             })}
           </div>
