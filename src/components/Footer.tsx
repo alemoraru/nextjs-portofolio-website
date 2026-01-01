@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { FaCodeBranch } from "react-icons/fa"
+import { footerConfig, socialIconMap } from "@/data/content"
 import { appVersion } from "@/lib/constants"
-import { footerConfig, socialIconMap } from "@/lib/contentConfig"
 import { cn } from "@/lib/utils"
 
 /**

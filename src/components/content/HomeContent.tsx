@@ -5,7 +5,7 @@ import BlogPost from "@/components/BlogPost"
 import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
-import { homeIntroConfig, factIconMap } from "@/lib/contentConfig"
+import { homeIntroConfig, factIconMap } from "@/data/content"
 import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
 

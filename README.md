@@ -8,9 +8,11 @@ performance-focused starting point for showcasing your **work**, **blogs**, and 
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.0-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
-![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)
+![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![MDX](https://img.shields.io/badge/MDX-Supported-orange?style=for-the-badge&logo=mdx)
+![Prettier](https://img.shields.io/badge/Prettier-3.6-F7B93E?style=for-the-badge&logo=prettier)
+![ESLint](https://img.shields.io/badge/ESLint-9.39-4B32C3?style=for-the-badge&logo=eslint)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 </div>
@@ -108,35 +110,59 @@ pnpm start
 
 ## 🎨 Customization
 
-Before using this template for your own portfolio, you'll want to personalize it with your information:
+This template is designed for easy customization! All content and configuration is centralized in the `src/data/`
+folder. Here's how to make it yours:
 
-### 1. Update Site Metadata (`src/app/layout.tsx`)
+### 1. Update Site Metadata (`src/data/metadata.ts`)
 
-Replace the placeholder metadata with your actual information:
+Edit `src/data/metadata.ts` to customize your site's SEO and social media information:
 
-- **Name**: Change names and descriptions to your own
-- **Description**: Update with your own professional summary
-- **Keywords**: Add relevant keywords for SEO
-- **URLs**: Replace `https://yourwebsite.com` with your actual domain
-- **Social**: Update Twitter/X handle (`@yourhandle`)
+- **title**: Your site/portfolio title
+- **description**: A brief description of your portfolio
+- **keywords**: Array of relevant keywords for SEO
+- **author**: Your name and website URL
+- **siteUrl**: Your actual domain (e.g., `https://yourdomain.com`)
+- **social.twitter**: Your Twitter/X handle (e.g., `@yourhandle`)
+- **ogImage**: Path to your Open Graph image for social media sharing
 
-### 2. Update Personal Information
+### 2. Update Personal Information (`src/data/content.ts`)
 
-- **Components**: Update name references in `src/components/Breadcrumbs.tsx`, `src/components/Footer.tsx`
+Edit `src/data/content.ts` to customize your homepage and footer:
+
+**Homepage Intro:**
+
+- `name`: Your name (displayed in the heading)
+- `introParagraphs`: Array of introduction paragraphs about yourself
+- `facts`: Your current company, education, location, languages, and role
+- `additionalFacts`: Custom facts with icons (hobbies, interests, etc.)
+
+**Footer:**
+
+- `copyrightName`: Your name for the copyright notice
+- `socialLinks`: Your social media URLs (just add the URLs, icons are automatic!)
+    - Supported platforms: GitHub, LinkedIn, Goodreads, Instagram, Twitter/X, Reddit, Dribbble, YouTube, Bluesky, Stack
+      Overflow, Email
+    - Leave any field empty (`""`) to hide that social link
+- `showVersionAndAttribution`: Set to `false` to hide the template attribution (true by default)
+
+### 3. Add Your Content (`.mdx` files)
+
+Create `.mdx` files in the respective folders to add your content:
+
+- **Blog Posts**: `src/data/blog/your-post.mdx`
+- **Projects**: `src/data/projects/your-project.mdx`
+- **Work Experience**: `src/data/work/your-job.mdx`
+
+Each `.mdx` file should include frontmatter with metadata (title, date, tags, etc.). The site automatically discovers
+and renders all content from these files!
+
+### 4. Update Visual Assets
+
 - **Favicon**: Replace `/public/icons/favicon.ico` with your own icon
 - **OG Image**: Create a 1200x630px image at `/public/og-image.png` for social media previews
-- **Social Links**: Update social media URLs in `src/components/Footer.tsx`
 
-### 3. Content
-
-- Add your blog posts in `src/data/blog/`
-- Add your projects in `src/data/projects/`
-- Add your work experience in `src/data/work/`
-
-That's it! The template will automatically use your information and .mdx files throughout the site.
-
-> **Note**: Future versions will include a centralized configuration file for easier customization of site-wide
-> settings, instead of having to modify multiple files.
+That's it! 🎉 The template automatically uses your configuration and content throughout the site. No need to modify
+components or understand the codebase!
 
 ---
 
