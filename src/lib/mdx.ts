@@ -332,6 +332,10 @@ function validateProjectFrontmatter(
   if (fm.githubUrl !== undefined && typeof fm.githubUrl !== "string") {
     throw new Error(`Invalid frontmatter in ${filename}: githubUrl must be a string`)
   }
+
+  if (fm.paperUrl !== undefined && typeof fm.paperUrl !== "string") {
+    throw new Error(`Invalid frontmatter in ${filename}: paperUrl must be a string`)
+  }
 }
 
 /**

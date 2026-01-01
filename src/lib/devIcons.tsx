@@ -179,7 +179,7 @@ export function techToIcon(techName: string, iconClassName?: string) {
       return <DevIcon name={"git"} iconClassName={iconClassName} />
     case "github":
     case "GitHub":
-      return <DevIcon name={"github"} iconClassName={iconClassName} />
+      return <DevIcon name={"github-dark"} iconClassName={iconClassName} />
     case "Gitlab":
     case "gitlab":
     case "GitLab":

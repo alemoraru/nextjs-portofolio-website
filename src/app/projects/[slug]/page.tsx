@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { BsStack, BsCardImage } from "react-icons/bs"
-import { FaUsers, FaUserTie, FaClock, FaGithub } from "react-icons/fa"
+import { FaUsers, FaUserTie, FaClock, FaGithub, FaBook } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
@@ -61,9 +61,9 @@ export default async function ProjectPage(props: { params: pageParams }) {
       <BackToPageButton pageUrl="/projects" />
       <h1 className="text-3xl font-extrabold mb-4">{frontmatter.title}</h1>
 
-      {/* GitHub Link Section */}
-      {frontmatter.githubUrl && (
-        <div className="mb-4">
+      {/* Links Section */}
+      <div className="mb-4">
+        {frontmatter.githubUrl && (
           <Link
             href={frontmatter.githubUrl}
             rel="noopener noreferrer"
@@ -72,8 +72,18 @@ export default async function ProjectPage(props: { params: pageParams }) {
             <FaGithub className="mr-2 w-5 h-5" />
             <span className="underline underline-offset-4">View on GitHub</span>
           </Link>
-        </div>
-      )}
+        )}
+        {frontmatter.paperUrl && (
+          <Link
+            href={frontmatter.paperUrl}
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-gray-800 dark:text-gray-100 hover:text-blue-600 transition ml-6"
+          >
+            <FaBook className="mr-2 w-5 h-5" />
+            <span className="underline underline-offset-4">Read Paper</span>
+          </Link>
+        )}
+      </div>
 
       {/* Project Metadata */}
       <div className="w-full mb-6 bg-gray-50 dark:bg-gray-800 p-5 rounded-xl shadow-md">

@@ -22,7 +22,7 @@ interface ProjectTileProps {
  */
 export default function ProjectTile({ slug, title, image, description }: ProjectTileProps) {
   return (
-    <Link href={`/projects/${slug}`} className="block">
+    <Link href={`/projects/${slug}`} className="block h-full">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -39,7 +39,7 @@ export default function ProjectTile({ slug, title, image, description }: Project
         }}
         whileTap={{ scale: 0.98 }}
         className={cn(
-          "group relative overflow-hidden rounded-lg",
+          "group relative overflow-hidden rounded-lg h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
           "bg-white dark:bg-gray-900",
           "shadow-sm hover:shadow-2xl hover:shadow-blue-500/20",
@@ -85,9 +85,10 @@ export default function ProjectTile({ slug, title, image, description }: Project
         {/* Title and Description */}
         <div
           className={cn(
-            "p-3 border-t border-gray-200 dark:border-gray-800",
+            "flex-1 p-3 border-t border-gray-200 dark:border-gray-800",
             "bg-linear-to-b from-white to-gray-50",
-            "dark:from-gray-900 dark:to-gray-900/80"
+            "dark:from-gray-900 dark:to-gray-900/80",
+            "flex flex-col justify-center"
           )}
         >
           <h3
