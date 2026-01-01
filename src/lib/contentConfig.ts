@@ -16,6 +16,7 @@ import {
   FaReddit,
   FaDribbble,
   FaYoutube,
+  FaStackOverflow,
 } from "react-icons/fa"
 import { FaBluesky, FaXTwitter } from "react-icons/fa6"
 
@@ -62,6 +63,13 @@ export const footerConfig = {
   copyrightName: "John Doe",
 
   /**
+   * Show version and attribution section
+   * Set to true if you want to hide the "built by @alemoraru" attribution and version number.
+   * By default, this is true to give credit to the template creator, but you can disable it if desired.
+   */
+  showVersionAndAttribution: false,
+
+  /**
    * Social media links
    * Simply add your URLs below. Leave empty ("") to hide a social link.
    */
@@ -75,6 +83,7 @@ export const footerConfig = {
     dribbble: "/",
     youtube: "/",
     bluesky: "/",
+    stackoverflow: "/",
     email: "contact@example.com",
   },
 }
@@ -96,5 +105,6 @@ export const socialIconMap: Record<
   dribbble: { icon: FaDribbble, label: "Dribbble" },
   youtube: { icon: FaYoutube, label: "YouTube" },
   bluesky: { icon: FaBluesky, label: "Bluesky" },
+  stackoverflow: { icon: FaStackOverflow, label: "Stack Overflow" },
   email: { icon: FaEnvelope, label: "Email" },
 }

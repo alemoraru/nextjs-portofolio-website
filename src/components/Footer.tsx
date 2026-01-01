@@ -75,40 +75,42 @@ export default function Footer() {
       </p>
 
       {/* Version & Attribution - Terminal style */}
-      <div
-        className={cn(
-          "flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3",
-          "text-xs font-mono text-gray-500 dark:text-gray-500"
-        )}
-      >
-        <Link
-          href={`https://github.com/alemoraru/nextjs-portofolio-website/releases/tag/v${appVersion}`}
-          rel="noopener noreferrer"
+      {footerConfig.showVersionAndAttribution && (
+        <div
           className={cn(
-            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md",
-            "bg-gray-200 dark:bg-gray-800",
-            "border border-gray-300 dark:border-gray-700",
-            "hover:border-blue-500 dark:hover:border-blue-400",
-            "hover:bg-blue-50 dark:hover:bg-blue-950/30",
-            "transition-all duration-200",
-            "hover:shadow-sm"
+            "flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3",
+            "text-xs font-mono text-gray-500 dark:text-gray-500"
           )}
         >
-          <FaCodeBranch className="w-3 h-3 text-gray-500 dark:text-gray-500" />
-          <span className="font-semibold text-blue-600 dark:text-blue-400">{appVersion}</span>
-        </Link>
-
-        <span className="text-gray-500 dark:text-gray-500">
-          built by{" "}
           <Link
-            href="https://github.com/alemoraru"
+            href={`https://github.com/alemoraru/nextjs-portofolio-website/releases/tag/v${appVersion}`}
             rel="noopener noreferrer"
-            className="font-semibold hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+            className={cn(
+              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md",
+              "bg-gray-200 dark:bg-gray-800",
+              "border border-gray-300 dark:border-gray-700",
+              "hover:border-blue-500 dark:hover:border-blue-400",
+              "hover:bg-blue-50 dark:hover:bg-blue-950/30",
+              "transition-all duration-200",
+              "hover:shadow-sm"
+            )}
           >
-            @alemoraru
+            <FaCodeBranch className="w-3 h-3 text-gray-500 dark:text-gray-500" />
+            <span className="font-semibold text-blue-600 dark:text-blue-400">{appVersion}</span>
           </Link>
-        </span>
-      </div>
+
+          <span className="text-gray-500 dark:text-gray-500">
+            built by{" "}
+            <Link
+              href="https://github.com/alemoraru"
+              rel="noopener noreferrer"
+              className="font-semibold hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+            >
+              @alemoraru
+            </Link>
+          </span>
+        </div>
+      )}
     </footer>
   )
 }
