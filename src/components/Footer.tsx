@@ -1,32 +1,10 @@
 import Link from "next/link"
-import {
-  FaGithub,
-  FaLinkedin,
-  FaGoodreads,
-  FaEnvelope,
-  FaInstagram,
-  FaReddit,
-  FaDribbble,
-  FaYoutube,
-  FaCodeBranch,
-} from "react-icons/fa"
-import { FaXTwitter } from "react-icons/fa6"
+import { FaCodeBranch } from "react-icons/fa"
 import { appVersion } from "@/lib/constants"
+import { footerConfig } from "@/lib/contentConfig"
 import { cn } from "@/lib/utils"
 
 export default function Footer() {
-  const socialLinks = [
-    { href: "/", icon: FaGithub, label: "GitHub" },
-    { href: "/", icon: FaLinkedin, label: "LinkedIn" },
-    { href: "/", icon: FaGoodreads, label: "GoodReads" },
-    { href: "/", icon: FaInstagram, label: "Instagram" },
-    { href: "/", icon: FaXTwitter, label: "X" },
-    { href: "/", icon: FaReddit, label: "Reddit" },
-    { href: "/", icon: FaDribbble, label: "Dribbble" },
-    { href: "/", icon: FaYoutube, label: "YouTube" },
-    { href: "mailto:<EMAIL>", icon: FaEnvelope, label: "Email" },
-  ]
-
   return (
     <footer
       className="relative mt-6 py-6 text-center text-sm text-gray-600 dark:text-gray-400
@@ -39,7 +17,7 @@ export default function Footer() {
     >
       {/* Social Links Grid */}
       <div className="flex justify-center flex-wrap gap-4 mb-4">
-        {socialLinks.map(({ href, icon: Icon, label }) => (
+        {footerConfig.socialLinks.map(({ href, icon: Icon, label }) => (
           <Link
             key={label}
             href={href}
@@ -70,7 +48,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <p className="text-sm mb-2 text-gray-600 dark:text-gray-400">
-        © {new Date().getFullYear()} John Doe. All rights reserved.
+        © {new Date().getFullYear()} {footerConfig.copyrightName}. All rights reserved.
       </p>
 
       {/* Version & Attribution - Terminal style */}
