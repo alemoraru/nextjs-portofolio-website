@@ -80,7 +80,24 @@ export default async function WorkPage(props: {
     )
     .sort((a, b) => {
       if (sortOrder === "newest") {
-        return new Date(b.end || "").getTime() - new Date(a.end || "").getTime()
+        // Items with "Present" should be at the top
+        const aIsPresent = a.end === "Present"
+        const bIsPresent = b.end === "Present"
+
+        if (aIsPresent && !bIsPresent) return -1
+        if (!aIsPresent && bIsPresent) return 1
+
+        // If both are Present, sort by company name
+        if (aIsPresent && bIsPresent) {
+          return a.company.localeCompare(b.company)
+        }
+
+        // Otherwise sort by end date (newest first)
+        const endDiff = new Date(b.end || "").getTime() - new Date(a.end || "").getTime()
+        if (endDiff !== 0) return endDiff
+
+        // If end dates are the same, sort by company name
+        return a.company.localeCompare(b.company)
       } else {
         return new Date(a.start || "").getTime() - new Date(b.start || "").getTime()
       }

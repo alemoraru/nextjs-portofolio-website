@@ -50,6 +50,7 @@ export interface ProjectFrontmatter {
   teamSize?: number
   role?: string
   githubUrl?: string
+  paperUrl?: string
 }
 
 /**

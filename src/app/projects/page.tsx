@@ -82,7 +82,24 @@ export default async function ProjectsPage(props: {
     )
     .sort((a, b) => {
       if (sortOrder === "newest") {
-        return new Date(b.endDate || "").getTime() - new Date(a.endDate || "").getTime()
+        // Items with "Present" should be at the top
+        const aIsPresent = a.endDate === "Present"
+        const bIsPresent = b.endDate === "Present"
+
+        if (aIsPresent && !bIsPresent) return -1
+        if (!aIsPresent && bIsPresent) return 1
+
+        // If both are Present, sort by title
+        if (aIsPresent && bIsPresent) {
+          return a.title.localeCompare(b.title)
+        }
+
+        // Otherwise sort by end date (newest first)
+        const endDiff = new Date(b.endDate || "").getTime() - new Date(a.endDate || "").getTime()
+        if (endDiff !== 0) return endDiff
+
+        // If end dates are the same, sort by title
+        return a.title.localeCompare(b.title)
       } else {
         return new Date(a.startDate || "").getTime() - new Date(b.startDate || "").getTime()
       }
