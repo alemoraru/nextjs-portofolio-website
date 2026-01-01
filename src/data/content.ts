@@ -25,9 +25,15 @@ import { FaBluesky, FaXTwitter } from "react-icons/fa6"
  */
 export const homeIntroConfig = {
   /**
-   * Your name (displayed in the heading)
+   * Your full name (used in breadcrumbs, footer, and other places)
    */
   name: "John Doe",
+
+  /**
+   * Your short/first name (optional - used in "Hi, I'm..." greeting)
+   * If not provided, the full name will be used
+   */
+  shortName: "John",
 
   /**
    * Introduction paragraphs (can be multiple)

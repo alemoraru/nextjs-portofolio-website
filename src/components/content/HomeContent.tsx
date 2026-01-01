@@ -97,7 +97,7 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
       >
         {/* Introductory Text */}
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Hi, I&#39;m {homeIntroConfig.name}{" "}
+          Hi, I&#39;m {homeIntroConfig.shortName || homeIntroConfig.name}{" "}
           <motion.span
             initial={{ rotate: 0 }}
             animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
