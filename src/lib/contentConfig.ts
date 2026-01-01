@@ -38,19 +38,38 @@ export const homeIntroConfig = {
   ],
 
   /**
-   * Quick facts displayed as chips
-   * Each fact has an icon and a label
+   * Quick facts displayed as chips below your introduction
+   * Fill in the fields below. Leave empty ("") to hide a fact.
    */
-  quickFacts: [
-    { icon: FaBuilding, label: "Hypernova Labs" },
-    { icon: FaUniversity, label: "Computer Science Grad @ VuA" },
-    { icon: FaMapMarkerAlt, label: "Lille, France" },
+  facts: {
+    company: "Hypernova Labs",
+    education: "Computer Science Grad @ VuA",
+    location: "Lille, France",
+    languages: "EN / ES / DE",
+    role: "Full-Stack Dev",
+  },
+
+  /**
+   * Additional custom facts
+   * Add any extra facts you want to display with their icons
+   */
+  additionalFacts: [
     { icon: FaBook, label: "Book Reviewer" },
-    { icon: FaLanguage, label: "EN / ES / DE" },
-    { icon: FaTools, label: "Full-Stack Dev" },
     { icon: FaGamepad, label: "Sci-fi Fan" },
     { icon: FaSkiing, label: "Skiing Enthusiast" },
   ] as Array<{ icon: IconType; label: string }>,
+}
+
+/**
+ * Internal mapping of predefined fact categories to their icons
+ * This is used internally by the HomeContent component - users don't need to modify this
+ */
+export const factIconMap: Record<keyof typeof homeIntroConfig.facts, IconType> = {
+  company: FaBuilding,
+  education: FaUniversity,
+  location: FaMapMarkerAlt,
+  languages: FaLanguage,
+  role: FaTools,
 }
 
 /**

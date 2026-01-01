@@ -5,7 +5,7 @@ import BlogPost from "@/components/BlogPost"
 import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
-import { homeIntroConfig } from "@/lib/contentConfig"
+import { homeIntroConfig, factIconMap } from "@/lib/contentConfig"
 import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
@@ -13,6 +13,61 @@ interface HomeContentProps {
   blog: BlogPostProps[]
   work: WorkItemProps[]
   projects: ProjectProps[]
+}
+
+/**
+ * Internal component to render quick facts
+ */
+function QuickFacts() {
+  // Build array of facts from predefined fields and additional facts
+  const allFacts = [
+    // Add predefined facts (filtering out empty values)
+    ...Object.entries(homeIntroConfig.facts)
+      .filter(([_, value]) => value && value.trim() !== "")
+      .map(([category, value]) => {
+        const categoryKey = category as keyof typeof factIconMap
+        return {
+          icon: factIconMap[categoryKey],
+          label: value,
+        }
+      }),
+    // Add additional custom facts
+    ...homeIntroConfig.additionalFacts,
+  ]
+
+  return (
+    <>
+      {allFacts.map((fact, i) => {
+        const Icon = fact.icon
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.3,
+              delay: i * 0.1,
+              type: "spring",
+              stiffness: 100,
+            }}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-full",
+              "border border-gray-300 dark:border-gray-700",
+              "bg-gray-50 dark:bg-gray-800",
+              "text-sm font-medium text-gray-700 dark:text-gray-300",
+              "shadow-sm hover:shadow-md",
+              "hover:border-blue-400 dark:hover:border-blue-600",
+              "transition-all duration-200 cursor-default"
+            )}
+          >
+            <Icon className="text-blue-600 dark:text-blue-400 text-base shrink-0" />
+            <span>{fact.label}</span>
+          </motion.div>
+        )
+      })}
+    </>
+  )
 }
 
 /**
@@ -71,35 +126,7 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
           </h2>
 
           <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
-            {homeIntroConfig.quickFacts.map((fact, i) => {
-              const Icon = fact.icon
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.3,
-                    delay: i * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                  }}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-full",
-                    "border border-gray-300 dark:border-gray-700",
-                    "bg-gray-50 dark:bg-gray-800",
-                    "text-sm font-medium text-gray-700 dark:text-gray-300",
-                    "shadow-sm hover:shadow-md",
-                    "hover:border-blue-400 dark:hover:border-blue-600",
-                    "transition-all duration-200 cursor-default"
-                  )}
-                >
-                  <Icon className="text-blue-600 dark:text-blue-400 text-base shrink-0" />
-                  <span>{fact.label}</span>
-                </motion.div>
-              )
-            })}
+            <QuickFacts />
           </div>
         </div>
       </motion.div>
