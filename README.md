@@ -143,7 +143,8 @@ Edit `src/data/content.ts` to customize your homepage and footer:
     - Supported platforms: GitHub, LinkedIn, Goodreads, Instagram, Twitter/X, Reddit, Dribbble, YouTube, Bluesky, Stack
       Overflow, Email
     - Leave any field empty (`""`) to hide that social link
-- `showVersionAndAttribution`: Set to `false` to hide the template attribution (true by default)
+- `showVersionAndAttribution`: Set to `false` to hide the template attribution (true by default). Leaving the
+  attribution is appreciated but not required!
 
 ### 3. Add Your Content (`.mdx` files)
 

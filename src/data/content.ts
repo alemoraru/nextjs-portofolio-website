@@ -86,7 +86,7 @@ export const footerConfig = {
    * Set to true if you want to hide the "built by @alemoraru" attribution and version number.
    * By default, this is true to give credit to the template creator, but you can disable it if desired.
    */
-  showVersionAndAttribution: false,
+  showVersionAndAttribution: true,
 
   /**
    * Social media links
