@@ -141,17 +141,39 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
       >
         <ViewAllHeader title="Work Experience" pageUrl="/work" itemCount={work.length} />
         <div className="grid gap-4">
-          {work.slice(0, 3).map((job, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-            >
-              <WorkItem {...job} />
-            </motion.div>
-          ))}
+          {work
+            .slice()
+            .sort((a, b) => {
+              // Items with "Present" should be at the top
+              const aIsPresent = a.end === "Present"
+              const bIsPresent = b.end === "Present"
+
+              if (aIsPresent && !bIsPresent) return -1
+              if (!aIsPresent && bIsPresent) return 1
+
+              // If both are Present or both have dates, sort by end date (newest first)
+              if (aIsPresent && bIsPresent) {
+                return a.company.localeCompare(b.company)
+              }
+
+              const endDiff = getTimeSafe(b.end) - getTimeSafe(a.end)
+              if (endDiff !== 0) return endDiff
+
+              // If end dates are the same, sort by company name
+              return a.company.localeCompare(b.company)
+            })
+            .slice(0, 3)
+            .map((job, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                viewport={{ once: true }}
+              >
+                <WorkItem {...job} />
+              </motion.div>
+            ))}
         </div>
       </motion.div>
 
@@ -165,17 +187,39 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
       >
         <ViewAllHeader title="Recent Projects" pageUrl="/projects" itemCount={projects.length} />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          {projects.slice(0, 4).map(proj => (
-            <motion.div
-              key={proj.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-            >
-              <ProjectTile key={proj.slug} {...proj} />
-            </motion.div>
-          ))}
+          {projects
+            .slice()
+            .sort((a, b) => {
+              // Items with "Present" should be at the top
+              const aIsPresent = a.endDate === "Present"
+              const bIsPresent = b.endDate === "Present"
+
+              if (aIsPresent && !bIsPresent) return -1
+              if (!aIsPresent && bIsPresent) return 1
+
+              // If both are Present or both have dates, sort by end date (newest first)
+              if (aIsPresent && bIsPresent) {
+                return a.title.localeCompare(b.title)
+              }
+
+              const endDiff = getTimeSafe(b.endDate) - getTimeSafe(a.endDate)
+              if (endDiff !== 0) return endDiff
+
+              // If end dates are the same, sort by title
+              return a.title.localeCompare(b.title)
+            })
+            .slice(0, 4)
+            .map(proj => (
+              <motion.div
+                key={proj.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                viewport={{ once: true }}
+              >
+                <ProjectTile key={proj.slug} {...proj} />
+              </motion.div>
+            ))}
         </div>
       </motion.div>
 
