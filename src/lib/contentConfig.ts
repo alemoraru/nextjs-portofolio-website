@@ -17,7 +17,7 @@ import {
   FaDribbble,
   FaYoutube,
 } from "react-icons/fa"
-import { FaXTwitter } from "react-icons/fa6"
+import { FaBluesky, FaXTwitter } from "react-icons/fa6"
 
 /**
  * Configuration for the home page intro section
@@ -63,17 +63,38 @@ export const footerConfig = {
 
   /**
    * Social media links
-   * Update the href values with your actual social media URLs
+   * Simply add your URLs below. Leave empty ("") to hide a social link.
    */
-  socialLinks: [
-    { href: "/", icon: FaGithub, label: "GitHub" },
-    { href: "/", icon: FaLinkedin, label: "LinkedIn" },
-    { href: "/", icon: FaGoodreads, label: "GoodReads" },
-    { href: "/", icon: FaInstagram, label: "Instagram" },
-    { href: "/", icon: FaXTwitter, label: "X" },
-    { href: "/", icon: FaReddit, label: "Reddit" },
-    { href: "/", icon: FaDribbble, label: "Dribbble" },
-    { href: "/", icon: FaYoutube, label: "YouTube" },
-    { href: "mailto:contact@example.com", icon: FaEnvelope, label: "Email" },
-  ] as Array<{ href: string; icon: IconType; label: string }>,
+  socialLinks: {
+    github: "/",
+    linkedin: "/",
+    goodreads: "/",
+    instagram: "/",
+    twitter: "/",
+    reddit: "/",
+    dribbble: "/",
+    youtube: "/",
+    bluesky: "/",
+    email: "contact@example.com",
+  },
+}
+
+/**
+ * Internal mapping of social platforms to their icons and labels
+ * This is used internally by the Footer component - users don't need to modify this
+ */
+export const socialIconMap: Record<
+  keyof typeof footerConfig.socialLinks,
+  { icon: IconType; label: string }
+> = {
+  github: { icon: FaGithub, label: "GitHub" },
+  linkedin: { icon: FaLinkedin, label: "LinkedIn" },
+  goodreads: { icon: FaGoodreads, label: "GoodReads" },
+  instagram: { icon: FaInstagram, label: "Instagram" },
+  twitter: { icon: FaXTwitter, label: "X" },
+  reddit: { icon: FaReddit, label: "Reddit" },
+  dribbble: { icon: FaDribbble, label: "Dribbble" },
+  youtube: { icon: FaYoutube, label: "YouTube" },
+  bluesky: { icon: FaBluesky, label: "Bluesky" },
+  email: { icon: FaEnvelope, label: "Email" },
 }
