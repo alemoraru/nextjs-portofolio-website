@@ -2,6 +2,18 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { homeIntroConfig } from "@/data/content"
+
+/**
+ * Generate initials from a name (e.g., "John Doe" -> "JD")
+ */
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map(word => word[0])
+    .join("")
+    .toUpperCase()
+}
 
 /**
  * The "breadcrumbs" component that displays the current path as a series of links.
@@ -10,6 +22,9 @@ export default function Breadcrumbs() {
   const pathname = usePathname()
 
   const segments = pathname.split("/").filter(Boolean)
+
+  // Generate initials from the name
+  const initials = getInitials(homeIntroConfig.name)
 
   // Only show breadcrumbs for /blog, /projects, /work and their subpaths
   const allowedRoots = ["blog", "projects", "work"]
@@ -26,9 +41,9 @@ export default function Breadcrumbs() {
                    transition-all duration-200 hover:scale-105 active:scale-95"
       >
         {/* Initials on mobile */}
-        <span className="block md:hidden text-lg">JD</span>
+        <span className="block md:hidden text-lg">{initials}</span>
         {/* Full name on desktop */}
-        <span className="hidden md:inline text-lg">John Doe</span>
+        <span className="hidden md:inline text-lg">{homeIntroConfig.name}</span>
       </Link>
 
       {/* Crumbs part: show only on mobile, not on desktop */}
