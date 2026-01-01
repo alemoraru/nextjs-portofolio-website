@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import { MDXComponents } from "mdx/types"
+import Image from "next/image"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
@@ -82,6 +83,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
 
       return <InlineCode>{children}</InlineCode>
     },
+
+    Image,
   }
 
   const { content } = await compileMDX({
