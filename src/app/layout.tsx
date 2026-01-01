@@ -6,7 +6,6 @@ import { ThemeProvider } from "next-themes"
 import React, { ReactNode } from "react"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
-import type { Metadata } from "next"
 
 /**
  * Import and configure the Gabarito font from Google Fonts.
@@ -34,73 +33,10 @@ export const viewport = {
 /**
  * Metadata for the application, including SEO and social media sharing information.
  *
- * IMPORTANT: Customize this metadata for your own portfolio!
- * Replace descriptions, and URLs with your actual information.
- * See README.md for detailed customization instructions.
+ * IMPORTANT: To customize this metadata for your own portfolio,
+ * edit the file: src/data/metadata.ts
  */
-export const metadata: Metadata = {
-  title: "Next.js Developer Portfolio Template",
-  description:
-    "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
-  keywords: [
-    "Developer",
-    "Software Engineer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Web Development",
-    "Portfolio",
-  ],
-  authors: [{ name: "Alexandru Moraru", url: "https://alexradumoraru.com" }],
-  creator: "Alexandru Moraru",
-  publisher: "Alexandru Moraru",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  icons: {
-    icon: "/icons/favicon.ico",
-    shortcut: "/icons/favicon.ico",
-    apple: "/icons/favicon.ico",
-  },
-  metadataBase: new URL("https://nextjs-portofolio-website.vercel.app"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    title: "Next.js Developer Portfolio Template",
-    description:
-      "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
-    url: "https://yourwebsite.com",
-    siteName: "Next.js Developer Portfolio Template",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Next.js Developer Portfolio Template",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Next.js Developer Portfolio Template",
-    description:
-      "Developer portfolio showcasing projects, work experience, and technical blog posts. Built with Next.js, TypeScript, and Tailwind CSS.",
-    creator: "@alexradumoraru",
-    images: ["/og-image.png"],
-  },
-  category: "technology",
-}
+export { metadata } from "@/data/metadata"
 
 /**
  * RootLayout component that wraps the entire application.
