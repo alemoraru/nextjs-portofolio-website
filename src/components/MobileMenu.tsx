@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useRef, useEffect } from "react"
 import { navItems } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 
 /**
  * MobileMenu component that displays a collapsible menu for mobile devices.
@@ -105,7 +106,12 @@ export default function MobileMenu({
                   onClick={() => setIsOpenAction(false)}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-gray-500 dark:text-gray-400 select-none">
+                    <span
+                      className={cn(
+                        "font-mono text-xs text-gray-500 dark:text-gray-400 select-none",
+                        pathname === path ? "text-white/80" : "text-gray-500 dark:text-gray-400"
+                      )}
+                    >
                       0{idx + 1}
                     </span>
                     {name}
