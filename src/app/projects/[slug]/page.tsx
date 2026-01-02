@@ -9,7 +9,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
-import ImageCarouselWrapper from "@/components/ImageCarouselWrapper"
+import ImageCarousel from "@/components/ImageCarousel"
 import { techToIcon } from "@/lib/devIcons"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
@@ -55,6 +55,22 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
   // Format duration from startDate and endDate
   const duration = `${frontmatter.startDate}–${frontmatter.endDate}`
+
+  // Get project images
+  const projectImages: { src: string; alt: string }[] = []
+  if (fs.existsSync(projectPhotoDir)) {
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+    const imageFiles = fs
+      .readdirSync(projectPhotoDir)
+      .filter(f => allowedExtensions.includes(path.extname(f).toLowerCase()))
+
+    imageFiles.forEach((filename, index) => {
+      projectImages.push({
+        src: `/projects/${slug}/${filename}`,
+        alt: `${frontmatter.title} ${index + 1}`,
+      })
+    })
+  }
 
   return (
     <AnimatedArticle>
@@ -130,13 +146,13 @@ export default async function ProjectPage(props: { params: pageParams }) {
       </div>
 
       {/* Image Carousel - Display project photos if available */}
-      {fs.existsSync(projectPhotoDir) && fs.readdirSync(projectPhotoDir).length > 0 && (
+      {projectImages.length > 0 && (
         <div className="w-full">
           <div className="flex items-center gap-2 mb-4" style={{ fontSize: "1.25rem" }}>
             <BsCardImage></BsCardImage>
             <h2 className="text-xl font-semibold">Project Gallery</h2>
           </div>
-          <ImageCarouselWrapper imageDir={`projects/${slug}`} altPrefix={frontmatter.title} />
+          <ImageCarousel images={projectImages} />
         </div>
       )}
 
