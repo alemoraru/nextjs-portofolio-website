@@ -9,7 +9,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
-import ImageCarousel from "@/components/ImageCarousel"
+import ProjectImageCarousel from "@/components/ProjectImageCarousel"
 import { techToIcon } from "@/lib/devIcons"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
@@ -153,7 +153,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
             <BsCardImage />
             <h2 className="text-xl font-semibold">Project Gallery</h2>
           </div>
-          <ImageCarousel images={projectImages} />
+          <ProjectImageCarousel images={projectImages} />
         </div>
       )}
 
