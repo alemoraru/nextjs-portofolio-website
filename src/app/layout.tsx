@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes"
 import React, { ReactNode } from "react"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
+import { cn } from "@/lib/utils"
 
 /**
  * Import and configure the Gabarito font from Google Fonts.
