@@ -80,8 +80,8 @@ export default async function ProjectPage(props: { params: pageParams }) {
       <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">{frontmatter.description}</p>
 
-      {/* Metadata Pills */}
-      <div className="flex flex-wrap items-center gap-3 mb-4">
+      {/* Metadata Pills & Links */}
+      <div className="flex flex-wrap items-center gap-3 mb-6">
         {frontmatter.teamSize && (
           <div className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
             <FaUsers className="w-4 h-4" />
@@ -104,28 +104,24 @@ export default async function ProjectPage(props: { params: pageParams }) {
             <strong>Duration:</strong> {duration}
           </span>
         </div>
-      </div>
-
-      {/* Links Section */}
-      <div className="flex flex-wrap gap-4 mb-6">
         {frontmatter.githubUrl && (
           <Link
             href={frontmatter.githubUrl}
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
-            <FaGithub className="w-5 h-5" />
-            <span className="underline underline-offset-4">View on GitHub</span>
+            <FaGithub className="w-4 h-4" />
+            <span>View on GitHub</span>
           </Link>
         )}
         {frontmatter.paperUrl && (
           <Link
             href={frontmatter.paperUrl}
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
-            <FaBook className="w-5 h-5" />
-            <span className="underline underline-offset-4">Read Paper</span>
+            <FaBook className="w-4 h-4" />
+            <span>Read Paper</span>
           </Link>
         )}
       </div>
