@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { FaArrowLeft, FaTag } from "react-icons/fa"
+import BackToPageButton from "@/components/BackToPageButton"
 import BlogPost from "@/components/BlogPost"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { BlogPostProps, tagPageParams } from "@/lib/types"
@@ -141,6 +142,7 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
   // Render the list of posts with the specified tag
   return (
     <div className="px-4 max-w-4xl mx-auto py-8 flex flex-col">
+      <BackToPageButton pageUrl="/blog" />
       <div className="flex items-center gap-3 mb-6">
         <FaTag className="w-6 h-6 text-blue-500" />
 
