@@ -3,7 +3,7 @@ import path from "path"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
-import { BsStack, BsCardImage } from "react-icons/bs"
+import { BsCardImage } from "react-icons/bs"
 import { FaUsers, FaUserTie, FaClock, FaGithub, FaBook } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
@@ -75,17 +75,46 @@ export default async function ProjectPage(props: { params: pageParams }) {
   return (
     <AnimatedArticle>
       <BackToPageButton pageUrl="/projects" />
-      <h1 className="text-3xl font-extrabold mb-4">{frontmatter.title}</h1>
+
+      {/* Header */}
+      <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+      <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">{frontmatter.description}</p>
+
+      {/* Metadata Pills */}
+      <div className="flex flex-wrap items-center gap-3 mb-4">
+        {frontmatter.teamSize && (
+          <div className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
+            <FaUsers className="w-4 h-4" />
+            <span>
+              <strong>Team Size:</strong> {frontmatter.teamSize}
+            </span>
+          </div>
+        )}
+        {frontmatter.role && (
+          <div className="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm">
+            <FaUserTie className="w-4 h-4" />
+            <span>
+              <strong>Role:</strong> {frontmatter.role}
+            </span>
+          </div>
+        )}
+        <div className="flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
+          <FaClock className="w-4 h-4" />
+          <span>
+            <strong>Duration:</strong> {duration}
+          </span>
+        </div>
+      </div>
 
       {/* Links Section */}
-      <div className="mb-4">
+      <div className="flex flex-wrap gap-4 mb-6">
         {frontmatter.githubUrl && (
           <Link
             href={frontmatter.githubUrl}
             rel="noopener noreferrer"
-            className="inline-flex items-center text-gray-800 dark:text-gray-100 hover:text-blue-600 transition"
+            className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            <FaGithub className="mr-2 w-5 h-5" />
+            <FaGithub className="w-5 h-5" />
             <span className="underline underline-offset-4">View on GitHub</span>
           </Link>
         )}
@@ -93,56 +122,26 @@ export default async function ProjectPage(props: { params: pageParams }) {
           <Link
             href={frontmatter.paperUrl}
             rel="noopener noreferrer"
-            className="inline-flex items-center text-gray-800 dark:text-gray-100 hover:text-blue-600 transition ml-6"
+            className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            <FaBook className="mr-2 w-5 h-5" />
+            <FaBook className="w-5 h-5" />
             <span className="underline underline-offset-4">Read Paper</span>
           </Link>
         )}
       </div>
 
-      {/* Project Metadata */}
-      <div className="w-full mb-6 bg-gray-50 dark:bg-gray-800 p-5 rounded-xl shadow-md">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm sm:text-base">
-          {frontmatter.teamSize && (
-            <div className="flex items-center gap-2">
-              <FaUsers className="text-blue-500" />
-              <span>
-                <strong>Team Size:</strong> {frontmatter.teamSize}
-              </span>
-            </div>
-          )}
-          {frontmatter.role && (
-            <div className="flex items-center gap-2">
-              <FaUserTie className="text-green-500" />
-              <span>
-                <strong>Role:</strong> {frontmatter.role}
-              </span>
-            </div>
-          )}
-          <div className="flex items-center gap-2">
-            <FaClock className="text-purple-500" />
-            <span>
-              <strong>Duration:</strong> {duration}
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Tech Stack Section */}
-      <div className="w-full mb-8">
-        <div className="flex items-center gap-2 mb-4" style={{ fontSize: "1.25rem" }}>
-          <BsStack></BsStack>
-          <h2 className="text-xl font-semibold">Tech Stack</h2>
-        </div>
-        <ul className="flex flex-wrap gap-4">
-          {frontmatter.techStack?.map(TechName => (
-            <li key={TechName} className="flex items-center gap-2">
-              {techToIcon(TechName)}
-              <span>{TechName}</span>
-            </li>
-          ))}
-        </ul>
+      <h2 className="text-xl font-semibold mb-4">Tech Stack</h2>
+      <div className="flex flex-wrap gap-3 mb-8">
+        {frontmatter.techStack?.map(techName => (
+          <div
+            key={techName}
+            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
+          >
+            {techToIcon(techName)}
+            <span>{techName}</span>
+          </div>
+        ))}
       </div>
 
       {/* Image Carousel - Display project photos if available */}
