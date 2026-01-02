@@ -11,15 +11,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-interface ImageCarouselProps {
+interface ProjectImageCarouselProps {
   images: { src: string; alt: string }[]
 }
 
 /**
- * ImageCarousel component that displays a carousel of images with navigation controls and indicators.
+ * ProjectImageCarousel component that displays a carousel of images with navigation controls and indicators.
  * @param images - An array of image objects containing `src` and `alt` properties.
  */
-export default function ImageCarousel({ images }: ImageCarouselProps) {
+export default function ProjectImageCarousel({ images }: ProjectImageCarouselProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
 
