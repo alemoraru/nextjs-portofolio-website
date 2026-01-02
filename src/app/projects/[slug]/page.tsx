@@ -3,7 +3,7 @@ import path from "path"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
-import { BsCardImage } from "react-icons/bs"
+import { BsCardImage, BsStack } from "react-icons/bs"
 import { FaUsers, FaUserTie, FaClock, FaGithub, FaBook } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
@@ -127,7 +127,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
       </div>
 
       {/* Tech Stack Section */}
-      <h2 className="text-xl font-semibold mb-4">Tech Stack</h2>
+      <div className="flex items-center gap-2 mb-4">
+        <BsStack />
+        <h2 className="text-xl font-semibold">Tech Stack</h2>
+      </div>
       <div className="flex flex-wrap gap-3 mb-8">
         {frontmatter.techStack?.map(techName => (
           <div
@@ -143,8 +146,11 @@ export default async function ProjectPage(props: { params: pageParams }) {
       {/* Image Carousel - Display project photos if available */}
       {projectImages.length > 0 && (
         <div className="w-full">
-          <div className="flex items-center gap-2 mb-4" style={{ fontSize: "1.25rem" }}>
-            <BsCardImage></BsCardImage>
+          <div
+            className="flex items-center justify-center gap-2 mb-4"
+            style={{ fontSize: "1.25rem" }}
+          >
+            <BsCardImage />
             <h2 className="text-xl font-semibold">Project Gallery</h2>
           </div>
           <ImageCarousel images={projectImages} />
