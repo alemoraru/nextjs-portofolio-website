@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
+import { BsStack } from "react-icons/bs"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
@@ -58,7 +59,10 @@ export default async function WorkItemPage(props: { params: pageParams }) {
       <BackToPageButton pageUrl="/work" />
       <h1 className="text-4xl font-bold mb-2">{frontmatter.company}</h1>
       <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
-      <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
+      <div className="flex items-center gap-2 mb-4">
+        <BsStack />
+        <h2 className="text-xl font-semibold">Tech Stack</h2>
+      </div>
       <div className="flex flex-wrap gap-4 mb-8">
         {frontmatter.techStack?.map(techName => (
           <div

@@ -23,10 +23,7 @@ export default function Header() {
         "bg-zinc-50/90 dark:bg-black/90",
         "border-b border-gray-300 dark:border-gray-800",
         "backdrop-blur-md backdrop-saturate-150",
-        "shadow-sm hover:shadow-md",
-        "before:content-[''] before:absolute before:top-0 before:left-0 before:right-0",
-        "before:h-px before:bg-gradient-to-r before:from-transparent",
-        "before:via-blue-500/50 before:to-transparent"
+        "shadow-sm hover:shadow-md"
       )}
     >
       <div
