@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation"
+import { paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
 import ProjectsClientUI from "./ProjectsClientUI"
 import ProjectsNotFound from "./ProjectsNotFound"
+
+const PROJECTS_PAGE_SIZE = paginationConfig.projectsPerPage
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.
@@ -23,7 +26,6 @@ export default async function ProjectsPage(props: {
   // Page param
   const currentPage = Number(searchParams?.page) || 1
   const { sort, tech } = searchParams || {}
-  const PROJECTS_PER_PAGE = 6
 
   // Sort param (default: newest)
   const allowedSorts = ["newest", "oldest"]
@@ -106,7 +108,7 @@ export default async function ProjectsPage(props: {
     })
 
   // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE)
+  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PAGE_SIZE)
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
@@ -114,8 +116,8 @@ export default async function ProjectsPage(props: {
   }
 
   // Paginate the filtered projects
-  const start = (currentPage - 1) * PROJECTS_PER_PAGE
-  const paginatedProjects = filteredProjects.slice(start, start + PROJECTS_PER_PAGE)
+  const start = (currentPage - 1) * PROJECTS_PAGE_SIZE
+  const paginatedProjects = filteredProjects.slice(start, start + PROJECTS_PAGE_SIZE)
 
   return (
     <ProjectsClientUI

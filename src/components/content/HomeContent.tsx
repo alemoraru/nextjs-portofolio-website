@@ -162,7 +162,7 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
               // If end dates are the same, sort by company name
               return a.company.localeCompare(b.company)
             })
-            .slice(0, 3)
+            .slice(0, homeIntroConfig.workItemsToShow)
             .map((job, i) => (
               <motion.div
                 key={i}
@@ -208,7 +208,7 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
               // If end dates are the same, sort by title
               return a.title.localeCompare(b.title)
             })
-            .slice(0, 4)
+            .slice(0, homeIntroConfig.projectsToShow)
             .map(proj => (
               <motion.div
                 key={proj.slug}
@@ -236,7 +236,7 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
           {blog
             .slice()
             .sort((a, b) => getTimeSafe(b.date) - getTimeSafe(a.date))
-            .slice(0, 3)
+            .slice(0, homeIntroConfig.blogPostsToShow)
             .map(post => (
               <motion.div
                 key={post.slug}

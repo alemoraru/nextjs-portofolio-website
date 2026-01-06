@@ -19,6 +19,9 @@ function normalizeTechName(techName: string): string {
 
 /**
  * Maps a technology name to its corresponding icon component.
+ * Some common aliases are handled. When aliases are not specifically handled,
+ * the function attempts to use the normalized tech name as a filename for DevIcon.
+ * If no matching icon is found, it falls back to a default CPU icon.
  * @param techName - Name of the technology (e.g., "typescript").
  * @param iconClassName - Optional CSS class names for the icon.
  * @returns A React component representing the icon for the specified technology.
@@ -49,6 +52,11 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "next":
     case "Next":
       return <DevIcon name={"nextjs"} iconClassName={iconClassName} />
+    case "nuxtjs":
+    case "NuxtJS":
+    case "nuxt":
+    case "Nuxt":
+      return <DevIcon name={"nuxtjs"} iconClassName={iconClassName} />
     case "nodejs":
     case "node.js":
     case "Node.js":
@@ -134,7 +142,7 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "C#":
     case "CSharp":
     case "c#":
-      return <DevIcon name={"csharp"} iconClassName={iconClassName} />
+      return <DevIcon name={"c-sharp"} iconClassName={iconClassName} />
     case "php":
     case "PHP":
       return <DevIcon name={"php"} iconClassName={iconClassName} />
@@ -166,6 +174,14 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "angular":
     case "Angular":
       return <DevIcon name={"angular"} iconClassName={iconClassName} />
+    case "opencv":
+    case "OpenCV":
+      return <DevIcon name={"opencv"} iconClassName={iconClassName} />
+    case "oculus":
+    case "Oculus":
+    case "Oculus SDK":
+    case "oculus sdk":
+      return <DevIcon name={"oculus"} iconClassName={iconClassName} />
     case "vue":
     case "Vue":
     case "vuejs":
@@ -211,12 +227,27 @@ export function techToIcon(techName: string, iconClassName?: string) {
     case "Grafana":
     case "grafana":
       return <DevIcon name={"grafana"} iconClassName={iconClassName} />
+    case "ROS":
+    case "ros":
+    case "Robot Operating System":
+    case "ROS (Robot Operating System)":
+      return <DevIcon name={"ros"} iconClassName={iconClassName} />
+    case "web3js":
+    case "Web3js":
+    case "web3.js":
+    case "Web3.js":
+      return <DevIcon name={"web3js"} iconClassName={iconClassName} />
     default:
       // Try to use the provided tech name as a filename fallback. DevIcon will attempt to load
       // `/dev/{normalized}.svg` and will render FiCpu if the asset doesn't exist.
-      const normalized = normalizeTechName(techName)
-      if (normalized.length > 0) {
-        return <DevIcon name={normalized} iconClassName={iconClassName} />
+      try {
+        const normalized = normalizeTechName(techName)
+        if (normalized.length > 0) {
+          return <DevIcon name={normalized} iconClassName={iconClassName} />
+        }
+      } catch (e) {
+        // Ignore errors and fall through to default icon
+        // Technically, no errors should occur in the above code
       }
 
       return <FiCpu className={iconClassName} />

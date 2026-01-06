@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation"
+import { paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
 import WorkClientUI from "./WorkClientUI"
 import WorkNotFound from "./WorkNotFound"
+
+const WORK_PAGE_SIZE = paginationConfig.projectsPerPage
 
 /**
  * WorkPage component that serves as the main page for displaying work experience.
@@ -23,7 +26,6 @@ export default async function WorkPage(props: {
   // Page param
   const currentPage = Number(searchParams?.page) || 1
   const { sort, company } = searchParams || {}
-  const WORK_PER_PAGE = 6
 
   // Sort param (default: newest)
   const allowedSorts = ["newest", "oldest"]
@@ -104,7 +106,7 @@ export default async function WorkPage(props: {
     })
 
   // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredWorkItems.length / WORK_PER_PAGE)
+  const totalPages = Math.ceil(filteredWorkItems.length / WORK_PAGE_SIZE)
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
@@ -112,8 +114,8 @@ export default async function WorkPage(props: {
   }
 
   // Paginate
-  const start = (currentPage - 1) * WORK_PER_PAGE
-  const paginatedWorkItems = filteredWorkItems.slice(start, start + WORK_PER_PAGE)
+  const start = (currentPage - 1) * WORK_PAGE_SIZE
+  const paginatedWorkItems = filteredWorkItems.slice(start, start + WORK_PAGE_SIZE)
 
   return (
     <WorkClientUI
