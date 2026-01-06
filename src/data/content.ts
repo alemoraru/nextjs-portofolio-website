@@ -67,15 +67,26 @@ export const homeIntroConfig = {
 }
 
 /**
- * Internal mapping of predefined fact categories to their icons
- * This is used internally by the HomeContent component - users don't need to modify this
+ * Configuration for pagination settings within the site.
  */
-export const factIconMap: Record<keyof typeof homeIntroConfig.facts, IconType> = {
-  company: FaBuilding,
-  education: FaUniversity,
-  location: FaMapMarkerAlt,
-  languages: FaLanguage,
-  role: FaTools,
+export const paginationConfig = {
+  /**
+   * Number of blog posts to show per page for "/blog" and "/blog?page=n" routes.
+   * This number must be a number greater than zero.
+   */
+  blogPostsPerPage: 5,
+
+  /**
+   * Number of work items to show per page for "/work" and "/work?page=n" routes.
+   * This number must be a number greater than zero.
+   */
+  workItemsPerPage: 6,
+
+  /**
+   * Number of projects to show per page for "/projects" and "/projects?page=n" routes.
+   * This number must be a number greater than zero.
+   */
+  projectsPerPage: 6,
 }
 
 /**
@@ -111,6 +122,21 @@ export const footerConfig = {
     stackoverflow: "/",
     email: "contact@example.com",
   },
+}
+
+// USERS DO NOT NEED TO MODIFY BELOW THIS LINE
+// YOU CAN, HOWEVER, EXTEND THE ICON MAPS IF NEEDED
+
+/**
+ * Internal mapping of predefined fact categories to their icons
+ * This is used internally by the HomeContent component - users don't need to modify this
+ */
+export const factIconMap: Record<keyof typeof homeIntroConfig.facts, IconType> = {
+  company: FaBuilding,
+  education: FaUniversity,
+  location: FaMapMarkerAlt,
+  languages: FaLanguage,
+  role: FaTools,
 }
 
 /**

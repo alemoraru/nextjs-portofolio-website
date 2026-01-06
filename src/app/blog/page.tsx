@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation"
+import { paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import BlogClientUI from "./BlogClientUI"
 import BlogNotFound from "./BlogNotFound"
+
+const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.
@@ -23,7 +26,6 @@ export default async function BlogPage(props: {
   // Page param
   const currentPage = Number(searchParams?.page) || 1
   const { sort, tags } = searchParams || {}
-  const POSTS_PER_PAGE = 5
 
   // Sort param (default: desc)
   const allowedSorts = ["asc", "desc"]
@@ -87,7 +89,7 @@ export default async function BlogPage(props: {
     })
 
   // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PAGE_SIZE)
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
@@ -95,8 +97,8 @@ export default async function BlogPage(props: {
   }
 
   // Paginate
-  const start = (currentPage - 1) * POSTS_PER_PAGE
-  const paginatedPosts = filteredPosts.slice(start, start + POSTS_PER_PAGE)
+  const start = (currentPage - 1) * POSTS_PAGE_SIZE
+  const paginatedPosts = filteredPosts.slice(start, start + POSTS_PAGE_SIZE)
 
   return (
     <BlogClientUI
