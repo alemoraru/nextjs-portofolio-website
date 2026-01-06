@@ -56,14 +56,41 @@ export const homeIntroConfig = {
   },
 
   /**
-   * Additional custom facts
-   * Add any extra facts you want to display with their icons
+   * Additional custom facts to display below the predefined ones.
+   * Add any extra facts you want to display with their icons.
+   * You must use an icon from react-icons and provide its label.
    */
   additionalFacts: [
     { icon: FaBook, label: "Book Reviewer" },
     { icon: FaGamepad, label: "Sci-fi Fan" },
     { icon: FaSkiing, label: "Skiing Enthusiast" },
   ] as Array<{ icon: IconType; label: string }>,
+
+  /**
+   * Number of work items to show in the preview sections on the home page.
+   * Note that the actual number shown may be less if there aren't enough items.
+   * If the actual number of items is larger than this, a "View All" link will be displayed.
+   * This number must be a number greater than zero.
+   */
+  workItemsToShow: 3,
+
+  /**
+   * Number of projects to show in the preview sections on the home page.
+   * Note that the actual number shown may be less if there aren't enough items.
+   * If the actual number of items is larger than this, a "View All" link will be displayed.
+   * This number must be a number greater than zero. We recommend keeping it low and
+   * having a multiple of 2 for better grid layout (e.g., 2 or 4).
+   */
+  projectsToShow: 4,
+
+  /**
+   * Number of blog posts and projects to show in the preview sections on the home page.
+   * Note that the actual number shown may be less if there aren't enough items.
+   * If the actual number of items is larger than this, a "View All" link will be displayed.
+   * This number must be a number greater than zero. We recommend keeping it low (=3) and
+   * having a multiple of 3 for better grid layout.
+   */
+  blogPostsToShow: 3,
 }
 
 /**
