@@ -119,7 +119,7 @@ export default function TableOfContents() {
   // Find minimum heading level to use as baseline
   const minLevel = Math.min(...headings.map(h => h.level))
 
-  // Get indent class based on heading level
+  // Get indent class based on heading level (for expanded panel)
   const getIndentClass = (level: number) => {
     const relativeLevel = level - minLevel
     switch (relativeLevel) {
@@ -136,6 +136,19 @@ export default function TableOfContents() {
     }
   }
 
+  // Get width class for horizontal lines (collapsed state)
+  const getLineWidthClass = (level: number) => {
+    const relativeLevel = level - minLevel
+    switch (relativeLevel) {
+      case 0:
+        return "w-4"
+      case 1:
+        return "w-3"
+      default:
+        return "w-2"
+    }
+  }
+
   return (
     <>
       {/* Horizontal lines - always visible on the left */}
@@ -148,16 +161,17 @@ export default function TableOfContents() {
         )}
         aria-label="Toggle table of contents"
       >
-        <div className="space-y-3">
+        <div className="space-y-3 flex flex-col items-end">
           {headings.map(heading => {
             const isActive = heading.id === activeId
             return (
               <div
                 key={heading.id}
-                className={`
-                  h-0.5 w-4 rounded-full transition-all duration-200
-                  ${isActive ? "bg-gray-800 dark:bg-gray-200" : "bg-gray-400 dark:bg-gray-600"}
-                `}
+                className={cn(
+                  "h-0.5 rounded-full transition-all duration-200",
+                  getLineWidthClass(heading.level),
+                  isActive ? "bg-gray-800 dark:bg-gray-200" : "bg-gray-400 dark:bg-gray-600"
+                )}
               />
             )
           })}
