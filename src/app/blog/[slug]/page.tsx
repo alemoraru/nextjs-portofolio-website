@@ -107,7 +107,12 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
       <p className="text-gray-500 mb-8">
-        {new Date(post.date).toLocaleDateString()} • {readingTime} min read
+        {new Date(post.date).toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}{" "}
+        • {readingTime} min read
       </p>
 
       {/* Display current blog post tags */}
