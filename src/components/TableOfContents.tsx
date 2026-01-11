@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 
 /**
@@ -22,6 +22,8 @@ export default function TableOfContents() {
   const [headings, setHeadings] = useState<TocItem[]>([])
   const [isExpanded, setIsExpanded] = useState(false)
   const [activeId, setActiveId] = useState<string>("")
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const article = document.querySelector("article")
@@ -78,6 +80,25 @@ export default function TableOfContents() {
     return () => observer.disconnect()
   }, [headings])
 
+  // Close ToC when clicking outside
+  useEffect(() => {
+    if (!isExpanded) return
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        panelRef.current &&
+        !buttonRef.current.contains(event.target as Node) &&
+        !panelRef.current.contains(event.target as Node)
+      ) {
+        setIsExpanded(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [isExpanded])
+
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -119,9 +140,10 @@ export default function TableOfContents() {
     <>
       {/* Horizontal lines - always visible on the left */}
       <button
+        ref={buttonRef}
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          "hidden lg:block fixed left-5 top-1/2 -translate-y-1/2 z-50 p-2 cursor-pointer",
+          "hidden lg:block fixed left-5 top-1/2 -translate-y-1/2 z-50 px-2 py-3 cursor-pointer",
           "rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-105"
         )}
         aria-label="Toggle table of contents"
@@ -144,7 +166,13 @@ export default function TableOfContents() {
 
       {/* Expanded panel */}
       {isExpanded && (
-        <div className="hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xl p-6">
+        <div
+          ref={panelRef}
+          className={cn(
+            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[80vh] shadow-2xl p-6",
+            "overflow-y-auto custom-scrollbar bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700"
+          )}
+        >
           <h2 className="text-xs font-semibold tracking-wider text-gray-900 dark:text-gray-100 mb-4">
             CONTENTS
           </h2>
