@@ -173,7 +173,7 @@ export default function TableOfContents() {
             "overflow-y-auto custom-scrollbar bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700"
           )}
         >
-          <h2 className="text-xs font-semibold tracking-wider text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-xs font-semibold tracking-wider text-gray-900 dark:text-gray-100 mb-6">
             CONTENTS
           </h2>
 
