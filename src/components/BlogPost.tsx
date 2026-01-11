@@ -58,7 +58,7 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
             <time dateTime={date}>
               {new Date(date).toLocaleDateString(undefined, {
                 year: "numeric",
-                month: "short",
+                month: "long",
                 day: "numeric",
               })}
             </time>

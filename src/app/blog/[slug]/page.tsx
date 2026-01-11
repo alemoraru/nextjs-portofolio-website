@@ -106,9 +106,17 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     <AnimatedArticle>
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
-      <p className="text-gray-500 mb-8">
-        {new Date(post.date).toLocaleDateString()} • {readingTime} min read
-      </p>
+      <div className="flex items-center gap-4 text-gray-500 mb-8">
+        <span>
+          {new Date(post.date).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </span>
+        <span>•</span>
+        <span>{readingTime} min read</span>
+      </div>
 
       {/* Display current blog post tags */}
       <div className="flex flex-wrap gap-2 mb-8 mt-2 justify-center items-center text-center">

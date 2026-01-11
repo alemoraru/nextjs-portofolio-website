@@ -13,6 +13,7 @@ import ProjectImageCarousel from "@/components/ProjectImageCarousel"
 import { techToIcon } from "@/lib/devIcons"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
+import { formatDuration } from "@/lib/utils"
 
 /**
  * Generate static parameters for the project pages to be pre-rendered.
@@ -54,7 +55,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
   })
 
   // Format duration from startDate and endDate
-  const duration = `${frontmatter.startDate}–${frontmatter.endDate}`
+  const duration = formatDuration(frontmatter.startDate, frontmatter.endDate)
 
   // Get project images
   const projectImages: { src: string; alt: string }[] = []

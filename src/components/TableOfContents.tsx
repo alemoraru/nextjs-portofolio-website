@@ -1,8 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { FaChevronDown, FaList, FaAngleRight } from "react-icons/fa"
+import { useEffect, useRef, useState } from "react"
+import { cn } from "@/lib/utils"
 
+/**
+ * Table of Contents item interface.
+ * This represents a single heading in the article.
+ */
 interface TocItem {
   id: string
   text: string
@@ -11,11 +15,15 @@ interface TocItem {
 
 /**
  * Component that generates a table of contents based on the headings of an article.
- * This can be used to provide quick navigation in automatically generated MDX pages (e.g., blog posts).
+ * Positioned on the left side of the page with a Substack-style design.
+ * Hidden on mobile/tablet screens.
  */
 export default function TableOfContents() {
   const [headings, setHeadings] = useState<TocItem[]>([])
-  const [isOpen, setIsOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [activeId, setActiveId] = useState<string>("")
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const article = document.querySelector("article")
@@ -25,6 +33,11 @@ export default function TableOfContents() {
     const tocItems: TocItem[] = []
 
     headingElements.forEach((heading, index) => {
+      // Exclude headings that are inside a section element (e.g., "Other posts that might interest you")
+      if (heading.closest("section")) {
+        return
+      }
+
       if (!heading.id) {
         heading.id = `heading-${index}`
       }
@@ -39,6 +52,53 @@ export default function TableOfContents() {
     setHeadings(tocItems)
   }, [])
 
+  // Track active heading based on scroll position
+  useEffect(() => {
+    if (headings.length === 0) return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      {
+        rootMargin: "-20% 0px -35% 0px",
+        threshold: 0,
+      }
+    )
+
+    headings.forEach(({ id }) => {
+      const element = document.getElementById(id)
+      if (element) {
+        observer.observe(element)
+      }
+    })
+
+    return () => observer.disconnect()
+  }, [headings])
+
+  // Close ToC when clicking outside
+  useEffect(() => {
+    if (!isExpanded) return
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        panelRef.current &&
+        !buttonRef.current.contains(event.target as Node) &&
+        !panelRef.current.contains(event.target as Node)
+      ) {
+        setIsExpanded(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [isExpanded])
+
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -50,6 +110,7 @@ export default function TableOfContents() {
         top: offsetPosition,
         behavior: "smooth",
       })
+      setIsExpanded(false)
     }
   }
 
@@ -58,69 +119,101 @@ export default function TableOfContents() {
   // Find minimum heading level to use as baseline
   const minLevel = Math.min(...headings.map(h => h.level))
 
+  // Get indent class based on heading level (for expanded panel)
+  const getIndentClass = (level: number) => {
+    const relativeLevel = level - minLevel
+    switch (relativeLevel) {
+      case 0:
+        return "pl-0"
+      case 1:
+        return "pl-6"
+      case 2:
+        return "pl-12"
+      case 3:
+        return "pl-16"
+      default:
+        return "pl-20"
+    }
+  }
+
+  // Get width class for horizontal lines (collapsed state)
+  const getLineWidthClass = (level: number) => {
+    const relativeLevel = level - minLevel
+    switch (relativeLevel) {
+      case 0:
+        return "w-4"
+      case 1:
+        return "w-3"
+      default:
+        return "w-2"
+    }
+  }
+
   return (
-    <div className="w-full sm:w-fit mb-6 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-linear-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+    <>
+      {/* Horizontal lines - always visible on the left */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-4 py-2 text-left font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        ref={buttonRef}
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={cn(
+          "hidden lg:block fixed left-5 top-1/2 -translate-y-1/2 z-50 px-2 py-3 cursor-pointer",
+          "rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-105"
+        )}
+        aria-label="Toggle table of contents"
       >
-        <div className="flex items-center gap-2">
-          <FaList className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-          <span>Table of Contents</span>
-        </div>
-        <FaChevronDown
-          className={`w-3 h-3 text-gray-500 transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <nav className="px-3 pb-2 space-y-0.5 overflow-y-auto max-h-120 custom-scrollbar">
+        <div className="space-y-3 flex flex-col items-end">
           {headings.map(heading => {
-            const indentLevel = heading.level - minLevel
-
-            // Map indent levels to Tailwind classes
-            const getIndentClass = (level: number) => {
-              switch (level) {
-                case 0:
-                  return "pl-2"
-                case 1:
-                  return "pl-6"
-                case 2:
-                  return "pl-10"
-                case 3:
-                  return "pl-14"
-                case 4:
-                  return "pl-18"
-                default:
-                  return "pl-22"
-              }
-            }
-
+            const isActive = heading.id === activeId
             return (
-              <button
+              <div
                 key={heading.id}
-                onClick={() => scrollToHeading(heading.id)}
-                className={`
-                  flex items-center gap-2 w-full text-left py-2 pr-3 rounded-md text-sm transition-colors
-                  text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-900 dark:hover:text-blue-100
-                  ${getIndentClass(indentLevel)}
-                  ${indentLevel > 0 ? "text-xs" : ""}
-                  ${indentLevel > 1 ? "opacity-90" : ""}
-                `}
-              >
-                <FaAngleRight className="w-3 h-3 shrink-0 text-gray-400 dark:text-gray-500" />
-                <span className="truncate">{heading.text}</span>
-              </button>
+                className={cn(
+                  "h-0.5 rounded-full transition-all duration-200",
+                  getLineWidthClass(heading.level),
+                  isActive ? "bg-gray-800 dark:bg-gray-200" : "bg-gray-400 dark:bg-gray-600"
+                )}
+              />
             )
           })}
-        </nav>
-      </div>
-    </div>
+        </div>
+      </button>
+
+      {/* Expanded panel */}
+      {isExpanded && (
+        <div
+          ref={panelRef}
+          className={cn(
+            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[80vh] shadow-2xl p-6",
+            "overflow-y-auto custom-scrollbar bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700"
+          )}
+        >
+          <h2 className="text-xs font-semibold tracking-wider text-gray-900 dark:text-gray-100 mb-6">
+            CONTENTS
+          </h2>
+
+          <nav className="space-y-1">
+            {headings.map(heading => {
+              const isActive = heading.id === activeId
+
+              return (
+                <button
+                  key={heading.id}
+                  onClick={() => scrollToHeading(heading.id)}
+                  className={cn(
+                    "flex items-start w-full text-left py-1 rounded transition-colors cursor-pointer text-sm",
+                    getIndentClass(heading.level),
+                    isActive
+                      ? "text-gray-900 dark:text-gray-100"
+                      : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  )}
+                >
+                  {heading.text}
+                </button>
+              )
+            })}
+          </nav>
+        </div>
+      )}
+    </>
   )
 }
