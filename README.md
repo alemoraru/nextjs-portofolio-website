@@ -1,4 +1,4 @@
-# Next.js Personal Website Theme
+# Next.js Developer-Themed Personal Website Template
 
 This is a custom personal website theme built using [Next.js](https://nextjs.org), bootstrapped with
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It's designed as a minimal,
@@ -181,14 +181,14 @@ components or understand the codebase!
 
 ## 🧭 Roadmap
 
-Planned improvements and current/future features:
+Planned improvement ideas and future features:
 
+- [X] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 - [ ] 🖼 Add theme customization options:
+    - [X] Centralized config file for content and appearance settings
     - [ ] Color palette
     - [ ] Layout options
     - [ ] Consistent color scheme across pages in tailwind.config.js
-- [ ] 🧪 Add tests and linting support for better maintainability
-- [ ] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
 
 ---
 
