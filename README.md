@@ -210,7 +210,7 @@ resources:
 ## ▲ Deployment
 
 The fastest way to deploy this app is
-via [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) —
+via [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme),
 the platform made by the creators of Next.js.
 
 For more detailed instructions, check out
@@ -250,6 +250,10 @@ This project follows best practices for code quality and style:
 
 > **Note**: To run both prettier and ESLint checks together, you can use the command:
 > `pnpm format-lint` or `pnpm lint-format`.
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=alemoraru/nextjs-portofolio-website&type=date&legend=top-left)](https://www.star-history.com/#alemoraru/nextjs-portofolio-website&type=date&legend=top-left)
 
 ## 🪪 License
 
