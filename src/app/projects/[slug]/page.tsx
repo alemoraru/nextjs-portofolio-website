@@ -10,6 +10,7 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
+import { homeIntroConfig } from "@/data/content"
 import { techToIcon } from "@/lib/devIcons"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
@@ -23,6 +24,31 @@ export async function generateStaticParams() {
   return projects.map(project => ({
     slug: project.slug,
   }))
+}
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata(props: { params: pageParams }) {
+  const { slug } = await props.params
+  const projects = await getAllProjects()
+  const project = projects.find(p => p.slug === slug)
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+    }
+  }
+
+  return {
+    title: `${project.title} | ${homeIntroConfig.name}`,
+    description: project.description,
+    openGraph: {
+      title: `${project.title} | ${homeIntroConfig.name}`,
+      description: project.description,
+      type: "article",
+    },
+  }
 }
 
 /**

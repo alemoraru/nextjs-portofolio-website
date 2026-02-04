@@ -15,6 +15,7 @@ import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
+import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { pageParams } from "@/lib/types"
 
@@ -37,6 +38,33 @@ export async function generateStaticParams() {
   return posts.map(post => ({
     slug: post.slug,
   }))
+}
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata(props: { params: pageParams }) {
+  const { slug } = await props.params
+  const posts = await getAllBlogPosts()
+  const post = posts.find(p => p.slug === slug)
+
+  if (!post) {
+    return {
+      title: "Blog Post Not Found",
+    }
+  }
+
+  return {
+    title: `${post.title} | ${homeIntroConfig.name}`,
+    description: post.title,
+    openGraph: {
+      title: `${post.title} | ${homeIntroConfig.name}`,
+      description: post.title,
+      type: "article",
+      publishedTime: post.date,
+      tags: post.tags,
+    },
+  }
 }
 
 /**

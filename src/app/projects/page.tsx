@@ -1,10 +1,25 @@
 import { redirect } from "next/navigation"
-import { paginationConfig } from "@/data/content"
+import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
 import ProjectsClientUI from "./ProjectsClientUI"
 import ProjectsNotFound from "./ProjectsNotFound"
 
 const PROJECTS_PAGE_SIZE = paginationConfig.projectsPerPage
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata() {
+  return {
+    title: `Projects | ${homeIntroConfig.name}`,
+    description: "Browse my portfolio of projects, side projects, and technical work.",
+    openGraph: {
+      title: `Projects | ${homeIntroConfig.name}`,
+      description: "Browse my portfolio of projects, side projects, and technical work.",
+      type: "website",
+    },
+  }
+}
 
 /**
  * ProjectsPage component that serves as the main page for displaying projects.

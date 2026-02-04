@@ -1,10 +1,25 @@
 import { redirect } from "next/navigation"
-import { paginationConfig } from "@/data/content"
+import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
 import WorkClientUI from "./WorkClientUI"
 import WorkNotFound from "./WorkNotFound"
 
 const WORK_PAGE_SIZE = paginationConfig.projectsPerPage
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata() {
+  return {
+    title: `Work | ${homeIntroConfig.name}`,
+    description: "Explore my professional work experience and career journey.",
+    openGraph: {
+      title: `Work | ${homeIntroConfig.name}`,
+      description: "Explore my professional work experience and career journey.",
+      type: "website",
+    },
+  }
+}
 
 /**
  * WorkPage component that serves as the main page for displaying work experience.
