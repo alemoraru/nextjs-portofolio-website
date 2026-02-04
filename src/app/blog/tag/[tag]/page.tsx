@@ -2,8 +2,27 @@ import Link from "next/link"
 import { FaArrowLeft, FaTag } from "react-icons/fa"
 import BackToPageButton from "@/components/BackToPageButton"
 import BlogPost from "@/components/BlogPost"
+import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { BlogPostProps, tagPageParams } from "@/lib/types"
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata({ params }: { params: tagPageParams }) {
+  const { tag } = await params
+  const decodedTag = decodeURIComponent(tag)
+
+  return {
+    title: `Posts tagged "${decodedTag}" | ${homeIntroConfig.name}`,
+    description: `Browse blog posts tagged with ${decodedTag}.`,
+    openGraph: {
+      title: `Posts tagged "${decodedTag}" | ${homeIntroConfig.name}`,
+      description: `Browse blog posts tagged with ${decodedTag}.`,
+      type: "website",
+    },
+  }
+}
 
 /**
  * BlogTagPage component that displays blog posts filtered by a specific tag.

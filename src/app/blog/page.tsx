@@ -1,10 +1,25 @@
 import { redirect } from "next/navigation"
-import { paginationConfig } from "@/data/content"
+import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import BlogClientUI from "./BlogClientUI"
 import BlogNotFound from "./BlogNotFound"
 
 const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata() {
+  return {
+    title: `Blog | ${homeIntroConfig.name}`,
+    description: "Read my latest blog posts about software development, technology, and more.",
+    openGraph: {
+      title: `Blog | ${homeIntroConfig.name}`,
+      description: "Read my latest blog posts about software development, technology, and more.",
+      type: "website",
+    },
+  }
+}
 
 /**
  * BlogPage component that serves as the main page for displaying blog posts.

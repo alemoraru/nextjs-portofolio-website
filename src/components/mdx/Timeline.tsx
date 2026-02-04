@@ -22,7 +22,9 @@ const container = {
 export function Timeline({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-4 mx-w-4xl w-full"
+      role="list"
+      aria-label="Work history timeline"
+      className="relative border-l-2 border-gray-300 dark:border-gray-700 ml-2 sm:ml-4 mx-w-4xl w-full"
       variants={container}
       initial="hidden"
       whileInView="show"
@@ -49,20 +51,24 @@ interface TimelineItemProps {
  * @constructor
  */
 export function TimelineItem({ title, duration, location, children }: TimelineItemProps) {
+  const dotColor = "bg-blue-500 dark:bg-blue-400"
+
   return (
     <motion.div
+      role="listitem"
       variants={{
         hidden: { opacity: 0, y: 50 },
         show: { opacity: 1, y: 0 },
       }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="relative mb-12 pl-8"
+      className="relative mb-12 pl-4 sm:pl-8"
     >
       {/* Animated Dot */}
       <motion.div
-        className="absolute left-[-10px] top-2 w-4 h-4 bg-blue-500 dark:bg-blue-400 rounded-full border-2 border-white dark:border-gray-900"
+        className={`absolute -left-2.5 top-2 w-4 h-4 ${dotColor} rounded-full border-2 border-white dark:border-gray-900`}
         initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
 
@@ -79,7 +85,7 @@ export function TimelineItem({ title, duration, location, children }: TimelineIt
             {location}
           </span>
         </div>
-        <div className="text-gray-700 dark:text-gray-300 prose dark:prose-invert">{children}</div>
+        <div className="text-gray-700 dark:text-gray-300">{children}</div>
       </div>
     </motion.div>
   )
