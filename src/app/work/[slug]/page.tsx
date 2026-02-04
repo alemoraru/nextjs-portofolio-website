@@ -25,7 +25,28 @@ export async function generateStaticParams() {
 }
 
 /**
+ * CompanyHeader component to display company logo and name
+ */
+function CompanyHeader({ frontmatter }: { frontmatter: WorkItemFrontmatter }) {
+  return (
+    <>
+      {frontmatter.logoUrl && (
+        <Image
+          src={frontmatter.logoUrl}
+          alt={`${frontmatter.company} logo`}
+          width={48}
+          height={48}
+          className="rounded-lg object-contain"
+        />
+      )}
+      <h1 className="text-4xl font-bold">{frontmatter.company}</h1>
+    </>
+  )
+}
+
+/**
  * WorkItemPage component that renders a single work item based on the slug.
+ * It reads the corresponding MDX file, compiles it, and displays the content along with the frontmatter information.
  */
 export default async function WorkItemPage(props: { params: pageParams }) {
   const { slug } = await props.params
@@ -67,48 +88,37 @@ export default async function WorkItemPage(props: { params: pageParams }) {
             rel="noopener noreferrer"
             className="flex items-center gap-4 hover:opacity-80 transition-opacity"
           >
-            {frontmatter.logoUrl && (
-              <Image
-                src={frontmatter.logoUrl}
-                alt={`${frontmatter.company} logo`}
-                width={48}
-                height={48}
-                className="rounded-lg object-contain"
-              />
-            )}
-            <h1 className="text-4xl font-bold">{frontmatter.company}</h1>
+            <CompanyHeader frontmatter={frontmatter} />
           </Link>
         ) : (
-          <>
-            {frontmatter.logoUrl && (
-              <Image
-                src={frontmatter.logoUrl}
-                alt={`${frontmatter.company} logo`}
-                width={48}
-                height={48}
-                className="rounded-lg object-contain"
-              />
-            )}
-            <h1 className="text-4xl font-bold">{frontmatter.company}</h1>
-          </>
+          <div className="flex items-center gap-4">
+            <CompanyHeader frontmatter={frontmatter} />
+          </div>
         )}
       </div>
-      <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
-      <div className="flex items-center gap-2 mb-4">
-        <BsStack />
-        <h2 className="text-xl font-semibold">Tech Stack</h2>
-      </div>
-      <div className="flex flex-wrap gap-4 mb-8">
-        {frontmatter.techStack?.map(techName => (
-          <div
-            key={techName}
-            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
-          >
-            {techToIcon(techName)}
-            <span>{techName}</span>
+      <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">{frontmatter.description}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-500 mb-6">
+        {frontmatter.start} - {frontmatter.end}
+      </p>
+      {frontmatter.techStack && frontmatter.techStack.length > 0 && (
+        <>
+          <div className="flex items-center gap-2 mb-4">
+            <BsStack />
+            <h2 className="text-xl font-semibold">Tech Stack</h2>
           </div>
-        ))}
-      </div>
+          <div className="flex flex-wrap gap-4 mb-8">
+            {frontmatter.techStack.map(techName => (
+              <div
+                key={techName}
+                className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
+              >
+                {techToIcon(techName)}
+                <span>{techName}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       <div className="max-w-5xl prose dark:prose-invert">{content}</div>
     </AnimatedArticle>
   )
