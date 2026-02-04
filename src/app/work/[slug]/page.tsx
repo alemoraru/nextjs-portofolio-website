@@ -1,5 +1,7 @@
 import fs from "fs"
 import path from "path"
+import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { BsStack } from "react-icons/bs"
@@ -57,7 +59,40 @@ export default async function WorkItemPage(props: { params: pageParams }) {
   return (
     <AnimatedArticle>
       <BackToPageButton pageUrl="/work" />
-      <h1 className="text-4xl font-bold mb-2">{frontmatter.company}</h1>
+      <div className="flex items-center gap-4 mb-2">
+        {frontmatter.companyUrl ? (
+          <Link
+            href={frontmatter.companyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-4 hover:opacity-80 transition-opacity"
+          >
+            {frontmatter.logoUrl && (
+              <Image
+                src={frontmatter.logoUrl}
+                alt={`${frontmatter.company} logo`}
+                width={48}
+                height={48}
+                className="rounded-lg object-contain"
+              />
+            )}
+            <h1 className="text-4xl font-bold">{frontmatter.company}</h1>
+          </Link>
+        ) : (
+          <>
+            {frontmatter.logoUrl && (
+              <Image
+                src={frontmatter.logoUrl}
+                alt={`${frontmatter.company} logo`}
+                width={48}
+                height={48}
+                className="rounded-lg object-contain"
+              />
+            )}
+            <h1 className="text-4xl font-bold">{frontmatter.company}</h1>
+          </>
+        )}
+      </div>
       <p className="text-lg text-gray-600 mb-6">{frontmatter.description}</p>
       <div className="flex items-center gap-2 mb-4">
         <BsStack />
