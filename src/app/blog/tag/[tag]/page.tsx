@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Link from "next/link"
 import { FaArrowLeft, FaTag } from "react-icons/fa"
 import BackToPageButton from "@/components/BackToPageButton"
@@ -9,7 +10,7 @@ import { BlogPostProps, tagPageParams } from "@/lib/types"
 /**
  * Generate metadata for SEO
  */
-export async function generateMetadata({ params }: { params: tagPageParams }) {
+export async function generateMetadata({ params }: { params: tagPageParams }): Promise<Metadata> {
   const { tag } = await params
   const decodedTag = decodeURIComponent(tag)
 

@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import { MDXComponents } from "mdx/types"
+import { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
@@ -43,7 +44,7 @@ export async function generateStaticParams() {
 /**
  * Generate metadata for SEO
  */
-export async function generateMetadata(props: { params: pageParams }) {
+export async function generateMetadata(props: { params: pageParams }): Promise<Metadata> {
   const { slug } = await props.params
   const posts = await getAllBlogPosts()
   const post = posts.find(p => p.slug === slug)

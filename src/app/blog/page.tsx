@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
@@ -9,7 +10,7 @@ const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
 /**
  * Generate metadata for SEO
  */
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Blog | ${homeIntroConfig.name}`,
     description: "Read my latest blog posts about software development, technology, and more.",

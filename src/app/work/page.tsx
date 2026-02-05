@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
@@ -9,7 +10,7 @@ const WORK_PAGE_SIZE = paginationConfig.projectsPerPage
 /**
  * Generate metadata for SEO
  */
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Work | ${homeIntroConfig.name}`,
     description: "Explore my professional work experience and career journey.",

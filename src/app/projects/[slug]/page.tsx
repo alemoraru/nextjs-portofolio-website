@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
 /**
  * Generate metadata for SEO
  */
-export async function generateMetadata(props: { params: pageParams }) {
+export async function generateMetadata(props: { params: pageParams }): Promise<Metadata> {
   const { slug } = await props.params
   const projects = await getAllProjects()
   const project = projects.find(p => p.slug === slug)

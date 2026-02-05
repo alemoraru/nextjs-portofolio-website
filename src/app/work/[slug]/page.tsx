@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
 /**
  * Generate dedicated blog page metadata for SEO
  */
-export async function generateMetadata(props: { params: pageParams }) {
+export async function generateMetadata(props: { params: pageParams }): Promise<Metadata> {
   const { slug } = await props.params
   const work = await getAllWorkItems()
   const post = work.find(w => w.slug === slug)
