@@ -1,6 +1,6 @@
 {
   "name": "nextjs-portofolio-website",
-  "version": "0.16.6",
+  "version": "0.16.7",
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",

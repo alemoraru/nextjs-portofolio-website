@@ -27,7 +27,7 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
     if (text) {
       return (
         <div className={`flex items-center space-x-2 ${className ? className : ""}`}>
-          <FiCpu className={`h-6 w-6 ${iconClassName ? iconClassName : ""}`} />
+          <FiCpu className={`size-6 ${iconClassName ? iconClassName : ""}`} />
           <span className={"font-semibold text-lg"}>{text}</span>
         </div>
       )
@@ -35,7 +35,7 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
 
     return (
       <FiCpu
-        className={`h-6 w-6 ${iconClassName ? iconClassName : ""} ${className ? className : ""}`}
+        className={`size-6 ${iconClassName ? iconClassName : ""} ${className ? className : ""}`}
       />
     )
   }

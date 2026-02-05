@@ -3,7 +3,9 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { FaCalendarAlt } from "react-icons/fa"
+import TechBadge from "@/components/TechBadge"
+import { calculateDuration, cn } from "@/lib/utils"
 
 interface ProjectTileProps {
   slug: string
@@ -16,11 +18,19 @@ interface ProjectTileProps {
 }
 
 /**
- * A functional component that renders a project tile with a link, image, and title.
+ * A functional component that renders a project tile with a link, image, title, dates, duration, and tech stack.
  *
- * @param {Object} props - The prop object for the component, containing slug, title, and image.
+ * @param {Object} props - The prop object for the component.
  */
-export default function ProjectTile({ slug, title, image, description }: ProjectTileProps) {
+export default function ProjectTile({
+  slug,
+  title,
+  image,
+  description,
+  techStack,
+  startDate,
+  endDate,
+}: ProjectTileProps) {
   return (
     <Link href={`/projects/${slug}`} className="block h-full">
       <motion.div
@@ -51,13 +61,16 @@ export default function ProjectTile({ slug, title, image, description }: Project
         )}
       >
         {/* Image Container */}
-        <div className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <div className="relative w-full h-48 overflow-hidden bg-gray-100 dark:bg-gray-900">
           <Image
             src={image}
             alt={title}
             fill
             loading="lazy"
-            className="object-cover transition-transform duration-300 group-hover:scale-110"
+            className={cn(
+              "object-cover transition-transform duration-300 group-hover:scale-110",
+              "rounded-b-lg border-b border-gray-300 dark:border-gray-700"
+            )}
           />
 
           {/* Overlay on Hover */}
@@ -82,30 +95,70 @@ export default function ProjectTile({ slug, title, image, description }: Project
           </motion.div>
         </div>
 
-        {/* Title and Description */}
+        {/* Title, Description, and Metadata */}
         <div
           className={cn(
-            "flex-1 p-3 border-t border-gray-200 dark:border-gray-800",
+            "flex-1 p-4",
             "bg-linear-to-b from-white to-gray-50",
             "dark:from-gray-900 dark:to-gray-900/80",
-            "flex flex-col justify-center"
+            "flex flex-col gap-3"
           )}
         >
-          <h3
-            className="text-lg font-bold text-gray-900 dark:text-white
-                         group-hover:text-blue-600 dark:group-hover:text-blue-400
-                         transition-colors duration-200 text-center"
-          >
-            {title}
-          </h3>
-          {description && (
-            <p
-              className="text-sm text-gray-600 dark:text-gray-400
-                          text-center line-clamp-2 leading-relaxed"
+          <div className="flex flex-col gap-2">
+            <h3
+              className={cn(
+                "text-lg font-bold text-gray-900 dark:text-white",
+                "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+                "transition-colors duration-200 text-center"
+              )}
             >
-              {description}
-            </p>
+              {title}
+            </h3>
+            {description && (
+              <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed text-center">
+                {description}
+              </p>
+            )}
+          </div>
+
+          {/* Date Range and Duration */}
+          {startDate && endDate && (
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <FaCalendarAlt className="w-3 h-3" />
+              <span>
+                {startDate} – {endDate}
+              </span>
+              <span>·</span>
+              <span>{calculateDuration(startDate, endDate)}</span>
+            </div>
           )}
+
+          {/* Tech Stack */}
+          {techStack &&
+            techStack.length > 0 &&
+            (() => {
+              const maxBadges = 5 // Show at most 5 badges (approximately 2 rows)
+              const visibleTechStack = techStack.slice(0, maxBadges)
+              const remainingCount = techStack.length - maxBadges
+
+              return (
+                <div className="flex flex-wrap justify-center gap-2">
+                  {visibleTechStack.map(techName => (
+                    <TechBadge key={techName} techName={techName} variant="small" />
+                  ))}
+                  {remainingCount > 0 && (
+                    <div
+                      className={cn(
+                        "flex items-center bg-gray-200 dark:bg-gray-700 rounded-full",
+                        "gap-1.5 px-2 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300"
+                      )}
+                    >
+                      + {remainingCount} more
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
         </div>
       </motion.div>
     </Link>

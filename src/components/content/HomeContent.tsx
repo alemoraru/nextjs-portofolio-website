@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, MotionConfig, type Variants } from "framer-motion"
 import BlogPost from "@/components/BlogPost"
 import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
@@ -13,6 +13,36 @@ interface HomeContentProps {
   blog: BlogPostProps[]
   work: WorkItemProps[]
   projects: ProjectProps[]
+}
+
+// Animation variants for consistent, smooth animations
+const fadeUpVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+}
+
+const staggerContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+}
+
+const staggerItemVariants: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 }
 
 /**
@@ -42,14 +72,17 @@ function QuickFacts() {
         return (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{
-              duration: 0.3,
+              duration: 0.5,
               delay: i * 0.1,
-              type: "spring",
-              stiffness: 100,
+              ease: "easeOut",
+            }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2, ease: "easeOut" },
             }}
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-full",
@@ -86,170 +119,185 @@ export default function HomeContent({ blog, work, projects }: HomeContentProps) 
   }
 
   return (
-    <section className="px-4 max-w-4xl mx-auto">
-      {/* Intro Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-center mt-2"
-      >
-        {/* Introductory Text */}
-        <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Hi, I&#39;m {homeIntroConfig.shortName || homeIntroConfig.name}{" "}
-          <motion.span
-            initial={{ rotate: 0 }}
-            animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-            transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-            className="inline-block"
-          >
-            👋
-          </motion.span>
-        </h1>
-
-        <div className="space-y-4 max-w-3xl mx-auto mb-8">
-          {homeIntroConfig.introParagraphs.map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-left"
+    <MotionConfig reducedMotion="user">
+      <section className="px-4 max-w-4xl mx-auto">
+        {/* Intro Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeUpVariants}
+          viewport={{ once: true }}
+          className="text-center mt-2"
+        >
+          {/* Introductory Text */}
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+            Hi, I&#39;m {homeIntroConfig.shortName || homeIntroConfig.name}{" "}
+            <motion.span
+              initial={{ rotate: 0 }}
+              animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+              transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+              className="inline-block"
             >
-              {paragraph}
-            </p>
-          ))}
-        </div>
+              👋
+            </motion.span>
+          </h1>
 
-        {/* Quick Facts Section */}
-        <div className="mt-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-            Quick & Fun Facts
-          </h2>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={staggerContainerVariants}
+            viewport={{ once: true }}
+            className="space-y-4 max-w-3xl mx-auto mb-8"
+          >
+            {homeIntroConfig.introParagraphs.map((paragraph, index) => (
+              <motion.p
+                key={index}
+                variants={staggerItemVariants}
+                className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-left"
+              >
+                {paragraph}
+              </motion.p>
+            ))}
+          </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
-            <QuickFacts />
+          {/* Quick Facts Section */}
+          <div className="mt-12 text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white"
+            >
+              Quick & Fun Facts
+            </motion.h2>
+
+            <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
+              <QuickFacts />
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Recent Work */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="mt-16"
-      >
-        <ViewAllHeader title="Work Experience" pageUrl="/work" itemCount={work.length} />
-        <div className="grid gap-4">
-          {work
-            .slice()
-            .sort((a, b) => {
-              // Items with "Present" should be at the top
-              const aIsPresent = a.end === "Present"
-              const bIsPresent = b.end === "Present"
+        {/* Recent Work */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeUpVariants}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mt-20"
+        >
+          <ViewAllHeader title="Work Experience" pageUrl="/work" itemCount={work.length} />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={staggerContainerVariants}
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid gap-4"
+          >
+            {work
+              .slice()
+              .sort((a, b) => {
+                // Items with "Present" should be at the top
+                const aIsPresent = a.end === "Present"
+                const bIsPresent = b.end === "Present"
 
-              if (aIsPresent && !bIsPresent) return -1
-              if (!aIsPresent && bIsPresent) return 1
+                if (aIsPresent && !bIsPresent) return -1
+                if (!aIsPresent && bIsPresent) return 1
 
-              // If both are Present or both have dates, sort by end date (newest first)
-              if (aIsPresent && bIsPresent) {
+                // If both are Present or both have dates, sort by end date (newest first)
+                if (aIsPresent && bIsPresent) {
+                  return a.company.localeCompare(b.company)
+                }
+
+                const endDiff = getTimeSafe(b.end) - getTimeSafe(a.end)
+                if (endDiff !== 0) return endDiff
+
+                // If end dates are the same, sort by company name
                 return a.company.localeCompare(b.company)
-              }
+              })
+              .slice(0, homeIntroConfig.workItemsToShow)
+              .map((job, i) => (
+                <motion.div key={i} variants={staggerItemVariants}>
+                  <WorkItem {...job} />
+                </motion.div>
+              ))}
+          </motion.div>
+        </motion.div>
 
-              const endDiff = getTimeSafe(b.end) - getTimeSafe(a.end)
-              if (endDiff !== 0) return endDiff
+        {/* Recent Projects */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeUpVariants}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mt-20"
+        >
+          <ViewAllHeader title="Recent Projects" pageUrl="/projects" itemCount={projects.length} />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={staggerContainerVariants}
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
+          >
+            {projects
+              .slice()
+              .sort((a, b) => {
+                // Items with "Present" should be at the top
+                const aIsPresent = a.endDate === "Present"
+                const bIsPresent = b.endDate === "Present"
 
-              // If end dates are the same, sort by company name
-              return a.company.localeCompare(b.company)
-            })
-            .slice(0, homeIntroConfig.workItemsToShow)
-            .map((job, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                viewport={{ once: true }}
-              >
-                <WorkItem {...job} />
-              </motion.div>
-            ))}
-        </div>
-      </motion.div>
+                if (aIsPresent && !bIsPresent) return -1
+                if (!aIsPresent && bIsPresent) return 1
 
-      {/* Recent Projects */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="mt-16"
-      >
-        <ViewAllHeader title="Recent Projects" pageUrl="/projects" itemCount={projects.length} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          {projects
-            .slice()
-            .sort((a, b) => {
-              // Items with "Present" should be at the top
-              const aIsPresent = a.endDate === "Present"
-              const bIsPresent = b.endDate === "Present"
+                // If both are Present or both have dates, sort by end date (newest first)
+                if (aIsPresent && bIsPresent) {
+                  return a.title.localeCompare(b.title)
+                }
 
-              if (aIsPresent && !bIsPresent) return -1
-              if (!aIsPresent && bIsPresent) return 1
+                const endDiff = getTimeSafe(b.endDate) - getTimeSafe(a.endDate)
+                if (endDiff !== 0) return endDiff
 
-              // If both are Present or both have dates, sort by end date (newest first)
-              if (aIsPresent && bIsPresent) {
+                // If end dates are the same, sort by title
                 return a.title.localeCompare(b.title)
-              }
+              })
+              .slice(0, homeIntroConfig.projectsToShow)
+              .map(proj => (
+                <motion.div key={proj.slug} variants={staggerItemVariants}>
+                  <ProjectTile {...proj} />
+                </motion.div>
+              ))}
+          </motion.div>
+        </motion.div>
 
-              const endDiff = getTimeSafe(b.endDate) - getTimeSafe(a.endDate)
-              if (endDiff !== 0) return endDiff
-
-              // If end dates are the same, sort by title
-              return a.title.localeCompare(b.title)
-            })
-            .slice(0, homeIntroConfig.projectsToShow)
-            .map(proj => (
-              <motion.div
-                key={proj.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                viewport={{ once: true }}
-              >
-                <ProjectTile key={proj.slug} {...proj} />
-              </motion.div>
-            ))}
-        </div>
-      </motion.div>
-
-      {/* Recent Blog Posts */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="mt-16 mb-12"
-      >
-        <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length} />
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {blog
-            .slice()
-            .sort((a, b) => getTimeSafe(b.date) - getTimeSafe(a.date))
-            .slice(0, homeIntroConfig.blogPostsToShow)
-            .map(post => (
-              <motion.div
-                key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                viewport={{ once: true }}
-              >
-                <BlogPost {...post} />
-              </motion.div>
-            ))}
-        </div>
-      </motion.div>
-    </section>
+        {/* Recent Blog Posts */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeUpVariants}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mt-20 mb-16"
+        >
+          <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length} />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={staggerContainerVariants}
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+          >
+            {blog
+              .slice()
+              .sort((a, b) => getTimeSafe(b.date) - getTimeSafe(a.date))
+              .slice(0, homeIntroConfig.blogPostsToShow)
+              .map(post => (
+                <motion.div key={post.slug} variants={staggerItemVariants}>
+                  <BlogPost {...post} />
+                </motion.div>
+              ))}
+          </motion.div>
+        </motion.div>
+      </section>
+    </MotionConfig>
   )
 }
