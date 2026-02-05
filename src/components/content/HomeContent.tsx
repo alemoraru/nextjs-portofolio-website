@@ -42,14 +42,13 @@ function QuickFacts() {
         return (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{
-              duration: 0.3,
+              duration: 0.4,
               delay: i * 0.1,
-              type: "spring",
-              stiffness: 100,
+              ease: "linear",
             }}
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-full",
