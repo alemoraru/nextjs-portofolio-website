@@ -10,8 +10,8 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
+import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
-import { techToIcon } from "@/lib/devIcons"
 import { getAllWorkItems } from "@/lib/mdx"
 import { pageParams, WorkItemFrontmatter } from "@/lib/types"
 import { calculateDuration } from "@/lib/utils"
@@ -139,13 +139,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
           </div>
           <div className="flex flex-wrap gap-4 mb-8">
             {frontmatter.techStack.map(techName => (
-              <div
-                key={techName}
-                className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
-              >
-                {techToIcon(techName)}
-                <span>{techName}</span>
-              </div>
+              <TechBadge key={techName} techName={techName} />
             ))}
           </div>
         </>
