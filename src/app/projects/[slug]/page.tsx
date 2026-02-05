@@ -10,8 +10,8 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
+import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
-import { techToIcon } from "@/lib/devIcons"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
 import { formatDuration } from "@/lib/utils"
@@ -160,13 +160,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
       </div>
       <div className="flex flex-wrap gap-3 mb-8">
         {frontmatter.techStack?.map(techName => (
-          <div
-            key={techName}
-            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
-          >
-            {techToIcon(techName)}
-            <span>{techName}</span>
-          </div>
+          <TechBadge key={techName} techName={techName} />
         ))}
       </div>
 
