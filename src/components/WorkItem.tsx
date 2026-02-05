@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
-import { cn } from "@/lib/utils"
+import { calculateDuration, cn } from "@/lib/utils"
 
 interface WorkItemProps {
   slug: string
@@ -73,11 +73,13 @@ export default function WorkItem({
 
         {/* Duration and Locations */}
         <div className="mt-2 text-gray-500 flex flex-col sm:flex-row sm:items-center">
-          <div className="flex items-center">
-            <FaCalendarAlt className="w-4 h-4 mr-1" />
+          <div className="flex items-center gap-2">
+            <FaCalendarAlt className="w-4 h-4" />
             <span>
               {start} – {end}
             </span>
+            <span>·</span>
+            <span>{calculateDuration(start, end)}</span>
           </div>
           {locations && locations.length > 0 && (
             <div className="flex items-center mt-1 sm:mt-0 sm:ml-2">
