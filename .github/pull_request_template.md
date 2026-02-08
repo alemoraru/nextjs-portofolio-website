@@ -22,6 +22,7 @@
 - [ ] No console warnings or errors
 - [ ] No ESLint warnings or errors
 - [ ] No prettier warnings or errors
+- [ ] No vitest warnings or errors
 
 ## Supplementary Information
 

@@ -11,6 +11,7 @@ performance-focused starting point for showcasing your **work**, **blogs**, and 
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![MDX](https://img.shields.io/badge/MDX-Supported-orange?style=for-the-badge&logo=mdx)
+![Vitest](https://img.shields.io/badge/Vitest-4.0-6E9F18?style=for-the-badge&logo=vitest)
 ![Prettier](https://img.shields.io/badge/Prettier-3.6-F7B93E?style=for-the-badge&logo=prettier)
 ![ESLint](https://img.shields.io/badge/ESLint-9.39-4B32C3?style=for-the-badge&logo=eslint)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
@@ -231,6 +232,7 @@ This project uses:
 - 💅 [Tailwind CSS](https://tailwindcss.com) Utility-first CSS framework
 - 🧱 [TypeScript](https://www.typescriptlang.org) Static typing
 - 📝 [MDX](https://mdxjs.com) Markdown with JSX support
+- 🧪 [Vitest](https://vitest.dev) Unit testing framework
 
 ---
 
@@ -238,15 +240,21 @@ This project uses:
 
 This project follows best practices for code quality and style:
 
-- Consistent code formatting using [Prettier](https://prettier.io)
-    - For prettier, you can run `pnpm format:check` to check for formatting issues, and `pnpm format` to
-      automatically format the code according to the defined style guidelines.
-    - Check out the `.prettierrc.json` & `.prettierignore` files for configuration details
-- Linting with [ESLint](https://eslint.org) to ensure code quality
-    - For ESLint, you can run `pnpm lint:check` to check for linting issues, and `pnpm lint` to
-      automatically fix linting issues where possible.
-    - Check out the `eslint.config.mjs` file for configuration details
-- Modular and reusable (React) components
+- **Testing** with [Vitest](https://vitest.dev) for unit and component testing
+    - Run `pnpm test` to execute all tests
+    - Run `pnpm test:watch` to run tests in watch mode
+    - Run `pnpm test:ui` to open the Vitest UI
+    - Tests are located in the `tests/` directory, mirroring the `src/` structure
+    - Check out `vitest.config.ts` for configuration details
+- **Code Formatting** using [Prettier](https://prettier.io)
+    - Run `pnpm format:check` to check for formatting issues
+    - Run `pnpm format:write` to automatically format the code
+    - Check out `.prettierrc.json` & `.prettierignore` files for configuration details
+- **Linting** with [ESLint](https://eslint.org) to ensure code quality
+    - Run `pnpm lint:check` to check for linting issues
+    - Run `pnpm lint:write` to automatically fix linting issues where possible
+    - Check out `eslint.config.mjs` file for configuration details
+- **Modular and reusable** (React) components
 
 > **Note**: To run both prettier and ESLint checks together, you can use the command:
 > `pnpm format-lint` or `pnpm lint-format`.

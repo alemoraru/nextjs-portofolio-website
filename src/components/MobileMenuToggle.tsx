@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 /**
  * A functional component that renders a mobile menu toggle button with an animated hamburger icon.
@@ -14,16 +15,18 @@ export default function MobileMenuToggle({
 }) {
   return (
     <button
-      className="md:hidden w-11 h-11 flex items-center justify-center rounded-lg
-                 bg-gray-100 dark:bg-gray-800
-                 border border-gray-300 dark:border-gray-700
-                 hover:bg-gray-200 dark:hover:bg-gray-700
-                 hover:border-gray-400 dark:hover:border-gray-600
-                 transition-all duration-200 cursor-pointer
-                 active:scale-95
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black
-                 shadow-sm hover:shadow-md"
+      className={cn(
+        "md:hidden w-11 h-11 flex items-center justify-center rounded-lg",
+        "bg-gray-100 dark:bg-gray-800",
+        "border border-gray-300 dark:border-gray-700",
+        "hover:bg-gray-200 dark:hover:bg-gray-700",
+        "hover:border-gray-400 dark:hover:border-gray-600",
+        "transition-all duration-200 cursor-pointer",
+        "active:scale-95",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+        "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black",
+        "shadow-sm hover:shadow-md"
+      )}
       onMouseDown={e => {
         e.stopPropagation()
         onToggleAction()
