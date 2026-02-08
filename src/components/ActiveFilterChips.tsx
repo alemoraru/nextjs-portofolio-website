@@ -1,5 +1,6 @@
 import React from "react"
 import { FaTimes, FaTrashAlt } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 interface ActiveFilterChipsProps {
   filters: string[]
@@ -28,8 +29,10 @@ export default function ActiveFilterChips({
       {filters.map(filter => (
         <span
           key={filter}
-          className="flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300
-                    px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm"
+          className={cn(
+            "flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+            "px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm"
+          )}
         >
           {filter}
           <button
@@ -46,9 +49,11 @@ export default function ActiveFilterChips({
       {onClearAll && filters.length > 1 && (
         <button
           onClick={onClearAll}
-          className="flex items-center bg-gray-200 dark:bg-gray-700 text-gray-700
-                    dark:text-gray-200 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm
-                    hover:bg-gray-300 dark:hover:bg-gray-600 ml-2 cursor-pointer"
+          className={cn(
+            "flex items-center bg-gray-200 dark:bg-gray-700 text-gray-700",
+            "dark:text-gray-200 px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm",
+            "hover:bg-gray-300 dark:hover:bg-gray-600 ml-2 cursor-pointer"
+          )}
           aria-label={clearAllLabel}
           tabIndex={0}
         >

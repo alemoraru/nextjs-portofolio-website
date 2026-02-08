@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa6"
+import { cn } from "@/lib/utils"
 
 /**
  * A functional component that renders a button to toggle between light and dark themes.
@@ -19,8 +20,10 @@ export default function ThemeToggleButton() {
   if (!mounted) {
     return (
       <div
-        className="w-11 h-11 rounded-lg border border-gray-300 dark:border-gray-700
-                      bg-gray-100 dark:bg-gray-800 animate-pulse"
+        className={cn(
+          "w-11 h-11 rounded-lg border border-gray-300 dark:border-gray-700",
+          "bg-gray-100 dark:bg-gray-800 animate-pulse"
+        )}
       />
     )
   }
@@ -28,16 +31,18 @@ export default function ThemeToggleButton() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="relative w-11 h-11 rounded-lg transition-all duration-200
-                 border border-gray-300 dark:border-gray-700
-                 bg-gray-100 dark:bg-gray-800
-                 hover:bg-gray-200 dark:hover:bg-gray-700
-                 hover:border-gray-400 dark:hover:border-gray-600
-                 active:scale-95
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black
-                 flex items-center justify-center
-                 cursor-pointer shadow-sm hover:shadow-md"
+      className={cn(
+        "relative w-11 h-11 rounded-lg transition-all duration-200",
+        "border border-gray-300 dark:border-gray-700",
+        "bg-gray-100 dark:bg-gray-800",
+        "hover:bg-gray-200 dark:hover:bg-gray-700",
+        "hover:border-gray-400 dark:hover:border-gray-600",
+        "active:scale-95",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+        "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black",
+        "flex items-center justify-center",
+        "cursor-pointer shadow-sm hover:shadow-md"
+      )}
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       <AnimatePresence mode="wait" initial={false}>
