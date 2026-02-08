@@ -3,9 +3,16 @@ import { vi } from "vitest"
 
 // Mock next/link
 vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: { children: React.ReactNode; href: string }) => {
+  default: ({
+    children,
+    href,
+    ...props
+  }: {
+    children: React.ReactNode
+    href: string
+  } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
     // Prevent navigation warnings by intercepting clicks
-    const onClick = (e: React.MouseEvent) => {
+    const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault()
       if (props.onClick) {
         props.onClick(e)
