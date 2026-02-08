@@ -87,3 +87,19 @@ export function calculateDuration(start: string, end: string): string {
     return `${years} yr${years > 1 ? "s" : ""} ${months} mo${months > 1 ? "s" : ""}`
   }
 }
+
+/**
+ * Normalizes a technology name into a standardized format.
+ * @param techName - The technology name to normalize.
+ * @returns The normalized technology name.
+ */
+export function normalizeTechName(techName: string): string {
+  return techName
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[._]/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+}

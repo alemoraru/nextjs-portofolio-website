@@ -139,16 +139,6 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
 }
 
 /**
- * Gets a single blog post by slug.
- * @param slug - The slug of the blog post to retrieve
- * @returns Promise resolving to the blog post or undefined if not found
- */
-export async function getBlogPost(slug: string): Promise<BlogPostProps | undefined> {
-  const posts = await getAllBlogPosts()
-  return posts.find(post => post.slug === slug)
-}
-
-/**
  * Validates that the work item frontmatter has all required fields and correct format.
  * @param frontmatter - The frontmatter object to validate
  * @param filename - The filename for error reporting
@@ -264,16 +254,6 @@ export async function getAllWorkItems(): Promise<WorkItemProps[]> {
   cachedWorkItems = workItems
 
   return workItems
-}
-
-/**
- * Gets a single work item by slug.
- * @param slug - The slug of the work item to retrieve
- * @returns Promise resolving to the work item or undefined if not found
- */
-export async function getWorkItem(slug: string): Promise<WorkItemProps | undefined> {
-  const workItems = await getAllWorkItems()
-  return workItems.find(item => item.slug === slug)
 }
 
 /**
@@ -402,14 +382,4 @@ export async function getAllProjects(): Promise<ProjectProps[]> {
   cachedProjects = projects
 
   return projects
-}
-
-/**
- * Gets a single project by slug.
- * @param slug - The slug of the project to retrieve
- * @returns Promise resolving to the project or undefined if not found
- */
-export async function getProject(slug: string): Promise<ProjectProps | undefined> {
-  const projects = await getAllProjects()
-  return projects.find(project => project.slug === slug)
 }

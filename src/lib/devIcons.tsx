@@ -1,21 +1,6 @@
 import { FiCpu } from "react-icons/fi"
 import DevIcon from "@/components/DevIcon"
-
-/**
- * Normalizes a technology name into a standardized format.
- * @param techName - The technology name to normalize.
- * @returns The normalized technology name.
- */
-function normalizeTechName(techName: string): string {
-  return techName
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[._]/g, "-")
-    .replace(/[^a-z0-9-]/g, "")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-}
+import { normalizeTechName } from "@/lib/utils"
 
 /**
  * Maps a technology name to its corresponding icon component.
