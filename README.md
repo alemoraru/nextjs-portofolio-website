@@ -244,6 +244,9 @@ This project follows best practices for code quality and style:
     - Run `pnpm test` to execute all tests
     - Run `pnpm test:watch` to run tests in watch mode
     - Run `pnpm test:ui` to open the Vitest UI
+    - Run `pnpm test:coverage` to generate a code coverage report (we use `v8` for fast coverage reporting). Note that 
+      coverage is being generated in the `coverage/` directory, and the report can be viewed by opening 
+      `coverage/index.html` in a browser.
     - Tests are located in the `tests/` directory, mirroring the `src/` structure
     - Check out `vitest.config.ts` for configuration details
 - **Code Formatting** using [Prettier](https://prettier.io)
