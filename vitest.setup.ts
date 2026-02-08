@@ -3,8 +3,16 @@ import { vi } from "vitest"
 
 // Mock next/link
 vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: { children: React.ReactNode; href: string }) =>
-    React.createElement("a", { href, ...props }, children),
+  default: ({ children, href, ...props }: { children: React.ReactNode; href: string }) => {
+    // Prevent navigation warnings by intercepting clicks
+    const onClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      if (props.onClick) {
+        props.onClick(e)
+      }
+    }
+    return React.createElement("a", { href, ...props, onClick }, children)
+  },
 }))
 
 // Mock next/image
