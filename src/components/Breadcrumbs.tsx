@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { homeIntroConfig } from "@/data/content"
+import { cn } from "@/lib/utils"
 
 /**
  * Generate initials from a name (e.g., "John Doe" -> "JD")
@@ -37,8 +38,10 @@ export default function Breadcrumbs() {
     <div className="flex items-center gap-2 text-lg text-black dark:text-white my-auto">
       <Link
         href="/"
-        className="hover:text-blue-500 dark:hover:text-blue-400 font-semibold
-                   transition-all duration-200 hover:scale-105 active:scale-95"
+        className={cn(
+          "hover:text-blue-500 dark:hover:text-blue-400 font-semibold",
+          "transition-all duration-200 hover:scale-105 active:scale-95"
+        )}
       >
         {/* Initials on mobile */}
         <span className="block md:hidden text-lg">{initials}</span>
@@ -57,10 +60,12 @@ export default function Breadcrumbs() {
                 <span className="text-gray-400 dark:text-gray-600 font-mono text-sm">/</span>
                 <Link
                   href={href}
-                  className="text-sm font-medium text-black dark:text-white
-                             hover:text-blue-500 dark:hover:text-blue-400
-                             transition-all duration-200 hover:underline
-                             underline-offset-2 decoration-blue-500/50"
+                  className={cn(
+                    "text-sm font-medium text-black dark:text-white",
+                    "hover:text-blue-500 dark:hover:text-blue-400",
+                    "transition-all duration-200 hover:underline",
+                    "underline-offset-2 decoration-blue-500/50"
+                  )}
                 >
                   {label}
                 </Link>

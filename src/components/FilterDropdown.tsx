@@ -84,9 +84,11 @@ export default function FilterDropdown({
         </motion.div>
         {resultCount > 0 && (
           <span
-            className="absolute -top-2 -right-2 bg-blue-600 dark:bg-blue-500 text-white
-                        text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center
-                        shadow-md border border-white dark:border-black"
+            className={cn(
+              "absolute -top-2 -right-2 bg-blue-600 dark:bg-blue-500 text-white",
+              "text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center",
+              "shadow-md border border-white dark:border-black"
+            )}
             title={`${resultCount} results`}
           >
             {resultCount}
@@ -113,9 +115,11 @@ export default function FilterDropdown({
                 <motion.label
                   key={name}
                   whileHover={{ x: 4 }}
-                  className="flex items-center space-x-3 cursor-pointer group py-2 px-2
-                             rounded-md hover:bg-gray-100 dark:hover:bg-gray-700/50
-                             transition-colors duration-200"
+                  className={cn(
+                    "flex items-center space-x-3 cursor-pointer group py-2 px-2",
+                    "rounded-md hover:bg-gray-100 dark:hover:bg-gray-700/50",
+                    "transition-colors duration-200"
+                  )}
                 >
                   <span className="relative inline-block w-5 h-5 shrink-0">
                     <input
@@ -125,10 +129,12 @@ export default function FilterDropdown({
                       className="peer absolute opacity-0 w-full h-full z-10 cursor-pointer"
                     />
                     <span
-                      className="block w-full h-full rounded border border-gray-400 dark:border-gray-500
-                                 peer-checked:bg-blue-600 peer-checked:border-blue-600
-                                 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-1
-                                 transition-all duration-200"
+                      className={cn(
+                        "block w-full h-full rounded border border-gray-400 dark:border-gray-500",
+                        "peer-checked:bg-blue-600 peer-checked:border-blue-600",
+                        "peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-1",
+                        "transition-all duration-200"
+                      )}
                     ></span>
                     <FaCheck className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none" />
                   </span>
