@@ -7,6 +7,25 @@ vi.mock("next/link", () => ({
     React.createElement("a", { href, ...props }, children),
 }))
 
+// Mock next/image
+vi.mock("next/image", () => ({
+  default: ({
+    src,
+    alt,
+    fill,
+    ...props
+  }: {
+    src: string
+    alt: string
+    fill?: boolean
+    [key: string]: unknown
+  }) => {
+    // Filter out Next.js specific props that aren't valid HTML attributes
+    const { priority: _priority, loading: _loading, quality: _quality, ...validProps } = props
+    return React.createElement("img", { src, alt, ...validProps })
+  },
+}))
+
 // Mock next/navigation
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
