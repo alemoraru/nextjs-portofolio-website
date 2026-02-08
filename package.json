@@ -6,13 +6,16 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "lint": "eslint --fix .",
     "lint:check": "eslint . --max-warnings=0",
-    "lint-format": "eslint --fix . && prettier --write .",
+    "lint:write": "eslint --fix . && prettier --write .",
     "format-lint": "prettier --write . && eslint --fix .",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
@@ -42,15 +45,19 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.2",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^28.0.0",
     "prettier": "3.6.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.0.18"
   },
   "overrides": {
     "@types/react": "19.2.7",
