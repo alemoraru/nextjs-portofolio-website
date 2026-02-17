@@ -90,11 +90,11 @@ function QuickFacts() {
               "bg-gray-50 dark:bg-gray-800",
               "text-sm font-medium text-gray-700 dark:text-gray-300",
               "shadow-sm hover:shadow-md",
-              "hover:border-blue-400 dark:hover:border-blue-600",
+              "hover:border-accent-400 dark:hover:border-accent-600",
               "transition-all duration-200 cursor-default"
             )}
           >
-            <Icon className="text-blue-600 dark:text-blue-400 text-base shrink-0" />
+            <Icon className="text-accent-600 dark:text-accent-400 text-base shrink-0" />
             <span>{fact.label}</span>
           </motion.div>
         )

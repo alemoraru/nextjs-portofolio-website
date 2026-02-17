@@ -2,14 +2,62 @@
 @import "highlight.js/styles/github-dark.css";
 @plugin "@tailwindcss/typography";
 
+/* ─── Accent color themes ──────────────────────────────────────────────────
+   Set the [data-theme] attribute on <html> (via siteMetadata.theme) to pick
+   one of the available themes. The default (blue) is defined on :root so it
+   works even when no data-theme attribute is present.
+   ─────────────────────────────────────────────────────────────────────── */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Default theme: blue */
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
 }
 
 .dark {
   --background: #171717;
   --foreground: #ffffff;
+}
+
+[data-theme="blue"] {
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+}
+
+[data-theme="purple"] {
+  --accent-400: #c084fc;
+  --accent-500: #a855f7;
+  --accent-600: #9333ea;
+}
+
+[data-theme="green"] {
+  --accent-400: #4ade80;
+  --accent-500: #22c55e;
+  --accent-600: #16a34a;
+}
+
+[data-theme="orange"] {
+  --accent-400: #fb923c;
+  --accent-500: #f97316;
+  --accent-600: #ea580c;
+}
+
+[data-theme="rose"] {
+  --accent-400: #fb7185;
+  --accent-500: #f43f5e;
+  --accent-600: #e11d48;
+}
+
+/* Expose accent variables as Tailwind utility colors (text-accent-*, etc.) */
+@theme inline {
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
