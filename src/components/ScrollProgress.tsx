@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react"
 
+/**
+ * ScrollProgress component that displays a progress bar at the bottom of the screen
+ * indicating how much of the article has been read.
+ */
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0)
 
