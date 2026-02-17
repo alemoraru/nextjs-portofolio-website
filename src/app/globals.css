@@ -59,6 +59,41 @@
   --accent-700: #be123c;
 }
 
+[data-theme="teal"] {
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+}
+
+[data-theme="indigo"] {
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+}
+
+[data-theme="amber"] {
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+}
+
+[data-theme="cyan"] {
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-700: #0e7490;
+}
+
+[data-theme="violet"] {
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+}
+
 /* Expose accent variables as Tailwind utility colors (text-accent-*, etc.) */
 @theme inline {
   --color-accent-400: var(--accent-400);
