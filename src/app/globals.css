@@ -16,6 +16,7 @@
   --accent-400: #60a5fa;
   --accent-500: #3b82f6;
   --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
 }
 
 .dark {
@@ -27,30 +28,35 @@
   --accent-400: #60a5fa;
   --accent-500: #3b82f6;
   --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
 }
 
 [data-theme="purple"] {
   --accent-400: #c084fc;
   --accent-500: #a855f7;
   --accent-600: #9333ea;
+  --accent-700: #7e22ce;
 }
 
 [data-theme="green"] {
   --accent-400: #4ade80;
   --accent-500: #22c55e;
   --accent-600: #16a34a;
+  --accent-700: #15803d;
 }
 
 [data-theme="orange"] {
   --accent-400: #fb923c;
   --accent-500: #f97316;
   --accent-600: #ea580c;
+  --accent-700: #c2410c;
 }
 
 [data-theme="rose"] {
   --accent-400: #fb7185;
   --accent-500: #f43f5e;
   --accent-600: #e11d48;
+  --accent-700: #be123c;
 }
 
 /* Expose accent variables as Tailwind utility colors (text-accent-*, etc.) */
@@ -58,6 +64,7 @@
   --color-accent-400: var(--accent-400);
   --color-accent-500: var(--accent-500);
   --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

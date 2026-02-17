@@ -21,10 +21,10 @@ export default function BackToPageButton({ pageUrl }: BackToPageButtonProps) {
       href={pageUrl}
       className={cn(
         "group inline-flex items-center gap-2 mb-8",
-        "text-sm font-semibold text-blue-600 dark:text-blue-400",
+        "text-sm font-semibold text-accent-600 dark:text-accent-400",
         "hover:gap-3 transition-all duration-200",
         "focus-visible:outline-none focus-visible:ring-2",
-        "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
         "dark:focus-visible:ring-offset-black rounded-sm"
       )}
     >

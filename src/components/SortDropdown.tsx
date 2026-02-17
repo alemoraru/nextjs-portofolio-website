@@ -52,7 +52,7 @@ export default function SortDropdown({ sortOrder, onChange, options }: SortDropd
           "text-sm font-medium text-gray-800 dark:text-gray-200",
           "transition-all duration-200",
           "active:scale-98",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
           "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
         )}
       >
@@ -95,9 +95,9 @@ export default function SortDropdown({ sortOrder, onChange, options }: SortDropd
                     "px-4 py-2.5",
                     "transition-colors duration-200",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-inset",
-                    "focus-visible:ring-blue-500",
+                    "focus-visible:ring-accent-500",
                     isSelected
-                      ? "bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-semibold"
+                      ? "bg-accent-500/10 dark:bg-accent-500/10 text-accent-600 dark:text-accent-400 font-semibold"
                       : "text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700/50"
                   )}
                 >

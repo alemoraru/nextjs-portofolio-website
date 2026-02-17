@@ -30,13 +30,13 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
         className={cn(
           "group relative h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700 rounded-lg p-5 shadow-sm",
-          "hover:border-blue-500 dark:hover:border-blue-500",
-          "hover:shadow-xl hover:shadow-blue-500/10",
+          "hover:border-accent-500 dark:hover:border-accent-500",
+          "hover:shadow-xl hover:shadow-accent-500/10",
           "transition-all duration-200 cursor-pointer",
           "bg-gray-50 dark:bg-gray-900",
           "hover:bg-white dark:hover:bg-gray-800",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black"
         )}
       >
@@ -44,7 +44,7 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
         <h3
           className={cn(
             "text-lg font-bold text-gray-900 dark:text-white",
-            "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+            "group-hover:text-accent-600 dark:group-hover:text-accent-400",
             "transition-colors duration-200"
           )}
         >
@@ -80,7 +80,7 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
         </p>
 
         {/* Read More Hint */}
-        <div className="flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all duration-200">
+        <div className="flex items-center gap-1 mt-4 text-sm font-semibold text-accent-600 dark:text-accent-400 group-hover:gap-2 transition-all duration-200">
           <span>Read article</span>
           <motion.span
             initial={{ x: 0 }}

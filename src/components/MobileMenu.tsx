@@ -100,7 +100,7 @@ export default function MobileMenu({
                              border active:scale-98
                              ${
                                pathname === path
-                                 ? "bg-blue-500 dark:bg-blue-600 text-white border-blue-600 dark:border-blue-500 shadow-md"
+                                 ? "bg-accent-500 dark:bg-accent-600 text-white border-accent-600 dark:border-accent-500 shadow-md"
                                  : "text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800/50"
                              }`}
                   onClick={() => setIsOpenAction(false)}

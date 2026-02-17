@@ -38,7 +38,7 @@ export default function ThemeToggleButton() {
         "hover:bg-gray-200 dark:hover:bg-gray-700",
         "hover:border-gray-400 dark:hover:border-gray-600",
         "active:scale-95",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
         "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black",
         "flex items-center justify-center",
         "cursor-pointer shadow-sm hover:shadow-md"
@@ -62,7 +62,7 @@ export default function ThemeToggleButton() {
           {resolvedTheme === "dark" ? (
             <FaSun className="w-5 h-5 text-yellow-400" />
           ) : (
-            <FaMoon className="w-5 h-5 text-blue-600" />
+            <FaMoon className="w-5 h-5 text-gray-600" />
           )}
         </motion.div>
       </AnimatePresence>

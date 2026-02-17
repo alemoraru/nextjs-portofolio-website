@@ -118,13 +118,13 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
   if (filteredPosts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-8">
-        <FaTag className="w-8 h-8 text-blue-500 mb-2" />
+        <FaTag className="w-8 h-8 text-accent-500 mb-2" />
         <h1 className="text-2xl font-bold mb-2">
-          No posts found for tag: <span className="text-blue-600">{decodedTag}</span>
+          No posts found for tag: <span className="text-accent-600">{decodedTag}</span>
         </h1>
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-blue-500 hover:underline font-medium mb-4"
+          className="inline-flex items-center gap-2 text-accent-500 hover:underline font-medium mb-4"
         >
           <FaArrowLeft className="w-4 h-4" />
           Back to all blog posts
@@ -142,8 +142,8 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
                   <BlogPost {...post} />
                   <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                     <span className="font-medium dark:text-white text-black">Reason:</span>
-                    <FaTag className="w-3 h-3 text-blue-400 shrink-0" />
-                    <span className="px-2 py-1 rounded-full dark:bg-blue-50 text-blue-700 font-semibold bg-blue-200 text-xs">
+                    <FaTag className="w-3 h-3 text-accent-400 shrink-0" />
+                    <span className="px-2 py-1 rounded-full bg-accent-500/15 text-accent-600 font-semibold text-xs">
                       {bestTag}
                     </span>
                     <span className="dark:text-gray-300 text-gray-500 text-xs">
@@ -164,12 +164,12 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
     <div className="px-4 max-w-4xl mx-auto py-8 flex flex-col">
       <BackToPageButton pageUrl="/blog" />
       <div className="flex items-center gap-3 mb-6">
-        <FaTag className="w-6 h-6 text-blue-500" />
+        <FaTag className="w-6 h-6 text-accent-500" />
 
         {/* Responsive header: stacked on mobile, inline on md+ */}
         <div className="flex flex-col md:flex-row md:items-center">
           <span className="text-2xl font-bold leading-tight md:mr-2">Posts tagged with</span>
-          <span className="text-blue-600 text-xl font-bold leading-tight">
+          <span className="text-accent-600 text-xl font-bold leading-tight">
             &quot;{decodedTag}&quot;
             <span className="ml-2 text-base font-semibold text-gray-500 align-middle">
               ({filteredPosts.length} post{filteredPosts.length !== 1 ? "s" : ""})

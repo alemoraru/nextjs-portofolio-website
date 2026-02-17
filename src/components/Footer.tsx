@@ -30,13 +30,13 @@ function SocialLinks() {
                 "rounded-lg border border-gray-300 dark:border-gray-700",
                 "bg-gray-100 dark:bg-gray-800",
                 "text-gray-700 dark:text-gray-300",
-                "hover:border-blue-500 dark:hover:border-blue-400",
-                "hover:bg-blue-50 dark:hover:bg-blue-950/30",
-                "hover:text-blue-600 dark:hover:text-blue-400",
+                "hover:border-accent-500 dark:hover:border-accent-400",
+                "hover:bg-accent-500/10 dark:hover:bg-accent-500/10",
+                "hover:text-accent-600 dark:hover:text-accent-400",
                 "transition-all duration-200",
                 "hover:scale-110 hover:shadow-md",
                 "active:scale-95",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
                 "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
               )}
             >
@@ -57,7 +57,7 @@ export default function Footer() {
         "bg-zinc-50/80 dark:bg-black/80 backdrop-blur-sm",
         "before:content-[''] before:absolute before:top-0 before:left-0 before:right-0",
         "before:h-px before:bg-linear-to-r before:from-transparent",
-        "before:via-blue-500/30 before:to-transparent"
+        "before:via-gray-500/30 before:to-transparent"
       )}
       id="footerPortfolio"
     >
@@ -89,14 +89,14 @@ export default function Footer() {
               "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md",
               "bg-gray-200 dark:bg-gray-800",
               "border border-gray-300 dark:border-gray-700",
-              "hover:border-blue-500 dark:hover:border-blue-400",
-              "hover:bg-blue-50 dark:hover:bg-blue-950/30",
+              "hover:border-accent-500 dark:hover:border-accent-400",
+              "hover:bg-accent-500/10 dark:hover:bg-accent-500/10",
               "transition-all duration-200",
               "hover:shadow-sm"
             )}
           >
             <FaCodeBranch className="w-3 h-3 text-gray-500 dark:text-gray-500" />
-            <span className="font-semibold text-blue-600 dark:text-blue-400">{appVersion}</span>
+            <span className="font-semibold text-accent-600 dark:text-accent-400">{appVersion}</span>
           </Link>
 
           <span className="text-gray-500 dark:text-gray-500">
@@ -104,7 +104,7 @@ export default function Footer() {
             <Link
               href="https://github.com/alemoraru"
               rel="noopener noreferrer"
-              className="font-semibold hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+              className="font-semibold hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200"
             >
               @alemoraru
             </Link>

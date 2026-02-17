@@ -53,7 +53,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           "text-gray-700 dark:text-gray-200",
           "transition-all duration-200",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black",
           currentPage === 1
             ? "opacity-40 cursor-not-allowed pointer-events-none"
@@ -72,10 +72,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           "w-9 h-9 flex items-center justify-center rounded-lg",
           "border transition-all duration-200 text-sm font-semibold",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black",
           currentPage === 1
-            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-500 cursor-default pointer-events-none shadow-sm"
+            ? "bg-accent-600 dark:bg-accent-500 text-white border-accent-600 dark:border-accent-500 cursor-default pointer-events-none shadow-sm"
             : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
         )}
         aria-current={currentPage === 1 ? "page" : undefined}
@@ -104,7 +104,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             "hover:border-gray-400 dark:hover:border-gray-600",
             "active:scale-95",
             "focus-visible:outline-none focus-visible:ring-2",
-            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
             "dark:focus-visible:ring-offset-black"
           )}
         >
@@ -117,8 +117,8 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         <span
           className={cn(
             "w-9 h-9 flex items-center justify-center rounded-lg",
-            "bg-blue-600 dark:bg-blue-500 text-white",
-            "border border-blue-600 dark:border-blue-500",
+            "bg-accent-600 dark:bg-accent-500 text-white",
+            "border border-accent-600 dark:border-accent-500",
             "text-sm font-semibold cursor-default shadow-sm"
           )}
           aria-current="page"
@@ -141,7 +141,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             "hover:border-gray-400 dark:hover:border-gray-600",
             "active:scale-95",
             "focus-visible:outline-none focus-visible:ring-2",
-            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
             "dark:focus-visible:ring-offset-black"
           )}
         >
@@ -164,10 +164,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             "w-9 h-9 flex items-center justify-center rounded-lg",
             "border transition-all duration-200 text-sm font-semibold",
             "focus-visible:outline-none focus-visible:ring-2",
-            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
             "dark:focus-visible:ring-offset-black",
             currentPage === totalPages
-              ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-500 cursor-default pointer-events-none shadow-sm"
+              ? "bg-accent-600 dark:bg-accent-500 text-white border-accent-600 dark:border-accent-500 cursor-default pointer-events-none shadow-sm"
               : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 active:scale-95"
           )}
           aria-current={currentPage === totalPages ? "page" : undefined}
@@ -186,7 +186,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           "text-gray-700 dark:text-gray-200",
           "transition-all duration-200",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black",
           currentPage === totalPages
             ? "opacity-40 cursor-not-allowed pointer-events-none"

@@ -9,13 +9,13 @@ import { FaTag } from "react-icons/fa"
 export default function BlogTag({ tag, href }: { tag: string; href?: string }) {
   // Base styles for the tag
   const baseClasses = `
-        flex items-center text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 group-hover:bg-blue-200
-        dark:group-hover:bg-blue-800 dark:text-blue-300 px-3 py-1 rounded-full transition duration-300 cursor-pointer
+        flex items-center text-xs bg-accent-500/15 text-accent-600 dark:bg-accent-500/20 group-hover:bg-accent-500/25
+        dark:group-hover:bg-accent-500/25 dark:text-accent-400 px-3 py-1 rounded-full transition duration-300 cursor-pointer
     `
 
   // Hover effects for the tag (if it's a link)
   const hoverClasses = `
-        hover:scale-105 hover:bg-blue-200 hover:shadow-md dark:hover:bg-blue-800
+        hover:scale-105 hover:bg-accent-500/25 hover:shadow-md dark:hover:bg-accent-500/25
     `
 
   const content = (
