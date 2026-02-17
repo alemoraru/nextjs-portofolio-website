@@ -1,10 +1,12 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 import Breadcrumbs from "@/components/Breadcrumbs"
 import MobileMenu from "@/components/MobileMenu"
 import MobileMenuToggle from "@/components/MobileMenuToggle"
 import NavigationMenu from "@/components/NavigationMenu"
+import { ScrollProgress } from "@/components/ScrollProgress"
 import ThemeToggleButton from "@/components/ThemeToggleButton"
 import { cn } from "@/lib/utils"
 
@@ -13,6 +15,8 @@ import { cn } from "@/lib/utils"
  */
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const isBlogPost = /^\/blog\/[^/]+/.test(pathname)
 
   return (
     <header
@@ -54,6 +58,9 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <MobileMenu isOpen={mobileMenuOpen} setIsOpenAction={setMobileMenuOpen} />
+
+      {/* Scroll progress bar that shows for blog posts only */}
+      {isBlogPost && <ScrollProgress />}
     </header>
   )
 }
