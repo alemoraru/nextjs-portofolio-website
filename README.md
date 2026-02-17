@@ -118,6 +118,7 @@ folder. Here's how to make it yours:
 
 Edit `src/data/metadata.ts` to customize your site's SEO and social media information:
 
+- **theme**: Choose an accent color for the site (e.g., `blue`, `green`, `purple`, `amber`, etc.)
 - **title**: Your site/portfolio title
 - **description**: A brief description of your portfolio
 - **keywords**: Array of relevant keywords for SEO
@@ -185,11 +186,10 @@ components or understand the codebase!
 Planned improvement ideas and future features:
 
 - [X] ❔ Add guides (i.e., READMEs) for creating blog/project/work pages
-- [ ] 🖼 Add theme customization options:
+- [X] 🖼 Add theme customization options:
     - [X] Centralized config file for content and appearance settings
-    - [ ] Color palette
-    - [ ] Layout options
-    - [ ] Consistent color scheme across pages in tailwind.config.js
+    - [X] Color palette options
+- [ ] ✨ Add layout variations for customization (e.g., sidebar, grid, etc.)
 
 ---
 
@@ -244,8 +244,8 @@ This project follows best practices for code quality and style:
     - Run `pnpm test` to execute all tests
     - Run `pnpm test:watch` to run tests in watch mode
     - Run `pnpm test:ui` to open the Vitest UI
-    - Run `pnpm test:coverage` to generate a code coverage report (we use `v8` for fast coverage reporting). Note that 
-      coverage is being generated in the `coverage/` directory, and the report can be viewed by opening 
+    - Run `pnpm test:coverage` to generate a code coverage report (we use `v8` for fast coverage reporting). Note that
+      coverage is being generated in the `coverage/` directory, and the report can be viewed by opening
       `coverage/index.html` in a browser.
     - Tests are located in the `tests/` directory, mirroring the `src/` structure
     - Check out `vitest.config.ts` for configuration details
