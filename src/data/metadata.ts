@@ -11,7 +11,7 @@ export const siteMetadata = {
    * Options: "blue" | "purple" | "green" | "orange" | "rose" | "teal" | "indigo" | "amber" | "cyan" | "violet"
    * The chosen theme controls the accent color used across all components.
    */
-  theme: "amber" as Theme,
+  theme: "blue" as Theme,
 
   /**
    * Site title (shown in browser tabs and search results)
