@@ -6,6 +6,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
+import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import rehypeSlug from "rehype-slug"
 import remark_gfm from "remark-gfm"
@@ -136,7 +137,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
       <div className="flex items-center gap-4 text-gray-500 mb-8">
-        <span>
+        <span className="flex items-center gap-1.5">
+          <FaRegCalendarAlt className="shrink-0" />
           {new Date(post.date).toLocaleDateString(undefined, {
             year: "numeric",
             month: "long",
@@ -144,7 +146,10 @@ export default async function BlogPostPage(props: { params: pageParams }) {
           })}
         </span>
         <span>•</span>
-        <span>{readingTime} min read</span>
+        <span className="flex items-center gap-1.5">
+          <FaBookOpen className="shrink-0" />
+          {readingTime} min read
+        </span>
       </div>
 
       {/* Display current blog post tags */}
