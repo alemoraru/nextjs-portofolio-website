@@ -16,7 +16,11 @@ import { cn } from "@/lib/utils"
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
-  const isBlogPost = /^\/blog\/[^/]+/.test(pathname)
+
+  // Show scroll progress bar only on blog post pages (e.g., /blog/my-post)
+  // If regex is not done properly, then it may also show on /blog/tag/some-tag pages, which we don't want.
+  // At least, that was an issue in the past, hence this longer comment to explain it.
+  const isBlogPost = /^\/blog\/[^/]+$/.test(pathname)
 
   return (
     <header
