@@ -86,3 +86,19 @@ export interface WorkItemFrontmatter {
  * @description This type is used to define the params for a dynamic tag route in Next.js.
  */
 export type tagPageParams = Promise<{ tag: string }>
+
+/**
+ * @description Accent color themes available for the portfolio.
+ * Set `siteMetadata.theme` in src/data/metadata.ts to one of these values.
+ */
+export type Theme =
+  | "blue"
+  | "purple"
+  | "green"
+  | "orange"
+  | "rose"
+  | "teal"
+  | "indigo"
+  | "amber"
+  | "cyan"
+  | "violet"

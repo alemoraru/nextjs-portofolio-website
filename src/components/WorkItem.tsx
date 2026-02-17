@@ -48,7 +48,7 @@ export default function WorkItem({
         }}
         className={cn(
           "border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm",
-          "hover:border-blue-500 transition cursor-pointer",
+          "hover:border-accent-500 transition cursor-pointer",
           "bg-gray-100 dark:bg-gray-900",
           "hover:bg-gray-200 dark:hover:bg-gray-800"
         )}
@@ -66,7 +66,7 @@ export default function WorkItem({
               />
             </div>
           )}
-          <h3 className="text-xl font-semibold group-hover:text-blue-500 transition">
+          <h3 className="text-xl font-semibold group-hover:text-accent-500 transition">
             {title} @ {company}
           </h3>
         </div>

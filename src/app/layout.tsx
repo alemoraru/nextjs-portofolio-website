@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes"
 import React, { ReactNode } from "react"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
+import { siteMetadata } from "@/data/metadata"
 import { cn } from "@/lib/utils"
 
 /**
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
+      data-theme={siteMetadata.theme}
       className={`${gabarito.className} ${gabarito.variable}`}
       suppressHydrationWarning
     >

@@ -56,11 +56,11 @@ export function CodeBlock({ className = "", children }: CodeBlockProps) {
             "flex items-center gap-1.5 px-2.5 py-1.5 rounded-md cursor-pointer",
             "text-xs font-medium transition-all duration-200",
             "focus-visible:outline-none focus-visible:ring-2",
-            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
             "focus-visible:ring-offset-gray-800",
             "active:scale-95",
             copied
-              ? "text-blue-400 bg-blue-400/10"
+              ? "text-accent-400 bg-accent-400/10"
               : "text-gray-300 hover:text-white hover:bg-gray-700/50"
           )}
           aria-label={copied ? "Copied to clipboard" : "Copy code to clipboard"}

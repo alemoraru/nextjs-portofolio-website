@@ -51,7 +51,7 @@ interface TimelineItemProps {
  * @constructor
  */
 export function TimelineItem({ title, duration, location, children }: TimelineItemProps) {
-  const dotColor = "bg-blue-500 dark:bg-blue-400"
+  const dotColor = "bg-accent-500 dark:bg-accent-400"
 
   return (
     <motion.div

@@ -2,14 +2,104 @@
 @import "highlight.js/styles/github-dark.css";
 @plugin "@tailwindcss/typography";
 
+/* ─── Accent color themes ──────────────────────────────────────────────────
+   Set the [data-theme] attribute on <html> (via siteMetadata.theme) to pick
+   one of the available themes. The default (blue) is defined on :root so it
+   works even when no data-theme attribute is present.
+   ─────────────────────────────────────────────────────────────────────── */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Default theme: blue */
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
 }
 
 .dark {
   --background: #171717;
   --foreground: #ffffff;
+}
+
+[data-theme="blue"] {
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+}
+
+[data-theme="purple"] {
+  --accent-400: #c084fc;
+  --accent-500: #a855f7;
+  --accent-600: #9333ea;
+  --accent-700: #7e22ce;
+}
+
+[data-theme="green"] {
+  --accent-400: #4ade80;
+  --accent-500: #22c55e;
+  --accent-600: #16a34a;
+  --accent-700: #15803d;
+}
+
+[data-theme="orange"] {
+  --accent-400: #fb923c;
+  --accent-500: #f97316;
+  --accent-600: #ea580c;
+  --accent-700: #c2410c;
+}
+
+[data-theme="rose"] {
+  --accent-400: #fb7185;
+  --accent-500: #f43f5e;
+  --accent-600: #e11d48;
+  --accent-700: #be123c;
+}
+
+[data-theme="teal"] {
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+}
+
+[data-theme="indigo"] {
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+}
+
+[data-theme="amber"] {
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+}
+
+[data-theme="cyan"] {
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-700: #0e7490;
+}
+
+[data-theme="violet"] {
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+}
+
+/* Expose accent variables as Tailwind utility colors (text-accent-*, etc.) */
+@theme inline {
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

@@ -39,7 +39,7 @@ export default function Breadcrumbs() {
       <Link
         href="/"
         className={cn(
-          "hover:text-blue-500 dark:hover:text-blue-400 font-semibold",
+          "hover:text-accent-500 dark:hover:text-accent-400 font-semibold",
           "transition-all duration-200 hover:scale-105 active:scale-95"
         )}
       >
@@ -62,9 +62,9 @@ export default function Breadcrumbs() {
                   href={href}
                   className={cn(
                     "text-sm font-medium text-black dark:text-white",
-                    "hover:text-blue-500 dark:hover:text-blue-400",
+                    "hover:text-accent-500 dark:hover:text-accent-400",
                     "transition-all duration-200 hover:underline",
-                    "underline-offset-2 decoration-blue-500/50"
+                    "underline-offset-2 decoration-accent-500/50"
                   )}
                 >
                   {label}

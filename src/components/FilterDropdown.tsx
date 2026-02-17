@@ -68,7 +68,7 @@ export default function FilterDropdown({
           "hover:border-gray-400 dark:hover:border-gray-600",
           "shadow-sm hover:shadow-md transition-all duration-200 active:scale-98",
           "text-sm font-medium text-gray-800 dark:text-gray-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
           "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
         )}
       >
@@ -85,7 +85,7 @@ export default function FilterDropdown({
         {resultCount > 0 && (
           <span
             className={cn(
-              "absolute -top-2 -right-2 bg-blue-600 dark:bg-blue-500 text-white",
+              "absolute -top-2 -right-2 bg-accent-600 dark:bg-accent-500 text-white",
               "text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center",
               "shadow-md border border-white dark:border-black"
             )}
@@ -131,14 +131,14 @@ export default function FilterDropdown({
                     <span
                       className={cn(
                         "block w-full h-full rounded border border-gray-400 dark:border-gray-500",
-                        "peer-checked:bg-blue-600 peer-checked:border-blue-600",
-                        "peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-1",
+                        "peer-checked:bg-accent-600 peer-checked:border-accent-600",
+                        "peer-focus-visible:ring-2 peer-focus-visible:ring-accent-500 peer-focus-visible:ring-offset-1",
                         "transition-all duration-200"
                       )}
                     ></span>
                     <FaCheck className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none" />
                   </span>
-                  <span className="text-gray-800 dark:text-gray-200 text-sm font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <span className="text-gray-800 dark:text-gray-200 text-sm font-medium group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
                     {name}{" "}
                     <span className="text-gray-500 dark:text-gray-400 font-normal">({count})</span>
                   </span>
@@ -150,10 +150,10 @@ export default function FilterDropdown({
                 onClick={handleApply}
                 className={cn(
                   "px-4 py-2 rounded-lg cursor-pointer text-sm font-medium",
-                  "bg-blue-600 dark:bg-blue-500 text-white",
-                  "hover:bg-blue-700 dark:hover:bg-blue-600",
+                  "bg-accent-600 dark:bg-accent-500 text-white",
+                  "hover:bg-accent-700 dark:hover:bg-accent-600",
                   "shadow-sm hover:shadow-md transition-all duration-200 active:scale-95",
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
                   "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                 )}
               >

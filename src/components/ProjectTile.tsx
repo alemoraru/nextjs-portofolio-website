@@ -52,11 +52,11 @@ export default function ProjectTile({
           "group relative overflow-hidden rounded-lg h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
           "bg-white dark:bg-gray-900",
-          "shadow-sm hover:shadow-2xl hover:shadow-blue-500/20",
-          "hover:border-blue-500 dark:hover:border-blue-500",
+          "shadow-sm hover:shadow-2xl hover:shadow-accent-500/20",
+          "hover:border-accent-500 dark:hover:border-accent-500",
           "transition-all duration-200",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black"
         )}
       >
@@ -79,7 +79,7 @@ export default function ProjectTile({
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
             className={cn(
-              "absolute inset-0 bg-linear-to-t from-blue-600/70 via-blue-500/70 to-transparent",
+              "absolute inset-0 bg-linear-to-t from-accent-600/70 via-accent-500/70 to-transparent",
               "flex flex-col items-center justify-center gap-2 p-4"
             )}
           >
@@ -108,7 +108,7 @@ export default function ProjectTile({
             <h3
               className={cn(
                 "text-lg font-bold text-gray-900 dark:text-white",
-                "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+                "group-hover:text-accent-600 dark:group-hover:text-accent-400",
                 "transition-colors duration-200 text-center"
               )}
             >

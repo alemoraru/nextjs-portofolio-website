@@ -33,13 +33,13 @@ export default function NavigationMenu() {
         {/* Animated active indicator as the border only */}
         <div
           className="absolute top-0 left-0 h-full transition-all duration-300 ease-in-out pointer-events-none z-0 flex
-                     bg-blue-50/50 dark:bg-blue-950/30"
+                     bg-accent-500/10 dark:bg-accent-500/10"
           style={{
             width: `calc((100% - ${navItems.length - 1} * 0.120rem) / ${navItems.length})`,
             transform: `translateX(calc(${activeIndex} * (100% + 0.125rem)))`,
-            border: "2px solid #3B82F6",
+            border: "2px solid var(--accent-500)",
             borderRadius: "9999px",
-            boxShadow: "0 2 12px rgba(59, 130, 246, 0.3)",
+            boxShadow: "0 2 12px color-mix(in srgb, var(--accent-500) 30%, transparent)",
           }}
         ></div>
         {navItems.map(({ name, path }, idx) => {
@@ -49,8 +49,8 @@ export default function NavigationMenu() {
               <Link
                 href={path}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative flex items-center justify-center px-3 py-1.5 rounded-full text-[15px] font-medium text-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black min-w-[72px] text-ellipsis whitespace-nowrap overflow-hidden select-none active:scale-95
-                                    ${isActive ? "text-blue-600 dark:text-blue-400 font-semibold" : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800/50"}
+                className={`relative flex items-center justify-center px-3 py-1.5 rounded-full text-[15px] font-medium text-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black min-w-[72px] text-ellipsis whitespace-nowrap overflow-hidden select-none active:scale-95
+                                    ${isActive ? "text-accent-600 dark:text-accent-400 font-semibold" : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800/50"}
                                 `}
                 tabIndex={0}
               >

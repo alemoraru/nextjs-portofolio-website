@@ -30,7 +30,7 @@ export default function ActiveFilterChips({
         <span
           key={filter}
           className={cn(
-            "flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+            "flex items-center bg-accent-500/15 text-accent-600 dark:bg-accent-500/20 dark:text-accent-400",
             "px-3 py-1 rounded-full text-xs md:text-sm font-medium shadow-sm"
           )}
         >
@@ -38,7 +38,7 @@ export default function ActiveFilterChips({
           <button
             onClick={() => onRemove(filter)}
             aria-label={`Remove filter ${filter}`}
-            className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none cursor-pointer flex items-center"
+            className="ml-2 text-accent-500 hover:text-accent-600 focus:outline-none cursor-pointer flex items-center"
             tabIndex={0}
           >
             <FaTimes className="w-4 h-4 md:w-4 md:h-4" />

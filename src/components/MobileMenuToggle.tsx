@@ -23,7 +23,7 @@ export default function MobileMenuToggle({
         "hover:border-gray-400 dark:hover:border-gray-600",
         "transition-all duration-200 cursor-pointer",
         "active:scale-95",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
         "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black",
         "shadow-sm hover:shadow-md"
       )}

@@ -1,3 +1,4 @@
+import type { Theme } from "@/lib/types"
 import type { Metadata } from "next"
 
 /**
@@ -5,6 +6,13 @@ import type { Metadata } from "next"
  * Customize this file with your own information for SEO and social media sharing
  */
 export const siteMetadata = {
+  /**
+   * Accent color theme for the portfolio.
+   * Options: "blue" | "purple" | "green" | "orange" | "rose" | "teal" | "indigo" | "amber" | "cyan" | "violet"
+   * The chosen theme controls the accent color used across all components.
+   */
+  theme: "amber" as Theme,
+
   /**
    * Site title (shown in browser tabs and search results)
    */

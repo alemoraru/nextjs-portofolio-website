@@ -35,7 +35,7 @@ export default function NotFound() {
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, duration: 0.6 }}
-        className="text-6xl md:text-8xl font-extrabold text-blue-600 dark:text-blue-500 mb-4 select-none"
+        className="text-6xl md:text-8xl font-extrabold text-accent-600 dark:text-accent-500 mb-4 select-none"
       >
         404
       </motion.div>
@@ -60,7 +60,7 @@ export default function NotFound() {
           "shadow-sm"
         )}
       >
-        <span className="inline-block font-mono text-sm md:text-base text-blue-600 dark:text-blue-400">
+        <span className="inline-block font-mono text-sm md:text-base text-accent-600 dark:text-accent-400">
           $ {randomLine}
         </span>
       </motion.div>
@@ -74,12 +74,12 @@ export default function NotFound() {
           href="/"
           className={cn(
             "group inline-flex items-center gap-2 px-6 py-2 rounded-lg",
-            "bg-blue-600 dark:bg-blue-500 text-white font-semibold",
-            "hover:bg-blue-700 dark:hover:bg-blue-600",
+            "bg-accent-600 dark:bg-accent-500 text-white font-semibold",
+            "hover:bg-accent-700 dark:hover:bg-accent-600",
             "transition-all duration-200 shadow-md hover:shadow-lg",
             "active:scale-95",
             "focus-visible:outline-none focus-visible:ring-2",
-            "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+            "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
             "dark:focus-visible:ring-offset-black"
           )}
         >

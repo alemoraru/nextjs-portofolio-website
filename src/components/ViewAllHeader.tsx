@@ -24,10 +24,10 @@ export default function ViewAllHeader({ title, pageUrl, itemCount }: ViewAllButt
         href={pageUrl}
         className={cn(
           "group flex items-center gap-1.5",
-          "text-sm font-semibold text-blue-600 dark:text-blue-400",
+          "text-sm font-semibold text-accent-600 dark:text-accent-400",
           "hover:gap-2.5 transition-all duration-200",
           "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black rounded-sm"
         )}
       >
@@ -35,9 +35,9 @@ export default function ViewAllHeader({ title, pageUrl, itemCount }: ViewAllButt
         <span
           className={cn(
             "inline-flex items-center justify-center min-w-5 h-5 px-1.5",
-            "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300",
+            "bg-accent-500/15 dark:bg-accent-500/15 text-accent-600 dark:text-accent-400",
             "rounded text-xs font-bold",
-            "group-hover:bg-blue-200 dark:group-hover:bg-blue-900",
+            "group-hover:bg-accent-500/25 dark:group-hover:bg-accent-500/25",
             "transition-colors duration-200"
           )}
         >
