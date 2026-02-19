@@ -38,6 +38,24 @@ point for your own personal website, or as a reference for doing the same thing 
 
 ---
 
+## 💎 Key Features
+
+- Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
+- MDX support for blog posts, projects, and work items
+- Syntax highlighting for code blocks in MDX files
+- Light/dark mode toggle
+- Responsive design for mobile and desktop
+- SEO-friendly structure and metadata
+- SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
+- Similar blog posts recommendations
+- Blog post categories pages
+- LLMs.txt route automatically generated from content metadata to help agents/crawlers discover your content
+- RSS.xml feed automatically generated from the blog posts available on the site
+- Easy customization through a centralized configuration file (`src/data/metadata.ts` and `src/data/content.ts`) for all
+  site content and appearance settings
+
+---
+
 ## 🧱 Project Structure
 
 The site is organized around the following main routes/pages:
@@ -168,18 +186,6 @@ That's it! 🎉 The template automatically uses your configuration and content t
 components or understand the codebase!
 
 ---
-
-## 💎 Key Features
-
-- Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
-- MDX support for blog posts, projects, and work items
-- Syntax highlighting for code blocks in MDX files
-- Light/dark mode toggle
-- Responsive design for mobile and desktop
-- SEO-friendly structure and metadata
-- SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
-- Similar blog posts recommendations
-- Blog post categories pages
 
 ## 🧭 Roadmap
 
