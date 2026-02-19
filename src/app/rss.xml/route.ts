@@ -8,7 +8,7 @@ import { escapeXml } from "@/lib/utils"
  * This route generates an RSS 2.0 XML feed from all blog posts,
  * allowing readers to subscribe via feed readers.
  */
-export async function GET() {
+export async function GET(request: Request) {
   const posts = await getAllBlogPosts()
 
   const items = posts
@@ -30,12 +30,13 @@ ${categories || ""}
     .join("\n")
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(siteMetadata.title)}</title>
     <link>${siteMetadata.siteUrl}</link>
     <description>${escapeXml(siteMetadata.description)}</description>
     <language>en</language>
+    <atom:link href="${new URL("/rss.xml", request.url).href}" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>
 </rss>`
