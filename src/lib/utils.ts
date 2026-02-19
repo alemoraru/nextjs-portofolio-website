@@ -93,6 +93,26 @@ export function calculateDuration(start: string, end: string): string {
  * @param techName - The technology name to normalize.
  * @returns The normalized technology name.
  */
+/**
+ * Escapes special XML characters in a string.
+ * @param str - The string to escape.
+ * @return The escaped string with special XML characters replaced by their corresponding entities.
+ */
+export function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
+}
+
+/**
+ * Normalizes a technology name by converting it to lowercase, replacing spaces and special characters with hyphens,
+ * and removing any non-alphanumeric characters except hyphens.
+ * @param techName - The technology name to normalize.
+ * @returns The normalized technology name.
+ */
 export function normalizeTechName(techName: string): string {
   return techName
     .toLowerCase()
