@@ -1,4 +1,4 @@
-import HomeContent from "@/components/content/HomeContent"
+import HomeContent from "@/components/home/HomeContent"
 import { getAllBlogPosts, getAllProjects, getAllWorkItems } from "@/lib/mdx"
 
 /**

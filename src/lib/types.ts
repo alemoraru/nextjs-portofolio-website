@@ -12,6 +12,7 @@ export interface BlogPostProps {
   summary: string
   date: string
   tags?: string[]
+  readingTime?: number
 }
 
 /**
@@ -35,6 +36,10 @@ export interface ProjectProps {
   startDate: string
   endDate: string
   techStack: string[]
+  teamSize?: number
+  role?: string
+  githubUrl?: string
+  paperUrl?: string
 }
 
 /**

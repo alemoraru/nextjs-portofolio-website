@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { FaRegCalendarAlt } from "react-icons/fa"
+import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
 import BlogTag from "@/components/BlogTag"
 import { BlogPostProps } from "@/lib/types"
 import { cn } from "@/lib/utils"
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
  */
-export default function BlogPost({ slug, title, summary, date, tags }: BlogPostProps) {
+export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
   return (
     <Link href={`/blog/${slug}`} className="block h-full">
       <motion.div
@@ -51,17 +51,28 @@ export default function BlogPost({ slug, title, summary, date, tags }: BlogPostP
           {title}
         </h3>
 
-        {/* Date */}
+        {/* Date and Reading Time */}
         {date && (
-          <div className="flex items-center gap-2 mt-2 text-sm text-gray-600 dark:text-gray-400">
-            <FaRegCalendarAlt className="w-3.5 h-3.5" />
-            <time dateTime={date}>
-              {new Date(date).toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+          <div className="flex items-center gap-3 mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <span className="flex items-center gap-1.5">
+              <FaRegCalendarAlt className="w-3.5 h-3.5" />
+              <time dateTime={date}>
+                {new Date(date).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </span>
+            {readingTime && (
+              <>
+                <span>·</span>
+                <span className="flex items-center gap-1.5">
+                  <FaBookOpen className="w-3.5 h-3.5" />
+                  {readingTime} min read
+                </span>
+              </>
+            )}
           </div>
         )}
 
