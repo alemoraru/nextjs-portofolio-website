@@ -12,6 +12,7 @@ export interface BlogPostProps {
   summary: string
   date: string
   tags?: string[]
+  readingTime?: number
 }
 
 /**

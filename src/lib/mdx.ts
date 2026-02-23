@@ -21,7 +21,7 @@ import {
 async function loadMDXDirectory<TFrontmatter, TProps>(
   dirPath: string,
   validate: (frontmatter: unknown, filename: string) => asserts frontmatter is TFrontmatter,
-  map: (slug: string, frontmatter: TFrontmatter) => TProps,
+  map: (slug: string, frontmatter: TFrontmatter, fileContent: string) => TProps,
   sort?: (a: TProps, b: TProps) => number
 ): Promise<TProps[]> {
   const files = fs.readdirSync(dirPath)
@@ -40,7 +40,7 @@ async function loadMDXDirectory<TFrontmatter, TProps>(
         })
 
         validate(frontmatter, file)
-        return map(slug, frontmatter)
+        return map(slug, frontmatter, fileContent)
       } catch (error) {
         throw new Error(
           `Failed to parse ${file}: ${error instanceof Error ? error.message : String(error)}`
@@ -110,12 +110,13 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
   cachedPosts = await loadMDXDirectory<BlogPostFrontmatter, BlogPostProps>(
     blogDir,
     validateBlogFrontmatter,
-    (slug, fm) => ({
+    (slug, fm, fileContent) => ({
       slug,
       title: fm.title,
       summary: fm.summary,
       date: fm.date,
       tags: fm.tags?.map(tag => tag.toLowerCase()),
+      readingTime: Math.ceil(fileContent.trim().split(/\s+/).length / 100),
     }),
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
