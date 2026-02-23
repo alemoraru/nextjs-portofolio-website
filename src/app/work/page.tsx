@@ -8,12 +8,20 @@ import WorkNotFound from "./WorkNotFound"
 const WORK_PAGE_SIZE = paginationConfig.projectsPerPage
 
 /**
- * Generate metadata for SEO
+ * Generate metadata for SEO, including a canonical URL that reflects the current page number.
+ * Sort and filter params are excluded from the canonical to avoid duplicate-content issues.
  */
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(props: {
+  searchParams?: Promise<{ page?: string }>
+}): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const page = Number(searchParams?.page) || 1
+  const canonical = page > 1 ? `/work?page=${page}` : "/work"
+
   return {
     title: `Work | ${homeIntroConfig.name}`,
     description: "Explore my professional work experience and career journey.",
+    alternates: { canonical },
     openGraph: {
       title: `Work | ${homeIntroConfig.name}`,
       description: "Explore my professional work experience and career journey.",

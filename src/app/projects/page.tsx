@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
@@ -7,12 +8,20 @@ import ProjectsNotFound from "./ProjectsNotFound"
 const PROJECTS_PAGE_SIZE = paginationConfig.projectsPerPage
 
 /**
- * Generate metadata for SEO
+ * Generate metadata for SEO, including a canonical URL that reflects the current page number.
+ * Sort and filter params are excluded from the canonical to avoid duplicate-content issues.
  */
-export async function generateMetadata() {
+export async function generateMetadata(props: {
+  searchParams?: Promise<{ page?: string }>
+}): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const page = Number(searchParams?.page) || 1
+  const canonical = page > 1 ? `/projects?page=${page}` : "/projects"
+
   return {
     title: `Projects | ${homeIntroConfig.name}`,
     description: "Browse my portfolio of projects, side projects, and technical work.",
+    alternates: { canonical },
     openGraph: {
       title: `Projects | ${homeIntroConfig.name}`,
       description: "Browse my portfolio of projects, side projects, and technical work.",

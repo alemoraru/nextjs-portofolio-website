@@ -8,12 +8,20 @@ import BlogNotFound from "./BlogNotFound"
 const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
 
 /**
- * Generate metadata for SEO
+ * Generate metadata for SEO, including a canonical URL that reflects the current page number.
+ * Sort and filter params are excluded from the canonical to avoid duplicate-content issues.
  */
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(props: {
+  searchParams?: Promise<{ page?: string }>
+}): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const page = Number(searchParams?.page) || 1
+  const canonical = page > 1 ? `/blog?page=${page}` : "/blog"
+
   return {
     title: `Blog | ${homeIntroConfig.name}`,
     description: "Read my latest blog posts about software development, technology, and more.",
+    alternates: { canonical },
     openGraph: {
       title: `Blog | ${homeIntroConfig.name}`,
       description: "Read my latest blog posts about software development, technology, and more.",

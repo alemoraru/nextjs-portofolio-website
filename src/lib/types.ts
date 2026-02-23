@@ -35,6 +35,10 @@ export interface ProjectProps {
   startDate: string
   endDate: string
   techStack: string[]
+  teamSize?: number
+  role?: string
+  githubUrl?: string
+  paperUrl?: string
 }
 
 /**
