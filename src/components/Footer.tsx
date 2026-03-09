@@ -54,7 +54,7 @@ export default function Footer() {
       className={cn(
         "relative mt-6 py-6 text-center text-sm text-gray-600 dark:text-gray-400",
         "px-4 border-t border-gray-200 dark:border-gray-900",
-        "bg-zinc-50/80 dark:bg-black/80 backdrop-blur-sm",
+        "bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-sm",
         "before:content-[''] before:absolute before:top-0 before:left-0 before:right-0",
         "before:h-px before:bg-linear-to-r before:from-transparent",
         "before:via-gray-500/30 before:to-transparent"

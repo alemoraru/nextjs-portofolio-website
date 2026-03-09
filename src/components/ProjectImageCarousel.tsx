@@ -2,14 +2,9 @@
 
 import Image from "next/image"
 import React, { useCallback, useEffect, useState } from "react"
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel"
+import { cn } from "@/lib/utils"
 
 interface ProjectImageCarouselProps {
   images: { src: string; alt: string }[]
@@ -64,25 +59,56 @@ export default function ProjectImageCarousel({ images }: ProjectImageCarouselPro
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-2 md:left-4" />
-        <CarouselNext className="right-2 md:right-4" />
       </Carousel>
 
-      {/* Pill indicators */}
+      {/* Controls: prev button, pill indicators, next button */}
       {images.length > 1 && (
-        <div className="flex justify-center gap-2 mt-4">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => api?.scrollTo(index)}
-              className={`h-2 rounded-full transition-all ${
-                index === current
-                  ? "w-8 bg-accent-500"
-                  : "w-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+        <div className="flex items-center justify-center gap-3 mt-4">
+          <button
+            onClick={() => api?.scrollPrev()}
+            className={cn(
+              "flex items-center justify-center w-7 h-7 rounded-full cursor-pointer border",
+              "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600",
+              "dark:text-gray-300 hover:border-accent-500 hover:text-accent-500 transition-all"
+            )}
+            aria-label="Previous slide"
+          >
+            <FaChevronLeft className="w-3 h-3" />
+          </button>
+
+          {/* When fewer than 8 imgs, show pill indicators; otherwise show "current / total" */}
+          {images.length <= 8 ? (
+            <div className="flex items-center gap-2">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === current
+                      ? "w-8 bg-accent-500"
+                      : "size-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 cursor-pointer hover:scale-120"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <span className="text-sm tabular-nums text-gray-500 dark:text-gray-400 min-w-12 text-center">
+              {current + 1} / {images.length}
+            </span>
+          )}
+
+          <button
+            onClick={() => api?.scrollNext()}
+            className={cn(
+              "flex items-center justify-center w-7 h-7 rounded-full cursor-pointer border",
+              "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600",
+              "dark:text-gray-300 hover:border-accent-500 hover:text-accent-500 transition-all"
+            )}
+            aria-label="Next slide"
+          >
+            <FaChevronRight className="w-3 h-3" />
+          </button>
         </div>
       )}
     </div>
