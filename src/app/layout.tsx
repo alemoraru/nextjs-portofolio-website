@@ -55,6 +55,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body
         className={`antialiased flex flex-col min-h-screen transition-colors overscroll-none ${gabarito.className} ${gabarito.variable}`}
+        suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           {/* Dot Background Layer */}

@@ -160,8 +160,8 @@ export default function ProjectsClientUI({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {paginatedProjects.map(project => (
-              <ProjectTile key={project.slug} {...project} />
+            {paginatedProjects.map((project, index) => (
+              <ProjectTile key={project.slug} {...project} priority={index === 0} />
             ))}
           </motion.div>
         ) : (
