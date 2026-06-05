@@ -52,6 +52,7 @@ export default function ProjectImageCarousel({ images }: ProjectImageCarouselPro
                   src={image.src}
                   alt={image.alt}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-contain select-none"
                   priority={index === 0}
                 />

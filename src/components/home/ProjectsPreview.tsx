@@ -43,9 +43,9 @@ export default function ProjectsPreview({ projects }: ProjectsPreviewProps) {
         viewport={{ once: true, margin: "-50px" }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
       >
-        {items.map(proj => (
+        {items.map((proj, index) => (
           <motion.div key={proj.slug} variants={staggerItemVariants}>
-            <ProjectTile {...proj} />
+            <ProjectTile {...proj} priority={index === 0} />
           </motion.div>
         ))}
       </motion.div>

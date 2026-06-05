@@ -15,6 +15,7 @@ interface ProjectTileProps {
   techStack?: string[]
   startDate?: string
   endDate?: string
+  priority?: boolean
 }
 
 /**
@@ -30,6 +31,7 @@ export default function ProjectTile({
   techStack,
   startDate,
   endDate,
+  priority = false,
 }: ProjectTileProps) {
   return (
     <Link href={`/projects/${slug}`} className="block h-full">
@@ -66,7 +68,9 @@ export default function ProjectTile({
             src={image}
             alt={title}
             fill
-            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={priority}
+            loading={priority ? "eager" : "lazy"}
             className={cn(
               "object-cover transition-transform duration-300 group-hover:scale-110",
               "rounded-b-lg border-b border-gray-300 dark:border-gray-700"
