@@ -38,6 +38,23 @@ point for your own personal website, or as a reference for doing the same thing 
 
 ---
 
+## 📋 Table of Contents
+
+- [💎 Key Features](#-key-features)
+- [🧱 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [🎨 Customization](#-customization)
+- [🖼️ Open Graph Images](#-open-graph-images)
+- [🧭 Roadmap](#-roadmap)
+- [📚 Learn More](#-learn-more)
+- [▲ Deployment](#-deployment)
+- [🛠 Tech Stack](#-tech-stack)
+- [💎 Code Quality & Guidelines](#-code-quality--guidelines)
+- [🪪 License](#-license)
+- [💬 Feedback & Contributions](#-feedback--contributions)
+
+---
+
 ## 💎 Key Features
 
 - Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
@@ -51,6 +68,7 @@ point for your own personal website, or as a reference for doing the same thing 
 - Blog post categories pages
 - LLMs.txt route automatically generated from content metadata to help agents/crawlers discover your content
 - RSS.xml feed automatically generated from the blog posts available on the site
+- Dynamic Open Graph image generation for all blog posts, work items, projects, and tag pages
 - Easy customization through a centralized configuration file (`src/data/metadata.ts` and `src/data/content.ts`) for all
   site content and appearance settings
 
@@ -184,6 +202,56 @@ and renders all content from these files!
 
 That's it! 🎉 The template automatically uses your configuration and content throughout the site. No need to modify
 components or understand the codebase!
+
+---
+
+## 🖼️ Open Graph Images
+
+Dynamic Open Graph images are automatically generated for every content page using Next.js's built-in `ImageResponse`
+API. When someone shares a link on social media or a messaging app, they get a branded preview image instead of a blank
+card.
+
+| Blog post                                       | Work item                                       | Project                                               |
+|-------------------------------------------------|-------------------------------------------------|-------------------------------------------------------|
+| ![Blog OG example](public/og-examples/blog.png) | ![Work OG example](public/og-examples/work.png) | ![Project OG example](public/og-examples/project.png) |
+
+| Blog tag                                      | |
+|-----------------------------------------------|-|
+| ![Tag OG example](public/og-examples/tag.png) | |
+
+### Covered routes
+
+| Route              | Image content                                          |
+|--------------------|--------------------------------------------------------|
+| `/blog/[slug]`     | Post title, summary, tags, and date                    |
+| `/blog/tag/[tag]`  | Tag name, post count, and latest 3 post titles         |
+| `/work/[slug]`     | Company name, role, description, period, and locations |
+| `/projects/[slug]` | Project title, description, tech stack, and duration   |
+
+The homepage uses the static image at `/public/og-image.png` (configured via `siteMetadata.ogImage` in
+`src/data/metadata.ts`).
+
+### Theme
+
+All generated images pick up the accent color from `siteMetadata.theme` in `src/data/metadata.ts`. Changing the theme
+there updates the accent color across the entire site _and_ in all OG images. No other changes needed. The available
+themes are: `blue`, `purple`, `green`, `orange`, `rose`, `teal`, `indigo`, `amber`, `cyan`, and `violet`.
+
+### When are images generated?
+
+Images are generated at **build time** and cached. Since all content comes from MDX files on disk, a rebuild is always
+required to publish new content anyway, so the images are always up to date after each deployment.
+
+### Local preview
+
+With the dev server running, you can view any generated image directly in a browser:
+
+```
+http://localhost:3000/blog/your-post-slug/opengraph-image
+http://localhost:3000/blog/tag/typescript/opengraph-image
+http://localhost:3000/work/your-company-slug/opengraph-image
+http://localhost:3000/projects/your-project-slug/opengraph-image
+```
 
 ---
 
