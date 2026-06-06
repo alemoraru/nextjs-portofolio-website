@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
+import { filterBlogPosts, paginateItems, sortBlogPosts } from "@/lib/utils"
 import BlogClientUI from "./BlogClientUI"
 import BlogNotFound from "./BlogNotFound"
 
@@ -100,29 +101,18 @@ export default async function BlogPage(props: {
     .sort((a, b) => a.tag.localeCompare(b.tag))
 
   // Filter and sort posts
-  const filteredPosts = posts
-    .filter(
-      post =>
-        selectedTags.length === 0 ||
-        (post.tags && selectedTags.some(tag => post.tags && post.tags.includes(tag)))
-    )
-    .sort((a, b) => {
-      const dateA = new Date(a.date || "").getTime()
-      const dateB = new Date(b.date || "").getTime()
-      return sortOrder === "asc" ? dateA - dateB : dateB - dateA
-    })
+  const filteredPosts = sortBlogPosts(filterBlogPosts(posts, selectedTags), sortOrder)
 
-  // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PAGE_SIZE)
+  const { items: paginatedPosts, totalPages } = paginateItems(
+    filteredPosts,
+    currentPage,
+    POSTS_PAGE_SIZE
+  )
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
     return <BlogNotFound />
   }
-
-  // Paginate
-  const start = (currentPage - 1) * POSTS_PAGE_SIZE
-  const paginatedPosts = filteredPosts.slice(start, start + POSTS_PAGE_SIZE)
 
   return (
     <BlogClientUI

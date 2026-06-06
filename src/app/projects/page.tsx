@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
+import { filterProjects, paginateItems, sortProjects } from "@/lib/utils"
 import ProjectsClientUI from "./ProjectsClientUI"
 import ProjectsNotFound from "./ProjectsNotFound"
 
@@ -100,48 +101,18 @@ export default async function ProjectsPage(props: {
     .sort((a, b) => a.tech.localeCompare(b.tech))
 
   // Filter and sort projects
-  const filteredProjects = projects
-    .filter(
-      project =>
-        selectedTechStack.length === 0 ||
-        (project.techStack && selectedTechStack.some(tech => project.techStack.includes(tech)))
-    )
-    .sort((a, b) => {
-      if (sortOrder === "newest") {
-        // Items with "Present" should be at the top
-        const aIsPresent = a.endDate === "Present"
-        const bIsPresent = b.endDate === "Present"
+  const filteredProjects = sortProjects(filterProjects(projects, selectedTechStack), sortOrder)
 
-        if (aIsPresent && !bIsPresent) return -1
-        if (!aIsPresent && bIsPresent) return 1
-
-        // If both are Present, sort by title
-        if (aIsPresent && bIsPresent) {
-          return a.title.localeCompare(b.title)
-        }
-
-        // Otherwise sort by end date (newest first)
-        const endDiff = new Date(b.endDate || "").getTime() - new Date(a.endDate || "").getTime()
-        if (endDiff !== 0) return endDiff
-
-        // If end dates are the same, sort by title
-        return a.title.localeCompare(b.title)
-      } else {
-        return new Date(a.startDate || "").getTime() - new Date(b.startDate || "").getTime()
-      }
-    })
-
-  // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PAGE_SIZE)
+  const { items: paginatedProjects, totalPages } = paginateItems(
+    filteredProjects,
+    currentPage,
+    PROJECTS_PAGE_SIZE
+  )
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
     return <ProjectsNotFound />
   }
-
-  // Paginate the filtered projects
-  const start = (currentPage - 1) * PROJECTS_PAGE_SIZE
-  const paginatedProjects = filteredProjects.slice(start, start + PROJECTS_PAGE_SIZE)
 
   return (
     <ProjectsClientUI

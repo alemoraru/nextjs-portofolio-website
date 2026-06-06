@@ -46,9 +46,10 @@ export const siteMetadata = {
   },
 
   /**
-   * Base URL of your website (used for canonical URLs and Open Graph)
+   * Base URL of your website (used for canonical URLs and Open Graph).
+   * Set NEXT_PUBLIC_SITE_URL in your environment (e.g. .env.local) to override the default.
    */
-  siteUrl: "https://nextjs-portofolio-website.vercel.app",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nextjs-portofolio-website.vercel.app",
 
   /**
    * Social media handles
@@ -95,7 +96,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     types: {
-      "application/rss+xml": "/feed.xml",
+      "application/rss+xml": "/rss.xml",
     },
   },
   openGraph: {

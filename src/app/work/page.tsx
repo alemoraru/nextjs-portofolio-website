@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
+import { filterWorkItems, paginateItems, sortWorkItems } from "@/lib/utils"
 import WorkClientUI from "./WorkClientUI"
 import WorkNotFound from "./WorkNotFound"
 
@@ -98,48 +99,18 @@ export default async function WorkPage(props: {
     .sort((a, b) => a.company.localeCompare(b.company))
 
   // Filter and sort work items
-  const filteredWorkItems = work
-    .filter(
-      workItem =>
-        selectedCompanies.length === 0 ||
-        (workItem.company && selectedCompanies.some(company => workItem.company === company))
-    )
-    .sort((a, b) => {
-      if (sortOrder === "newest") {
-        // Items with "Present" should be at the top
-        const aIsPresent = a.end === "Present"
-        const bIsPresent = b.end === "Present"
+  const filteredWorkItems = sortWorkItems(filterWorkItems(work, selectedCompanies), sortOrder)
 
-        if (aIsPresent && !bIsPresent) return -1
-        if (!aIsPresent && bIsPresent) return 1
-
-        // If both are Present, sort by company name
-        if (aIsPresent && bIsPresent) {
-          return a.company.localeCompare(b.company)
-        }
-
-        // Otherwise sort by end date (newest first)
-        const endDiff = new Date(b.end || "").getTime() - new Date(a.end || "").getTime()
-        if (endDiff !== 0) return endDiff
-
-        // If end dates are the same, sort by company name
-        return a.company.localeCompare(b.company)
-      } else {
-        return new Date(a.start || "").getTime() - new Date(b.start || "").getTime()
-      }
-    })
-
-  // Calculate total pages and clamp currentPage
-  const totalPages = Math.ceil(filteredWorkItems.length / WORK_PAGE_SIZE)
+  const { items: paginatedWorkItems, totalPages } = paginateItems(
+    filteredWorkItems,
+    currentPage,
+    WORK_PAGE_SIZE
+  )
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
     return <WorkNotFound />
   }
-
-  // Paginate
-  const start = (currentPage - 1) * WORK_PAGE_SIZE
-  const paginatedWorkItems = filteredWorkItems.slice(start, start + WORK_PAGE_SIZE)
 
   return (
     <WorkClientUI

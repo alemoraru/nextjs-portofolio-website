@@ -5,7 +5,8 @@ import BackToPageButton from "@/components/BackToPageButton"
 import BlogPost from "@/components/BlogPost"
 import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
-import { BlogPostProps, tagPageParams } from "@/lib/types"
+import { tagPageParams } from "@/lib/types"
+import { getClosestTagPosts } from "@/lib/utils"
 
 /**
  * Generate metadata for SEO
@@ -13,10 +14,12 @@ import { BlogPostProps, tagPageParams } from "@/lib/types"
 export async function generateMetadata({ params }: { params: tagPageParams }): Promise<Metadata> {
   const { tag } = await params
   const decodedTag = decodeURIComponent(tag)
+  const canonicalTag = decodedTag.toLowerCase()
 
   return {
     title: `Posts tagged "${decodedTag}" | ${homeIntroConfig.name}`,
     description: `Browse blog posts tagged with ${decodedTag}.`,
+    alternates: { canonical: `/blog/tag/${canonicalTag}` },
     openGraph: {
       title: `Posts tagged "${decodedTag}" | ${homeIntroConfig.name}`,
       description: `Browse blog posts tagged with ${decodedTag}.`,
@@ -42,68 +45,6 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
   const filteredPosts = posts.filter(
     post => post.tags && post.tags.some(t => t.toLowerCase() === decodedTag.toLowerCase())
   )
-
-  /**
-   * Compute the Dice Coefficient similarity between two strings.
-   * @param a the first string
-   * @param b the second string
-   * @returns a similarity score between 0 and 1 (1 = identical, 0 = no similarity)
-   */
-  function diceCoefficient(a: string, b: string): number {
-    if (!a.length || !b.length) return 0
-    if (a === b) return 1
-    const bigrams = (str: string) => {
-      const s = str.toLowerCase()
-      const pairs = []
-      for (let i = 0; i < s.length - 1; i++) {
-        pairs.push(s.slice(i, i + 2))
-      }
-      return pairs
-    }
-    const pairsA = bigrams(a)
-    const pairsB = bigrams(b)
-    const setB = new Set(pairsB)
-    let matches = 0
-    for (const pair of pairsA) {
-      if (setB.has(pair)) matches++
-    }
-    return (2 * matches) / (pairsA.length + pairsB.length)
-  }
-
-  /**
-   * Find posts with tags that are most similar to the target tag using Dice Coefficient.
-   * @param posts the list of blog posts to search
-   * @param targetTag the tag to compare against
-   * @param maxPosts the maximum number of similar posts to return
-   * @returns an array of posts with their best matching tag and similarity score
-   */
-  function getClosestTagPosts(
-    posts: BlogPostProps[],
-    targetTag: string,
-    maxPosts: number = 3
-  ): Array<{
-    post: BlogPostProps
-    bestScore: number
-    bestTag: string
-  }> {
-    return posts
-      .map((post: BlogPostProps) => {
-        const tags: string[] = post.tags ?? []
-        let bestScore = 0
-        let bestTag = ""
-        for (const tag of tags) {
-          const score = diceCoefficient(tag, targetTag)
-          if (score > bestScore) {
-            bestScore = score
-            bestTag = tag
-          }
-        }
-        return { post, bestScore, bestTag }
-      })
-      .filter(({ bestScore }) => bestScore > 0)
-      .sort((a, b) => b.bestScore - a.bestScore)
-      .slice(0, maxPosts)
-  }
 
   // For suggestions: find posts with tags closest to the requested tag
   const closestTagPosts = getClosestTagPosts(
