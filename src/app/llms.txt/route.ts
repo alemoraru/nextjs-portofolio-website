@@ -1,45 +1,66 @@
 import { NextResponse } from "next/server"
-import { paginationConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
+import { getAllBlogPosts, getAllProjects, getAllWorkItems } from "@/lib/mdx"
 
 /**
  * API route handler for GET requests to "/llms.txt".
  * This route generates a plain text file containing site metadata and route information.
  * It is intended for use by language models (LLMs) to understand the structure and content of the site.
  */
-export function GET() {
-  const { blogPostsPerPage, workItemsPerPage, projectsPerPage } = paginationConfig
+export async function GET() {
+  const base = siteMetadata.siteUrl
+  const [posts, projects, work] = await Promise.all([
+    getAllBlogPosts(),
+    getAllProjects(),
+    getAllWorkItems(),
+  ])
+
+  const blogSection = posts
+    .map(p => `- [${p.title}](${base}/blog/${p.slug}): ${p.summary}`)
+    .join("\n")
+
+  const projectsSection = projects
+    .map(p => {
+      const period =
+        p.endDate === "Present" ? `${p.startDate} – Present` : `${p.startDate} – ${p.endDate}`
+      const tech = p.techStack.join(", ")
+      return `- [${p.title}](${base}/projects/${p.slug}) (${period}, ${tech}): ${p.description}`
+    })
+    .join("\n")
+
+  const workSection = work
+    .map(w => {
+      const period = `${w.start} – ${w.end}`
+      return `- [${w.company}](${base}/work/${w.slug}): ${w.title}, ${period}. ${w.description}`
+    })
+    .join("\n")
 
   const content = `# ${siteMetadata.title}
 
-${siteMetadata.description}
+> ${siteMetadata.description}
 
-## Keywords
+## Blog Posts
 
-${siteMetadata.keywords.join(", ")}
+${blogSection}
 
-## URL
+## Projects
 
-${siteMetadata.siteUrl}
+${projectsSection}
 
-## Routes
+## Work Experience
 
-${siteMetadata.siteUrl}
-  The home page. Provides an introduction to the author and previews of recent blog posts, projects, and work experience.
+${workSection}
 
-${siteMetadata.siteUrl}/blog
-  A list of blog posts written by the author. Shows ${blogPostsPerPage} posts per page. Supports pagination via ?page=n.
+## Site
 
-${siteMetadata.siteUrl}/projects
-  A showcase of personal and professional projects. Shows ${projectsPerPage} projects per page. Supports pagination via ?page=n.
-
-${siteMetadata.siteUrl}/work
-  A timeline of work experience and employment history. Shows ${workItemsPerPage} items per page. Supports pagination via ?page=n.
+- [Home](${base}): Introduction and previews of recent activity.
+- [Blog](${base}/blog): All blog posts.
+- [Projects](${base}/projects): All projects.
+- [Work](${base}/work): Full work history.
+- [RSS Feed](${base}/rss.xml): Subscribe to new blog posts.
 `
 
   return new NextResponse(content, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-    },
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
   })
 }
