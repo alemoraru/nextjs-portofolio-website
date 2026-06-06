@@ -11,13 +11,16 @@ import { navItems } from "@/lib/constants"
  */
 export default function NavigationMenu() {
   const pathname = usePathname()
-  const [activeIndex, setActiveIndex] = useState(0)
+
+  const getActiveIndex = (p: string) =>
+    navItems.findIndex(({ path }) =>
+      path === "/" ? p === "/" : p === path || p.startsWith(path + "/")
+    )
+
+  const [activeIndex, setActiveIndex] = useState(() => getActiveIndex(pathname))
 
   useEffect(() => {
-    const index = navItems.findIndex(({ path }) =>
-      path === "/" ? pathname === "/" : pathname.startsWith(path)
-    )
-    setActiveIndex(index !== -1 ? index : 0)
+    setActiveIndex(getActiveIndex(pathname))
   }, [pathname])
 
   return (
@@ -40,6 +43,7 @@ export default function NavigationMenu() {
             border: "2px solid var(--accent-500)",
             borderRadius: "9999px",
             boxShadow: "0 2 12px color-mix(in srgb, var(--accent-500) 30%, transparent)",
+            opacity: activeIndex === -1 ? 0 : 1,
           }}
         ></div>
         {navItems.map(({ name, path }, idx) => {
