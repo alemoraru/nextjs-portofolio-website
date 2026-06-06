@@ -20,17 +20,7 @@ import TableOfContents from "@/components/TableOfContents"
 import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { pageParams } from "@/lib/types"
-
-/**
- * Calculate the reading time of a text based on the number of words.
- * Assumes an average reading speed of 200 words per minute.
- * @param text The text to calculate the reading time for.
- */
-function getReadingTime(text: string): number {
-  const wordsPerMinute = 100
-  const numberOfWords = text.trim().split(/\s+/).length
-  return Math.ceil(numberOfWords / wordsPerMinute)
-}
+import { getReadingTime } from "@/lib/utils"
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.

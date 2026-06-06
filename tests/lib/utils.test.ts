@@ -1,5 +1,21 @@
 import { describe, it, expect } from "vitest"
-import { cn, formatDuration, calculateDuration, normalizeTechName } from "@/lib/utils"
+import {
+  cn,
+  formatDuration,
+  calculateDuration,
+  normalizeTechName,
+  getReadingTime,
+  diceCoefficient,
+  getClosestTagPosts,
+  filterBlogPosts,
+  sortBlogPosts,
+  filterWorkItems,
+  sortWorkItems,
+  filterProjects,
+  sortProjects,
+  paginateItems,
+} from "@/lib/utils"
+import type { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 
 describe("cn", () => {
   it("should merge class names", () => {
@@ -315,5 +331,354 @@ describe("normalizeTechName", () => {
       expect(normalizeTechName("Express.js")).toBe("express-js")
       expect(normalizeTechName("FastAPI")).toBe("fastapi")
     })
+  })
+})
+
+describe("getReadingTime", () => {
+  it("should return 1 for a very short text", () => {
+    expect(getReadingTime("hello world")).toBe(1)
+  })
+
+  it("should round up to the nearest minute", () => {
+    // 101 words → Math.ceil(101/100) = 2
+    const text = Array(101).fill("word").join(" ")
+    expect(getReadingTime(text)).toBe(2)
+  })
+
+  it("should trim leading/trailing whitespace before counting", () => {
+    const text = "  " + Array(100).fill("word").join(" ") + "  "
+    expect(getReadingTime(text)).toBe(1)
+  })
+
+  it("should handle exactly 100 words as 1 minute", () => {
+    const text = Array(100).fill("word").join(" ")
+    expect(getReadingTime(text)).toBe(1)
+  })
+
+  it("should handle 200 words as 2 minutes", () => {
+    const text = Array(200).fill("word").join(" ")
+    expect(getReadingTime(text)).toBe(2)
+  })
+})
+
+describe("diceCoefficient", () => {
+  it("should return 1 for identical strings", () => {
+    expect(diceCoefficient("typescript", "typescript")).toBe(1)
+  })
+
+  it("should return 0 for empty strings", () => {
+    expect(diceCoefficient("", "react")).toBe(0)
+    expect(diceCoefficient("react", "")).toBe(0)
+    expect(diceCoefficient("", "")).toBe(0)
+  })
+
+  it("should return 0 for completely dissimilar strings", () => {
+    // No shared bigrams between "ab" and "cd"
+    expect(diceCoefficient("ab", "cd")).toBe(0)
+  })
+
+  it("should return a value between 0 and 1 for similar strings", () => {
+    const score = diceCoefficient("javascript", "typescript")
+    expect(score).toBeGreaterThan(0)
+    expect(score).toBeLessThan(1)
+  })
+
+  it("should be case-insensitive", () => {
+    expect(diceCoefficient("React", "react")).toBe(1)
+    expect(diceCoefficient("TypeScript", "typescript")).toBe(1)
+  })
+
+  it("similar tags should score higher than dissimilar tags", () => {
+    const scoreHigh = diceCoefficient("react", "reactjs")
+    const scoreLow = diceCoefficient("react", "python")
+    expect(scoreHigh).toBeGreaterThan(scoreLow)
+  })
+})
+
+describe("getClosestTagPosts", () => {
+  const posts: BlogPostProps[] = [
+    { slug: "a", title: "A", summary: "", date: "2024-01-01", tags: ["typescript"] },
+    { slug: "b", title: "B", summary: "", date: "2024-01-02", tags: ["javascript"] },
+    { slug: "c", title: "C", summary: "", date: "2024-01-03", tags: ["python"] },
+    { slug: "d", title: "D", summary: "", date: "2024-01-04", tags: [] },
+  ]
+
+  it("should return posts with the highest tag similarity", () => {
+    const results = getClosestTagPosts(posts, "typescrypt")
+    expect(results.length).toBeGreaterThan(0)
+    // "typescript" is the most similar to "typescrypt"
+    expect(results[0].bestTag).toBe("typescript")
+  })
+
+  it("should exclude posts with zero similarity", () => {
+    // Posts with no tags should not appear
+    const results = getClosestTagPosts(posts, "typescript")
+    expect(results.every(r => r.bestScore > 0)).toBe(true)
+  })
+
+  it("should respect the maxPosts limit", () => {
+    const results = getClosestTagPosts(posts, "script", 2)
+    expect(results.length).toBeLessThanOrEqual(2)
+  })
+
+  it("should sort results by descending similarity score", () => {
+    const results = getClosestTagPosts(posts, "typescript")
+    for (let i = 1; i < results.length; i++) {
+      expect(results[i - 1].bestScore).toBeGreaterThanOrEqual(results[i].bestScore)
+    }
+  })
+
+  it("should return empty array when no posts have any tags", () => {
+    const emptyPosts: BlogPostProps[] = [
+      { slug: "x", title: "X", summary: "", date: "2024-01-01", tags: [] },
+    ]
+    expect(getClosestTagPosts(emptyPosts, "typescript")).toEqual([])
+  })
+})
+
+describe("Blog helpers", () => {
+  const blogPosts: BlogPostProps[] = [
+    { slug: "a", title: "A", summary: "", date: "2024-03-01", tags: ["react", "typescript"] },
+    { slug: "b", title: "B", summary: "", date: "2024-01-01", tags: ["python"] },
+    { slug: "c", title: "C", summary: "", date: "2024-06-01", tags: ["react"] },
+    { slug: "d", title: "D", summary: "", date: "2023-12-01", tags: [] },
+  ]
+
+  describe("filterBlogPosts", () => {
+    it("should return all posts when no tags selected", () => {
+      expect(filterBlogPosts(blogPosts, [])).toHaveLength(4)
+    })
+
+    it("should filter posts that match any selected tag", () => {
+      const result = filterBlogPosts(blogPosts, ["react"])
+      expect(result.map(p => p.slug)).toEqual(["a", "c"])
+    })
+
+    it("should match posts with any of the selected tags (OR logic)", () => {
+      const result = filterBlogPosts(blogPosts, ["react", "python"])
+      expect(result.map(p => p.slug)).toEqual(["a", "b", "c"])
+    })
+
+    it("should return empty array when no posts match", () => {
+      expect(filterBlogPosts(blogPosts, ["golang"])).toHaveLength(0)
+    })
+
+    it("should not mutate the original array", () => {
+      const original = [...blogPosts]
+      filterBlogPosts(blogPosts, ["react"])
+      expect(blogPosts).toEqual(original)
+    })
+  })
+
+  describe("sortBlogPosts", () => {
+    it("should sort by date descending by default (desc)", () => {
+      const result = sortBlogPosts(blogPosts, "desc")
+      expect(result.map(p => p.slug)).toEqual(["c", "a", "b", "d"])
+    })
+
+    it("should sort by date ascending (asc)", () => {
+      const result = sortBlogPosts(blogPosts, "asc")
+      expect(result.map(p => p.slug)).toEqual(["d", "b", "a", "c"])
+    })
+
+    it("should not mutate the original array", () => {
+      const original = [...blogPosts]
+      sortBlogPosts(blogPosts, "desc")
+      expect(blogPosts).toEqual(original)
+    })
+  })
+})
+
+describe("Work helpers", () => {
+  const workItems: WorkItemProps[] = [
+    {
+      slug: "current",
+      company: "Acme",
+      title: "Engineer",
+      start: "Jan 2023",
+      end: "Present",
+      description: "",
+      locations: [],
+    },
+    {
+      slug: "older",
+      company: "Beta",
+      title: "Dev",
+      start: "Jan 2021",
+      end: "Dec 2022",
+      description: "",
+      locations: [],
+    },
+    {
+      slug: "newest-past",
+      company: "Gamma",
+      title: "Lead",
+      start: "Jan 2022",
+      end: "Dec 2023",
+      description: "",
+      locations: [],
+    },
+  ]
+
+  describe("filterWorkItems", () => {
+    it("should return all items when no companies selected", () => {
+      expect(filterWorkItems(workItems, [])).toHaveLength(3)
+    })
+
+    it("should filter to exact company match", () => {
+      const result = filterWorkItems(workItems, ["Acme"])
+      expect(result).toHaveLength(1)
+      expect(result[0].slug).toBe("current")
+    })
+
+    it("should support multiple companies (OR logic)", () => {
+      const result = filterWorkItems(workItems, ["Acme", "Beta"])
+      expect(result).toHaveLength(2)
+    })
+
+    it("should return empty when no match", () => {
+      expect(filterWorkItems(workItems, ["Unknown"])).toHaveLength(0)
+    })
+  })
+
+  describe("sortWorkItems", () => {
+    it("should place Present items first when sorting newest", () => {
+      const result = sortWorkItems(workItems, "newest")
+      expect(result[0].end).toBe("Present")
+    })
+
+    it("should sort past items by end date descending when sorting newest", () => {
+      const result = sortWorkItems(workItems, "newest")
+      const past = result.filter(w => w.end !== "Present")
+      expect(past[0].slug).toBe("newest-past") // Dec 2023 > Dec 2022
+    })
+
+    it("should sort by start date ascending when sorting oldest", () => {
+      const result = sortWorkItems(workItems, "oldest")
+      expect(result[0].slug).toBe("older") // Jan 2021
+    })
+
+    it("should not mutate the original array", () => {
+      const original = [...workItems]
+      sortWorkItems(workItems, "newest")
+      expect(workItems).toEqual(original)
+    })
+  })
+})
+
+describe("Project helpers", () => {
+  const projects: ProjectProps[] = [
+    {
+      slug: "p1",
+      title: "Alpha",
+      image: "",
+      description: "",
+      startDate: "2023-01",
+      endDate: "2023-06",
+      techStack: ["React", "TypeScript"],
+    },
+    {
+      slug: "p2",
+      title: "Beta",
+      image: "",
+      description: "",
+      startDate: "2022-01",
+      endDate: "2022-12",
+      techStack: ["Python"],
+    },
+    {
+      slug: "p3",
+      title: "Gamma",
+      image: "",
+      description: "",
+      startDate: "2024-01",
+      endDate: "Present",
+      techStack: ["React", "Node.js"],
+    },
+  ]
+
+  describe("filterProjects", () => {
+    it("should return all projects when no tech selected", () => {
+      expect(filterProjects(projects, [])).toHaveLength(3)
+    })
+
+    it("should filter by tech stack membership", () => {
+      const result = filterProjects(projects, ["React"])
+      expect(result.map(p => p.slug)).toEqual(["p1", "p3"])
+    })
+
+    it("should support multiple techs (OR logic)", () => {
+      const result = filterProjects(projects, ["React", "Python"])
+      expect(result).toHaveLength(3)
+    })
+
+    it("should return empty when no match", () => {
+      expect(filterProjects(projects, ["Rust"])).toHaveLength(0)
+    })
+  })
+
+  describe("sortProjects", () => {
+    it("should place Present projects first when sorting newest", () => {
+      const result = sortProjects(projects, "newest")
+      expect(result[0].endDate).toBe("Present")
+    })
+
+    it("should sort past projects by end date descending when sorting newest", () => {
+      const result = sortProjects(projects, "newest")
+      const past = result.filter(p => p.endDate !== "Present")
+      expect(past[0].slug).toBe("p1") // 2023-06 > 2022-12
+    })
+
+    it("should sort by start date ascending when sorting oldest", () => {
+      const result = sortProjects(projects, "oldest")
+      expect(result[0].slug).toBe("p2") // 2022-01
+    })
+
+    it("should not mutate the original array", () => {
+      const original = [...projects]
+      sortProjects(projects, "newest")
+      expect(projects).toEqual(original)
+    })
+  })
+})
+
+describe("paginateItems", () => {
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  it("should return the first page correctly", () => {
+    const { items: page, totalPages } = paginateItems(items, 1, 3)
+    expect(page).toEqual([1, 2, 3])
+    expect(totalPages).toBe(4)
+  })
+
+  it("should return a middle page correctly", () => {
+    const { items: page } = paginateItems(items, 2, 3)
+    expect(page).toEqual([4, 5, 6])
+  })
+
+  it("should return a partial last page", () => {
+    const { items: page } = paginateItems(items, 4, 3)
+    expect(page).toEqual([10])
+  })
+
+  it("should compute totalPages correctly", () => {
+    expect(paginateItems(items, 1, 5).totalPages).toBe(2)
+    expect(paginateItems(items, 1, 10).totalPages).toBe(1)
+    expect(paginateItems(items, 1, 3).totalPages).toBe(4)
+  })
+
+  it("should return 0 totalPages for an empty array", () => {
+    expect(paginateItems([], 1, 5).totalPages).toBe(0)
+  })
+
+  it("should return empty items for an out-of-range page", () => {
+    const { items: page } = paginateItems(items, 99, 5)
+    expect(page).toEqual([])
+  })
+
+  it("should work with page size equal to array length", () => {
+    const { items: page, totalPages } = paginateItems(items, 1, 10)
+    expect(page).toEqual(items)
+    expect(totalPages).toBe(1)
   })
 })

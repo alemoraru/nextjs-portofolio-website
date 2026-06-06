@@ -9,6 +9,7 @@ import {
   WorkItemFrontmatter,
   WorkItemProps,
 } from "@/lib/types"
+import { getReadingTime } from "@/lib/utils"
 
 /**
  * Reads every .mdx file in a directory, parses frontmatter, validates it,
@@ -116,7 +117,7 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
       summary: fm.summary,
       date: fm.date,
       tags: fm.tags?.map(tag => tag.toLowerCase()),
-      readingTime: Math.ceil(fileContent.trim().split(/\s+/).length / 100),
+      readingTime: getReadingTime(fileContent),
     }),
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )

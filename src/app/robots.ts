@@ -1,3 +1,4 @@
+import { siteMetadata } from "@/data/metadata"
 import type { MetadataRoute } from "next"
 
 /**
@@ -13,6 +14,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/", "/private/"],
       },
     ],
-    sitemap: "https://nextjs-portofolio-website.vercel.app/sitemap.xml",
+    sitemap: `${siteMetadata.siteUrl}/sitemap.xml`,
   }
 }

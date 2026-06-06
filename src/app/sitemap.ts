@@ -1,4 +1,7 @@
+import { siteMetadata } from "@/data/metadata"
 import type { MetadataRoute } from "next"
+
+const base = siteMetadata.siteUrl
 
 /**
  * Generates a sitemap.xml file for the website.
@@ -6,25 +9,25 @@ import type { MetadataRoute } from "next"
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://nextjs-portofolio-website.vercel.app",
+      url: base,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: "https://nextjs-portofolio-website.vercel.app/work",
+      url: `${base}/work`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: "https://nextjs-portofolio-website.vercel.app/projects",
+      url: `${base}/projects`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://nextjs-portofolio-website.vercel.app/blog",
+      url: `${base}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
