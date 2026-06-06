@@ -58,7 +58,7 @@ point for your own personal website, or as a reference for doing the same thing 
 ## 💎 Key Features
 
 - Main dashboard (Home page), with `/work`, `/projects`, and `/blog` links
-- MDX support for blog posts, projects, and work items
+- [MDX](https://mdxjs.com/) support for blog posts, projects, and work items
 - [Zod](https://zod.dev/)-validated frontmatter for all MDX content types. Invalid files are caught at build time with
   precise field-level error messages
 - Syntax highlighting for code blocks in MDX files
@@ -71,7 +71,8 @@ point for your own personal website, or as a reference for doing the same thing 
 - [LLMs.txt](https://llmstxt.org/) route automatically generated from content metadata to help agents/crawlers discover
   your content
 - RSS.xml feed automatically generated from the blog posts available on the site
-- Dynamic Open Graph image generation for all blog posts, work items, projects, and tag pages
+- [Dynamic Open Graph image generation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images#generated-open-graph-images)
+  for all blog posts, work items, projects, and tag pages
 - Easy customization through a centralized configuration file (`src/data/metadata.ts` and `src/data/content.ts`) for all
   site content and appearance settings
 
