@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og"
 import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
+import { getOgThemeColors } from "@/lib/og-theme"
 
 // DO NOT REMOVE BELOW VARIABLES
 export const alt = "Blog post"
@@ -14,6 +15,7 @@ export const contentType = "image/png"
  */
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const { accent, accentBg, accentText } = getOgThemeColors()
   const posts = await getAllBlogPosts()
   const post = posts.find(p => p.slug === slug)
 
@@ -40,7 +42,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
       }}
     >
       {/* Left accent bar */}
-      <div style={{ width: "12px", background: "#3b82f6", flexShrink: 0 }} />
+      <div style={{ width: "12px", background: accent, flexShrink: 0 }} />
 
       {/* Content area */}
       <div
@@ -62,8 +64,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         >
           <div
             style={{
-              background: "#eff6ff",
-              color: "#3b82f6",
+              background: accentBg,
+              color: accentText,
               fontSize: "20px",
               fontWeight: 600,
               padding: "6px 16px",
