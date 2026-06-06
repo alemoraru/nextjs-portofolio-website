@@ -23,6 +23,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const role = item?.title ?? ""
   const description = item?.description ?? ""
   const period = item ? `${item.start} – ${item.end}` : ""
+  const locations = item?.locations?.join(" · ") ?? ""
 
   return new ImageResponse(
     <div
@@ -105,8 +106,11 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           )}
         </div>
 
-        {/* Bottom: site name */}
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        {/* Bottom: location + site name */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+          {locations && (
+            <div style={{ color: "#9ca3af", fontSize: "18px" }}>{`📍 ${locations}`}</div>
+          )}
           <div style={{ color: "#9ca3af", fontSize: "20px", fontWeight: 600 }}>
             {homeIntroConfig.name}
           </div>
