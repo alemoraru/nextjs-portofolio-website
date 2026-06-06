@@ -1,27 +1,26 @@
 import fs from "fs"
 import path from "path"
 import { compileMDX } from "next-mdx-remote/rsc"
+import { z } from "zod"
 import {
-  BlogPostFrontmatter,
-  BlogPostProps,
-  ProjectFrontmatter,
-  ProjectProps,
-  WorkItemFrontmatter,
-  WorkItemProps,
-} from "@/lib/types"
+  BlogFrontmatterSchema,
+  ProjectFrontmatterSchema,
+  WorkItemFrontmatterSchema,
+} from "@/lib/schemas"
+import { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 import { getReadingTime } from "@/lib/utils"
 
 /**
- * Reads every .mdx file in a directory, parses frontmatter, validates it,
+ * Reads every .mdx file in a directory, parses frontmatter with a Zod schema,
  * maps it to the desired props shape, and optionally sorts the results.
- * @param dirPath   - Absolute path to the directory containing .mdx files.
- * @param validate  - Assertion function that throws if frontmatter is invalid.
- * @param map       - Transforms (slug, frontmatter) into the final props object.
- * @param sort      - Optional comparator for the final array.
+ * @param dirPath  - Absolute path to the directory containing .mdx files.
+ * @param schema   - Zod schema used to parse and validate frontmatter.
+ * @param map      - Transforms (slug, frontmatter) into the final props object.
+ * @param sort     - Optional comparator for the final array.
  */
 async function loadMDXDirectory<TFrontmatter, TProps>(
   dirPath: string,
-  validate: (frontmatter: unknown, filename: string) => asserts frontmatter is TFrontmatter,
+  schema: z.ZodSchema<TFrontmatter>,
   map: (slug: string, frontmatter: TFrontmatter, fileContent: string) => TProps,
   sort?: (a: TProps, b: TProps) => number
 ): Promise<TProps[]> {
@@ -35,14 +34,18 @@ async function loadMDXDirectory<TFrontmatter, TProps>(
       const slug = path.basename(file, ".mdx")
 
       try {
-        const { frontmatter } = await compileMDX<TFrontmatter>({
+        const { frontmatter: raw } = await compileMDX<TFrontmatter>({
           source: fileContent,
           options: { parseFrontmatter: true },
         })
 
-        validate(frontmatter, file)
+        const frontmatter = schema.parse(raw)
         return map(slug, frontmatter, fileContent)
       } catch (error) {
+        if (error instanceof z.ZodError) {
+          const issues = error.issues.map(i => `${i.path.join(".")}: ${i.message}`).join(", ")
+          throw new Error(`Invalid frontmatter in ${file}: ${issues}`)
+        }
         throw new Error(
           `Failed to parse ${file}: ${error instanceof Error ? error.message : String(error)}`
         )
@@ -51,50 +54,6 @@ async function loadMDXDirectory<TFrontmatter, TProps>(
   )
 
   return sort ? items.sort(sort) : items
-}
-
-/**
- * Blog post frontmatter validation and loading. Ensures required fields are present and correctly typed
- * @param frontmatter - The frontmatter object extracted from an MDX file
- * @param filename - The name of the MDX file (used for error messages)
- * @throws Will throw an error if validation fails, indicating the specific issue and file
- * @asserts frontmatter is BlogPostFrontmatter - Narrows the type of frontmatter for downstream usage
- */
-function validateBlogFrontmatter(
-  frontmatter: unknown,
-  filename: string
-): asserts frontmatter is BlogPostFrontmatter {
-  if (!frontmatter || typeof frontmatter !== "object") {
-    throw new Error(`Invalid frontmatter in ${filename}: frontmatter is missing or not an object`)
-  }
-
-  const fm = frontmatter as Record<string, unknown>
-
-  if (!fm.title || typeof fm.title !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: title is missing or not a string`)
-  }
-  if (!fm.summary || typeof fm.summary !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: summary is missing or not a string`)
-  }
-  if (!fm.date || typeof fm.date !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: date is missing or not a string`)
-  }
-
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/
-  if (!dateRegex.test(fm.date)) {
-    throw new Error(
-      `Invalid frontmatter in ${filename}: date must be in YYYY-MM-DD format, got "${fm.date}"`
-    )
-  }
-
-  if (fm.tags !== undefined) {
-    if (!Array.isArray(fm.tags)) {
-      throw new Error(`Invalid frontmatter in ${filename}: tags must be an array`)
-    }
-    if (!fm.tags.every(tag => typeof tag === "string")) {
-      throw new Error(`Invalid frontmatter in ${filename}: all tags must be strings`)
-    }
-  }
 }
 
 let cachedPosts: BlogPostProps[] | null = null
@@ -108,15 +67,15 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
 
   const blogDir = path.join(process.cwd(), "src", "data", "blog")
 
-  cachedPosts = await loadMDXDirectory<BlogPostFrontmatter, BlogPostProps>(
+  cachedPosts = await loadMDXDirectory(
     blogDir,
-    validateBlogFrontmatter,
+    BlogFrontmatterSchema,
     (slug, fm, fileContent) => ({
       slug,
       title: fm.title,
       summary: fm.summary,
       date: fm.date,
-      tags: fm.tags?.map(tag => tag.toLowerCase()),
+      tags: fm.tags?.map((tag: string) => tag.toLowerCase()),
       readingTime: getReadingTime(fileContent),
     }),
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -125,63 +84,20 @@ export async function getAllBlogPosts(): Promise<BlogPostProps[]> {
   return cachedPosts
 }
 
-/**
- * Work item frontmatter validation and loading. Ensures required fields are present and correctly typed
- * @param frontmatter - The frontmatter object extracted from an MDX file
- * @param filename - The name of the MDX file (used for error messages)
- * @throws Error - throw an error if validation fails, indicating the specific issue and file
- * @asserts frontmatter is WorkItemFrontmatter - Narrows the type of frontmatter for downstream usage
- */
-function validateWorkItemFrontmatter(
-  frontmatter: unknown,
-  filename: string
-): asserts frontmatter is WorkItemFrontmatter {
-  if (!frontmatter || typeof frontmatter !== "object") {
-    throw new Error(`Invalid frontmatter in ${filename}: frontmatter is missing or not an object`)
-  }
-
-  const fm = frontmatter as Record<string, unknown>
-
-  if (!fm.company || typeof fm.company !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: company is missing or not a string`)
-  }
-  if (!fm.title || typeof fm.title !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: title is missing or not a string`)
-  }
-  if (!fm.start || typeof fm.start !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: start is missing or not a string`)
-  }
-  if (!fm.end || typeof fm.end !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: end is missing or not a string`)
-  }
-  if (!fm.description || typeof fm.description !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: description is missing or not a string`)
-  }
-  if (!fm.locations || !Array.isArray(fm.locations)) {
-    throw new Error(`Invalid frontmatter in ${filename}: locations must be an array`)
-  }
-  if (!fm.locations.every(loc => typeof loc === "string")) {
-    throw new Error(`Invalid frontmatter in ${filename}: all locations must be strings`)
-  }
-  if (fm.logoUrl !== undefined && typeof fm.logoUrl !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: logoUrl must be a string`)
-  }
-}
-
 let cachedWorkItems: WorkItemProps[] | null = null
 
 /**
  * Scans the work directory, parses all MDX files, and returns work items
- * sorted by start date descending. Results are cached for the process lifetime.
+ * sorted by end date descending. Results are cached for the process lifetime.
  */
 export async function getAllWorkItems(): Promise<WorkItemProps[]> {
   if (cachedWorkItems) return cachedWorkItems
 
   const workDir = path.join(process.cwd(), "src", "data", "work")
 
-  cachedWorkItems = await loadMDXDirectory<WorkItemFrontmatter, WorkItemProps>(
+  cachedWorkItems = await loadMDXDirectory(
     workDir,
-    validateWorkItemFrontmatter,
+    WorkItemFrontmatterSchema,
     (slug, fm) => ({
       slug,
       company: fm.company,
@@ -205,58 +121,6 @@ export async function getAllWorkItems(): Promise<WorkItemProps[]> {
   return cachedWorkItems
 }
 
-/**
- * Project frontmatter validation and loading. Ensures required fields are present and correctly typed
- * @param frontmatter - The frontmatter object extracted from an MDX file
- * @param filename - The name of the MDX file (used for error messages)
- * @throws Error - throw an error if validation fails, indicating the specific issue and file
- * @asserts frontmatter is ProjectFrontmatter - Narrows the type of frontmatter for downstream usage
- */
-function validateProjectFrontmatter(
-  frontmatter: unknown,
-  filename: string
-): asserts frontmatter is ProjectFrontmatter {
-  if (!frontmatter || typeof frontmatter !== "object") {
-    throw new Error(`Invalid frontmatter in ${filename}: frontmatter is missing or not an object`)
-  }
-
-  const fm = frontmatter as Record<string, unknown>
-
-  if (!fm.title || typeof fm.title !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: title is missing or not a string`)
-  }
-  if (!fm.image || typeof fm.image !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: image is missing or not a string`)
-  }
-  if (!fm.description || typeof fm.description !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: description is missing or not a string`)
-  }
-  if (!fm.startDate || typeof fm.startDate !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: startDate is missing or not a string`)
-  }
-  if (!fm.endDate || typeof fm.endDate !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: endDate is missing or not a string`)
-  }
-  if (!fm.techStack || !Array.isArray(fm.techStack)) {
-    throw new Error(`Invalid frontmatter in ${filename}: techStack must be an array`)
-  }
-  if (!fm.techStack.every(tech => typeof tech === "string")) {
-    throw new Error(`Invalid frontmatter in ${filename}: all techStack items must be strings`)
-  }
-  if (fm.teamSize !== undefined && typeof fm.teamSize !== "number") {
-    throw new Error(`Invalid frontmatter in ${filename}: teamSize must be a number`)
-  }
-  if (fm.role !== undefined && typeof fm.role !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: role must be a string`)
-  }
-  if (fm.githubUrl !== undefined && typeof fm.githubUrl !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: githubUrl must be a string`)
-  }
-  if (fm.paperUrl !== undefined && typeof fm.paperUrl !== "string") {
-    throw new Error(`Invalid frontmatter in ${filename}: paperUrl must be a string`)
-  }
-}
-
 let cachedProjects: ProjectProps[] | null = null
 
 /**
@@ -268,23 +132,19 @@ export async function getAllProjects(): Promise<ProjectProps[]> {
 
   const projectsDir = path.join(process.cwd(), "src", "data", "projects")
 
-  cachedProjects = await loadMDXDirectory<ProjectFrontmatter, ProjectProps>(
-    projectsDir,
-    validateProjectFrontmatter,
-    (slug, fm) => ({
-      slug,
-      title: fm.title,
-      image: fm.image,
-      description: fm.description,
-      startDate: fm.startDate,
-      endDate: fm.endDate,
-      techStack: fm.techStack,
-      teamSize: fm.teamSize,
-      role: fm.role,
-      githubUrl: fm.githubUrl,
-      paperUrl: fm.paperUrl,
-    })
-  )
+  cachedProjects = await loadMDXDirectory(projectsDir, ProjectFrontmatterSchema, (slug, fm) => ({
+    slug,
+    title: fm.title,
+    image: fm.image,
+    description: fm.description,
+    startDate: fm.startDate,
+    endDate: fm.endDate,
+    techStack: fm.techStack,
+    teamSize: fm.teamSize,
+    role: fm.role,
+    githubUrl: fm.githubUrl,
+    paperUrl: fm.paperUrl,
+  }))
 
   return cachedProjects
 }

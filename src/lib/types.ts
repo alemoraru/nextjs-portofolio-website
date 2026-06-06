@@ -15,15 +15,7 @@ export interface BlogPostProps {
   readingTime?: number
 }
 
-/**
- * @description This interface defines the frontmatter structure in MDX blog post files.
- */
-export interface BlogPostFrontmatter {
-  title: string
-  summary: string
-  date: string
-  tags?: string[]
-}
+export type { BlogPostFrontmatter } from "@/lib/schemas"
 
 /**
  * @description This interface defines the structure (i.e., contents) of a project card.
@@ -42,21 +34,7 @@ export interface ProjectProps {
   paperUrl?: string
 }
 
-/**
- * @description This interface defines the frontmatter structure in MDX project files.
- */
-export interface ProjectFrontmatter {
-  title: string
-  image: string
-  description: string
-  startDate: string
-  endDate: string
-  techStack: string[]
-  teamSize?: number
-  role?: string
-  githubUrl?: string
-  paperUrl?: string
-}
+export type { ProjectFrontmatter } from "@/lib/schemas"
 
 /**
  * @description This interface defines the structure (i.e., contents) of a work experience item.
@@ -74,20 +52,7 @@ export interface WorkItemProps {
   techStack?: string[]
 }
 
-/**
- * @description This interface defines the frontmatter structure in MDX work item files.
- */
-export interface WorkItemFrontmatter {
-  company: string
-  title: string
-  start: string
-  end: string
-  description: string
-  locations: string[]
-  logoUrl?: string
-  companyUrl?: string
-  techStack?: string[]
-}
+export type { WorkItemFrontmatter } from "@/lib/schemas"
 
 /**
  * @description This type is used to define the params for a dynamic tag route in Next.js.
