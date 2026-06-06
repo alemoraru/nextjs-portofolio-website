@@ -151,3 +151,132 @@ body {
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(215 20% 25%);
 }
+
+/* ─── Print stylesheet ──────────────────────────────────────────────────────
+   Forces white-on-black rendering so dark-mode users get readable printouts.
+   Hides all navigation chrome and decorative elements.
+   ─────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  /* Force light colour scheme regardless of OS/user preference */
+  :root,
+  .dark {
+    --background: #ffffff;
+    --foreground: #000000;
+    color-scheme: light;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 1.5cm 2cm;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Hide site chrome */
+  header,
+  footer,
+  nav,
+  [role="progressbar"],
+  [aria-label="Scroll progress"] {
+    display: none !important;
+  }
+
+  /* Hide the decorative dot-grid background layer */
+  body > div:first-of-type,
+  [class*="fixed inset-0"] {
+    display: none !important;
+  }
+
+  /* Hide interactive controls */
+  button,
+  [role="button"] {
+    display: none !important;
+  }
+
+  /* Keep links legible — show URL after linked text */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #444 !important;
+    word-break: break-all;
+  }
+
+  /* But not internal anchors or icon-only links */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  /* Code blocks: light background, dark text */
+  pre,
+  code,
+  pre *,
+  code * {
+    background: #f5f5f5 !important;
+    color: #111 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  pre {
+    padding: 0.75em 1em !important;
+    border-radius: 4px !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid breaking headings and code from their following content */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+
+  /* Avoid orphaned images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Prose/typography overrides */
+  .prose,
+  .prose * {
+    color: #000 !important;
+  }
+
+  .prose a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  .prose a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #444 !important;
+  }
+
+  .prose a[href^="#"]::after {
+    content: "";
+  }
+}
