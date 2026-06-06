@@ -70,6 +70,8 @@ export interface WorkItemProps {
   description: string
   locations: string[]
   logoUrl?: string
+  companyUrl?: string
+  techStack?: string[]
 }
 
 /**

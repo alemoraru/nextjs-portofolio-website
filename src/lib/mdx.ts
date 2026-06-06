@@ -191,6 +191,8 @@ export async function getAllWorkItems(): Promise<WorkItemProps[]> {
       description: fm.description,
       locations: fm.locations,
       logoUrl: fm.logoUrl,
+      companyUrl: fm.companyUrl,
+      techStack: fm.techStack,
     }),
     // Sort by start date descending so the most recent role is first
     (a, b) => {

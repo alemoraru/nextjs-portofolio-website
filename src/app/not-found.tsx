@@ -2,32 +2,30 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { useMemo } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
-/**
- * NotFound component that displays a 404 error message when a page is not found.
- */
-export default function NotFound() {
-  // Fun bash commands or dev quotes, all indicating a page is not found
-  const funLines = [
-    'echo "Oops! This page is 404 not found-ish"',
-    'echo "404: This is not the page you are looking for!"',
-    'echo "cd /dev/null # Page not found"',
-    'echo "cat ~/nowhere # No such file or directory"',
-    'echo "git checkout --the-missing-page"',
-    'echo "rm -rf ./this-page # Already gone!"',
-    'echo "curl -I /404 | grep not-found"',
-    'echo "find . -name missing-page # 0 results"',
-    'echo "ls ~/404 # Not found"',
-    'echo "exit 404 # Page not found-ish"',
-    'echo "// TODO: Implement this page"',
-    'echo "¯\\_(ツ)_/¯ # 404 not found"',
-  ]
+const funLines = [
+  'echo "Oops! This page is 404 not found-ish"',
+  'echo "404: This is not the page you are looking for!"',
+  'echo "cd /dev/null # Page not found"',
+  'echo "cat ~/nowhere # No such file or directory"',
+  'echo "git checkout --the-missing-page"',
+  'echo "rm -rf ./this-page # Already gone!"',
+  'echo "curl -I /404 | grep not-found"',
+  'echo "find . -name missing-page # 0 results"',
+  'echo "ls ~/404 # Not found"',
+  'echo "exit 404 # Page not found-ish"',
+  'echo "// TODO: Implement this page"',
+  'echo "¯\\_(ツ)_/¯ # 404 not found"',
+]
 
-  // Select a random line from the funLines array to display
-  // eslint-disable-next-line react-hooks/purity
-  const randomLine = useMemo(() => funLines[Math.floor(Math.random() * funLines.length)], [])
+export default function NotFound() {
+  const [line, setLine] = useState(funLines[0])
+
+  useEffect(() => {
+    setLine(funLines[Math.floor(Math.random() * funLines.length)])
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
@@ -61,7 +59,7 @@ export default function NotFound() {
         )}
       >
         <span className="inline-block font-mono text-sm md:text-base text-accent-600 dark:text-accent-400">
-          $ {randomLine}
+          $ {line}
         </span>
       </motion.div>
 
