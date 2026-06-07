@@ -62,9 +62,12 @@ point for your own personal website, or as a reference for doing the same thing 
 - [Zod](https://zod.dev/)-validated frontmatter for all MDX content types. Invalid files are caught at build time with
   precise field-level error messages
 - Syntax highlighting for code blocks in MDX files
-- Light/dark mode toggle
+- Light/dark mode toggle. The classic theme switcher ;)
 - Responsive design for mobile and desktop
-- SEO-friendly structure and metadata
+- SEO-friendly structure and metadata,
+  including [JSON-LD structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)
+  on the home page and blog posts for Google rich results eligibility. For more context, also see
+  Vercel's [JSON-LD guide](https://nextjs.org/docs/app/guides/json-ld).
 - SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
 - Similar blog posts recommendations
 - Blog post categories pages

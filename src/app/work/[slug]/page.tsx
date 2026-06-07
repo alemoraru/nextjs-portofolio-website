@@ -13,9 +13,11 @@ import BackToPageButton from "@/components/BackToPageButton"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
+import { siteMetadata } from "@/data/metadata"
 import { getAllWorkItems } from "@/lib/mdx"
 import { pageParams, WorkItemFrontmatter } from "@/lib/types"
 import { calculateDuration } from "@/lib/utils"
+import type { EmployeeRole, WithContext } from "schema-dts"
 
 /**
  * Generate static parameters for the work item pages to be pre-rendered.
@@ -75,6 +77,7 @@ function CompanyHeader({ frontmatter }: { frontmatter: WorkItemFrontmatter }) {
 /**
  * WorkItemPage component that renders a single work item based on the slug.
  * It reads the corresponding MDX file, compiles it, and displays the content along with the frontmatter information.
+ * This page also includes structured data in JSON-LD format for SEO purposes, describing the work experience as an EmployeeRole.
  */
 export default async function WorkItemPage(props: { params: pageParams }) {
   const { slug } = await props.params
@@ -105,8 +108,23 @@ export default async function WorkItemPage(props: { params: pageParams }) {
     },
   })
 
+  const jsonLd: WithContext<EmployeeRole> = {
+    "@context": "https://schema.org",
+    "@type": "EmployeeRole",
+    roleName: frontmatter.title,
+    name: frontmatter.company,
+    description: frontmatter.description,
+    startDate: frontmatter.start,
+    ...(frontmatter.end !== "Present" && { endDate: frontmatter.end }),
+    url: `${siteMetadata.siteUrl}/work/${post.slug}`,
+  }
+
   return (
     <AnimatedArticle>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <BackToPageButton pageUrl="/work" />
       <div className="flex items-center gap-4 mb-2">
         {frontmatter.companyUrl ? (
