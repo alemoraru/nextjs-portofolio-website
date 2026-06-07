@@ -17,7 +17,7 @@ import { siteMetadata } from "@/data/metadata"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
 import { formatDuration } from "@/lib/utils"
-import type { SoftwareApplication, WithContext } from "schema-dts"
+import type { CreativeWork, WithContext } from "schema-dts"
 
 /**
  * Generate static parameters for the project pages to be pre-rendered.
@@ -105,9 +105,9 @@ export default async function ProjectPage(props: { params: pageParams }) {
     })
   }
 
-  const jsonLd: WithContext<SoftwareApplication> = {
+  const jsonLd: WithContext<CreativeWork> = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "CreativeWork",
     name: frontmatter.title,
     description: frontmatter.description,
     url: `${siteMetadata.siteUrl}/projects/${post.slug}`,
