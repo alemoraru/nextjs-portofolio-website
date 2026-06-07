@@ -30,7 +30,7 @@ Per-page Open Graph images are generated at build time using Next.js `ImageRespo
 color configured in `siteMetadata.theme`.
 
 | Route              | Image content                                       |
-|--------------------|-----------------------------------------------------|
+| ------------------ | --------------------------------------------------- |
 | `/blog/[slug]`     | Post title, summary, up to 4 tags, publication date |
 | `/blog/tag/[tag]`  | Tag name, post count, latest 3 post titles          |
 | `/work/[slug]`     | Company name, role, description, period, locations  |
@@ -44,7 +44,7 @@ Schema.org structured data is embedded in a `<script type="application/ld+json">
 content eligible for Google rich results:
 
 | Page               | Schema type           | Key fields                                                   |
-|--------------------|-----------------------|--------------------------------------------------------------|
+| ------------------ | --------------------- | ------------------------------------------------------------ |
 | Home (`/`)         | `Person`              | Name, job title, site URL, social profile links (`sameAs`)   |
 | `/blog/[slug]`     | `BlogPosting`         | Headline, summary, publish date, tags as keywords, author    |
 | `/projects/[slug]` | `SoftwareApplication` | Name, description, dates, tech stack as keywords, GitHub URL |
