@@ -13,9 +13,11 @@ import BackToPageButton from "@/components/BackToPageButton"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
+import { siteMetadata } from "@/data/metadata"
 import { getAllProjects } from "@/lib/mdx"
 import { pageParams, ProjectFrontmatter } from "@/lib/types"
 import { formatDuration } from "@/lib/utils"
+import type { SoftwareApplication, WithContext } from "schema-dts"
 
 /**
  * Generate static parameters for the project pages to be pre-rendered.
@@ -54,6 +56,9 @@ export async function generateMetadata(props: { params: pageParams }): Promise<M
 
 /**
  * ProjectPage component that renders a single project based on the slug.
+ * It also generates JSON-LD structured data for SEO purposes, describing the software application (project) and its attributes.
+ * The JSON-LD uses the schema.org "SoftwareApplication" type to describe the project, including properties like name, description, URL, dates, tech stack, and author information.
+ * The JSON-LD is included in a script tag in the head of the page, and it is properly escaped to prevent XSS vulnerabilities.
  */
 export default async function ProjectPage(props: { params: pageParams }) {
   const { slug } = await props.params
@@ -100,8 +105,30 @@ export default async function ProjectPage(props: { params: pageParams }) {
     })
   }
 
+  const jsonLd: WithContext<SoftwareApplication> = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: frontmatter.title,
+    description: frontmatter.description,
+    url: `${siteMetadata.siteUrl}/projects/${post.slug}`,
+    dateCreated: frontmatter.startDate,
+    dateModified: frontmatter.endDate,
+    ...(frontmatter.techStack &&
+      frontmatter.techStack.length > 0 && { keywords: frontmatter.techStack.join(", ") }),
+    ...(frontmatter.githubUrl && { codeRepository: frontmatter.githubUrl }),
+    author: {
+      "@type": "Person",
+      name: homeIntroConfig.name,
+      url: siteMetadata.siteUrl,
+    },
+  }
+
   return (
     <AnimatedArticle>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <BackToPageButton pageUrl="/projects" />
 
       {/* Header */}

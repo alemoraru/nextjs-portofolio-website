@@ -18,9 +18,11 @@ import { InlineCode } from "@/components/mdx/InlineCode"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
 import { homeIntroConfig } from "@/data/content"
+import { siteMetadata } from "@/data/metadata"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { pageParams } from "@/lib/types"
 import { getReadingTime } from "@/lib/utils"
+import type { BlogPosting, WithContext } from "schema-dts"
 
 /**
  * Generate static parameters for the blog post pages to be pre-rendered.
@@ -122,8 +124,32 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     components: mdxComponents,
   })
 
+  const jsonLd: WithContext<BlogPosting> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    url: `${siteMetadata.siteUrl}/blog/${post.slug}`,
+    ...(post.tags && post.tags.length > 0 && { keywords: post.tags.join(", ") }),
+    author: {
+      "@type": "Person",
+      name: homeIntroConfig.name,
+      url: siteMetadata.siteUrl,
+    },
+    publisher: {
+      "@type": "Person",
+      name: homeIntroConfig.name,
+      url: siteMetadata.siteUrl,
+    },
+  }
+
   return (
     <AnimatedArticle>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
       <div className="flex items-center gap-4 text-gray-500 mb-8">
