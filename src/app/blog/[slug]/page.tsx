@@ -129,7 +129,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.summary,
-    datePublished: post.date,
+    image: `${siteMetadata.siteUrl}/blog/${post.slug}/opengraph-image`,
+    datePublished: new Date(post.date).toISOString(),
     url: `${siteMetadata.siteUrl}/blog/${post.slug}`,
     ...(post.tags && post.tags.length > 0 && { keywords: post.tags.join(", ") }),
     author: {
