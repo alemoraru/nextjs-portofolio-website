@@ -44,7 +44,7 @@ point for your own personal website, or as a reference for doing the same thing 
 - [🧱 Project Structure](#-project-structure)
 - [🚀 Getting Started](#-getting-started)
 - [🎨 Customization](#-customization)
-- [🖼️ Open Graph Images](#-open-graph-images)
+- [🔍 SEO](#-seo)
 - [🧭 Roadmap](#-roadmap)
 - [📚 Learn More](#-learn-more)
 - [▲ Deployment](#-deployment)
@@ -212,11 +212,15 @@ components or understand the codebase!
 
 ---
 
-## 🖼️ Open Graph Images
+## 🔍 SEO
 
-Dynamic Open Graph images are automatically generated for every content page using Next.js's built-in `ImageResponse`
-API. When someone shares a link on social media or a messaging app, they get a branded preview image instead of a blank
-card.
+This template ships with a comprehensive SEO setup out of the box: global metadata, Open Graph and Twitter Card tags,
+dynamic OG image generation, JSON-LD structured data, a sitemap, a `robots.txt`, an RSS feed, and an `llms.txt` route.
+
+### Dynamic Open Graph images
+
+Per-page Open Graph images are generated at build time using Next.js's built-in `ImageResponse` API. When someone shares
+a link on social media or a messaging app, they get a branded preview image instead of a blank card.
 
 | Blog post                                       | Work item                                       | Project                                               |
 |-------------------------------------------------|-------------------------------------------------|-------------------------------------------------------|
@@ -226,8 +230,6 @@ card.
 |-----------------------------------------------|-|
 | ![Tag OG example](public/og-examples/tag.png) | |
 
-### Covered routes
-
 | Route              | Image content                                          |
 |--------------------|--------------------------------------------------------|
 | `/blog/[slug]`     | Post title, summary, tags, and date                    |
@@ -236,22 +238,10 @@ card.
 | `/projects/[slug]` | Project title, description, tech stack, and duration   |
 
 The homepage uses the static image at `/public/og-image.png` (configured via `siteMetadata.ogImage` in
-`src/data/metadata.ts`).
+`src/data/metadata.ts`). All generated images pick up the accent color from `siteMetadata.theme`. Changing the theme
+updates the color across the entire site _and_ in all OG images automatically.
 
-### Theme
-
-All generated images pick up the accent color from `siteMetadata.theme` in `src/data/metadata.ts`. Changing the theme
-there updates the accent color across the entire site _and_ in all OG images. No other changes needed. The available
-themes are: `blue`, `purple`, `green`, `orange`, `rose`, `teal`, `indigo`, `amber`, `cyan`, and `violet`.
-
-### When are images generated?
-
-Images are generated at **build time** and cached. Since all content comes from MDX files on disk, a rebuild is always
-required to publish new content anyway, so the images are always up to date after each deployment.
-
-### Local preview
-
-With the dev server running, you can view any generated image directly in a browser:
+Images are generated at **build time** and cached. With the dev server running, you can preview any of them directly:
 
 ```
 http://localhost:3000/blog/your-post-slug/opengraph-image
@@ -259,6 +249,12 @@ http://localhost:3000/blog/tag/typescript/opengraph-image
 http://localhost:3000/work/your-company-slug/opengraph-image
 http://localhost:3000/projects/your-project-slug/opengraph-image
 ```
+
+### Full SEO reference
+
+For a complete breakdown of every SEO feature and the steps you need to take when customizing the template (setting your
+domain, replacing assets, submitting to Google Search Console, validating structured data, etc.),
+see **[docs/SEO.md](docs/SEO.md)**.
 
 ---
 
