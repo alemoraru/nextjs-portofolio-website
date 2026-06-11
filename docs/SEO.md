@@ -54,10 +54,23 @@ Types are enforced via the [`schema-dts`](https://github.com/google/schema-dts) 
 
 ### `sitemap.xml`
 
-A `sitemap.xml` is generated automatically at `/sitemap.xml` (via `src/app/sitemap.ts`). It covers the four main
-routes: home, `/work`, `/projects`, `/blog`, with appropriate `changeFrequency` and `priority` values.
-That said, these change frequency and priority hints are just that: hints. Search engines may choose to ignore them
-and instead crawl based on internal linking structure and their own algorithms.
+A `sitemap.xml` is generated automatically at `/sitemap.xml` (via `src/app/sitemap.ts`). It covers every
+publicly routable URL on the site. No manual updates needed when you add/remove new content:
+
+| Entries                       | Source                                | `changeFrequency`               | `priority` |
+|-------------------------------|---------------------------------------|---------------------------------|------------|
+| `/`                           | Static                                | `weekly`                        | `1.0`      |
+| `/work`, `/projects`, `/blog` | Static                                | `yearly` / `monthly` / `weekly` | `0.8`      |
+| `/blog/[slug]`                | All MDX files in `src/data/blog/`     | `monthly`                       | `0.6`      |
+| `/blog/tag/[tag]`             | Unique tags across all posts          | `weekly`                        | `0.5`      |
+| `/work/[slug]`                | All MDX files in `src/data/work/`     | `yearly`                        | `0.6`      |
+| `/projects/[slug]`            | All MDX files in `src/data/projects/` | `monthly`                       | `0.6`      |
+
+Blog post entries use the post's `date` frontmatter field as `lastModified`; project entries use `endDate`.
+
+The `change frequency` and `priority` hints are just that: hints. Search engines may choose to ignore them
+and instead crawl based on internal linking structure and their own algorithms. In reality, the actual change
+frequency may, of course, vary widely based on how often you add new content or update existing pages.
 
 ### `robots.txt`
 
@@ -141,6 +154,10 @@ Paste the page URL or the raw JSON.
 
 ### 8. Keep the sitemap in sync with new routes
 
-`src/app/sitemap.ts` currently lists only the four top-level routes. If you add new static pages, add them there.
-Individual blog/project/work slugs do not need to be listed, since search engines follow internal links, and the OG
-metadata on each page is sufficient for indexing.
+`src/app/sitemap.ts` automatically discovers all content by reading the MDX files in `src/data/blog/`,
+`src/data/work/`, and `src/data/projects/` at build time. Adding a new `.mdx` file is all it takes, therefore no
+manual edits to the sitemap are required.
+
+If you add entirely new static pages (outside of the existing content types), add them to the `staticRoutes`
+array at the top of `src/app/sitemap.ts`. However, for most portfolio use cases, the existing dynamic routes
+should cover all your needs without modification.
