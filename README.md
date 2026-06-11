@@ -67,7 +67,9 @@ point for your own personal website, or as a reference for doing the same thing 
 - SEO-friendly structure and metadata,
   including [JSON-LD structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)
   on the home page and blog posts for Google rich results eligibility. For more context, also see
-  Vercel's [JSON-LD guide](https://nextjs.org/docs/app/guides/json-ld).
+  Vercel's [JSON-LD guide](https://nextjs.org/docs/app/guides/json-ld)
+- Automatic `sitemap.xml` that discovers every blog post, project, work item, and tag page at build time. No
+  manual updates needed when content is added or removed! (See `src/app/sitemap.ts` for implementation details)
 - SSR support for pagination, sorting, and filtering of blog posts, projects, and work items
 - Similar blog posts recommendations
 - Blog post categories pages
