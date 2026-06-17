@@ -59,10 +59,13 @@ export const siteMetadata = {
   },
 
   /**
-   * Open Graph image (for social media sharing)
-   * Path to your og-image.png in the public folder
+   * Optional: Custom Open Graph image for the index (home) page.
+   * Set this to the path of an image in your public folder (e.g. "/og-image.png").
+   * Set to null to use the auto-generated dynamic OG image instead.
+   *
+   * Note: /blog, /projects, and /work always use dynamically generated OG images.
    */
-  ogImage: "/og-image.png",
+  ogImage: "/og-image.png" as string | null,
 }
 
 /**
@@ -106,21 +109,23 @@ export const metadata: Metadata = {
     description: siteMetadata.description,
     url: siteMetadata.siteUrl,
     siteName: siteMetadata.title,
-    images: [
-      {
-        url: siteMetadata.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteMetadata.title,
-      },
-    ],
+    ...(siteMetadata.ogImage && {
+      images: [
+        {
+          url: siteMetadata.ogImage,
+          width: 1200,
+          height: 630,
+          alt: siteMetadata.title,
+        },
+      ],
+    }),
   },
   twitter: {
     card: "summary_large_image",
     title: siteMetadata.title,
     description: siteMetadata.description,
     creator: siteMetadata.social.twitter,
-    images: [siteMetadata.ogImage],
+    ...(siteMetadata.ogImage && { images: [siteMetadata.ogImage] }),
   },
   category: "technology",
 }

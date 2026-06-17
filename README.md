@@ -77,7 +77,7 @@ point for your own personal website, or as a reference for doing the same thing 
   your content
 - RSS.xml feed automatically generated from the blog posts available on the site
 - [Dynamic Open Graph image generation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images#generated-open-graph-images)
-  for all blog posts, work items, projects, and tag pages
+  for the home page, `/blog`, `/projects`, `/work`, and all their individual posts, items, and tag pages
 - Easy customization through a centralized configuration file (`src/data/metadata.ts` and `src/data/content.ts`) for all
   site content and appearance settings
 
@@ -170,7 +170,8 @@ Edit `src/data/metadata.ts` to customize your site's SEO and social media inform
 - **author**: Your name and website URL
 - **siteUrl**: Your actual domain (e.g., `https://yourdomain.com`)
 - **social.twitter**: Your Twitter/X handle (e.g., `@yourhandle`)
-- **ogImage**: Path to your Open Graph image for social media sharing
+- **ogImage**: (Optional) Path to a custom home page OG image in your `public/` folder (e.g. `"/og-image.png"`). Set to
+  `null` to use the auto-generated dynamic image instead
 
 ### 2. Update Personal Information (`src/data/content.ts`)
 
@@ -207,7 +208,8 @@ and renders all content from these files!
 ### 4. Update Visual Assets
 
 - **Favicon**: Replace `/public/icons/favicon.ico` with your own icon
-- **OG Image**: Create a 1200x630px image at `/public/og-image.png` for social media previews
+- **OG Image** (optional): Place a 1200×630 px image in `/public/` and set `ogImage` in `src/data/metadata.ts` to its
+  path to use a custom home page preview. Set `ogImage` to `null` to use the auto-generated image instead
 
 That's it! 🎉 The template automatically uses your configuration and content throughout the site. No need to modify
 components or understand the codebase!
@@ -232,20 +234,29 @@ a link on social media or a messaging app, they get a branded preview image inst
 |-----------------------------------------------|-|
 | ![Tag OG example](public/og-examples/tag.png) | |
 
-| Route              | Image content                                          |
-|--------------------|--------------------------------------------------------|
-| `/blog/[slug]`     | Post title, summary, tags, and date                    |
-| `/blog/tag/[tag]`  | Tag name, post count, and latest 3 post titles         |
-| `/work/[slug]`     | Company name, role, description, period, and locations |
-| `/projects/[slug]` | Project title, description, tech stack, and duration   |
+| Route              | Image content                                                                             |
+|--------------------|-------------------------------------------------------------------------------------------|
+| `/`                | Auto-generated (name, role, company, location) — or your custom image if `ogImage` is set |
+| `/blog`            | "All Posts" heading, total post count, and 3 most recent post titles                      |
+| `/projects`        | "All Projects" heading, total project count, and up to 4 project names                    |
+| `/work`            | "Work Experience" heading, total company count, and up to 4 companies with their role     |
+| `/blog/[slug]`     | Post title, summary, tags, and date                                                       |
+| `/blog/tag/[tag]`  | Tag name, post count, and latest 3 post titles                                            |
+| `/work/[slug]`     | Company name, role, description, period, and locations                                    |
+| `/projects/[slug]` | Project title, description, tech stack, and duration                                      |
 
-The homepage uses the static image at `/public/og-image.png` (configured via `siteMetadata.ogImage` in
-`src/data/metadata.ts`). All generated images pick up the accent color from `siteMetadata.theme`. Changing the theme
+The home page generates a dynamic OG image by default. To use a custom static image instead, set `siteMetadata.ogImage`
+in `src/data/metadata.ts` to its path in the `public/` folder (e.g. `"/og-image.png"`); set it to `null` to go back to
+the generated image. All generated images pick up the accent color from `siteMetadata.theme` — changing the theme
 updates the color across the entire site _and_ in all OG images automatically.
 
 Images are generated at **build time** and cached. With the dev server running, you can preview any of them directly:
 
 ```
+http://localhost:3000/opengraph-image
+http://localhost:3000/blog/opengraph-image
+http://localhost:3000/projects/opengraph-image
+http://localhost:3000/work/opengraph-image
 http://localhost:3000/blog/your-post-slug/opengraph-image
 http://localhost:3000/blog/tag/typescript/opengraph-image
 http://localhost:3000/work/your-company-slug/opengraph-image
