@@ -6,14 +6,14 @@ performance-focused starting point for showcasing your **work**, **blogs**, and 
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
-![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Next.js](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/next?style=for-the-badge&logo=next.js&color=black&label=Next.js)
+![TypeScript](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/dev/typescript?style=for-the-badge&logo=typescript&color=blue&label=TypeScript)
+![React](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/react?style=for-the-badge&logo=react&color=61DAFB&label=React)
+![Tailwind CSS](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/dev/tailwindcss?style=for-the-badge&logo=tailwind-css&color=38B2AC&label=Tailwind%20CSS)
 ![MDX](https://img.shields.io/badge/MDX-Supported-orange?style=for-the-badge&logo=mdx)
-![Vitest](https://img.shields.io/badge/Vitest-4.0-6E9F18?style=for-the-badge&logo=vitest)
-![Prettier](https://img.shields.io/badge/Prettier-3.6-F7B93E?style=for-the-badge&logo=prettier)
-![ESLint](https://img.shields.io/badge/ESLint-9.39-4B32C3?style=for-the-badge&logo=eslint)
+![Vitest](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/dev/vitest?style=for-the-badge&logo=vitest&color=6E9F18&label=Vitest)
+![Prettier](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/dev/prettier?style=for-the-badge&logo=prettier&color=F7B93E&label=Prettier)
+![ESLint](https://img.shields.io/github/package-json/dependency-version/alemoraru/nextjs-portofolio-website/dev/eslint?style=for-the-badge&logo=eslint&color=4B32C3&label=ESLint)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 </div>
