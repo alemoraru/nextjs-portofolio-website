@@ -1,17 +1,17 @@
-import type { Theme } from "@/lib/types"
+import type { SiteMetadata } from "@/lib/types"
 import type { Metadata } from "next"
 
 /**
  * Site metadata configuration
  * Customize this file with your own information for SEO and social media sharing
  */
-export const siteMetadata = {
+export const siteMetadata: SiteMetadata = {
   /**
    * Accent color theme for the portfolio.
    * Options: "blue" | "purple" | "green" | "orange" | "rose" | "teal" | "indigo" | "amber" | "cyan" | "violet"
    * The chosen theme controls the accent color used across all components.
    */
-  theme: "blue" as Theme,
+  theme: "blue",
 
   /**
    * Site title (shown in browser tabs and search results)
@@ -65,7 +65,7 @@ export const siteMetadata = {
    *
    * Note: /blog, /projects, and /work always use dynamically generated OG images.
    */
-  ogImage: "/og-image.png" as string | null,
+  ogImage: "/og-image.png",
 }
 
 /**

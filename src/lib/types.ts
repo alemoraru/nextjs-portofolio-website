@@ -74,3 +74,23 @@ export type Theme =
   | "amber"
   | "cyan"
   | "violet"
+
+/**
+ * @description Shape of the site-wide metadata configuration object in src/data/metadata.ts.
+ */
+export interface SiteMetadata {
+  theme: Theme
+  title: string
+  description: string
+  keywords: string[]
+  author: {
+    name: string
+    url: string
+  }
+  siteUrl: string
+  social: {
+    twitter: string
+  }
+  /** Set to null to use the auto-generated dynamic OG image for the home page. */
+  ogImage: string | null
+}
