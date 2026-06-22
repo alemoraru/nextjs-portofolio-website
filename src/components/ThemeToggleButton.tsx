@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa6"
 import { cn } from "@/lib/utils"
 
@@ -28,9 +28,41 @@ export default function ThemeToggleButton() {
     )
   }
 
+  const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
+
+    if (!document.startViewTransition) {
+      setTheme(nextTheme)
+      return
+    }
+
+    const { clientX: x, clientY: y } = event
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    )
+
+    const transition = document.startViewTransition(() => {
+      setTheme(nextTheme)
+    })
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
+        },
+        {
+          duration: 500,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      )
+    })
+  }
+
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={handleToggle}
       className={cn(
         "relative w-11 h-11 rounded-lg transition-all duration-200",
         "border border-gray-300 dark:border-gray-700",
