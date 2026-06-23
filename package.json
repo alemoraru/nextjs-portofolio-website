@@ -51,16 +51,16 @@
     "@types/node": "25.8.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitest/coverage-v8": "^4.1.9",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
     "eslint-config-prettier": "10.1.8",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.1.1",
     "prettier": "3.8.3",
     "schema-dts": "^2.0.0",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "@types/react": "19.2.7",
