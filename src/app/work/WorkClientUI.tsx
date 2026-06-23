@@ -110,7 +110,7 @@ export default function WorkClientUI({
     <section className="px-4 max-w-4xl mx-auto">
       <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
         {/* Company Filter Dropdown - Left */}
-        <div className="relative flex-grow md:flex-grow-0">
+        <div className="relative grow md:grow-0">
           <Suspense fallback={null}>
             <FilterDropdown
               items={uniqueCompanies.map(({ company, count }) => ({ name: company, count }))}
@@ -125,7 +125,7 @@ export default function WorkClientUI({
         </div>
 
         {/* Sort Order Dropdown - Right */}
-        <div className="relative flex-grow md:flex-grow-0 z-20">
+        <div className="relative grow md:grow-0 z-20">
           <Suspense fallback={null}>
             <SortDropdown
               sortOrder={sortOrder}
