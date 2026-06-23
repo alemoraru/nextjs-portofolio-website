@@ -83,7 +83,7 @@ export default function ProjectTile({
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
             className={cn(
-              "absolute inset-0 bg-linear-to-t from-accent-600/70 via-accent-500/70 to-transparent",
+              "absolute inset-0 bg-linear-to-t from-accent-800/65 via-accent-600/40 to-transparent",
               "flex flex-col items-center justify-center gap-2 p-4"
             )}
           >
@@ -103,8 +103,8 @@ export default function ProjectTile({
         <div
           className={cn(
             "flex-1 p-4",
-            "bg-linear-to-b from-white to-gray-50",
-            "dark:from-gray-900 dark:to-gray-900/80",
+            "bg-linear-to-b from-white to-gray-50/70",
+            "dark:from-gray-900 dark:to-gray-900/65",
             "flex flex-col gap-3"
           )}
         >
