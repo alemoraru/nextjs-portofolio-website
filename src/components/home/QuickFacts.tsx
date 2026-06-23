@@ -5,6 +5,9 @@ import { factIconMap, homeIntroConfig } from "@/data/content"
 import { cn } from "@/lib/utils"
 import { fadeUpVariants } from "./animations"
 
+/**
+ * Simple component which renders pill-like quick facts about the user, based on the homeIntroConfig data.
+ */
 export default function QuickFacts() {
   const allFacts = [
     ...Object.entries(homeIntroConfig.facts)
@@ -34,7 +37,7 @@ export default function QuickFacts() {
         Quick &amp; Fun Facts
       </motion.h2>
 
-      <div className="flex flex-wrap justify-center gap-3 px-4 max-w-4xl mx-auto">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-4 max-w-4xl mx-auto">
         {allFacts.map((fact, i) => {
           const Icon = fact.icon
           return (
@@ -46,16 +49,16 @@ export default function QuickFacts() {
               transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               whileHover={{ scale: 1.05, transition: { duration: 0.2, ease: "easeOut" } }}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-full",
+                "flex items-center gap-1.5 px-3 py-1.5 sm:gap-2 sm:px-4 sm:py-2 rounded-full",
                 "border border-gray-300 dark:border-gray-700",
                 "bg-gray-50 dark:bg-gray-800",
-                "text-sm font-medium text-gray-700 dark:text-gray-300",
+                "text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300",
                 "shadow-sm hover:shadow-md",
                 "hover:border-accent-400 dark:hover:border-accent-600",
                 "transition-all duration-200 cursor-default"
               )}
             >
-              <Icon className="text-accent-600 dark:text-accent-400 text-base shrink-0" />
+              <Icon className="text-accent-600 dark:text-accent-400 text-xs sm:text-base shrink-0" />
               <span>{fact.label}</span>
             </motion.div>
           )
