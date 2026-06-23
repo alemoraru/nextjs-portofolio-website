@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { FaArrowLeft, FaExclamationCircle } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 /**
  * WorkNotFound component that displays a 404 error message when the work page is not found.
@@ -14,7 +15,11 @@ export default function WorkNotFound() {
       </p>
       <Link
         href="/work"
-        className="inline-block bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-2 rounded transition-colors shadow focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2"
+        className={cn(
+          "inline-block bg-accent-500 hover:bg-accent-600 text-white font-semibold",
+          "px-6 py-2 rounded transition-colors shadow",
+          "focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2"
+        )}
       >
         <FaArrowLeft className="inline-block mr-2" /> Back to /work
       </Link>
