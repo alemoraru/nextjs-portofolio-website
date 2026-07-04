@@ -1,6 +1,41 @@
 import React from "react"
 import { vi } from "vitest"
 
+// Minimal in-memory localStorage mock. Node gates the built-in global `localStorage`
+// behind an experimental flag, so it's undefined by default in the jsdom test environment.
+class LocalStorageMock implements Storage {
+  private store = new Map<string, string>()
+
+  get length() {
+    return this.store.size
+  }
+
+  getItem(key: string) {
+    return this.store.get(key) ?? null
+  }
+
+  setItem(key: string, value: string) {
+    this.store.set(key, String(value))
+  }
+
+  removeItem(key: string) {
+    this.store.delete(key)
+  }
+
+  clear() {
+    this.store.clear()
+  }
+
+  key(index: number) {
+    return Array.from(this.store.keys())[index] ?? null
+  }
+}
+
+Object.defineProperty(globalThis, "localStorage", {
+  value: new LocalStorageMock(),
+  writable: true,
+})
+
 // Mock next/link
 vi.mock("next/link", () => ({
   default: ({
