@@ -17,7 +17,7 @@ export default function MobileMenuToggle({
     <button
       className={cn(
         "md:hidden w-11 h-11 flex items-center justify-center rounded-lg",
-        "bg-gray-100 dark:bg-gray-800",
+        "bg-gray-100 dark:bg-gray-900",
         "border border-gray-300 dark:border-gray-700",
         "hover:bg-gray-200 dark:hover:bg-gray-700",
         "hover:border-gray-400 dark:hover:border-gray-600",
