@@ -113,8 +113,22 @@ pages, navigation, filtering, and search capabilities automatically.
 
 ## 🚀 Getting Started
 
-To start your development environment locally, after cloning the repository, run the following command
-in the root directory of the project:
+After cloning the repository, install the dependencies first:
+
+```bash
+npm install
+```
+
+or via `pnpm` (recommended):
+
+```bash
+pnpm install
+```
+
+This also sets up the project's Git hooks (via [Husky](https://typicode.github.io/husky)) automatically, no extra
+setup needed. See [Code Quality & Guidelines](#-code-quality--guidelines) for what those hooks check.
+
+To start your development environment locally, run the following command in the root directory of the project:
 
 ```bash
 npm run dev
@@ -238,16 +252,16 @@ a link on social media or a messaging app, they get a branded preview image inst
 |-----------------------------------------------|-|
 | ![Tag OG example](public/og-examples/tag.png) | |
 
-| Route              | Image content                                                                             |
-|--------------------|-------------------------------------------------------------------------------------------|
-| `/`                | Auto-generated (name, role, company, location) — or your custom image if `ogImage` is set |
-| `/blog`            | "All Posts" heading, total post count, and 3 most recent post titles                      |
-| `/projects`        | "All Projects" heading, total project count, and up to 4 project names                    |
-| `/work`            | "Work Experience" heading, total company count, and up to 4 companies with their role     |
-| `/blog/[slug]`     | Post title, summary, tags, and date                                                       |
-| `/blog/tag/[tag]`  | Tag name, post count, and latest 3 post titles                                            |
-| `/work/[slug]`     | Company name, role, description, period, and locations                                    |
-| `/projects/[slug]` | Project title, description, tech stack, and duration                                      |
+| Route              | Image content                                                                            |
+|--------------------|------------------------------------------------------------------------------------------|
+| `/`                | Auto-generated (name, role, company, location), or your custom image if `ogImage` is set |
+| `/blog`            | "All Posts" heading, total post count, and 3 most recent post titles                     |
+| `/projects`        | "All Projects" heading, total project count, and up to 4 project names                   |
+| `/work`            | "Work Experience" heading, total company count, and up to 4 companies with their role    |
+| `/blog/[slug]`     | Post title, summary, tags, and date                                                      |
+| `/blog/tag/[tag]`  | Tag name, post count, and latest 3 post titles                                           |
+| `/work/[slug]`     | Company name, role, description, period, and locations                                   |
+| `/projects/[slug]` | Project title, description, tech stack, and duration                                     |
 
 The home page generates a dynamic OG image by default. To use a custom static image instead, set `siteMetadata.ogImage`
 in `src/data/metadata.ts` to its path in the `public/` folder (e.g. `"/og-image.png"`); set it to `null` to go back to
@@ -355,6 +369,12 @@ This project follows best practices for code quality and style:
     - Run `pnpm lint:write` to automatically fix linting issues where possible
     - Check out `eslint.config.mjs` file for configuration details
 - **Modular and reusable** (React) components
+- **Git Hooks** via [Husky](https://typicode.github.io/husky) + 
+  [lint-staged](https://github.com/lint-staged/lint-staged),
+  installed automatically on `pnpm install`, mirrors the checks run in CI (`.github/workflows/code-quality.yml`)
+    - `pre-commit`: runs ESLint and Prettier (via `lint-staged`) on staged files only
+    - `pre-push`: runs the full test suite (`pnpm test`)
+    - Check out the `.husky/` directory for the hook scripts
 
 > **Note**: To run both prettier and ESLint checks together, you can use the command:
 > `pnpm format-lint` or `pnpm lint-format`.
