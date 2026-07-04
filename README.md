@@ -63,6 +63,8 @@ point for your own personal website, or as a reference for doing the same thing 
   precise field-level error messages
 - Syntax highlighting for code blocks in MDX files
 - Light/dark mode toggle. The classic theme switcher ;)
+- Runtime accent color picker: right-click (or long-press on touch devices) the theme toggle button to switch between
+  10 accent colors on the fly. The choice is remembered across visits via `localStorage`
 - Responsive design for mobile and desktop
 - SEO-friendly structure and metadata,
   including [JSON-LD structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)
@@ -163,7 +165,9 @@ folder. Here's how to make it yours:
 
 Edit `src/data/metadata.ts` to customize your site's SEO and social media information:
 
-- **theme**: Choose an accent color for the site (e.g., `blue`, `green`, `purple`, `amber`, etc.)
+- **theme**: Choose the site's _default_ accent color (e.g., `blue`, `green`, `purple`, `amber`, etc.). Visitors can
+  override this at runtime by right-clicking (or long-pressing on touch devices) the theme toggle button; their
+  choice is saved in `localStorage` and takes precedence over this default on their next visit
 - **title**: Your site/portfolio title
 - **description**: A brief description of your portfolio
 - **keywords**: Array of relevant keywords for SEO
@@ -247,8 +251,10 @@ a link on social media or a messaging app, they get a branded preview image inst
 
 The home page generates a dynamic OG image by default. To use a custom static image instead, set `siteMetadata.ogImage`
 in `src/data/metadata.ts` to its path in the `public/` folder (e.g. `"/og-image.png"`); set it to `null` to go back to
-the generated image. All generated images pick up the accent color from `siteMetadata.theme` — changing the theme
-updates the color across the entire site _and_ in all OG images automatically.
+the generated image. All generated images pick up the accent color from `siteMetadata.theme`; changing the theme
+updates the color across the entire site _and_ in all OG images automatically. Note that OG images are generated at
+build time from this default and always reflect it, regardless of any per-visitor accent color chosen at runtime via
+the theme toggle button's color picker.
 
 Images are generated at **build time** and cached. With the dev server running, you can preview any of them directly:
 
@@ -279,6 +285,7 @@ Planned improvement ideas and future features:
 - [X] 🖼 Add theme customization options:
     - [X] Centralized config file for content and appearance settings
     - [X] Color palette options
+    - [X] Runtime accent color picker (right-click/long-press the theme toggle button)
 - [ ] ✨ Add layout variations for customization (e.g., sidebar, grid, etc.)
 
 ---
