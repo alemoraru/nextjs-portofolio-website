@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { describe, it, expect, vi } from "vitest"
+import { AccentThemeProvider } from "@/components/AccentThemeProvider"
 import ThemeToggleButton from "@/components/ThemeToggleButton"
 
 // Mock next-themes to provide different theme states
@@ -14,20 +15,33 @@ vi.mock("next-themes", async () => {
   }
 })
 
+/**
+ * ThemeToggleButton reads accent theme state via `useAccentTheme()`, so it must be
+ * rendered within an `AccentThemeProvider`.
+ */
+function renderThemeToggleButton() {
+  return render(
+    <AccentThemeProvider>
+      <ThemeToggleButton />
+    </AccentThemeProvider>
+  )
+}
+
+const getToggleButton = () => screen.getByRole("button", { name: /switch to (dark|light) mode/i })
+
 describe("ThemeToggleButton", () => {
   it("renders the component", () => {
-    const { container } = render(<ThemeToggleButton />)
+    const { container } = renderThemeToggleButton()
 
     // Component should render
     expect(container.firstChild).not.toBeNull()
   })
 
   it("renders the toggle button after mounting", async () => {
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      const button = screen.getByRole("button")
-      expect(button).toBeDefined()
+      expect(getToggleButton()).toBeDefined()
     })
   })
 
@@ -42,10 +56,10 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Switch to dark mode")).toBeDefined()
+      expect(screen.getByLabelText(/switch to dark mode/i)).toBeDefined()
     })
   })
 
@@ -60,10 +74,10 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Switch to light mode")).toBeDefined()
+      expect(screen.getByLabelText(/switch to light mode/i)).toBeDefined()
     })
   })
 
@@ -79,11 +93,10 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      const button = screen.getByRole("button")
-      fireEvent.click(button)
+      fireEvent.click(getToggleButton())
     })
 
     expect(mockSetTheme).toHaveBeenCalledWith("dark")
@@ -102,11 +115,10 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      const button = screen.getByRole("button")
-      fireEvent.click(button)
+      fireEvent.click(getToggleButton())
     })
 
     expect(mockSetTheme).toHaveBeenCalledWith("light")
@@ -124,7 +136,7 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    const { container } = render(<ThemeToggleButton />)
+    const { container } = renderThemeToggleButton()
 
     await waitFor(() => {
       // Check for SVG icon (sun icon should be present)
@@ -144,7 +156,7 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    const { container } = render(<ThemeToggleButton />)
+    const { container } = renderThemeToggleButton()
 
     await waitFor(() => {
       // Check for SVG icon (moon icon should be present)
@@ -165,10 +177,10 @@ describe("ThemeToggleButton", () => {
       forcedTheme: undefined,
     })
 
-    render(<ThemeToggleButton />)
+    renderThemeToggleButton()
 
     await waitFor(() => {
-      const button = screen.getByRole("button")
+      const button = getToggleButton()
       fireEvent.click(button)
       fireEvent.click(button)
       fireEvent.click(button)

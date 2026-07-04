@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { describe, it, expect } from "vitest"
+import { AccentThemeProvider } from "@/components/AccentThemeProvider"
 import Header from "@/components/Header"
 import { homeIntroConfig } from "@/data/content"
 
@@ -12,27 +13,37 @@ function getInitials(name: string): string {
     .toUpperCase()
 }
 
+// Header renders ThemeToggleButton, which reads accent theme state via `useAccentTheme()`,
+// so it must be rendered within an `AccentThemeProvider`.
+function renderHeader() {
+  return render(
+    <AccentThemeProvider>
+      <Header />
+    </AccentThemeProvider>
+  )
+}
+
 describe("Header", () => {
   it("renders the header element with the correct id", () => {
-    render(<Header />)
+    renderHeader()
     const header = document.getElementById("headerPortfolio")
     expect(header).not.toBeNull()
     expect(header?.tagName).toBe("HEADER")
   })
 
   it("renders the site name from breadcrumbs", () => {
-    render(<Header />)
+    renderHeader()
     expect(screen.getByText(homeIntroConfig.name)).toBeDefined()
   })
 
   it("renders the initials for mobile breadcrumbs", () => {
-    render(<Header />)
+    renderHeader()
     const initials = getInitials(homeIntroConfig.name)
     expect(screen.getByText(initials)).toBeDefined()
   })
 
   it("renders navigation items", () => {
-    render(<Header />)
+    renderHeader()
     expect(screen.getByText("Home")).toBeDefined()
     expect(screen.getByText("Work")).toBeDefined()
     expect(screen.getByText("Projects")).toBeDefined()
@@ -40,7 +51,7 @@ describe("Header", () => {
   })
 
   it("renders navigation links with correct hrefs", () => {
-    render(<Header />)
+    renderHeader()
     const homeLink = screen.getByText("Home").closest("a")
     const workLink = screen.getByText("Work").closest("a")
     const projectsLink = screen.getByText("Projects").closest("a")
@@ -53,19 +64,19 @@ describe("Header", () => {
   })
 
   it("renders the theme toggle button", () => {
-    render(<Header />)
-    const themeButton = screen.getByLabelText("Switch to dark mode")
+    renderHeader()
+    const themeButton = screen.getByLabelText(/switch to dark mode/i)
     expect(themeButton).toBeDefined()
   })
 
   it("renders the mobile menu toggle button", () => {
-    render(<Header />)
+    renderHeader()
     const menuButton = screen.getByLabelText("Open menu")
     expect(menuButton).toBeDefined()
   })
 
   it("toggles the mobile menu toggle aria-label on click", () => {
-    render(<Header />)
+    renderHeader()
     const menuButton = screen.getByLabelText("Open menu")
 
     // The button uses onMouseDown, so fire that event
@@ -76,7 +87,7 @@ describe("Header", () => {
   })
 
   it("marks the current page as active in the navigation", () => {
-    render(<Header />)
+    renderHeader()
     // With pathname mocked to "/", Home should have aria-current="page"
     const homeLink = screen.getByText("Home").closest("a")
     expect(homeLink?.getAttribute("aria-current")).toBe("page")
