@@ -41,22 +41,23 @@ export default function ProjectTile({
         transition={{ opacity: { duration: 0.8 } }}
         whileHover={{
           scale: 1.05,
-          filter: "brightness(1.15)",
           transition: {
-            type: "spring",
-            stiffness: 200,
-            damping: 30,
-            duration: 0.4,
+            type: "tween",
+            ease: [0.22, 1, 0.36, 1],
+            duration: 0.6,
           },
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{
+          scale: 0.98,
+          transition: { type: "tween", ease: "easeOut", duration: 0.15 },
+        }}
         className={cn(
           "group relative overflow-hidden rounded-lg h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
           "bg-white dark:bg-gray-900",
           "shadow-sm hover:shadow-2xl hover:shadow-accent-500/20",
           "hover:border-accent-500 dark:hover:border-accent-500",
-          "transition-all duration-200",
+          "transition-[border-color,box-shadow] duration-200",
           "focus-visible:outline-none focus-visible:ring-2",
           "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-black"
