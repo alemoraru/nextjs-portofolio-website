@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import PageHeaderSync from "@/components/PageHeaderSync"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
@@ -125,6 +126,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
   return (
     <AnimatedArticle>
+      <PageHeaderSync
+        title={frontmatter.title}
+        subtitle={`${homeIntroConfig.name}'s Projects · ${duration}`}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}

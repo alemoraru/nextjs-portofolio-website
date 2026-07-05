@@ -11,6 +11,18 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Generates initials from a name (e.g., "John Doe" -> "JD").
+ * @param name - the full name to abbreviate.
+ */
+export function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map(word => word[0])
+    .join("")
+    .toUpperCase()
+}
+
+/**
  * Formats a duration given start and end dates.
  * Can be used for work experience or project durations.
  * @param start - the start date in "YYYY-MM" format

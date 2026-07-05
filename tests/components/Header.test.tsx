@@ -2,23 +2,19 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { describe, it, expect } from "vitest"
 import { AccentThemeProvider } from "@/components/AccentThemeProvider"
 import Header from "@/components/Header"
+import { PageHeaderProvider } from "@/components/PageHeaderProvider"
 import { homeIntroConfig } from "@/data/content"
-
-// Generate initials from a name (same logic as Breadcrumbs component)
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .map(word => word[0])
-    .join("")
-    .toUpperCase()
-}
+import { getInitials } from "@/lib/utils"
 
 // Header renders ThemeToggleButton, which reads accent theme state via `useAccentTheme()`,
-// so it must be rendered within an `AccentThemeProvider`.
+// and reads the current detail page's title/subtitle via `usePageHeader()`, so it must be
+// rendered within both an `AccentThemeProvider` and a `PageHeaderProvider`.
 function renderHeader() {
   return render(
     <AccentThemeProvider>
-      <Header />
+      <PageHeaderProvider>
+        <Header />
+      </PageHeaderProvider>
     </AccentThemeProvider>
   )
 }
