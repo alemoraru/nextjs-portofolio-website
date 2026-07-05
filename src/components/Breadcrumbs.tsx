@@ -3,18 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { homeIntroConfig } from "@/data/content"
-import { cn } from "@/lib/utils"
-
-/**
- * Generate initials from a name (e.g., "John Doe" -> "JD")
- */
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .map(word => word[0])
-    .join("")
-    .toUpperCase()
-}
+import { cn, getInitials } from "@/lib/utils"
 
 /**
  * The "breadcrumbs" component that displays the current path as a series of links.
@@ -34,12 +23,18 @@ export default function Breadcrumbs() {
   // Note: We don't validate slugs here as invalid slugs will 404 at the page level
   const showBreadcrumbs = segments.length > 0 && allowedRoots.includes(segments[0])
 
+  // On individual detail pages (/blog/<slug>, /projects/<slug>, /work/<slug>), the mobile
+  // header flips to show the page title once the reader scrolls (see Header), so keep the
+  // crumb trail down to just the root segment here instead of also spelling out the slug.
+  const isDetailPage = segments.length === 2 && allowedRoots.includes(segments[0])
+  const displaySegments = isDetailPage ? segments.slice(0, 1) : segments
+
   return (
-    <div className="flex items-center gap-2 text-lg text-black dark:text-white my-auto">
+    <div className="flex items-center gap-2 min-w-0 text-lg text-black dark:text-white my-auto">
       <Link
         href="/"
         className={cn(
-          "hover:text-accent-500 dark:hover:text-accent-400 font-semibold",
+          "shrink-0 hover:text-accent-500 dark:hover:text-accent-400 font-semibold",
           "transition-all duration-200 hover:scale-105 active:scale-95"
         )}
       >
@@ -50,21 +45,43 @@ export default function Breadcrumbs() {
       </Link>
 
       {/* Crumbs part: show only on mobile, not on desktop */}
-      <span className="flex md:hidden items-center gap-1.5">
+      <span className="flex md:hidden items-center gap-1.5 min-w-0">
         {showBreadcrumbs &&
-          segments.map((segment, i) => {
+          displaySegments.map((segment, i) => {
             const href = "/" + segments.slice(0, i + 1).join("/")
-            const label = segment.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())
+
+            // Route segments (e.g. a tag slug) can be URL-encoded - decode before
+            // formatting so labels read as text instead of raw "%20"-style escapes.
+            let decodedSegment = segment
+            try {
+              decodedSegment = decodeURIComponent(segment)
+            } catch {
+              // Malformed escape sequence - fall back to the raw segment
+            }
+            const label = decodedSegment
+              .replace(/[-_]/g, " ")
+              .replace(/\b\w/g, l => l.toUpperCase())
+
+            // Last segment is the only one that can be arbitrarily long (e.g. a tag
+            // name), so it's the only one that needs to shrink/truncate.
+            const isLastSegment = i === displaySegments.length - 1
+
             return (
-              <span key={href} className="flex items-center gap-1.5">
-                <span className="text-gray-400 dark:text-gray-600 font-mono text-sm">/</span>
+              <span
+                key={href}
+                className={cn("flex items-center gap-1.5", isLastSegment && "min-w-0")}
+              >
+                <span className="text-gray-400 dark:text-gray-600 font-mono text-sm shrink-0">
+                  /
+                </span>
                 <Link
                   href={href}
                   className={cn(
                     "text-sm font-medium text-black dark:text-white",
                     "hover:text-accent-500 dark:hover:text-accent-400",
                     "transition-all duration-200 hover:underline",
-                    "underline-offset-2 decoration-accent-500/50"
+                    "underline-offset-2 decoration-accent-500/50",
+                    isLastSegment && "truncate min-w-0"
                   )}
                 >
                   {label}

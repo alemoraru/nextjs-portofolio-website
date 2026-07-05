@@ -102,7 +102,7 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
 
   // Render the list of posts with the specified tag
   return (
-    <div className="px-4 max-w-4xl mx-auto py-8 flex flex-col">
+    <div className="px-4 max-w-4xl mx-auto py-2 flex flex-col">
       <BackToPageButton pageUrl="/blog" />
       <div className="flex items-center gap-3 mb-6">
         <FaTag className="w-6 h-6 text-accent-500" />

@@ -36,6 +36,21 @@ Object.defineProperty(globalThis, "localStorage", {
   writable: true,
 })
 
+// jsdom doesn't implement `window.matchMedia`, but Header uses it to detect the mobile
+// breakpoint for its scroll-flip behavior. Defaults to "no match" (desktop) unless a
+// test overrides it.
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }),
+})
+
 // Mock next/link
 vi.mock("next/link", () => ({
   default: ({

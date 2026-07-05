@@ -104,7 +104,7 @@ export default function FilterDropdown({
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             className={cn(
-              "origin-top absolute z-10 mt-2 w-64 p-4 space-y-3",
+              "origin-top absolute z-10 mt-2 w-64 p-2 space-y-3",
               "bg-white dark:bg-gray-800",
               "border border-gray-300 dark:border-gray-700",
               "rounded-lg shadow-xl backdrop-blur-sm"

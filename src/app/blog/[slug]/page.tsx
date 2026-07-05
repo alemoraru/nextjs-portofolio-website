@@ -15,6 +15,7 @@ import BackToPageButton from "@/components/BackToPageButton"
 import BlogTag from "@/components/BlogTag"
 import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
+import PageHeaderSync from "@/components/PageHeaderSync"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
 import { homeIntroConfig } from "@/data/content"
@@ -145,8 +146,14 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     },
   }
 
+  const headerSubtitle = `${homeIntroConfig.name}'s Blog · ${new Date(post.date).toLocaleDateString(
+    undefined,
+    { year: "numeric", month: "short", day: "numeric" }
+  )}`
+
   return (
     <AnimatedArticle>
+      <PageHeaderSync title={post.title} subtitle={headerSubtitle} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
