@@ -52,6 +52,10 @@ export function formatDuration(start: string, end: string): string {
     return `${formatMonth(startMonth)} ${startYear} – Present`
   }
 
+  if (start === end) {
+    return `${formatMonth(startMonth)} ${startYear}`
+  }
+
   if (startYear === endYear) {
     return `${formatMonth(startMonth)} – ${formatMonth(endMonth)} ${startYear}`
   }

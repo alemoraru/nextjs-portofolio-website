@@ -86,6 +86,10 @@ describe("formatDuration", () => {
   it("should handle single digit months", () => {
     expect(formatDuration("2020-1", "2020-12")).toBe("Jan – Dec 2020")
   })
+
+  it("should collapse to a single date when start equals end", () => {
+    expect(formatDuration("2020-01", "2020-01")).toBe("Jan 2020")
+  })
 })
 
 describe("calculateDuration", () => {
