@@ -95,7 +95,7 @@ export function calculateDuration(start: string, end: string): string {
   // Calculate difference in months
   const yearDiff = endDate.getFullYear() - startDate.getFullYear()
   const monthDiff = endDate.getMonth() - startDate.getMonth()
-  const totalMonths = yearDiff * 12 + monthDiff + 1
+  const totalMonths = yearDiff * 12 + monthDiff
 
   const years = Math.floor(totalMonths / 12)
   const months = totalMonths % 12
