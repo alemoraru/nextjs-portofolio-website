@@ -23,6 +23,16 @@ export function getInitials(name: string): string {
 }
 
 /**
+ * Formats a start/end date pair as a range, collapsing to a single date when they match.
+ * @param start - the start date string.
+ * @param end - the end date string.
+ * @returns "start - end", or just "start" if start and end are equal.
+ */
+export function formatDateRange(start: string, end: string): string {
+  return start === end ? start : `${start} - ${end}`
+}
+
+/**
  * Formats a duration given start and end dates.
  * Can be used for work experience or project durations.
  * @param start - the start date in "YYYY-MM" format

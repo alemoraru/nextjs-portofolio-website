@@ -17,7 +17,7 @@ import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllWorkItems } from "@/lib/mdx"
 import { pageParams, WorkItemFrontmatter } from "@/lib/types"
-import { calculateDuration } from "@/lib/utils"
+import { calculateDuration, formatDateRange } from "@/lib/utils"
 import type { EmployeeRole, WithContext } from "schema-dts"
 
 /**
@@ -124,7 +124,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
     <AnimatedArticle>
       <PageHeaderSync
         title={frontmatter.title}
-        subtitle={`${frontmatter.company} · ${frontmatter.start} - ${frontmatter.end}`}
+        subtitle={`${frontmatter.company} · ${formatDateRange(frontmatter.start, frontmatter.end)}`}
       />
       <script
         type="application/ld+json"
@@ -149,9 +149,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
       </div>
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">{frontmatter.description}</p>
       <p className="text-sm text-gray-500 dark:text-gray-500 mb-6 flex items-center gap-2">
-        <span>
-          {frontmatter.start} - {frontmatter.end}
-        </span>
+        <span>{formatDateRange(frontmatter.start, frontmatter.end)}</span>
         <span>·</span>
         <span>{calculateDuration(frontmatter.start, frontmatter.end)}</span>
       </p>
