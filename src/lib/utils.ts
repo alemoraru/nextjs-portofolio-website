@@ -23,12 +23,54 @@ export function getInitials(name: string): string {
 }
 
 /**
+ * Parses a flexible date string into a Date. Accepts "Jan 2020"/"January 2020", "2020-01"/"2020/01",
+ * "Present"/"current" (resolved to now), or anything the native Date constructor understands.
+ * Returns an invalid Date (NaN time) if none of these apply.
+ * @param dateStr - the date string to parse.
+ */
+function parseFlexibleDate(dateStr: string): Date {
+  if (dateStr.toLowerCase().includes("present") || dateStr.toLowerCase().includes("current")) {
+    return new Date()
+  }
+
+  // Format: "Jan 2020", "January 2020"
+  const monthYearMatch = dateStr.match(/^([A-Za-z]+)\s+(\d{4})$/)
+  if (monthYearMatch) {
+    return new Date(`${monthYearMatch[1]} 1, ${monthYearMatch[2]}`)
+  }
+
+  // Format: "2020-01", "2020/01"
+  const dashMatch = dateStr.match(/^(\d{4})[-/](\d{2})$/)
+  if (dashMatch) {
+    return new Date(parseInt(dashMatch[1]), parseInt(dashMatch[2]) - 1, 1)
+  }
+
+  // Fallback to Date constructor
+  return new Date(dateStr)
+}
+
+/**
  * Formats a start/end date pair as a range, collapsing to a single date when they match.
  * @param start - the start date string.
  * @param end - the end date string.
  * @returns "start – end", or just "start" if start and end are equal.
+ * @throws {Error} if start or end is not a recognizable date (see {@link parseFlexibleDate}),
+ * or if start is chronologically after end.
  */
 export function formatDateRange(start: string, end: string): string {
+  const startDate = parseFlexibleDate(start)
+  const endDate = parseFlexibleDate(end)
+
+  if (Number.isNaN(startDate.getTime())) {
+    throw new Error(`formatDateRange: invalid start date "${start}"`)
+  }
+  if (Number.isNaN(endDate.getTime())) {
+    throw new Error(`formatDateRange: invalid end date "${end}"`)
+  }
+  if (start !== end && startDate.getTime() > endDate.getTime()) {
+    throw new Error(`formatDateRange: start date "${start}" is after end date "${end}"`)
+  }
+
   return start === end ? start : `${start} – ${end}`
 }
 
@@ -83,31 +125,8 @@ export function formatDuration(start: string, end: string): string {
  * @returns Formatted duration (e.g., "2 yrs 3 mos", "6 mos", "1 yr")
  */
 export function calculateDuration(start: string, end: string): string {
-  const parseDate = (dateStr: string): Date => {
-    // Handle "Present" or similar
-    if (dateStr.toLowerCase().includes("present") || dateStr.toLowerCase().includes("current")) {
-      return new Date()
-    }
-
-    // Try parsing common formats
-    // Format: "Jan 2020", "January 2020"
-    const monthYearMatch = dateStr.match(/^([A-Za-z]+)\s+(\d{4})$/)
-    if (monthYearMatch) {
-      return new Date(`${monthYearMatch[1]} 1, ${monthYearMatch[2]}`)
-    }
-
-    // Format: "2020-01", "2020/01"
-    const dashMatch = dateStr.match(/^(\d{4})[-/](\d{2})$/)
-    if (dashMatch) {
-      return new Date(parseInt(dashMatch[1]), parseInt(dashMatch[2]) - 1, 1)
-    }
-
-    // Fallback to Date constructor
-    return new Date(dateStr)
-  }
-
-  const startDate = parseDate(start)
-  const endDate = parseDate(end)
+  const startDate = parseFlexibleDate(start)
+  const endDate = parseFlexibleDate(end)
 
   // Calculate difference in months
   const yearDiff = endDate.getFullYear() - startDate.getFullYear()
@@ -190,6 +209,10 @@ export function diceCoefficient(a: string, b: string): number {
 
   const pairsA = bigrams(a)
   const pairsB = bigrams(b)
+  // Single-character strings produce no bigrams; without this guard the ratio below
+  // would divide 0/0 and return NaN instead of "no similarity".
+  if (pairsA.length === 0 || pairsB.length === 0) return 0
+
   const setB = new Set(pairsB)
   let matches = 0
   for (const pair of pairsA) {
@@ -354,6 +377,11 @@ export function paginateItems<T>(
   pageSize: number
 ): { items: T[]; totalPages: number } {
   const totalPages = Math.ceil(items.length / pageSize)
+  // Symmetric with an out-of-range high page (which naturally slices to []): a page below
+  // 1 has no items either, rather than silently wrapping into a negative slice from the end.
+  if (page < 1) {
+    return { items: [], totalPages }
+  }
   const start = (page - 1) * pageSize
   return { items: items.slice(start, start + pageSize), totalPages }
 }

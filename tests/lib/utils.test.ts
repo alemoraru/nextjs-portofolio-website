@@ -1,10 +1,12 @@
 import { describe, it, expect } from "vitest"
 import {
   cn,
+  getInitials,
   formatDateRange,
   formatBlogDate,
   formatDuration,
   calculateDuration,
+  escapeXml,
   normalizeTechName,
   getReadingTime,
   diceCoefficient,
@@ -49,6 +51,32 @@ describe("cn", () => {
   })
 })
 
+describe("getInitials", () => {
+  it("should build initials from a two-word name", () => {
+    expect(getInitials("John Doe")).toBe("JD")
+  })
+
+  it("should uppercase lowercase input", () => {
+    expect(getInitials("john doe")).toBe("JD")
+  })
+
+  it("should return a single initial for a single-word name", () => {
+    expect(getInitials("Madonna")).toBe("M")
+  })
+
+  it("should build initials for names with more than two words", () => {
+    expect(getInitials("Jane Mary Doe")).toBe("JMD")
+  })
+
+  it("should return an empty string for an empty name", () => {
+    expect(getInitials("")).toBe("")
+  })
+
+  it("should tolerate multiple/leading/trailing spaces without producing extra characters", () => {
+    expect(getInitials("  Jane   Mary  Doe ")).toBe("JMD")
+  })
+})
+
 describe("formatDateRange", () => {
   it("should join start and end with an en dash", () => {
     expect(formatDateRange("Mar 2021", "Jun 2023")).toBe("Mar 2021 – Jun 2023")
@@ -61,6 +89,35 @@ describe("formatDateRange", () => {
   it("should collapse to a single date when start equals end", () => {
     expect(formatDateRange("Present", "Present")).toBe("Present")
   })
+
+  it("should accept ISO year-month and slash-separated dates", () => {
+    expect(formatDateRange("2021-03", "2023-06")).toBe("2021-03 – 2023-06")
+    expect(formatDateRange("2021/03", "2023/06")).toBe("2021/03 – 2023/06")
+  })
+
+  it("should throw when the start date is not a recognizable date", () => {
+    expect(() => formatDateRange("not a date", "Jun 2023")).toThrow(/invalid start date/)
+  })
+
+  it("should throw when the end date is not a recognizable date", () => {
+    expect(() => formatDateRange("Mar 2021", "not a date")).toThrow(/invalid end date/)
+  })
+
+  it("should throw when a date is an empty string", () => {
+    expect(() => formatDateRange("", "Jun 2023")).toThrow(/invalid start date/)
+  })
+
+  it("should throw when start is chronologically after end", () => {
+    expect(() => formatDateRange("Jun 2023", "Mar 2021")).toThrow(/is after end date/)
+  })
+
+  it("should not throw when start and end are the same instant, even for Present", () => {
+    expect(() => formatDateRange("Present", "Present")).not.toThrow()
+  })
+
+  it("should not throw when start is before a Present end date", () => {
+    expect(() => formatDateRange("Jan 2020", "Present")).not.toThrow()
+  })
 })
 
 describe("formatBlogDate", () => {
@@ -70,6 +127,14 @@ describe("formatBlogDate", () => {
 
   it("should format a date with the short month when requested", () => {
     expect(formatBlogDate("2025-04-01", "short")).toBe("Apr 1, 2025")
+  })
+
+  it("should format double-digit days without a leading zero", () => {
+    expect(formatBlogDate("2025-04-15")).toBe("April 15, 2025")
+  })
+
+  it("should return 'Invalid Date' for an unparseable date string", () => {
+    expect(formatBlogDate("not-a-date")).toBe("Invalid Date")
   })
 })
 
@@ -115,6 +180,11 @@ describe("formatDuration", () => {
 
   it("should collapse to a single date when start equals end", () => {
     expect(formatDuration("2020-01", "2020-01")).toBe("Jan 2020")
+  })
+
+  it("does not validate ordering: a reversed range is formatted as given", () => {
+    // Unlike formatDateRange, formatDuration performs no chronological validation.
+    expect(formatDuration("2021-06", "2020-01")).toBe("Jun 2021 – Jan 2020")
   })
 })
 
@@ -221,6 +291,51 @@ describe("calculateDuration", () => {
     it("should handle leap year calculations", () => {
       expect(calculateDuration("2020-02", "2021-02")).toBe("1 yr")
     })
+
+    it("does not validate ordering: a reversed range produces a negative duration", () => {
+      // Unlike formatDateRange, calculateDuration performs no chronological validation.
+      expect(calculateDuration("Jun 2020", "Jan 2020")).toBe("-1 yr -5 mo")
+    })
+
+    it("propagates NaN for an unparseable date instead of throwing", () => {
+      expect(calculateDuration("not-a-date", "2020-01")).toBe("NaN yr NaN mo")
+    })
+  })
+})
+
+describe("escapeXml", () => {
+  it("should escape ampersands", () => {
+    expect(escapeXml("Tom & Jerry")).toBe("Tom &amp; Jerry")
+  })
+
+  it("should escape angle brackets", () => {
+    expect(escapeXml("<script>")).toBe("&lt;script&gt;")
+  })
+
+  it("should escape double quotes", () => {
+    expect(escapeXml('say "hi"')).toBe("say &quot;hi&quot;")
+  })
+
+  it("should escape single quotes", () => {
+    expect(escapeXml("it's here")).toBe("it&apos;s here")
+  })
+
+  it("should escape all special characters together", () => {
+    expect(escapeXml(`<a href="x">Tom & Jerry's "book"</a>`)).toBe(
+      "&lt;a href=&quot;x&quot;&gt;Tom &amp; Jerry&apos;s &quot;book&quot;&lt;/a&gt;"
+    )
+  })
+
+  it("should escape ampersands before other entities to avoid double-escaping", () => {
+    expect(escapeXml("&lt;")).toBe("&amp;lt;")
+  })
+
+  it("should return strings without special characters unchanged", () => {
+    expect(escapeXml("plain text 123")).toBe("plain text 123")
+  })
+
+  it("should return an empty string unchanged", () => {
+    expect(escapeXml("")).toBe("")
   })
 })
 
@@ -389,6 +504,14 @@ describe("getReadingTime", () => {
     const text = Array(200).fill("word").join(" ")
     expect(getReadingTime(text)).toBe(2)
   })
+
+  it("should return 1 for an empty string (splitting yields a single empty token)", () => {
+    expect(getReadingTime("")).toBe(1)
+  })
+
+  it("should return 1 for a whitespace-only string", () => {
+    expect(getReadingTime("   ")).toBe(1)
+  })
 })
 
 describe("diceCoefficient", () => {
@@ -422,6 +545,17 @@ describe("diceCoefficient", () => {
     const scoreHigh = diceCoefficient("react", "reactjs")
     const scoreLow = diceCoefficient("react", "python")
     expect(scoreHigh).toBeGreaterThan(scoreLow)
+  })
+
+  it("should return 0 when one string has no bigrams and shares none with the other", () => {
+    // Single-char "a" produces no bigrams; "ab" has one ("ab"), so there's nothing to match.
+    expect(diceCoefficient("ab", "a")).toBe(0)
+  })
+
+  it("should return 0 (not NaN) for two different single-character strings", () => {
+    // Both single-char inputs produce zero bigrams; without the zero-bigram guard,
+    // the coefficient would divide 0/0 and return NaN instead of "no similarity".
+    expect(diceCoefficient("a", "b")).toBe(0)
   })
 })
 
@@ -498,6 +632,13 @@ describe("Blog helpers", () => {
       filterBlogPosts(blogPosts, ["react"])
       expect(blogPosts).toEqual(original)
     })
+
+    it("should exclude posts with tags entirely omitted (undefined), not just empty", () => {
+      const postsWithUndefinedTags: BlogPostProps[] = [
+        { slug: "e", title: "E", summary: "", date: "2024-05-01" },
+      ]
+      expect(filterBlogPosts(postsWithUndefinedTags, ["react"])).toHaveLength(0)
+    })
   })
 
   describe("sortBlogPosts", () => {
@@ -569,6 +710,10 @@ describe("Work helpers", () => {
     it("should return empty when no match", () => {
       expect(filterWorkItems(workItems, ["Unknown"])).toHaveLength(0)
     })
+
+    it("should return an empty array unchanged when given an empty work list", () => {
+      expect(filterWorkItems([], ["Acme"])).toEqual([])
+    })
   })
 
   describe("sortWorkItems", () => {
@@ -592,6 +737,19 @@ describe("Work helpers", () => {
       const original = [...workItems]
       sortWorkItems(workItems, "newest")
       expect(workItems).toEqual(original)
+    })
+
+    it("should tie-break multiple Present items alphabetically by company when sorting newest", () => {
+      const twoPresent: WorkItemProps[] = [
+        { ...workItems[0], slug: "z-co", company: "Zeta", end: "Present" },
+        { ...workItems[0], slug: "a-co", company: "Alpha", end: "Present" },
+      ]
+      const result = sortWorkItems(twoPresent, "newest")
+      expect(result.map(w => w.slug)).toEqual(["a-co", "z-co"])
+    })
+
+    it("should handle an empty array", () => {
+      expect(sortWorkItems([], "newest")).toEqual([])
     })
   })
 })
@@ -645,6 +803,10 @@ describe("Project helpers", () => {
     it("should return empty when no match", () => {
       expect(filterProjects(projects, ["Rust"])).toHaveLength(0)
     })
+
+    it("should return an empty array unchanged when given an empty project list", () => {
+      expect(filterProjects([], ["React"])).toEqual([])
+    })
   })
 
   describe("sortProjects", () => {
@@ -668,6 +830,19 @@ describe("Project helpers", () => {
       const original = [...projects]
       sortProjects(projects, "newest")
       expect(projects).toEqual(original)
+    })
+
+    it("should tie-break multiple Present projects alphabetically by title when sorting newest", () => {
+      const twoPresent: ProjectProps[] = [
+        { ...projects[0], slug: "z-proj", title: "Zeta", endDate: "Present" },
+        { ...projects[0], slug: "a-proj", title: "Alpha", endDate: "Present" },
+      ]
+      const result = sortProjects(twoPresent, "newest")
+      expect(result.map(p => p.slug)).toEqual(["a-proj", "z-proj"])
+    })
+
+    it("should handle an empty array", () => {
+      expect(sortProjects([], "newest")).toEqual([])
     })
   })
 })
@@ -710,5 +885,17 @@ describe("paginateItems", () => {
     const { items: page, totalPages } = paginateItems(items, 1, 10)
     expect(page).toEqual(items)
     expect(totalPages).toBe(1)
+  })
+
+  it("should return empty items for page 0", () => {
+    const { items: page, totalPages } = paginateItems(items, 0, 3)
+    expect(page).toEqual([])
+    expect(totalPages).toBe(4)
+  })
+
+  it("should return empty items for a negative page instead of wrapping from the end", () => {
+    const { items: page, totalPages } = paginateItems(items, -1, 3)
+    expect(page).toEqual([])
+    expect(totalPages).toBe(4)
   })
 })
