@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { FaChevronDown, FaBroom, FaCheck } from "react-icons/fa"
+import { useClickOutside } from "@/hooks/useClickOutside"
 import { cn } from "@/lib/utils"
 
 interface FilterDropdownProps {
@@ -29,26 +30,7 @@ export default function FilterDropdown({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsDropdownOpen(false)
-      }
-    }
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsDropdownOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    document.addEventListener("keydown", handleEscape)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-      document.removeEventListener("keydown", handleEscape)
-    }
-  }, [])
+  useClickOutside(dropdownRef, () => setIsDropdownOpen(false))
 
   // Close the dropdown when filters are applied
   const handleApply = () => {

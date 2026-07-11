@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { DEFAULT_SIMILAR_POSTS_COUNT, PRESENT } from "@/lib/constants"
 import type { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 
 /**
@@ -96,15 +97,15 @@ export function formatBlogDate(date: string, style: "long" | "short" = "long"): 
  */
 export function formatDuration(start: string, end: string): string {
   const [startYear, startMonth] = start.split("-")
-  const [endYear, endMonth] = end === "Present" ? ["", ""] : end.split("-")
+  const [endYear, endMonth] = end === PRESENT ? ["", ""] : end.split("-")
 
   const formatMonth = (month: string) => {
     const date = new Date(2000, parseInt(month) - 1)
     return date.toLocaleDateString("en-US", { month: "short" })
   }
 
-  if (end === "Present") {
-    return `${formatMonth(startMonth)} ${startYear} – Present`
+  if (end === PRESENT) {
+    return `${formatMonth(startMonth)} ${startYear} – ${PRESENT}`
   }
 
   if (start === end) {
@@ -227,13 +228,13 @@ export function diceCoefficient(a: string, b: string): number {
  *
  * @param posts - Array of blog posts to search through.
  * @param targetTag - The tag to compare against post tags.
- * @param maxPosts - Maximum number of similar posts to return (default: 3).
+ * @param maxPosts - Maximum number of similar posts to return (default: {@link DEFAULT_SIMILAR_POSTS_COUNT}).
  * @returns An array of objects containing the post, its best matching tag, and the similarity score.
  */
 export function getClosestTagPosts(
   posts: BlogPostProps[],
   targetTag: string,
-  maxPosts = 3
+  maxPosts = DEFAULT_SIMILAR_POSTS_COUNT
 ): Array<{ post: BlogPostProps; bestScore: number; bestTag: string }> {
   return posts
     .map(post => {
@@ -255,6 +256,26 @@ export function getClosestTagPosts(
 }
 
 /**
+ * Filters items to those whose associated value(s) overlap with a selected list.
+ * Used to back the per-domain `filter*` helpers below (e.g. blog tags, work companies,
+ * project tech stacks) with a single implementation of the same "OR" matching logic.
+ * @param items - Array of items to filter.
+ * @param selected - Values to filter by. If empty, no filtering is applied.
+ * @param getValues - Extracts the value(s) to match against `selected` from an item.
+ */
+function filterByValues<T>(
+  items: T[],
+  selected: string[],
+  getValues: (item: T) => string[] | undefined
+): T[] {
+  if (selected.length === 0) return items
+  return items.filter(item => {
+    const values = getValues(item)
+    return values ? selected.some(s => values.includes(s)) : false
+  })
+}
+
+/**
  * Filters blog posts based on selected tags. If no tags are selected, returns all posts.
  * A post matches if it has at least one tag that is in the selectedTags array.
  *
@@ -263,8 +284,7 @@ export function getClosestTagPosts(
  * @returns An array of blog posts that match the selected tags.
  */
 export function filterBlogPosts(posts: BlogPostProps[], selectedTags: string[]): BlogPostProps[] {
-  if (selectedTags.length === 0) return posts
-  return posts.filter(post => post.tags && selectedTags.some(tag => post.tags!.includes(tag)))
+  return filterByValues(posts, selectedTags, post => post.tags)
 }
 
 /**
@@ -292,33 +312,7 @@ export function filterWorkItems(
   work: WorkItemProps[],
   selectedCompanies: string[]
 ): WorkItemProps[] {
-  if (selectedCompanies.length === 0) return work
-  return work.filter(item => selectedCompanies.some(c => item.company === c))
-}
-
-/**
- * Sorts work items by end date (newest first) or start date (oldest first). Work items with "Present" as end date are treated as the newest.
- * @param work - Array of work items to sort.
- * @param sortOrder - "newest" to sort by end date descending, "oldest" to sort by start date ascending.
- * @returns A new array of work items sorted according to the specified order.
- */
-export function sortWorkItems(
-  work: WorkItemProps[],
-  sortOrder: "newest" | "oldest"
-): WorkItemProps[] {
-  return [...work].sort((a, b) => {
-    if (sortOrder === "newest") {
-      const aIsPresent = a.end === "Present"
-      const bIsPresent = b.end === "Present"
-      if (aIsPresent && !bIsPresent) return -1
-      if (!aIsPresent && bIsPresent) return 1
-      if (aIsPresent && bIsPresent) return a.company.localeCompare(b.company)
-      const endDiff = new Date(b.end || "").getTime() - new Date(a.end || "").getTime()
-      if (endDiff !== 0) return endDiff
-      return a.company.localeCompare(b.company)
-    }
-    return new Date(a.start || "").getTime() - new Date(b.start || "").getTime()
-  })
+  return filterByValues(work, selectedCompanies, item => [item.company])
 }
 
 /**
@@ -332,14 +326,63 @@ export function filterProjects(
   projects: ProjectProps[],
   selectedTechStack: string[]
 ): ProjectProps[] {
-  if (selectedTechStack.length === 0) return projects
-  return projects.filter(
-    project => project.techStack && selectedTechStack.some(tech => project.techStack.includes(tech))
+  return filterByValues(projects, selectedTechStack, project => project.techStack)
+}
+
+/**
+ * Sorts items by end date (newest first, with `PRESENT` treated as newest) or start date
+ * (oldest first). Ties among simultaneous `PRESENT` items, or among items sharing an end
+ * date, are broken alphabetically via `getLabel`. Backs `sortWorkItems`/`sortProjects` with
+ * a single implementation of the same "Present-aware" sort algorithm.
+ * @param items - Array of items to sort.
+ * @param sortOrder - "newest" to sort by end date descending, "oldest" to sort by start date ascending.
+ * @param getStart - Extracts an item's start date string.
+ * @param getEnd - Extracts an item's end date string (or `PRESENT`).
+ * @param getLabel - Extracts the string used to break ties (e.g. company/title).
+ */
+function sortByPresentAwareDate<T>(
+  items: T[],
+  sortOrder: "newest" | "oldest",
+  getStart: (item: T) => string,
+  getEnd: (item: T) => string,
+  getLabel: (item: T) => string
+): T[] {
+  return [...items].sort((a, b) => {
+    if (sortOrder === "newest") {
+      const aIsPresent = getEnd(a) === PRESENT
+      const bIsPresent = getEnd(b) === PRESENT
+      if (aIsPresent && !bIsPresent) return -1
+      if (!aIsPresent && bIsPresent) return 1
+      if (aIsPresent && bIsPresent) return getLabel(a).localeCompare(getLabel(b))
+      const endDiff = new Date(getEnd(b) || "").getTime() - new Date(getEnd(a) || "").getTime()
+      if (endDiff !== 0) return endDiff
+      return getLabel(a).localeCompare(getLabel(b))
+    }
+    return new Date(getStart(a) || "").getTime() - new Date(getStart(b) || "").getTime()
+  })
+}
+
+/**
+ * Sorts work items by end date (newest first) or start date (oldest first). Work items with `PRESENT` as end date are treated as the newest.
+ * @param work - Array of work items to sort.
+ * @param sortOrder - "newest" to sort by end date descending, "oldest" to sort by start date ascending.
+ * @returns A new array of work items sorted according to the specified order.
+ */
+export function sortWorkItems(
+  work: WorkItemProps[],
+  sortOrder: "newest" | "oldest"
+): WorkItemProps[] {
+  return sortByPresentAwareDate(
+    work,
+    sortOrder,
+    item => item.start,
+    item => item.end,
+    item => item.company
   )
 }
 
 /**
- * Sorts projects by end date (newest first) or start date (oldest first). Projects with "Present" as end date are treated as the newest.
+ * Sorts projects by end date (newest first) or start date (oldest first). Projects with `PRESENT` as end date are treated as the newest.
  * @param projects - Array of projects to sort.
  * @param sortOrder - "newest" to sort by end date descending, "oldest" to sort by start date ascending.
  * @returns A new array of projects sorted according to the specified order.
@@ -348,19 +391,13 @@ export function sortProjects(
   projects: ProjectProps[],
   sortOrder: "newest" | "oldest"
 ): ProjectProps[] {
-  return [...projects].sort((a, b) => {
-    if (sortOrder === "newest") {
-      const aIsPresent = a.endDate === "Present"
-      const bIsPresent = b.endDate === "Present"
-      if (aIsPresent && !bIsPresent) return -1
-      if (!aIsPresent && bIsPresent) return 1
-      if (aIsPresent && bIsPresent) return a.title.localeCompare(b.title)
-      const endDiff = new Date(b.endDate || "").getTime() - new Date(a.endDate || "").getTime()
-      if (endDiff !== 0) return endDiff
-      return a.title.localeCompare(b.title)
-    }
-    return new Date(a.startDate || "").getTime() - new Date(b.startDate || "").getTime()
-  })
+  return sortByPresentAwareDate(
+    projects,
+    sortOrder,
+    item => item.startDate,
+    item => item.endDate,
+    item => item.title
+  )
 }
 
 /**

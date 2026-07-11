@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { FiCpu } from "react-icons/fi"
+import { cn } from "@/lib/utils"
 
 interface DevIconProps {
   name: string
@@ -26,33 +27,29 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
   if (imgError) {
     if (text) {
       return (
-        <div className={`flex items-center space-x-2 ${className ? className : ""}`}>
-          <FiCpu className={`size-6 ${iconClassName ? iconClassName : ""}`} />
-          <span className={"font-semibold text-lg"}>{text}</span>
+        <div className={cn("flex items-center space-x-2", className)}>
+          <FiCpu className={cn("size-6", iconClassName)} />
+          <span className="font-semibold text-lg">{text}</span>
         </div>
       )
     }
 
-    return (
-      <FiCpu
-        className={`size-6 ${iconClassName ? iconClassName : ""} ${className ? className : ""}`}
-      />
-    )
+    return <FiCpu className={cn("size-6", iconClassName, className)} />
   }
 
   // Attempt to load the image from the public/dev folder. If it errors, onError will set imgError.
   if (text) {
     return (
-      <div className={`flex items-center space-x-2 ${className ? className : ""}`}>
+      <div className={cn("flex items-center space-x-2", className)}>
         <Image
           src={`/dev/${name}.svg`}
           alt={`${name} icon`}
           width={24}
           height={24}
-          className={`h-6 w-6 ${iconClassName ? iconClassName : ""}`}
+          className={cn("h-6 w-6", iconClassName)}
           onError={() => setImgError(true)}
         />
-        <span className={"font-semibold text-lg"}>{text}</span>
+        <span className="font-semibold text-lg">{text}</span>
       </div>
     )
   } else {
@@ -62,7 +59,7 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
         alt={`${name} icon`}
         width={24}
         height={24}
-        className={`h-6 w-6 ${iconClassName ? iconClassName : ""} ${className ? className : ""}`}
+        className={cn("h-6 w-6", iconClassName, className)}
         onError={() => setImgError(true)}
       />
     )

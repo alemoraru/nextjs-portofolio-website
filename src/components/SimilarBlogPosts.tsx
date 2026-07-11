@@ -1,4 +1,5 @@
 import BlogPost from "@/components/BlogPost"
+import { DEFAULT_SIMILAR_POSTS_COUNT } from "@/lib/constants"
 import { BlogPostProps } from "@/lib/types"
 
 /**
@@ -31,7 +32,7 @@ function computeTagSimilarity(postA: BlogPostProps, postB: BlogPostProps): numbe
 export default function SimilarBlogPosts({
   allPosts,
   currentPostPlug,
-  maxPosts = 3,
+  maxPosts = DEFAULT_SIMILAR_POSTS_COUNT,
   heading = "Other posts that might interest you...",
 }: SimilarBlogPostsProps) {
   const currentPost = allPosts.find(p => p.slug === currentPostPlug)

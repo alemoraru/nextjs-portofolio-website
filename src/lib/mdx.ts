@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { z } from "zod"
+import { PRESENT } from "@/lib/constants"
 import {
   BlogFrontmatterSchema,
   ProjectFrontmatterSchema,
@@ -112,8 +113,8 @@ export async function getAllWorkItems(): Promise<WorkItemProps[]> {
     }),
     // Sort by start date descending so the most recent role is first
     (a, b) => {
-      const endA = a.end === "Present" ? new Date() : new Date(a.end)
-      const endB = b.end === "Present" ? new Date() : new Date(b.end)
+      const endA = a.end === PRESENT ? new Date() : new Date(a.end)
+      const endB = b.end === PRESENT ? new Date() : new Date(b.end)
       return endB.getTime() - endA.getTime()
     }
   )

@@ -7,6 +7,7 @@ import { FaCalendarAlt } from "react-icons/fa"
 import AnimatedCard from "@/components/AnimatedCard"
 import HoverArrow from "@/components/HoverArrow"
 import TechBadge from "@/components/TechBadge"
+import { MAX_PROJECT_TILE_TECH_BADGES } from "@/lib/constants"
 import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
 
 interface ProjectTileProps {
@@ -120,9 +121,8 @@ export default function ProjectTile({
           {techStack &&
             techStack.length > 0 &&
             (() => {
-              const maxBadges = 5 // Show at most 5 badges (approximately 2 rows)
-              const visibleTechStack = techStack.slice(0, maxBadges)
-              const remainingCount = techStack.length - maxBadges
+              const visibleTechStack = techStack.slice(0, MAX_PROJECT_TILE_TECH_BADGES)
+              const remainingCount = techStack.length - MAX_PROJECT_TILE_TECH_BADGES
 
               return (
                 <div className="flex flex-wrap justify-center gap-2">

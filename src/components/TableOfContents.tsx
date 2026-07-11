@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useClickOutside } from "@/hooks/useClickOutside"
 import { cn } from "@/lib/utils"
 
 /**
@@ -81,23 +82,10 @@ export default function TableOfContents() {
   }, [headings])
 
   // Close ToC when clicking outside
-  useEffect(() => {
-    if (!isExpanded) return
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        buttonRef.current &&
-        panelRef.current &&
-        !buttonRef.current.contains(event.target as Node) &&
-        !panelRef.current.contains(event.target as Node)
-      ) {
-        setIsExpanded(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [isExpanded])
+  useClickOutside([buttonRef, panelRef], () => setIsExpanded(false), {
+    enabled: isExpanded,
+    closeOnEscape: false,
+  })
 
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)

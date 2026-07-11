@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { siteMetadata } from "@/data/metadata"
 import { getAllBlogPosts, getAllProjects, getAllWorkItems } from "@/lib/mdx"
+import { formatDateRange } from "@/lib/utils"
 
 /**
  * API route handler for GET requests to "/llms.txt".
@@ -21,8 +22,7 @@ export async function GET() {
 
   const projectsSection = projects
     .map(p => {
-      const period =
-        p.endDate === "Present" ? `${p.startDate} – Present` : `${p.startDate} – ${p.endDate}`
+      const period = formatDateRange(p.startDate, p.endDate)
       const tech = p.techStack.join(", ")
       return `- [${p.title}](${base}/projects/${p.slug}) (${period}, ${tech}): ${p.description}`
     })
@@ -30,7 +30,7 @@ export async function GET() {
 
   const workSection = work
     .map(w => {
-      const period = `${w.start} – ${w.end}`
+      const period = formatDateRange(w.start, w.end)
       return `- [${w.company}](${base}/work/${w.slug}): ${w.title}, ${period}. ${w.description}`
     })
     .join("\n")

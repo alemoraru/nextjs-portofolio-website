@@ -4,11 +4,14 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useRef, useEffect } from "react"
+import { useClickOutside } from "@/hooks/useClickOutside"
 import { navItems } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 /**
  * MobileMenu component that displays a collapsible menu for mobile devices.
+ * @param isOpen - Indicates whether the menu is open or closed.
+ * @param setIsOpenAction - Function to toggle the menu's open state.
  */
 export default function MobileMenu({
   isOpen,
@@ -20,27 +23,15 @@ export default function MobileMenu({
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement | null>(null)
 
+  useClickOutside(menuRef, () => setIsOpenAction(false), { enabled: isOpen, closeOnEscape: false })
+
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpenAction(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
-      // Prevent scroll when menu is open
-      document.body.style.overflow = "hidden"
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside)
-      document.body.style.overflow = ""
-    }
-
+    // Prevent scroll when menu is open
+    document.body.style.overflow = isOpen ? "hidden" : ""
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
       document.body.style.overflow = ""
     }
-  }, [isOpen, setIsOpenAction])
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -95,14 +86,13 @@ export default function MobileMenu({
               >
                 <Link
                   href={path}
-                  className={`block w-full px-4 py-3.5 rounded-lg text-base font-medium
-                             transition-all duration-200
-                             border active:scale-98
-                             ${
-                               pathname === path
-                                 ? "bg-accent-500 dark:bg-accent-600 text-white border-accent-600 dark:border-accent-500 shadow-md"
-                                 : "text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                             }`}
+                  className={cn(
+                    "block w-full px-4 py-3.5 rounded-lg text-base font-medium",
+                    "transition-all duration-200 border active:scale-98",
+                    pathname === path
+                      ? "bg-accent-500 dark:bg-accent-600 text-white border-accent-600 dark:border-accent-500 shadow-md"
+                      : "text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800/50"
+                  )}
                   onClick={() => setIsOpenAction(false)}
                 >
                   <span className="flex items-center gap-2">
