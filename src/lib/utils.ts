@@ -26,10 +26,23 @@ export function getInitials(name: string): string {
  * Formats a start/end date pair as a range, collapsing to a single date when they match.
  * @param start - the start date string.
  * @param end - the end date string.
- * @returns "start - end", or just "start" if start and end are equal.
+ * @returns "start – end", or just "start" if start and end are equal.
  */
 export function formatDateRange(start: string, end: string): string {
-  return start === end ? start : `${start} - ${end}`
+  return start === end ? start : `${start} – ${end}`
+}
+
+/**
+ * Formats an ISO date string ("YYYY-MM-DD") as a human-readable date, e.g. "April 1, 2025".
+ * @param date - the ISO date string to format.
+ * @param style - "long" for full month name, "short" for abbreviated month name.
+ */
+export function formatBlogDate(date: string, style: "long" | "short" = "long"): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: style,
+    day: "numeric",
+  })
 }
 
 /**

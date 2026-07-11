@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest"
 import {
   cn,
+  formatDateRange,
+  formatBlogDate,
   formatDuration,
   calculateDuration,
   normalizeTechName,
@@ -44,6 +46,30 @@ describe("cn", () => {
 
   it("should handle undefined and null", () => {
     expect(cn("px-2", undefined, null, "py-1")).toBe("px-2 py-1")
+  })
+})
+
+describe("formatDateRange", () => {
+  it("should join start and end with an en dash", () => {
+    expect(formatDateRange("Mar 2021", "Jun 2023")).toBe("Mar 2021 – Jun 2023")
+  })
+
+  it("should collapse to a single date when start month and end month are the same", () => {
+    expect(formatDateRange("Mar 2021", "Mar 2021")).toBe("Mar 2021")
+  })
+
+  it("should collapse to a single date when start equals end", () => {
+    expect(formatDateRange("Present", "Present")).toBe("Present")
+  })
+})
+
+describe("formatBlogDate", () => {
+  it("should format a date with the long month by default", () => {
+    expect(formatBlogDate("2025-04-01")).toBe("April 1, 2025")
+  })
+
+  it("should format a date with the short month when requested", () => {
+    expect(formatBlogDate("2025-04-01", "short")).toBe("Apr 1, 2025")
   })
 })
 

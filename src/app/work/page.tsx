@@ -1,12 +1,12 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
 import { filterWorkItems, paginateItems, sortWorkItems } from "@/lib/utils"
 import WorkClientUI from "./WorkClientUI"
-import WorkNotFound from "./WorkNotFound"
 
-const WORK_PAGE_SIZE = paginationConfig.projectsPerPage
+const WORK_PAGE_SIZE = paginationConfig.workItemsPerPage
 
 /**
  * Generate metadata for SEO, including a canonical URL that reflects the current page number.
@@ -109,7 +109,14 @@ export default async function WorkPage(props: {
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
-    return <WorkNotFound />
+    return (
+      <PageNotFound
+        heading="Work page not found"
+        description="The page you requested does not exist. Please return to the first page of work experience."
+        backHref="/work"
+        backLabel="Back to /work"
+      />
+    )
   }
 
   return (

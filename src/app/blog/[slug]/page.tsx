@@ -22,7 +22,7 @@ import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { pageParams } from "@/lib/types"
-import { getReadingTime } from "@/lib/utils"
+import { formatBlogDate, getReadingTime } from "@/lib/utils"
 import type { BlogPosting, WithContext } from "schema-dts"
 
 /**
@@ -146,10 +146,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     },
   }
 
-  const headerSubtitle = `${homeIntroConfig.name}'s Blog · ${new Date(post.date).toLocaleDateString(
-    undefined,
-    { year: "numeric", month: "short", day: "numeric" }
-  )}`
+  const headerSubtitle = `${homeIntroConfig.name}'s Blog · ${formatBlogDate(post.date, "short")}`
 
   return (
     <AnimatedArticle>
@@ -163,11 +160,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       <div className="flex items-center gap-4 text-gray-500 mb-8">
         <span className="flex items-center gap-1.5">
           <FaRegCalendarAlt className="shrink-0" />
-          {new Date(post.date).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatBlogDate(post.date)}
         </span>
         <span>•</span>
         <span className="flex items-center gap-1.5">

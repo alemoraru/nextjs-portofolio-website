@@ -1,11 +1,12 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
+import AnimatedCard from "@/components/AnimatedCard"
 import BlogTag from "@/components/BlogTag"
+import HoverArrow from "@/components/HoverArrow"
 import { BlogPostProps } from "@/lib/types"
-import { cn } from "@/lib/utils"
+import { cn, formatBlogDate } from "@/lib/utils"
 
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
@@ -13,22 +14,7 @@ import { cn } from "@/lib/utils"
 export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
   return (
     <Link href={`/blog/${slug}`} className="block h-full">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ opacity: { duration: 0.8 } }}
-        whileHover={{
-          scale: 1.05,
-          transition: {
-            type: "tween",
-            ease: [0.22, 1, 0.36, 1],
-            duration: 0.6,
-          },
-        }}
-        whileTap={{
-          scale: 0.98,
-          transition: { type: "tween", ease: "easeOut", duration: 0.15 },
-        }}
+      <AnimatedCard
         className={cn(
           "group relative h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700 rounded-lg p-5 shadow-sm",
@@ -58,13 +44,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
           <div className="flex items-center gap-3 mt-2 text-sm text-gray-600 dark:text-gray-400">
             <span className="flex items-center gap-1.5">
               <FaRegCalendarAlt className="w-3.5 h-3.5" />
-              <time dateTime={date}>
-                {new Date(date).toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
+              <time dateTime={date}>{formatBlogDate(date)}</time>
             </span>
             {readingTime && (
               <>
@@ -95,16 +75,9 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
         {/* Read More Hint */}
         <div className="flex items-center gap-1 mt-4 text-sm font-semibold text-accent-600 dark:text-accent-400 group-hover:gap-2 transition-all duration-200">
           <span>Read article</span>
-          <motion.span
-            initial={{ x: 0 }}
-            animate={{ x: 0 }}
-            whileHover={{ x: 4 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          >
-            →
-          </motion.span>
+          <HoverArrow />
         </div>
-      </motion.div>
+      </AnimatedCard>
     </Link>
   )
 }

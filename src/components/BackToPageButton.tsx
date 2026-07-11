@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
+import HoverArrow from "@/components/HoverArrow"
 import { cn } from "@/lib/utils"
 
 interface BackToPageButtonProps {
@@ -28,15 +28,7 @@ export default function BackToPageButton({ pageUrl }: BackToPageButtonProps) {
         "dark:focus-visible:ring-offset-black rounded-sm"
       )}
     >
-      <motion.span
-        initial={{ x: 0 }}
-        animate={{ x: 0 }}
-        whileHover={{ x: -2 }}
-        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-        className="text-base"
-      >
-        ←
-      </motion.span>
+      <HoverArrow direction="left" offset={2} className="text-base" />
       <span>Back to {capitalizedName}</span>
     </Link>
   )

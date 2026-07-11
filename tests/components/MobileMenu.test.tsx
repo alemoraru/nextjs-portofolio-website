@@ -4,10 +4,10 @@ import MobileMenu from "@/components/MobileMenu"
 import { navItems } from "@/lib/constants"
 
 describe("MobileMenu", () => {
-  let mockSetIsOpen: ReturnType<typeof vi.fn>
+  let mockSetIsOpen: ReturnType<typeof vi.fn<(v: boolean) => void>>
 
   beforeEach(() => {
-    mockSetIsOpen = vi.fn()
+    mockSetIsOpen = vi.fn<(v: boolean) => void>()
   })
 
   afterEach(() => {

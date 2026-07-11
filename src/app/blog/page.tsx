@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { filterBlogPosts, paginateItems, sortBlogPosts } from "@/lib/utils"
 import BlogClientUI from "./BlogClientUI"
-import BlogNotFound from "./BlogNotFound"
 
 const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
 
@@ -111,7 +111,14 @@ export default async function BlogPage(props: {
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
-    return <BlogNotFound />
+    return (
+      <PageNotFound
+        heading="Blog page not found"
+        description="The page you requested does not exist. Please return to the first page of blog posts."
+        backHref="/blog"
+        backLabel="Back to /blog"
+      />
+    )
   }
 
   return (
