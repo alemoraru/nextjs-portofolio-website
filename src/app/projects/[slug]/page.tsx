@@ -5,7 +5,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { BsCardImage, BsStack } from "react-icons/bs"
-import { FaUsers, FaUserTie, FaClock, FaGithub, FaBook } from "react-icons/fa"
+import { FaUsers, FaUserTie, FaClock, FaGithub, FaBook, FaExternalLinkAlt } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
@@ -144,7 +144,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
       <div className="flex flex-wrap items-center gap-3 mb-6">
         {frontmatter.teamSize && (
           <div className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
-            <FaUsers className="w-4 h-4" />
+            <FaUsers className="size-4" />
             <span>
               <strong>Team Size:</strong> {frontmatter.teamSize}
             </span>
@@ -152,7 +152,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
         )}
         {frontmatter.role && (
           <div className="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm">
-            <FaUserTie className="w-4 h-4" />
+            <FaUserTie className="size-4" />
             <span>
               <strong>Role:</strong> {frontmatter.role}
             </span>
@@ -168,9 +168,15 @@ export default async function ProjectPage(props: { params: pageParams }) {
           <Link
             href={frontmatter.githubUrl}
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
+            className="group flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
-            <FaGithub className="w-4 h-4" />
+            <span className="relative size-4 shrink-0 overflow-hidden">
+              <FaGithub className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0" />
+              <FaExternalLinkAlt
+                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+                aria-hidden="true"
+              />
+            </span>
             <span>View on GitHub</span>
           </Link>
         )}
@@ -178,9 +184,15 @@ export default async function ProjectPage(props: { params: pageParams }) {
           <Link
             href={frontmatter.paperUrl}
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
+            className="group flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
-            <FaBook className="w-4 h-4" />
+            <span className="relative size-4 shrink-0 overflow-hidden">
+              <FaBook className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0" />
+              <FaExternalLinkAlt
+                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+                aria-hidden="true"
+              />
+            </span>
             <span>Read Paper</span>
           </Link>
         )}
