@@ -24,7 +24,10 @@ export default function ActiveFilterChips({
 
   return (
     <div
-      className={`flex flex-row flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-thin ${className}`}
+      className={cn(
+        "flex flex-row flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-thin",
+        className
+      )}
     >
       {filters.map(filter => (
         <span

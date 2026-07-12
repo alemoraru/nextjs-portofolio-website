@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
+import HoverArrow from "@/components/HoverArrow"
 import { cn } from "@/lib/utils"
 
 interface ViewAllButtonProps {
@@ -43,15 +43,7 @@ export default function ViewAllHeader({ title, pageUrl, itemCount }: ViewAllButt
         >
           {itemCount}
         </span>
-        <motion.span
-          initial={{ x: 0 }}
-          animate={{ x: 0 }}
-          whileHover={{ x: 2 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="text-base"
-        >
-          →
-        </motion.span>
+        <HoverArrow offset={2} className="text-base" />
       </Link>
     </div>
   )

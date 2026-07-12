@@ -5,27 +5,15 @@ import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import { homeIntroConfig } from "@/data/content"
 import { ProjectProps } from "@/lib/types"
+import { sortProjects } from "@/lib/utils"
 import { fadeUpVariants, staggerContainerVariants, staggerItemVariants } from "./animations"
 
 interface ProjectsPreviewProps {
   projects: ProjectProps[]
 }
 
-function sortProjects(items: ProjectProps[]): ProjectProps[] {
-  return items.slice().sort((a, b) => {
-    const aIsPresent = a.endDate === "Present"
-    const bIsPresent = b.endDate === "Present"
-    if (aIsPresent && !bIsPresent) return -1
-    if (!aIsPresent && bIsPresent) return 1
-    if (aIsPresent && bIsPresent) return a.title.localeCompare(b.title)
-    const endDiff = new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
-    if (endDiff !== 0) return endDiff
-    return a.title.localeCompare(b.title)
-  })
-}
-
 export default function ProjectsPreview({ projects }: ProjectsPreviewProps) {
-  const items = sortProjects(projects).slice(0, homeIntroConfig.projectsToShow)
+  const items = sortProjects(projects, "newest").slice(0, homeIntroConfig.projectsToShow)
 
   return (
     <motion.div

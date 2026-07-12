@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
 import { filterProjects, paginateItems, sortProjects } from "@/lib/utils"
 import ProjectsClientUI from "./ProjectsClientUI"
-import ProjectsNotFound from "./ProjectsNotFound"
 
 const PROJECTS_PAGE_SIZE = paginationConfig.projectsPerPage
 
@@ -111,7 +111,14 @@ export default async function ProjectsPage(props: {
 
   // If page is out of bounds, show not-found
   if (currentPage < 1 || (totalPages > 0 && currentPage > totalPages)) {
-    return <ProjectsNotFound />
+    return (
+      <PageNotFound
+        heading="Projects page not found"
+        description="The page you requested does not exist. Please return to the first page of projects."
+        backHref="/projects"
+        backLabel="Back to /projects"
+      />
+    )
   }
 
   return (

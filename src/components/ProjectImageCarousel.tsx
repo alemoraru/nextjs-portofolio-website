@@ -84,11 +84,12 @@ export default function ProjectImageCarousel({ images }: ProjectImageCarouselPro
                 <button
                   key={index}
                   onClick={() => api?.scrollTo(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className={cn(
+                    "h-2 rounded-full transition-all",
                     index === current
                       ? "w-8 bg-accent-500"
                       : "size-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 cursor-pointer hover:scale-120"
-                  }`}
+                  )}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}

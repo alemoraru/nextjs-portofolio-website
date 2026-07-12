@@ -7,6 +7,7 @@ import { FaChevronDown } from "react-icons/fa"
 import { FaMoon, FaSun } from "react-icons/fa6"
 import { useAccentTheme } from "@/components/AccentThemeProvider"
 import ThemeColorMenu from "@/components/ThemeColorMenu"
+import { useClickOutside } from "@/hooks/useClickOutside"
 import { cn } from "@/lib/utils"
 import type { Theme } from "@/lib/types"
 
@@ -73,26 +74,7 @@ export default function ThemeToggleButton() {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsColorMenuOpen(false)
-      }
-    }
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsColorMenuOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    document.addEventListener("keydown", handleEscape)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-      document.removeEventListener("keydown", handleEscape)
-    }
-  }, [])
+  useClickOutside(containerRef, () => setIsColorMenuOpen(false))
 
   if (!mounted) {
     return (

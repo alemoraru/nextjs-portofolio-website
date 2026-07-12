@@ -1,22 +1,12 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
-import { calculateDuration, cn } from "@/lib/utils"
-
-interface WorkItemProps {
-  slug: string
-  company: string
-  title: string
-  start: string
-  end: string
-  description: string
-  locations?: string[]
-  logoUrl?: string
-}
+import AnimatedCard from "@/components/AnimatedCard"
+import { WorkItemProps } from "@/lib/types"
+import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
 
 /**
  * A functional component that renders a work item with a link, title, company, start and end dates, description, and locations.
@@ -33,22 +23,7 @@ export default function WorkItem({
 }: WorkItemProps) {
   return (
     <Link href={`/work/${slug}`} className="block group">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ opacity: { duration: 0.8 } }}
-        whileHover={{
-          scale: 1.05,
-          transition: {
-            type: "tween",
-            ease: [0.22, 1, 0.36, 1],
-            duration: 0.6,
-          },
-        }}
-        whileTap={{
-          scale: 0.98,
-          transition: { type: "tween", ease: "easeOut", duration: 0.15 },
-        }}
+      <AnimatedCard
         className={cn(
           "border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm",
           "hover:border-accent-500 transition-colors duration-200 cursor-pointer",
@@ -78,9 +53,7 @@ export default function WorkItem({
         <div className="mt-2 text-gray-500 flex flex-col sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
             <FaCalendarAlt className="w-4 h-4" />
-            <span>
-              {start} – {end}
-            </span>
+            <span>{formatDateRange(start, end)}</span>
             <span>·</span>
             <span>{calculateDuration(start, end)}</span>
           </div>
@@ -94,7 +67,7 @@ export default function WorkItem({
         </div>
 
         <p className="mt-2 text-gray-700">{description}</p>
-      </motion.div>
+      </AnimatedCard>
     </Link>
   )
 }

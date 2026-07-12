@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { FaChevronDown, FaCheck } from "react-icons/fa"
+import { useClickOutside } from "@/hooks/useClickOutside"
 import { cn } from "@/lib/utils"
 
 interface SortDropdownProps {
@@ -11,31 +12,15 @@ interface SortDropdownProps {
 
 /**
  * SortDropdown component that provides a dropdown for selecting sorting options (e.g., newest, oldest).
+ * @param sortOrder - The current sort order.
+ * @param onChange - Callback function to handle changes in the sort order.
+ * @param options - Array of sorting options with labels and values.
  */
 export default function SortDropdown({ sortOrder, onChange, options }: SortDropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsDropdownOpen(false)
-      }
-    }
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsDropdownOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    document.addEventListener("keydown", handleEscape)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-      document.removeEventListener("keydown", handleEscape)
-    }
-  }, [])
+  useClickOutside(dropdownRef, () => setIsDropdownOpen(false))
 
   return (
     <div className="relative" ref={dropdownRef}>

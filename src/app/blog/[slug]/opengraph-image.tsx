@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og"
 import { homeIntroConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { getOgThemeColors } from "@/lib/og-theme"
+import { formatBlogDate } from "@/lib/utils"
 
 // DO NOT REMOVE BELOW VARIABLES
 export const alt = "Blog post"
@@ -22,13 +23,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const title = post?.title ?? "Blog Post"
   const summary = post?.summary ?? ""
   const tags = post?.tags?.slice(0, 4) ?? []
-  const date = post?.date
-    ? new Date(post.date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : ""
+  const date = post?.date ? formatBlogDate(post.date) : ""
 
   return new ImageResponse(
     <div

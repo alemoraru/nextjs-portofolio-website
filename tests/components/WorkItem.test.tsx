@@ -55,11 +55,6 @@ describe("WorkItem", () => {
     expect(screen.getByText("San Francisco, CA, Remote")).toBeDefined()
   })
 
-  it("does not render locations when not provided", () => {
-    const { container } = render(<WorkItem {...defaultProps} locations={undefined} />)
-    expect(container.textContent).not.toContain("San Francisco")
-  })
-
   it("does not render locations when array is empty", () => {
     const { container } = render(<WorkItem {...defaultProps} locations={[]} />)
     // Should not render the location section

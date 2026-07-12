@@ -5,27 +5,15 @@ import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
 import { homeIntroConfig } from "@/data/content"
 import { WorkItemProps } from "@/lib/types"
+import { sortWorkItems } from "@/lib/utils"
 import { fadeUpVariants, staggerContainerVariants, staggerItemVariants } from "./animations"
 
 interface WorkPreviewProps {
   work: WorkItemProps[]
 }
 
-function sortWork(items: WorkItemProps[]): WorkItemProps[] {
-  return items.slice().sort((a, b) => {
-    const aIsPresent = a.end === "Present"
-    const bIsPresent = b.end === "Present"
-    if (aIsPresent && !bIsPresent) return -1
-    if (!aIsPresent && bIsPresent) return 1
-    if (aIsPresent && bIsPresent) return a.company.localeCompare(b.company)
-    const endDiff = new Date(b.end).getTime() - new Date(a.end).getTime()
-    if (endDiff !== 0) return endDiff
-    return a.company.localeCompare(b.company)
-  })
-}
-
 export default function WorkPreview({ work }: WorkPreviewProps) {
-  const items = sortWork(work).slice(0, homeIntroConfig.workItemsToShow)
+  const items = sortWorkItems(work, "newest").slice(0, homeIntroConfig.workItemsToShow)
 
   return (
     <motion.div

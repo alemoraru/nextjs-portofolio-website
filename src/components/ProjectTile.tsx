@@ -4,8 +4,11 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { FaCalendarAlt } from "react-icons/fa"
+import AnimatedCard from "@/components/AnimatedCard"
+import HoverArrow from "@/components/HoverArrow"
 import TechBadge from "@/components/TechBadge"
-import { calculateDuration, cn } from "@/lib/utils"
+import { MAX_PROJECT_TILE_TECH_BADGES } from "@/lib/constants"
+import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
 
 interface ProjectTileProps {
   slug: string
@@ -35,22 +38,7 @@ export default function ProjectTile({
 }: ProjectTileProps) {
   return (
     <Link href={`/projects/${slug}`} className="block h-full">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ opacity: { duration: 0.8 } }}
-        whileHover={{
-          scale: 1.05,
-          transition: {
-            type: "tween",
-            ease: [0.22, 1, 0.36, 1],
-            duration: 0.6,
-          },
-        }}
-        whileTap={{
-          scale: 0.98,
-          transition: { type: "tween", ease: "easeOut", duration: 0.15 },
-        }}
+      <AnimatedCard
         className={cn(
           "group relative overflow-hidden rounded-lg h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
@@ -89,14 +77,7 @@ export default function ProjectTile({
             )}
           >
             <span className="text-white text-lg font-bold tracking-tight">Explore Project</span>
-            <motion.span
-              initial={{ x: 0 }}
-              whileHover={{ x: 4 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="text-white text-2xl font-bold"
-            >
-              →
-            </motion.span>
+            <HoverArrow className="text-white text-2xl font-bold" />
           </motion.div>
         </div>
 
@@ -130,9 +111,7 @@ export default function ProjectTile({
           {startDate && endDate && (
             <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
               <FaCalendarAlt className="w-3 h-3" />
-              <span>
-                {startDate} – {endDate}
-              </span>
+              <span>{formatDateRange(startDate, endDate)}</span>
               <span>·</span>
               <span>{calculateDuration(startDate, endDate)}</span>
             </div>
@@ -142,9 +121,8 @@ export default function ProjectTile({
           {techStack &&
             techStack.length > 0 &&
             (() => {
-              const maxBadges = 5 // Show at most 5 badges (approximately 2 rows)
-              const visibleTechStack = techStack.slice(0, maxBadges)
-              const remainingCount = techStack.length - maxBadges
+              const visibleTechStack = techStack.slice(0, MAX_PROJECT_TILE_TECH_BADGES)
+              const remainingCount = techStack.length - MAX_PROJECT_TILE_TECH_BADGES
 
               return (
                 <div className="flex flex-wrap justify-center gap-2">
@@ -165,7 +143,7 @@ export default function ProjectTile({
               )
             })()}
         </div>
-      </motion.div>
+      </AnimatedCard>
     </Link>
   )
 }

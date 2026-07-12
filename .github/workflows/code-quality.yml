@@ -27,7 +27,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts
 
       # Takes less than eslint, so we run it first
       - name: Run Prettier check
@@ -36,6 +36,10 @@ jobs:
       # We also configured eslint-config-prettier to avoid conflicts
       - name: Run ESLint
         run: pnpm lint:check
+
+      # Extra type checking for TypeScript, which is not covered by ESLint
+      - name: Run TypeScript type check
+        run: pnpm types:check
 
   test:
     name: Tests
@@ -60,7 +64,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts
 
       - name: Run tests with coverage
         run: pnpm test:coverage
