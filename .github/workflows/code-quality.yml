@@ -37,6 +37,10 @@ jobs:
       - name: Run ESLint
         run: pnpm lint:check
 
+      # Extra type checking for TypeScript, which is not covered by ESLint
+      - name: Run TypeScript type check
+        run: pnpm types:check
+
   test:
     name: Tests
     runs-on: ubuntu-latest
