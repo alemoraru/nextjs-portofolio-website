@@ -263,7 +263,7 @@ export function getClosestTagPosts(
  * @param selected - Values to filter by. If empty, no filtering is applied.
  * @param getValues - Extracts the value(s) to match against `selected` from an item.
  */
-function filterByValues<T>(
+export function filterByValues<T>(
   items: T[],
   selected: string[],
   getValues: (item: T) => string[] | undefined
@@ -340,7 +340,7 @@ export function filterProjects(
  * @param getEnd - Extracts an item's end date string (or `PRESENT`).
  * @param getLabel - Extracts the string used to break ties (e.g. company/title).
  */
-function sortByPresentAwareDate<T>(
+export function sortByPresentAwareDate<T>(
   items: T[],
   sortOrder: "newest" | "oldest",
   getStart: (item: T) => string,

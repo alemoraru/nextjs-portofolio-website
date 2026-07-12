@@ -11,8 +11,10 @@ import {
   getReadingTime,
   diceCoefficient,
   getClosestTagPosts,
+  filterByValues,
   filterBlogPosts,
   sortBlogPosts,
+  sortByPresentAwareDate,
   filterWorkItems,
   sortWorkItems,
   filterProjects,
@@ -597,6 +599,119 @@ describe("getClosestTagPosts", () => {
       { slug: "x", title: "X", summary: "", date: "2024-01-01", tags: [] },
     ]
     expect(getClosestTagPosts(emptyPosts, "typescript")).toEqual([])
+  })
+})
+
+describe("filterByValues", () => {
+  const items = [
+    { id: "a", tags: ["x", "y"] },
+    { id: "b", tags: ["y"] },
+    { id: "c", tags: undefined as string[] | undefined },
+    { id: "d", tags: [] as string[] },
+  ]
+
+  it("should return all items unchanged when selected is empty", () => {
+    expect(filterByValues(items, [], item => item.tags)).toEqual(items)
+  })
+
+  it("should return items whose values overlap with a selected value", () => {
+    const result = filterByValues(items, ["x"], item => item.tags)
+    expect(result.map(i => i.id)).toEqual(["a"])
+  })
+
+  it("should match on any of multiple selected values (OR logic)", () => {
+    const result = filterByValues(items, ["x", "y"], item => item.tags)
+    expect(result.map(i => i.id)).toEqual(["a", "b"])
+  })
+
+  it("should exclude items whose getValues returns undefined", () => {
+    const result = filterByValues(items, ["x", "y"], item => item.tags)
+    expect(result.map(i => i.id)).not.toContain("c")
+  })
+
+  it("should exclude items with an empty values array", () => {
+    const result = filterByValues(items, ["x", "y"], item => item.tags)
+    expect(result.map(i => i.id)).not.toContain("d")
+  })
+
+  it("should support wrapping a scalar field as a single-element array", () => {
+    const scalarItems = [
+      { id: "a", category: "fruit" },
+      { id: "b", category: "veg" },
+    ]
+    const result = filterByValues(scalarItems, ["fruit"], item => [item.category])
+    expect(result.map(i => i.id)).toEqual(["a"])
+  })
+
+  it("should return an empty array when nothing matches", () => {
+    expect(filterByValues(items, ["nonexistent"], item => item.tags)).toEqual([])
+  })
+
+  it("should not mutate the input array", () => {
+    const original = [...items]
+    filterByValues(items, ["x"], item => item.tags)
+    expect(items).toEqual(original)
+  })
+})
+
+describe("sortByPresentAwareDate", () => {
+  interface Item {
+    id: string
+    start: string
+    end: string
+  }
+  const getStart = (i: Item) => i.start
+  const getEnd = (i: Item) => i.end
+  const getLabel = (i: Item) => i.id
+
+  const items: Item[] = [
+    { id: "current", start: "2023-01", end: "Present" },
+    { id: "older", start: "2021-01", end: "2022-12" },
+    { id: "newest-past", start: "2022-01", end: "2023-12" },
+  ]
+
+  it("should place Present items first when sorting newest", () => {
+    const result = sortByPresentAwareDate(items, "newest", getStart, getEnd, getLabel)
+    expect(result[0].end).toBe("Present")
+  })
+
+  it("should sort past items by end date descending when sorting newest", () => {
+    const result = sortByPresentAwareDate(items, "newest", getStart, getEnd, getLabel)
+    const past = result.filter(i => i.end !== "Present")
+    expect(past[0].id).toBe("newest-past") // 2023-12 > 2022-12
+  })
+
+  it("should sort by start date ascending when sorting oldest", () => {
+    const result = sortByPresentAwareDate(items, "oldest", getStart, getEnd, getLabel)
+    expect(result[0].id).toBe("older") // 2021-01
+  })
+
+  it("should tie-break multiple Present items via getLabel", () => {
+    const twoPresent: Item[] = [
+      { id: "Zeta", start: "2020-01", end: "Present" },
+      { id: "Alpha", start: "2020-01", end: "Present" },
+    ]
+    const result = sortByPresentAwareDate(twoPresent, "newest", getStart, getEnd, getLabel)
+    expect(result.map(i => i.id)).toEqual(["Alpha", "Zeta"])
+  })
+
+  it("should tie-break items sharing an end date via getLabel", () => {
+    const tied: Item[] = [
+      { id: "Zeta", start: "2020-01", end: "2022-01" },
+      { id: "Alpha", start: "2020-01", end: "2022-01" },
+    ]
+    const result = sortByPresentAwareDate(tied, "newest", getStart, getEnd, getLabel)
+    expect(result.map(i => i.id)).toEqual(["Alpha", "Zeta"])
+  })
+
+  it("should not mutate the input array", () => {
+    const original = [...items]
+    sortByPresentAwareDate(items, "newest", getStart, getEnd, getLabel)
+    expect(items).toEqual(original)
+  })
+
+  it("should handle an empty array", () => {
+    expect(sortByPresentAwareDate([], "newest", getStart, getEnd, getLabel)).toEqual([])
   })
 })
 
