@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import React, { useEffect, useRef, useState } from "react"
+import { flushSync } from "react-dom"
 import { FaChevronDown } from "react-icons/fa"
 import { FaMoon, FaSun } from "react-icons/fa6"
 import { useAccentTheme } from "@/components/AccentThemeProvider"
@@ -21,6 +22,11 @@ const LONG_PRESS_MOVE_THRESHOLD_PX = 10
  * should defer any other state changes (e.g. closing the color menu) until then,
  * since updates made while the transition is in flight are hidden inside its
  * frozen before/after snapshots and won't visibly animate.
+ *
+ * `apply` is committed via `flushSync` so React writes the DOM change (the theme
+ * class) synchronously before the transition captures its "new" snapshot; without
+ * it React batches the update, the snapshot captures the old theme, and the reveal
+ * appears to freeze before the theme abruptly pops in.
  */
 function runViewTransitionReveal(x: number, y: number, apply: () => void): Promise<void> {
   if (!document.startViewTransition) {
@@ -34,7 +40,7 @@ function runViewTransitionReveal(x: number, y: number, apply: () => void): Promi
   )
 
   const transition = document.startViewTransition(() => {
-    apply()
+    flushSync(apply)
   })
 
   transition.ready.then(() => {
@@ -96,7 +102,15 @@ export default function ThemeToggleButton() {
 
     const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
     const wasColorMenuOpen = isColorMenuOpen
-    runViewTransitionReveal(event.clientX, event.clientY, () => setTheme(nextTheme)).then(() => {
+
+    // Center the reveal on the button itself. Touch- and keyboard-generated clicks
+    // often report clientX/clientY as 0, which would otherwise anchor the ripple to
+    // the top-left of the viewport instead of the button.
+    const rect = event.currentTarget.getBoundingClientRect()
+    const originX = rect.left + rect.width / 2
+    const originY = rect.top + rect.height / 2
+
+    runViewTransitionReveal(originX, originY, () => setTheme(nextTheme)).then(() => {
       if (wasColorMenuOpen) setIsColorMenuOpen(false)
     })
   }
