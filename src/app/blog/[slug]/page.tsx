@@ -157,13 +157,12 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       />
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
-      <div className="flex items-center gap-4 text-gray-500 mb-8">
-        <span className="flex items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mb-8">
+        <span className="flex items-center gap-1.5 whitespace-nowrap">
           <FaRegCalendarAlt className="shrink-0" />
           {formatBlogDate(post.date)}
         </span>
-        <span>•</span>
-        <span className="flex items-center gap-1.5">
+        <span className="flex items-center gap-1.5 whitespace-nowrap">
           <FaBookOpen className="shrink-0" />
           {readingTime} min read
         </span>
