@@ -41,19 +41,17 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
 
         {/* Date and Reading Time */}
         {date && (
-          <div className="flex items-center gap-3 mt-2 text-sm text-gray-600 dark:text-gray-400">
-            <span className="flex items-center gap-1.5">
-              <FaRegCalendarAlt className="w-3.5 h-3.5" />
-              <time dateTime={date}>{formatBlogDate(date)}</time>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
+              <FaRegCalendarAlt className="w-3.5 h-3.5 shrink-0" />
+              <time dateTime={date}>{formatBlogDate(date, "short")}</time>
             </span>
             {readingTime && (
-              <>
-                <span>·</span>
-                <span className="flex items-center gap-1.5">
-                  <FaBookOpen className="w-3.5 h-3.5" />
-                  {readingTime} min read
-                </span>
-              </>
+              <span className="flex items-center gap-1.5 whitespace-nowrap">
+                <span aria-hidden="true">·</span>
+                <FaBookOpen className="w-3.5 h-3.5 shrink-0" />
+                {readingTime} min read
+              </span>
             )}
           </div>
         )}

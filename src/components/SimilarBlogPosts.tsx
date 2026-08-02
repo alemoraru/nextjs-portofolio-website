@@ -51,20 +51,22 @@ export default function SimilarBlogPosts({
   if (scoredPosts.length === 0) return null
 
   return (
-    <section className="mt-14 border-t pt-10 border-zinc-600">
+    <section className="w-full mt-14 border-t pt-10 border-zinc-600">
       <h2 className="text-2xl font-semibold mb-6 text-center">{heading}</h2>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {scoredPosts.map(sim => (
-          <BlogPost
-            key={sim.slug}
-            slug={sim.slug}
-            title={sim.title}
-            summary={sim.summary}
-            date={sim.date}
-            tags={sim.tags}
-            readingTime={sim.readingTime}
-          />
-        ))}
+      <div className="@container">
+        <div className="grid gap-4 @[480px]:grid-cols-2 @[800px]:grid-cols-3">
+          {scoredPosts.map(sim => (
+            <BlogPost
+              key={sim.slug}
+              slug={sim.slug}
+              title={sim.title}
+              summary={sim.summary}
+              date={sim.date}
+              tags={sim.tags}
+              readingTime={sim.readingTime}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )
