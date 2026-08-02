@@ -29,13 +29,13 @@ describe("BlogPost", () => {
 
   it("renders the formatted date", () => {
     render(<BlogPost {...defaultProps} />)
-    // The date "2024-01-15" should be formatted as "January 15, 2024"
-    expect(screen.getByText("January 15, 2024")).toBeDefined()
+    // The date "2024-01-15" should be formatted as "Jan 15, 2024" (short month)
+    expect(screen.getByText("Jan 15, 2024")).toBeDefined()
   })
 
   it("renders the date with correct datetime attribute", () => {
     render(<BlogPost {...defaultProps} />)
-    const timeElement = screen.getByText("January 15, 2024")
+    const timeElement = screen.getByText("Jan 15, 2024")
     expect(timeElement.tagName).toBe("TIME")
     expect(timeElement.getAttribute("datetime")).toBe("2024-01-15")
   })
