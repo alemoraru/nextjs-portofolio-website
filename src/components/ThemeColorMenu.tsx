@@ -41,14 +41,16 @@ export default function ThemeColorMenu({ isOpen, activeTheme, onSelect }: ThemeC
       initial="hidden"
       animate="visible"
       className={cn(
-        "origin-top-right absolute right-0 mt-2 w-52",
+        "origin-top absolute left-1/2 -translate-x-[calc(50%+1.5rem)]",
+        "sm:origin-top-right sm:left-auto sm:translate-x-0 sm:right-0",
+        "mt-2 w-[min(13rem,calc(100vw-2rem))]",
         "bg-white dark:bg-gray-800",
         "border border-gray-300 dark:border-gray-700",
         "rounded-lg shadow-xl backdrop-blur-sm",
-        "p-3 z-50"
+        "p-3 z-50 @container"
       )}
     >
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-1 gap-2 @[88px]:grid-cols-2 @[124px]:grid-cols-3 @[160px]:grid-cols-4 @[196px]:grid-cols-5">
         {THEME_OPTIONS.map(theme => {
           const isSelected = theme === activeTheme
           return (

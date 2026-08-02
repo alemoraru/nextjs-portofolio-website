@@ -77,22 +77,24 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
                 You might be interested in these posts with similar tags:
               </span>
             </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 text-left">
-              {closestTagPosts.map(({ post, bestTag, bestScore }) => (
-                <div key={post.slug} className="flex flex-col">
-                  <BlogPost {...post} />
-                  <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                    <span className="font-medium dark:text-white text-black">Reason:</span>
-                    <FaTag className="w-3 h-3 text-accent-400 shrink-0" />
-                    <span className="px-2 py-1 rounded-full bg-accent-500/15 text-accent-600 font-semibold text-xs">
-                      {bestTag}
-                    </span>
-                    <span className="dark:text-gray-300 text-gray-500 text-xs">
-                      {Math.round(bestScore * 100)}% match
-                    </span>
+            <div className="@container">
+              <div className="grid gap-6 @[480px]:grid-cols-2 @[800px]:grid-cols-3 text-left">
+                {closestTagPosts.map(({ post, bestTag, bestScore }) => (
+                  <div key={post.slug} className="flex flex-col">
+                    <BlogPost {...post} />
+                    <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                      <span className="font-medium dark:text-white text-black">Reason:</span>
+                      <FaTag className="w-3 h-3 text-accent-400 shrink-0" />
+                      <span className="px-2 py-1 rounded-full bg-accent-500/15 text-accent-600 font-semibold text-xs">
+                        {bestTag}
+                      </span>
+                      <span className="dark:text-gray-300 text-gray-500 text-xs">
+                        {Math.round(bestScore * 100)}% match
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}

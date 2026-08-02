@@ -74,6 +74,8 @@ export type Theme =
   | "amber"
   | "cyan"
   | "violet"
+  | "pink"
+  | "lime"
 
 /**
  * @description Shape of the site-wide metadata configuration object in src/data/metadata.ts.

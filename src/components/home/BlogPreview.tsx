@@ -26,19 +26,21 @@ export default function BlogPreview({ blog }: BlogPreviewProps) {
       className="mt-20 mb-16"
     >
       <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length} />
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        variants={staggerContainerVariants}
-        viewport={{ once: true, margin: "-50px" }}
-        className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
-      >
-        {posts.map(post => (
-          <motion.div key={post.slug} variants={staggerItemVariants}>
-            <BlogPost {...post} />
-          </motion.div>
-        ))}
-      </motion.div>
+      <div className="@container">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={staggerContainerVariants}
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid gap-4 @[800px]:grid-cols-3"
+        >
+          {posts.map(post => (
+            <motion.div key={post.slug} variants={staggerItemVariants}>
+              <BlogPost {...post} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </motion.div>
   )
 }
