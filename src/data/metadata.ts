@@ -8,7 +8,7 @@ import type { Metadata } from "next"
 export const siteMetadata: SiteMetadata = {
   /**
    * Accent color theme for the portfolio.
-   * Options: "blue" | "purple" | "green" | "orange" | "rose" | "teal" | "indigo" | "amber" | "cyan" | "violet"
+   * Options: "blue" | "purple" | "green" | "orange" | "rose" | "teal" | "indigo" | "amber" | "cyan" | "violet" | "pink" | "lime"
    * The chosen theme controls the accent color used across all components.
    */
   theme: "blue",

@@ -13,6 +13,8 @@ export const themeColors: Record<Theme, { accent: string; accentBg: string; acce
     amber: { accent: "#f59e0b", accentBg: "#fffbeb", accentText: "#b45309" },
     cyan: { accent: "#06b6d4", accentBg: "#ecfeff", accentText: "#0e7490" },
     violet: { accent: "#8b5cf6", accentBg: "#f5f3ff", accentText: "#6d28d9" },
+    pink: { accent: "#ec4899", accentBg: "#fdf2f8", accentText: "#be185d" },
+    lime: { accent: "#84cc16", accentBg: "#f7fee7", accentText: "#4d7c0f" },
   }
 
 /**

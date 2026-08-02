@@ -94,6 +94,20 @@
   --accent-700: #6d28d9;
 }
 
+[data-theme="pink"] {
+  --accent-400: #f472b6;
+  --accent-500: #ec4899;
+  --accent-600: #db2777;
+  --accent-700: #be185d;
+}
+
+[data-theme="lime"] {
+  --accent-400: #a3e635;
+  --accent-500: #84cc16;
+  --accent-600: #65a30d;
+  --accent-700: #4d7c0f;
+}
+
 /* Expose accent variables as Tailwind utility colors (text-accent-*, etc.) */
 @theme inline {
   --color-accent-400: var(--accent-400);
