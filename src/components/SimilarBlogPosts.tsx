@@ -62,6 +62,7 @@ export default function SimilarBlogPosts({
             summary={sim.summary}
             date={sim.date}
             tags={sim.tags}
+            readingTime={sim.readingTime}
           />
         ))}
       </div>
