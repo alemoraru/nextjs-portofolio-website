@@ -34,16 +34,13 @@ jobs:
           # tag pushed below triggers the Build & Release workflow.
           token: ${{ secrets.RELEASE_TOKEN }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # pnpm/action-setup@v4
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # pnpm/setup@v1
         with:
-          version: 10
-
-      - name: Setup Node.js
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: "pnpm"
+          version: 11
+          runtime: node@24
+          cache: true
+          install: false
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts
