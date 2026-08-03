@@ -1,0 +1,83 @@
+name: Prepare Release
+
+run-name: "Prepare New '${{ inputs.release_type }}' Release"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Semantic version bump"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # allow pushing commits/tags
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+          # A PAT is required (not the default GITHUB_TOKEN) so that the
+          # tag pushed below triggers the Build & Release workflow.
+          token: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+
+      # We re-use the code-quality gates to ensure code quality before releasing
+      - name: Run Prettier check
+        run: pnpm format:check
+
+      - name: Run ESLint
+        run: pnpm lint:check
+
+      - name: Run TypeScript type check
+        run: pnpm types:check
+
+      - name: Build Next.js
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+        run: pnpm build
+
+      - name: Configure git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version and create git tag
+        id: bump
+        run: |
+          pnpm version ${{ inputs.release_type }} -m "chore(release): v%s"
+          echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Push commit and tags
+        run: |
+          git push origin HEAD:main
+          git push origin --tags
+
+      - name: Output new version
+        run: echo "🚀 Released version ${{ steps.bump.outputs.version }}"
