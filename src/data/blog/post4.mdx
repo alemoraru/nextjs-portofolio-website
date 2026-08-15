@@ -9,37 +9,563 @@ tags:
   - GitHub
 ---
 
-**Git** is a distributed version control system. It helps you track changes, collaborate with others, and manage code more effectively.
+**Git** is a distributed version control system. It helps you track changes, collaborate with others, and manage code more effectively. This guide walks through everything from installing Git to advanced workflows used by professional teams, so keep it bookmarked as a reference.
+
+## What Is Git?
+
+Git is a free and open-source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+
+### A Short History of Git
+
+Git was created by Linus Torvalds in 2005 for development of the Linux kernel, after the community lost access to the proprietary tool it had been using. It was designed with performance, integrity, and support for distributed, non-linear workflows as core goals.
+
+### Why Version Control Matters
+
+Without version control, teams rely on emailing files back and forth or keeping folders like `project_final_v2_FINAL.zip`. Version control replaces that chaos with a single source of truth and a complete history of every change.
+
+### Overview
+
+At a high level, Git lets you snapshot your project at any point in time, branch off to work on something new, and merge that work back in without losing anything.
 
 ## Why Use Git?
 
-- Track every change in your project
-- Collaborate with team members easily
-- Roll back to previous versions when needed
+Git is useful whether you're working alone or with a large team.
 
-## Common Git Commands
+### Individual Projects
+
+- Track every change in your project
+- Roll back to previous versions when needed
+- Experiment safely on branches without breaking your main code
+
+### Team Collaboration
+
+- Multiple people can work on the same codebase at once
+- Conflicts are surfaced explicitly instead of silently overwriting work
+- Code review happens naturally through pull requests
+
+### Open Source Contributions
+
+- Fork a repository, make changes, and propose them upstream
+- Maintain your own patches without owning the original project
+- Track exactly who changed what, and why
+
+## Installing Git
+
+Git runs on every major operating system.
+
+### macOS
 
 ```shell
-# Initialize a new Git repository
+# Using Homebrew
+brew install git
+
+# Or via Xcode Command Line Tools
+xcode-select --install
+```
+
+### Windows
+
+```shell
+# Using winget
+winget install --id Git.Git -e --source winget
+```
+
+Alternatively, download the installer from the official Git website.
+
+### Linux
+
+```shell
+# Debian/Ubuntu
+sudo apt update && sudo apt install git
+
+# Fedora
+sudo dnf install git
+
+# Arch
+sudo pacman -S git
+```
+
+### Verifying the Installation
+
+```shell
+git --version
+```
+
+## Configuring Git
+
+Before your first commit, tell Git who you are.
+
+### Setting Your Identity
+
+```shell
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+### Configuring Line Endings
+
+```shell
+# Windows
+git config --global core.autocrlf true
+
+# macOS/Linux
+git config --global core.autocrlf input
+```
+
+### Setting a Default Editor
+
+```shell
+git config --global core.editor "code --wait"
+```
+
+### Useful Aliases
+
+```shell
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+```
+
+## Git Fundamentals
+
+Understanding a few core concepts up front makes everything else click.
+
+### The Three States
+
+Git tracks files across three states: **modified**, **staged**, and **committed**.
+
+### The `.git` Directory
+
+Every repository has a hidden `.git` folder containing the entire history, configuration, and metadata for the project.
+
+### Snapshots, Not Diffs
+
+Unlike some older version control systems, Git stores a snapshot of your entire project at each commit, not just the differences from the previous version.
+
+## Creating a Repository
+
+There are two ways to start working with a Git repository.
+
+### `git init`
+
+```shell
+mkdir my-project
+cd my-project
 git init
+```
 
-# Check the status of your repository
+### Cloning an Existing Repository
+
+```shell
+git clone https://github.com/user/repo.git
+```
+
+## The Basic Workflow
+
+The day-to-day loop of using Git is short and repetitive.
+
+### Checking Status
+
+```shell
 git status
+```
 
-# Stage changes
+### Staging Changes
+
+```shell
 git add .
+git add path/to/file.js
+```
 
-# Commit changes
-git commit -m "Initial commit"
+### Committing Changes
 
-# Push to a remote repository
+```shell
+git commit -m "Add login form validation"
+```
+
+### Viewing History
+
+```shell
+git log
+git log --oneline --graph --all
+```
+
+## Branching
+
+Branches let you work on features in isolation.
+
+### What Is a Branch?
+
+A branch is simply a movable pointer to a commit. The default branch is usually called `main`.
+
+### Creating Branches
+
+```shell
+git branch feature/login
+git checkout -b feature/login
+```
+
+### Switching Branches
+
+```shell
+git switch feature/login
+git checkout feature/login
+```
+
+### Deleting Branches
+
+```shell
+git branch -d feature/login
+git branch -D feature/login  # force delete
+```
+
+## Merging
+
+Merging brings changes from one branch into another.
+
+### Fast-Forward Merges
+
+When the target branch hasn't diverged, Git simply moves the pointer forward.
+
+### Three-Way Merges
+
+When both branches have new commits, Git creates a new merge commit that combines both histories.
+
+### Resolving Merge Conflicts
+
+```shell
+git merge feature/login
+# CONFLICT (content): Merge conflict in src/login.js
+
+# Edit the file, then:
+git add src/login.js
+git commit
+```
+
+## Rebasing
+
+Rebasing rewrites commit history to create a linear sequence.
+
+### Interactive Rebase
+
+```shell
+git rebase -i HEAD~3
+```
+
+### Rebase vs Merge
+
+Merging preserves history exactly as it happened; rebasing rewrites it to look as if you'd branched off the latest code from the start.
+
+### When to Avoid Rebasing
+
+Never rebase commits that have already been pushed and shared with others, since it rewrites history and breaks collaborators' clones.
+
+## Working with Remotes
+
+Remotes let you sync your local repository with others.
+
+### Adding a Remote
+
+```shell
+git remote add origin https://github.com/user/repo.git
+```
+
+### Fetching vs Pulling
+
+`git fetch` downloads changes without merging them; `git pull` fetches and merges (or rebases) in one step.
+
+```shell
+git fetch origin
+git pull origin main
+```
+
+### Pushing Changes
+
+```shell
 git push origin main
+git push -u origin feature/login
+```
+
+### Tracking Branches
+
+A tracking branch is a local branch linked to a remote branch, so `git push` and `git pull` know where to sync.
+
+## Undoing Changes
+
+Mistakes happen. Git gives you several ways to fix them.
+
+### `git checkout`
+
+```shell
+git checkout -- file.js  # discard local changes
+```
+
+### `git reset`
+
+```shell
+git reset HEAD~1          # undo last commit, keep changes staged
+git reset --hard HEAD~1   # undo last commit, discard changes
+```
+
+### `git revert`
+
+```shell
+git revert <commit-hash>  # create a new commit that undoes a previous one
+```
+
+### Cleaning Untracked Files
+
+```shell
+git clean -fd
+```
+
+## Stashing
+
+Stashing lets you set aside uncommitted work temporarily.
+
+### Basic Stashing
+
+```shell
+git stash
+git stash pop
+```
+
+### Naming Stashes
+
+```shell
+git stash push -m "WIP: navbar redesign"
+```
+
+### Applying and Dropping Stashes
+
+```shell
+git stash list
+git stash apply stash@{0}
+git stash drop stash@{0}
+```
+
+## Tags
+
+Tags mark specific points in history, typically used for releases.
+
+### Lightweight Tags
+
+```shell
+git tag v1.0.0
+```
+
+### Annotated Tags
+
+```shell
+git tag -a v1.0.0 -m "First stable release"
+```
+
+### Pushing Tags
+
+```shell
+git push origin v1.0.0
+git push origin --tags
+```
+
+## `.gitignore`
+
+Tell Git which files it should never track.
+
+### Syntax Basics
+
+```shell
+# Comments start with a hash
+node_modules/
+*.log
+.env
+```
+
+### Common Patterns
+
+```shell
+# Ignore everything in a folder except one file
+build/*
+!build/.gitkeep
+```
+
+### Global Ignore Files
+
+```shell
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+## Git Hooks
+
+Hooks let you run scripts automatically at certain points in the Git lifecycle.
+
+### Client-Side Hooks
+
+Examples include `pre-commit`, `commit-msg`, and `pre-push`, which run on your own machine.
+
+### Server-Side Hooks
+
+Examples include `pre-receive` and `post-receive`, which run on the server hosting the repository.
+
+### Example: `pre-commit`
+
+```shell
+#!/bin/sh
+# .git/hooks/pre-commit
+npm run lint || exit 1
+```
+
+## Collaborating on GitHub
+
+GitHub adds collaboration tooling on top of Git.
+
+### Forking
+
+Forking creates your own copy of someone else's repository under your account.
+
+### Pull Requests
+
+A pull request proposes merging changes from one branch (often on a fork) into another, with a space for discussion and review.
+
+### Code Reviews
+
+Reviewers can comment on specific lines, request changes, or approve the pull request before it's merged.
+
+## Advanced Topics
+
+Once you're comfortable with the basics, these tools solve less common problems.
+
+### Cherry-Picking
+
+```shell
+git cherry-pick <commit-hash>
+```
+
+Applies a single commit from one branch onto another.
+
+### Bisecting
+
+```shell
+git bisect start
+git bisect bad
+git bisect good v1.0.0
+```
+
+Binary-searches through history to find the commit that introduced a bug.
+
+### Submodules
+
+Submodules let you embed one Git repository inside another as a subdirectory.
+
+#### Adding a Submodule
+
+```shell
+git submodule add https://github.com/user/lib.git libs/lib
+```
+
+#### Updating Submodules
+
+```shell
+git submodule update --init --recursive
+```
+
+### Worktrees
+
+Worktrees let you check out multiple branches at once, each in its own directory, without cloning the repository again.
+
+```shell
+git worktree add ../hotfix hotfix/urgent-bug
+```
+
+## Common Git Workflows
+
+Different teams structure their branching strategy differently.
+
+### Feature Branch Workflow
+
+Every new feature is developed on its own branch and merged into `main` via a pull request.
+
+### Gitflow
+
+A stricter model with dedicated `develop`, `release`, and `hotfix` branches alongside `main`.
+
+### Trunk-Based Development
+
+Everyone commits small, frequent changes directly to `main` (or very short-lived branches), often behind feature flags.
+
+## Troubleshooting Common Issues
+
+Even experienced developers run into these regularly.
+
+### Detached HEAD State
+
+```shell
+git checkout main
+```
+
+Happens when you check out a specific commit instead of a branch; committing here can leave work orphaned if you don't create a branch first.
+
+### Merge Conflict Panic
+
+Take a breath, open the conflicting files, look for the `<<<<<<<`, `=======`, and `>>>>>>>` markers, and resolve them one at a time.
+
+### Accidentally Committed Secrets
+
+```shell
+# Rotate the secret immediately, then remove it from history
+git filter-repo --path secrets.env --invert-paths
 ```
 
 ## Best Practices
 
-- Write meaningful commit messages
-- Commit often but logically
-- Always pull before pushing changes
+A few habits go a long way toward a clean, useful history.
+
+### Commit Message Conventions
+
+```shell
+git commit -m "fix: correct off-by-one error in pagination"
+```
+
+Prefixes like `feat:`, `fix:`, and `chore:` make history easy to scan and can drive automated changelogs.
+
+### Commit Often, Push Deliberately
+
+Commit small, logical chunks of work locally, but push only when the code is in a reasonable state for others to see.
+
+### Keep Branches Short-Lived
+
+The longer a branch lives without merging, the more painful the eventual merge conflicts become.
+
+### Example
+
+```shell
+git checkout -b fix/typo-in-readme
+# make the change
+git commit -am "fix: correct typo in README"
+git push -u origin fix/typo-in-readme
+```
+
+## Cheat Sheet
+
+A quick reference for the commands you'll reach for most.
+
+### Most-Used Commands
+
+```shell
+git status
+git add .
+git commit -m "message"
+git push
+git pull
+git log --oneline
+```
+
+### Emergency Commands
+
+```shell
+git reset --hard HEAD       # discard all local changes
+git reflog                  # find a commit you thought you lost
+git stash                   # temporarily shelve changes
+```
 
 Start using Git from day one on all your projects! 🚀
