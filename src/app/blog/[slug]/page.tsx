@@ -8,7 +8,6 @@ import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
 import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
-import rehypeSlug from "rehype-slug"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
@@ -21,6 +20,7 @@ import TableOfContents from "@/components/TableOfContents"
 import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllBlogPosts } from "@/lib/mdx"
+import { headingLinkRehypePlugins } from "@/lib/mdx-plugins"
 import { pageParams } from "@/lib/types"
 import { formatBlogDate, getReadingTime } from "@/lib/utils"
 import type { BlogPosting, WithContext } from "schema-dts"
@@ -117,7 +117,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       mdxOptions: {
         remarkPlugins: [remark_gfm],
         rehypePlugins: [
-          rehypeSlug, // Automatically adds IDs to headings
+          ...headingLinkRehypePlugins, // Adds IDs to headings and links back to them
           [rehypeHighlight, { ignoreMissing: true }],
         ],
       },

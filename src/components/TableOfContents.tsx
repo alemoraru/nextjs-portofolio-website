@@ -43,9 +43,13 @@ export default function TableOfContents() {
         heading.id = `heading-${index}`
       }
 
+      // Exclude the "#" anchor link injected by rehype-autolink-headings
+      const clone = heading.cloneNode(true) as HTMLElement
+      clone.querySelectorAll(".anchor-link").forEach(el => el.remove())
+
       tocItems.push({
         id: heading.id,
-        text: heading.textContent || "",
+        text: clone.textContent?.trim() || "",
         level: parseInt(heading.tagName.substring(1)),
       })
     })
