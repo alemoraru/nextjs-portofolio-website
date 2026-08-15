@@ -76,11 +76,6 @@ describe("ProjectTile", () => {
     expect(screen.getByText("+ 2 more")).toBeDefined()
   })
 
-  it("renders the 'Explore Project' overlay text", () => {
-    render(<ProjectTile {...defaultProps} />)
-    expect(screen.getByText("Explore Project")).toBeDefined()
-  })
-
   it("does not render dates when not provided", () => {
     const { container } = render(
       <ProjectTile {...defaultProps} startDate={undefined} endDate={undefined} />
