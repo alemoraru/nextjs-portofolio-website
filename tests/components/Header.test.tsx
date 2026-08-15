@@ -40,7 +40,7 @@ describe("Header", () => {
 
   it("renders navigation items", () => {
     renderHeader()
-    expect(screen.getByText("Home")).toBeDefined()
+    // "Home" isn't part of the desktop nav - the site name/initials link already covers it
     expect(screen.getByText("Work")).toBeDefined()
     expect(screen.getByText("Projects")).toBeDefined()
     expect(screen.getByText("Blog")).toBeDefined()
@@ -48,12 +48,10 @@ describe("Header", () => {
 
   it("renders navigation links with correct hrefs", () => {
     renderHeader()
-    const homeLink = screen.getByText("Home").closest("a")
     const workLink = screen.getByText("Work").closest("a")
     const projectsLink = screen.getByText("Projects").closest("a")
     const blogLink = screen.getByText("Blog").closest("a")
 
-    expect(homeLink?.getAttribute("href")).toBe("/")
     expect(workLink?.getAttribute("href")).toBe("/work")
     expect(projectsLink?.getAttribute("href")).toBe("/projects")
     expect(blogLink?.getAttribute("href")).toBe("/blog")
@@ -82,10 +80,12 @@ describe("Header", () => {
     expect(screen.getByLabelText("Close menu")).toBeDefined()
   })
 
-  it("marks the current page as active in the navigation", () => {
+  it("does not mark any navigation item as active on the home page", () => {
     renderHeader()
-    // With pathname mocked to "/", Home should have aria-current="page"
-    const homeLink = screen.getByText("Home").closest("a")
-    expect(homeLink?.getAttribute("aria-current")).toBe("page")
+    // With pathname mocked to "/", no desktop nav item should be active since "Home" isn't
+    // one of them
+    const links = screen.getAllByRole("link")
+    const currentPageLinks = links.filter(link => link.getAttribute("aria-current") === "page")
+    expect(currentPageLinks.length).toBe(0)
   })
 })

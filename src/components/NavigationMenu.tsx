@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { navItems } from "@/lib/constants"
+import { useEffect, useRef, useState } from "react"
+import { desktopNavItems } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 /**
@@ -14,14 +14,21 @@ export default function NavigationMenu() {
   const pathname = usePathname()
 
   const getActiveIndex = (p: string) =>
-    navItems.findIndex(({ path }) =>
-      path === "/" ? p === "/" : p === path || p.startsWith(path + "/")
-    )
+    desktopNavItems.findIndex(({ path }) => p === path || p.startsWith(path + "/"))
 
   const [activeIndex, setActiveIndex] = useState(() => getActiveIndex(pathname))
+  // Sliding the indicator only makes sense between two visible pill positions. Jumping to
+  // or from "no active item" (e.g. the home page) should just pop in/out instead of
+  // animating in from the edge, so track that transition to disable it for a single update.
+  const [instant, setInstant] = useState(false)
+  const prevIndexRef = useRef(activeIndex)
 
   useEffect(() => {
-    setActiveIndex(getActiveIndex(pathname))
+    const newIndex = getActiveIndex(pathname)
+    const prevIndex = prevIndexRef.current
+    setInstant(newIndex === -1 || prevIndex === -1)
+    setActiveIndex(newIndex)
+    prevIndexRef.current = newIndex
   }, [pathname])
 
   return (
@@ -39,11 +46,12 @@ export default function NavigationMenu() {
         {/* Animated active indicator as the border only */}
         <div
           className={cn(
-            "absolute top-0 left-0 h-full transition-all duration-300 ease-in-out pointer-events-none z-0 flex",
+            "absolute top-0 left-0 h-full pointer-events-none z-0 flex",
+            instant ? "transition-none" : "transition-all duration-300 ease-in-out",
             "bg-accent-500/10 dark:bg-accent-500/10"
           )}
           style={{
-            width: `calc((100% - ${navItems.length - 1} * 0.120rem) / ${navItems.length})`,
+            width: `calc((100% - ${desktopNavItems.length - 1} * 0.120rem) / ${desktopNavItems.length})`,
             transform: `translateX(calc(${activeIndex} * (100% + 0.125rem)))`,
             border: "2px solid var(--accent-500)",
             borderRadius: "9999px",
@@ -51,7 +59,7 @@ export default function NavigationMenu() {
             opacity: activeIndex === -1 ? 0 : 1,
           }}
         ></div>
-        {navItems.map(({ name, path }, idx) => {
+        {desktopNavItems.map(({ name, path }, idx) => {
           const isActive = pathname === path
           return (
             <li key={name} className="relative z-10 flex justify-center items-center">
@@ -72,7 +80,7 @@ export default function NavigationMenu() {
                 {name}
               </Link>
               {/* Invisible divider except last item */}
-              {idx < navItems.length - 1 && (
+              {idx < desktopNavItems.length - 1 && (
                 <span className="mx-0.5 h-5 w-px" aria-hidden="true"></span>
               )}
             </li>

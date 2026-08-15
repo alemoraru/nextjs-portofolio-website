@@ -11,6 +11,17 @@ export const navItems = [
 ]
 
 /**
+ * Array of navigation items for the website (i.e. paths/pages to navigate to) that are
+ * displayed in the desktop header navigation menu. This is a subset of `navItems` that
+ * excludes the "Home" item, since the header's name/initials link already goes home.
+ */
+export const desktopNavItems = [
+  { name: "Work", path: "/work" },
+  { name: "Projects", path: "/projects" },
+  { name: "Blog", path: "/blog" },
+]
+
+/**
  * Version of the application from package.json.
  */
 export const appVersion = packageJson.version
