@@ -10,12 +10,14 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import { MDXImage } from "@/components/mdx/MDXImage"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllWorkItems } from "@/lib/mdx"
+import { headingLinkRehypePlugins } from "@/lib/mdx-plugins"
 import { pageParams, WorkItemFrontmatter } from "@/lib/types"
 import { calculateDuration, formatDateRange } from "@/lib/utils"
 import type { EmployeeRole, WithContext } from "schema-dts"
@@ -99,12 +101,14 @@ export default async function WorkItemPage(props: { params: pageParams }) {
     components: {
       Timeline,
       TimelineItem,
+      img: MDXImage,
+      Image: MDXImage,
     },
     options: {
       parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remark_gfm],
-        rehypePlugins: [rehypeHighlight],
+        rehypePlugins: [...headingLinkRehypePlugins, rehypeHighlight],
       },
     },
   })

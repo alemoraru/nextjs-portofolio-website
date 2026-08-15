@@ -14,6 +14,12 @@ interface TocItem {
   level: number
 }
 
+/** Caps how tall the collapsed line-index can grow, regardless of article length. */
+const MAX_LINES_CONTAINER_HEIGHT = "50vh"
+
+/** Gradient that fades the last ~30% of the line-index to transparent when it overflows. */
+const OVERFLOW_FADE_MASK = "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)"
+
 /**
  * Component that generates a table of contents based on the headings of an article.
  * Positioned on the left side of the page with a Substack-style design.
@@ -23,8 +29,10 @@ export default function TableOfContents() {
   const [headings, setHeadings] = useState<TocItem[]>([])
   const [isExpanded, setIsExpanded] = useState(false)
   const [activeId, setActiveId] = useState<string>("")
+  const [isLineIndexOverflowing, setIsLineIndexOverflowing] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+  const lineIndexRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const article = document.querySelector("article")
@@ -43,9 +51,13 @@ export default function TableOfContents() {
         heading.id = `heading-${index}`
       }
 
+      // Exclude the "#" anchor link injected by rehype-autolink-headings
+      const clone = heading.cloneNode(true) as HTMLElement
+      clone.querySelectorAll(".anchor-link").forEach(el => el.remove())
+
       tocItems.push({
         id: heading.id,
-        text: heading.textContent || "",
+        text: clone.textContent?.trim() || "",
         level: parseInt(heading.tagName.substring(1)),
       })
     })
@@ -79,6 +91,14 @@ export default function TableOfContents() {
     })
 
     return () => observer.disconnect()
+  }, [headings])
+
+  // Detect whether the line-index overflows its max height, so the fade-out
+  // mask only appears when there's actually more content below the fold.
+  useEffect(() => {
+    const container = lineIndexRef.current
+    if (!container) return
+    setIsLineIndexOverflowing(container.scrollHeight > container.clientHeight)
   }, [headings])
 
   // Close ToC when clicking outside
@@ -149,14 +169,22 @@ export default function TableOfContents() {
         )}
         aria-label="Toggle table of contents"
       >
-        <div className="space-y-3 flex flex-col items-end">
+        <div
+          ref={lineIndexRef}
+          className="space-y-3 flex flex-col items-end overflow-hidden"
+          style={{
+            maxHeight: MAX_LINES_CONTAINER_HEIGHT,
+            maskImage: isLineIndexOverflowing ? OVERFLOW_FADE_MASK : undefined,
+            WebkitMaskImage: isLineIndexOverflowing ? OVERFLOW_FADE_MASK : undefined,
+          }}
+        >
           {headings.map(heading => {
             const isActive = heading.id === activeId
             return (
               <div
                 key={heading.id}
                 className={cn(
-                  "h-0.5 rounded-full transition-all duration-200",
+                  "h-0.5 rounded-full transition-all duration-200 shrink-0",
                   getLineWidthClass(heading.level),
                   isActive ? "bg-gray-800 dark:bg-gray-200" : "bg-gray-400 dark:bg-gray-600"
                 )}
@@ -171,7 +199,7 @@ export default function TableOfContents() {
         <div
           ref={panelRef}
           className={cn(
-            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[80vh] shadow-2xl p-6",
+            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[75vh] shadow-2xl p-6",
             "overflow-y-auto custom-scrollbar bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700"
           )}
         >

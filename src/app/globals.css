@@ -169,6 +169,33 @@ body {
   background: hsl(215 27.9% 10.9%);
 }
 
+/* Heading anchor links (rehype-autolink-headings), added via src/lib/mdx-plugins.ts */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 6rem;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) .anchor-link {
+  margin-left: 0.5rem;
+  font-weight: 400;
+  color: var(--accent-500);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6):hover .anchor-link,
+.prose :where(h1, h2, h3, h4, h5, h6) .anchor-link:focus-visible {
+  opacity: 1;
+}
+
+/* Tailwind Typography adds literal backticks around inline `code` via CSS
+   content; our InlineCode component already renders a styled pill, so drop
+   the plugin's own backticks (fenced blocks inside `pre` are unaffected). */
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(215 20% 25%);
 }
@@ -228,6 +255,11 @@ body {
   /* Hide interactive controls */
   button,
   [role="button"] {
+    display: none !important;
+  }
+
+  /* Never print the full-screen image lightbox, even if left open */
+  .mdx-lightbox-overlay {
     display: none !important;
   }
 
