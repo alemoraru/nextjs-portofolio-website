@@ -188,6 +188,14 @@ body {
   opacity: 1;
 }
 
+/* Tailwind Typography adds literal backticks around inline `code` via CSS
+   content; our InlineCode component already renders a styled pill, so drop
+   the plugin's own backticks (fenced blocks inside `pre` are unaffected). */
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(215 20% 25%);
 }
