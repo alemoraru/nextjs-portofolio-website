@@ -175,7 +175,7 @@ export default function TableOfContents() {
         <div
           ref={panelRef}
           className={cn(
-            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[80vh] shadow-2xl p-6",
+            "hidden lg:block fixed left-16 top-1/2 -translate-y-1/2 z-50 w-60 max-h-[75vh] shadow-2xl p-6",
             "overflow-y-auto custom-scrollbar bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700"
           )}
         >
