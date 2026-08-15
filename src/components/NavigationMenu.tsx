@@ -6,6 +6,11 @@ import { useEffect, useRef, useState } from "react"
 import { desktopNavItems } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
+// A nav item is active for its exact path or any nested subroute (e.g. "/work" is active
+// for "/work/foo"), so both the sliding indicator and each link's aria-current agree.
+const isPathActive = (pathname: string, path: string) =>
+  pathname === path || pathname.startsWith(path + "/")
+
 /**
  * NavigationMenu component that displays a horizontal navigation menu.
  * This component is to be used in the header of the application on desktop devices.
@@ -14,7 +19,7 @@ export default function NavigationMenu() {
   const pathname = usePathname()
 
   const getActiveIndex = (p: string) =>
-    desktopNavItems.findIndex(({ path }) => p === path || p.startsWith(path + "/"))
+    desktopNavItems.findIndex(({ path }) => isPathActive(p, path))
 
   const [activeIndex, setActiveIndex] = useState(() => getActiveIndex(pathname))
   // Sliding the indicator only makes sense between two visible pill positions. Jumping to
@@ -60,7 +65,7 @@ export default function NavigationMenu() {
           }}
         ></div>
         {desktopNavItems.map(({ name, path }, idx) => {
-          const isActive = pathname === path
+          const isActive = isPathActive(pathname, path)
           return (
             <li key={name} className="relative z-10 flex justify-center items-center">
               <Link

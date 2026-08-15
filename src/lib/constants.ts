@@ -12,14 +12,11 @@ export const navItems = [
 
 /**
  * Array of navigation items for the website (i.e. paths/pages to navigate to) that are
- * displayed in the desktop header navigation menu. This is a subset of `navItems` that
- * excludes the "Home" item, since the header's name/initials link already goes home.
+ * displayed in the desktop header navigation menu. Derived from `navItems`, excluding the
+ * "Home" item, since the header's name/initials link already goes home. Deriving it keeps
+ * the desktop menu in sync with `navItems` instead of duplicating and potentially drifting.
  */
-export const desktopNavItems = [
-  { name: "Work", path: "/work" },
-  { name: "Projects", path: "/projects" },
-  { name: "Blog", path: "/blog" },
-]
+export const desktopNavItems = navItems.filter(({ path }) => path !== "/")
 
 /**
  * Version of the application from package.json.

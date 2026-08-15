@@ -79,6 +79,18 @@ describe("NavigationMenu", () => {
     expect(currentPageLinks.length).toBe(1)
   })
 
+  it("marks the parent item as active for a nested subroute", () => {
+    mockUsePathname.mockReturnValue("/work/foo")
+    render(<NavigationMenu />)
+
+    const workLink = screen.getByText("Work").closest("a")
+    expect(workLink?.getAttribute("aria-current")).toBe("page")
+
+    const links = screen.getAllByRole("link")
+    const currentPageLinks = links.filter(link => link.getAttribute("aria-current") === "page")
+    expect(currentPageLinks.length).toBe(1)
+  })
+
   it("has tabIndex={0} on all navigation links", () => {
     render(<NavigationMenu />)
 
