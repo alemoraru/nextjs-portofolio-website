@@ -23,7 +23,7 @@ export default function BlogPreview({ blog }: BlogPreviewProps) {
       whileInView="visible"
       variants={fadeUpVariants}
       viewport={{ once: true, margin: "-100px" }}
-      className="mt-20 mb-16"
+      className="mt-20 mb-12"
     >
       <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length} />
       <div className="@container">
