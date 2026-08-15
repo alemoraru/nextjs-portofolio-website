@@ -258,6 +258,11 @@ body {
     display: none !important;
   }
 
+  /* Never print the full-screen image lightbox, even if left open */
+  .mdx-lightbox-overlay {
+    display: none !important;
+  }
+
   /* Keep links legible — show URL after linked text */
   a[href]::after {
     content: " (" attr(href) ")";

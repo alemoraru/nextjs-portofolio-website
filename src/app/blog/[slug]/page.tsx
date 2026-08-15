@@ -2,7 +2,6 @@ import fs from "fs"
 import path from "path"
 import { MDXComponents } from "mdx/types"
 import { Metadata } from "next"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
@@ -14,6 +13,7 @@ import BackToPageButton from "@/components/BackToPageButton"
 import BlogTag from "@/components/BlogTag"
 import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
+import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
@@ -107,7 +107,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       return <InlineCode>{children}</InlineCode>
     },
 
-    Image,
+    img: MDXImage,
+    Image: MDXImage,
   }
 
   const { content } = await compileMDX({

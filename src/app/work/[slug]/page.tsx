@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import { MDXImage } from "@/components/mdx/MDXImage"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import TechBadge from "@/components/TechBadge"
@@ -100,6 +101,8 @@ export default async function WorkItemPage(props: { params: pageParams }) {
     components: {
       Timeline,
       TimelineItem,
+      img: MDXImage,
+      Image: MDXImage,
     },
     options: {
       parseFrontmatter: true,

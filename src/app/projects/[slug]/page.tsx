@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
 import TechBadge from "@/components/TechBadge"
@@ -79,6 +80,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
   const { content, frontmatter } = await compileMDX<ProjectFrontmatter>({
     source: mdxSource,
+    components: {
+      img: MDXImage,
+      Image: MDXImage,
+    },
     options: {
       parseFrontmatter: true,
       mdxOptions: {
