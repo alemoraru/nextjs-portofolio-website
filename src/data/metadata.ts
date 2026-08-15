@@ -65,7 +65,7 @@ export const siteMetadata: SiteMetadata = {
    *
    * Note: /blog, /projects, and /work always use dynamically generated OG images.
    */
-  ogImage: "/og-image.png",
+  ogImage: null,
 }
 
 /**

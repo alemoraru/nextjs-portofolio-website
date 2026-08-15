@@ -1,11 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { FaCalendarAlt } from "react-icons/fa"
 import AnimatedCard from "@/components/AnimatedCard"
-import HoverArrow from "@/components/HoverArrow"
 import TechBadge from "@/components/TechBadge"
 import { MAX_PROJECT_TILE_TECH_BADGES } from "@/lib/constants"
 import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
@@ -65,20 +63,6 @@ export default function ProjectTile({
               "rounded-b-lg border-b border-gray-300 dark:border-gray-700"
             )}
           />
-
-          {/* Overlay on Hover */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            className={cn(
-              "absolute inset-0 bg-linear-to-t from-accent-800/65 via-accent-600/40 to-transparent",
-              "flex flex-col items-center justify-center gap-2 p-4"
-            )}
-          >
-            <span className="text-white text-lg font-bold tracking-tight">Explore Project</span>
-            <HoverArrow className="text-white text-2xl font-bold" />
-          </motion.div>
         </div>
 
         {/* Title, Description, and Metadata */}

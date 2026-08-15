@@ -63,13 +63,13 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
 
         {/* Date and Reading Time */}
         {date && (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
-            <span ref={dateRef} className="flex items-center gap-1.5 whitespace-nowrap">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <span ref={dateRef} className="flex items-center gap-2 whitespace-nowrap">
               <FaRegCalendarAlt className="w-3.5 h-3.5 shrink-0" />
               <time dateTime={date}>{formatBlogDate(date, "short")}</time>
             </span>
             {readingTime && (
-              <span ref={readingTimeRef} className="flex items-center gap-1.5 whitespace-nowrap">
+              <span ref={readingTimeRef} className="flex items-center gap-2 whitespace-nowrap">
                 <span className={onSameLine ? "visible" : "invisible"} aria-hidden="true">
                   ·
                 </span>
