@@ -41,13 +41,9 @@ export default function Header() {
   const pathname = usePathname()
   const { headerInfo } = usePageHeader()
 
-  // Show scroll progress bar only on blog post pages (e.g., /blog/my-post)
-  // If regex is not done properly, then it may also show on /blog/tag/some-tag pages, which we don't want.
-  // At least, that was an issue in the past, hence this longer comment to explain it.
-  const isBlogPost = /^\/blog\/[^/]+$/.test(pathname)
-
-  // Whether the current page is a detail page (blog post, project, or work item) that
-  // gets the mobile header title flip. Excludes list/tag pages like /blog/tag/<tag>.
+  // Whether the current page is a detail page (blog post, project, or work item). Drives both
+  // the mobile header title flip and the reading-progress bar. `DETAIL_PAGE_REGEX` ends in
+  // `[^/]+$`, so list/tag pages like `/blog/tag/<tag>` are correctly excluded.
   const isDetailPage = DETAIL_PAGE_REGEX.test(pathname)
 
   useEffect(() => {
@@ -69,8 +65,12 @@ export default function Header() {
     }
 
     lastScrollYRef.current = window.scrollY
+    let frame = 0
 
-    const handleScroll = () => {
+    // Coalesce bursts of scroll events into one check per frame; `window.scrollY` is a
+    // cheap read (no forced layout) and React skips the re-render when the flag is unchanged.
+    const evaluate = () => {
+      frame = 0
       const currentScrollY = window.scrollY
       const previousScrollY = lastScrollYRef.current
 
@@ -88,8 +88,15 @@ export default function Header() {
       lastScrollYRef.current = currentScrollY
     }
 
+    const handleScroll = () => {
+      if (!frame) frame = requestAnimationFrame(evaluate)
+    }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [isDetailPage, headerInfo])
 
   const showTitleBlock = isDetailPage && isMobile && isScrolled && headerInfo !== null
@@ -162,9 +169,10 @@ export default function Header() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={mobileMenuOpen} setIsOpenAction={setMobileMenuOpen} />
 
-      {/* Scroll progress bar for blog posts: always shown on desktop, but on mobile it
-          only appears once the reader starts scrolling (alongside the title flip). */}
-      {isBlogPost && (
+      {/* Reading-progress bar on blog post / project / work detail pages: always shown on
+          desktop, but on mobile it only appears once the reader starts scrolling (alongside
+          the title flip). */}
+      {isDetailPage && (
         <div className={cn("md:block", isScrolled ? "block" : "hidden")}>
           <ScrollProgress />
         </div>
