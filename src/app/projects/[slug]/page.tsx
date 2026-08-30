@@ -96,6 +96,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
   // Format duration from startDate and endDate
   const duration = formatDuration(frontmatter.startDate, frontmatter.endDate)
+  const displayName = homeIntroConfig.shortName || homeIntroConfig.name
 
   // Get project images
   const projectImages: { src: string; alt: string }[] = []
@@ -135,7 +136,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
     <AnimatedArticle>
       <PageHeaderSync
         title={frontmatter.title}
-        subtitle={`${homeIntroConfig.name}'s Projects · ${duration}`}
+        subtitle={`${displayName}'s Projects · ${duration}`}
       />
       <JsonLd data={jsonLd} />
       <BackToPageButton pageUrl="/projects" />

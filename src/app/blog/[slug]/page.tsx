@@ -148,7 +148,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     },
   }
 
-  const headerSubtitle = `${homeIntroConfig.name}'s Blog · ${formatBlogDate(post.date, "short")}`
+  const displayName = homeIntroConfig.shortName || homeIntroConfig.name
+  const headerSubtitle = `${displayName}'s Blog · ${formatBlogDate(post.date, "short")}`
 
   return (
     <AnimatedArticle>
