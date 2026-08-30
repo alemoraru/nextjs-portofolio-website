@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import JsonLd from "@/components/JsonLd"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
@@ -136,10 +137,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
         title={frontmatter.title}
         subtitle={`${homeIntroConfig.name}'s Projects · ${duration}`}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
       <BackToPageButton pageUrl="/projects" />
 
       {/* Header */}

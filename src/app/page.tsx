@@ -1,4 +1,5 @@
 import HomeContent from "@/components/home/HomeContent"
+import JsonLd from "@/components/JsonLd"
 import { footerConfig, homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllBlogPosts, getAllProjects, getAllWorkItems } from "@/lib/mdx"
@@ -33,10 +34,7 @@ export default async function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
       <HomeContent blog={blog} work={work} projects={projects} />
     </>
   )

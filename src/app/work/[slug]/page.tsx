@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import JsonLd from "@/components/JsonLd"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
 import PageHeaderSync from "@/components/PageHeaderSync"
@@ -130,10 +131,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
         title={frontmatter.title}
         subtitle={`${frontmatter.company} · ${formatDateRange(frontmatter.start, frontmatter.end)}`}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
       <BackToPageButton pageUrl="/work" />
       <div className="flex items-center gap-4 mb-2">
         {frontmatter.companyUrl ? (

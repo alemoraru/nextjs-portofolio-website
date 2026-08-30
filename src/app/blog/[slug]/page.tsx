@@ -11,6 +11,7 @@ import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
 import BlogTag from "@/components/BlogTag"
+import JsonLd from "@/components/JsonLd"
 import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
 import { MDXImage } from "@/components/mdx/MDXImage"
@@ -152,10 +153,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
   return (
     <AnimatedArticle>
       <PageHeaderSync title={post.title} subtitle={headerSubtitle} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
       <BackToPageButton pageUrl="/blog" />
       <div className="text-3xl font-bold mb-4">{post.title}</div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mb-8">
