@@ -43,7 +43,7 @@ export default function ViewAllHeader({ title, pageUrl, itemCount }: ViewAllButt
         >
           {itemCount}
         </span>
-        <HoverArrow offset={2} className="text-base" />
+        <HoverArrow className="text-base" />
       </Link>
     </div>
   )
