@@ -25,11 +25,6 @@ const nextConfig: NextConfig = {
     // to cache each variant for a long time (31 days).
     minimumCacheTTL: 2_678_400,
   },
-  experimental: {
-    // react-icons/* subpaths are already optimized by Next's built-in list; framer-motion
-    // is not, so add it here to strip unused motion exports from route bundles.
-    optimizePackageImports: ["framer-motion"],
-  },
   async headers() {
     return [
       {
