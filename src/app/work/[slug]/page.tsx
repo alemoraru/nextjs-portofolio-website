@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import BackToTopButton from "@/components/BackToTopButton"
 import JsonLd from "@/components/JsonLd"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import { Timeline, TimelineItem } from "@/components/mdx/Timeline"
@@ -169,6 +170,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
         </>
       )}
       <div className="max-w-5xl prose dark:prose-invert">{content}</div>
+      <BackToTopButton />
     </AnimatedArticle>
   )
 }

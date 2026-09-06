@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import BackToTopButton from "@/components/BackToTopButton"
 import BlogTag from "@/components/BlogTag"
 import JsonLd from "@/components/JsonLd"
 import { CodeBlock } from "@/components/mdx/CodeBlock"
@@ -181,6 +182,7 @@ export default async function BlogPostPage(props: { params: pageParams }) {
 
       <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
       <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3} />
+      <BackToTopButton />
     </AnimatedArticle>
   )
 }
