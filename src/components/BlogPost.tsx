@@ -1,7 +1,4 @@
-"use client"
-
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
 import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
 import AnimatedCard from "@/components/AnimatedCard"
 import BlogTag from "@/components/BlogTag"
@@ -13,27 +10,6 @@ import { cn, formatBlogDate } from "@/lib/utils"
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
  */
 export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
-  const dateRef = useRef<HTMLSpanElement>(null)
-  const readingTimeRef = useRef<HTMLSpanElement>(null)
-  const [onSameLine, setOnSameLine] = useState(true)
-
-  // Detect whether the date and reading time actually wrapped onto separate lines
-  // (rather than guessing via a hardcoded breakpoint), so the separator dot only
-  // shows when they're genuinely sharing a line.
-  useEffect(() => {
-    const dateEl = dateRef.current
-    const readingTimeEl = readingTimeRef.current
-    const row = dateEl?.parentElement
-    if (!dateEl || !readingTimeEl || !row) return
-
-    const checkAlignment = () => setOnSameLine(dateEl.offsetTop === readingTimeEl.offsetTop)
-
-    checkAlignment()
-    const observer = new ResizeObserver(checkAlignment)
-    observer.observe(row)
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <Link href={`/blog/${slug}`} className="block h-full">
       <AnimatedCard
@@ -64,15 +40,13 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
         {/* Date and Reading Time */}
         {date && (
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
-            <span ref={dateRef} className="flex items-center gap-2 whitespace-nowrap">
+            <span className="flex items-center gap-2 whitespace-nowrap">
               <FaRegCalendarAlt className="w-3.5 h-3.5 shrink-0" />
               <time dateTime={date}>{formatBlogDate(date, "short")}</time>
             </span>
             {readingTime && (
-              <span ref={readingTimeRef} className="flex items-center gap-2 whitespace-nowrap">
-                <span className={onSameLine ? "visible" : "invisible"} aria-hidden="true">
-                  ·
-                </span>
+              <span className="flex items-center gap-2 whitespace-nowrap">
+                <span aria-hidden="true">·</span>
                 <FaBookOpen className="w-3.5 h-3.5 shrink-0" />
                 {readingTime} min read
               </span>

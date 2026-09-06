@@ -10,6 +10,16 @@ export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 /**
+ * Pre-render one OG image per blog post at build time. Metadata image routes do not
+ * inherit the sibling page's `generateStaticParams`, so without this the route is
+ * rendered on demand on first request.
+ */
+export async function generateStaticParams() {
+  const posts = await getAllBlogPosts()
+  return posts.map(post => ({ slug: post.slug }))
+}
+
+/**
  * Generates an Open Graph image for a blog post based on its slug.
  * The image includes the post's title, summary, tags, and publication date,
  * styled in a visually appealing way for sharing on social media platforms.

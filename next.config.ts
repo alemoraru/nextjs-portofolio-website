@@ -18,6 +18,13 @@ const csp = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    // Serve AVIF (then WebP) where the browser supports it; the default is WebP only.
+    formats: ["image/avif", "image/webp"],
+    // All images are local assets that only change on deploy, so allow the optimizer
+    // to cache each variant for a long time (31 days).
+    minimumCacheTTL: 2_678_400,
+  },
   async headers() {
     return [
       {

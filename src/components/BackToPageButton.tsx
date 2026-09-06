@@ -28,7 +28,7 @@ export default function BackToPageButton({ pageUrl }: BackToPageButtonProps) {
         "dark:focus-visible:ring-offset-black rounded-sm"
       )}
     >
-      <HoverArrow direction="left" offset={2} className="text-base" />
+      <HoverArrow direction="left" className="text-base" />
       <span>Back to {capitalizedName}</span>
     </Link>
   )

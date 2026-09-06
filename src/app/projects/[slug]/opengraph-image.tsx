@@ -9,6 +9,16 @@ export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 /**
+ * Pre-render one OG image per project at build time. Metadata image routes do not
+ * inherit the sibling page's `generateStaticParams`, so without this the route is
+ * rendered on demand on first request.
+ */
+export async function generateStaticParams() {
+  const projects = await getAllProjects()
+  return projects.map(project => ({ slug: project.slug }))
+}
+
+/**
  * Generates an Open Graph image for a project based on its slug.
  * The image includes the project's title, description, tech stack, and duration,
  * styled in a visually appealing way for sharing on social media platforms.

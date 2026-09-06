@@ -32,9 +32,9 @@ point for your own personal website, or as a reference for doing the same thing 
 
 </details>
 
-![Screenshot Pages Desktop](public/homepage-screenshot-desktop.png)
+![Screenshot Pages Desktop](docs/homepage-screenshot-desktop.png)
 
-![Screenshot Pages Phone](public/pages-screenshots-mobile.png)
+![Screenshot Pages Phone](docs/pages-screenshots-mobile.png)
 
 ---
 

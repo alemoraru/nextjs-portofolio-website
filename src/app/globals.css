@@ -125,6 +125,30 @@
   mix-blend-mode: normal;
 }
 
+/* Reading-progress bar (Header → ScrollProgress). The fill is driven by the document's
+   scroll position with zero JS. No scroll listener, no re-render, no layout reads.
+   Browsers without scroll-driven animations keep the default (collapsed) bar. */
+@keyframes scroll-progress-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.scroll-progress-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress-bar {
+    animation: scroll-progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
