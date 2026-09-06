@@ -10,6 +10,7 @@ import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
 import BackToPageButton from "@/components/BackToPageButton"
+import BackToTopButton from "@/components/BackToTopButton"
 import JsonLd from "@/components/JsonLd"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
@@ -230,6 +231,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
       {/* Display the actual content of the .mdx file */}
       <div className="max-w-4xl prose dark:prose-invert">{content}</div>
+      <BackToTopButton />
     </AnimatedArticle>
   )
 }
