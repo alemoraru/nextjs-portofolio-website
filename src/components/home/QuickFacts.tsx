@@ -1,9 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { fadeUpVariants } from "@/components/home/animations"
 import { factIconMap, homeIntroConfig } from "@/data/content"
 import { cn } from "@/lib/utils"
-import { fadeUpVariants } from "./animations"
 
 /**
  * Simple component which renders pill-like quick facts about the user, based on the homeIntroConfig data.

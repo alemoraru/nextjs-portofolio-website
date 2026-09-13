@@ -1,12 +1,16 @@
 "use client"
 
 import { motion } from "framer-motion"
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  staggerItemVariants,
+} from "@/components/home/animations"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import WorkItem from "@/components/WorkItem"
 import { homeIntroConfig } from "@/data/content"
 import { WorkItemProps } from "@/lib/types"
 import { sortWorkItems } from "@/lib/utils"
-import { fadeUpVariants, staggerContainerVariants, staggerItemVariants } from "./animations"
 
 interface WorkPreviewProps {
   work: WorkItemProps[]

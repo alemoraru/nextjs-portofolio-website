@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import WorkClientUI from "@/app/work/WorkClientUI"
 import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllWorkItems } from "@/lib/mdx"
 import { filterWorkItems, paginateItems, sortWorkItems } from "@/lib/utils"
-import WorkClientUI from "./WorkClientUI"
 
 const WORK_PAGE_SIZE = paginationConfig.workItemsPerPage
 

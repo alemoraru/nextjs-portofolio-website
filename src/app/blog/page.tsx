@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import BlogClientUI from "@/app/blog/BlogClientUI"
 import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { filterBlogPosts, paginateItems, sortBlogPosts } from "@/lib/utils"
-import BlogClientUI from "./BlogClientUI"
 
 const POSTS_PAGE_SIZE = paginationConfig.blogPostsPerPage
 

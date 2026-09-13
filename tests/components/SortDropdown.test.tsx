@@ -41,7 +41,8 @@ describe("SortDropdown", () => {
   })
 
   it("shows 'Sort' as fallback when no matching option is found", () => {
-    const { container } = render(<SortDropdown {...defaultProps} sortOrder={"invalid" as any} />)
+    const invalidSortOrder = "invalid" as unknown as "newest" | "oldest" | "asc" | "desc"
+    const { container } = render(<SortDropdown {...defaultProps} sortOrder={invalidSortOrder} />)
 
     expect(container.textContent).toContain("Sort")
   })

@@ -77,7 +77,7 @@ vi.mock("next/image", () => ({
   default: ({
     src,
     alt,
-    fill,
+    fill: _fill,
     ...props
   }: {
     src: string

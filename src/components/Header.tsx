@@ -107,7 +107,7 @@ export default function Header() {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         "text-black dark:text-white",
-        "bg-zinc-50/90 dark:bg-zinc-950/90",
+        "bg-zinc-50/75 dark:bg-zinc-950/75",
         "border-b border-gray-300 dark:border-gray-800",
         "backdrop-blur-md backdrop-saturate-150",
         "shadow-sm hover:shadow-md"

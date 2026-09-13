@@ -1,12 +1,16 @@
 "use client"
 
 import { motion } from "framer-motion"
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  staggerItemVariants,
+} from "@/components/home/animations"
 import ProjectTile from "@/components/ProjectTile"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import { homeIntroConfig } from "@/data/content"
 import { ProjectProps } from "@/lib/types"
 import { sortProjects } from "@/lib/utils"
-import { fadeUpVariants, staggerContainerVariants, staggerItemVariants } from "./animations"
 
 interface ProjectsPreviewProps {
   projects: ProjectProps[]

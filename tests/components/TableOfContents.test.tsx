@@ -41,7 +41,7 @@ describe("TableOfContents", () => {
       unobserve = vi.fn()
       disconnect = vi.fn()
       constructor() {}
-    } as any
+    } as unknown as typeof IntersectionObserver
 
     // Mock window.scrollTo
     window.scrollTo = vi.fn()
