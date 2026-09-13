@@ -38,10 +38,29 @@ const eslintConfig = defineConfig([
           alphabetize: { order: "asc", caseInsensitive: true },
         },
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["./*", "../*"],
+              message: 'Use the "@/..." alias instead of a relative import.',
+            },
+          ],
+        },
+      ],
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/set-state-in-effect": "off", // Temporarily disable to avoid conflicts with custom hooks
+    },
+  },
+  {
+    // package.json lives outside src/, which is all the "@/" alias maps to, so importing it
+    // is the one legitimate case where a relative import is unavoidable.
+    files: ["src/lib/constants.ts"],
+    rules: {
+      "no-restricted-imports": "off",
     },
   },
 ])

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { FaCodeBranch } from "react-icons/fa"
 import { footerConfig, socialIconMap } from "@/data/content"
 import { appVersion } from "@/lib/constants"
+import { SocialPlatform } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 /**
@@ -13,11 +14,14 @@ function SocialLinks() {
       {Object.entries(footerConfig.socialLinks)
         .filter(([_, url]) => url && url.trim() !== "")
         .map(([platform, url]) => {
-          const platformKey = platform as keyof typeof socialIconMap
+          const platformKey = platform as SocialPlatform
           const { icon: Icon, label } = socialIconMap[platformKey]
 
           // Add mailto: prefix for email if not already present
-          const href = platform === "email" && !url.startsWith("mailto:") ? `mailto:${url}` : url
+          const href =
+            platformKey === SocialPlatform.Email && !url.startsWith("mailto:")
+              ? `mailto:${url}`
+              : url
 
           return (
             <Link

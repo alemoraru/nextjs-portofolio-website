@@ -2,10 +2,14 @@
 
 import { motion } from "framer-motion"
 import BlogPost from "@/components/BlogPost"
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  staggerItemVariants,
+} from "@/components/home/animations"
 import ViewAllHeader from "@/components/ViewAllHeader"
 import { homeIntroConfig } from "@/data/content"
 import { BlogPostProps } from "@/lib/types"
-import { fadeUpVariants, staggerContainerVariants, staggerItemVariants } from "./animations"
 
 interface BlogPreviewProps {
   blog: BlogPostProps[]

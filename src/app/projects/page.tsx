@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import ProjectsClientUI from "@/app/projects/ProjectsClientUI"
 import PageNotFound from "@/components/PageNotFound"
 import { homeIntroConfig, paginationConfig } from "@/data/content"
 import { getAllProjects } from "@/lib/mdx"
 import { filterProjects, paginateItems, sortProjects } from "@/lib/utils"
-import ProjectsClientUI from "./ProjectsClientUI"
 
 const PROJECTS_PAGE_SIZE = paginationConfig.projectsPerPage
 

@@ -60,6 +60,26 @@ export type { WorkItemFrontmatter } from "@/lib/schemas"
 export type tagPageParams = Promise<{ tag: string }>
 
 /**
+ * @description Social media platforms supported in `footerConfig.socialLinks` and
+ * `contactConfig.featuredChannels` (src/data/content.ts). Enum values match the plain string
+ * keys used in those config objects, so existing string keys there keep type-checking against
+ * this enum without needing bracket syntax everywhere.
+ */
+export enum SocialPlatform {
+  GitHub = "github",
+  LinkedIn = "linkedin",
+  GoodReads = "goodreads",
+  Instagram = "instagram",
+  Twitter = "twitter",
+  Reddit = "reddit",
+  Dribbble = "dribbble",
+  YouTube = "youtube",
+  Bluesky = "bluesky",
+  StackOverflow = "stackoverflow",
+  Email = "email",
+}
+
+/**
  * @description Accent color themes available for the portfolio.
  * Set `siteMetadata.theme` in src/data/metadata.ts to one of these values.
  */

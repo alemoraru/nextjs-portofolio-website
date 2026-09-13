@@ -19,6 +19,7 @@ import {
   FaStackOverflow,
 } from "react-icons/fa"
 import { FaBluesky, FaXTwitter } from "react-icons/fa6"
+import { SocialPlatform } from "@/lib/types"
 
 /**
  * Configuration for the home page intro section
@@ -148,7 +149,7 @@ export const footerConfig = {
     bluesky: "/",
     stackoverflow: "/",
     email: "contact@example.com",
-  },
+  } as Record<SocialPlatform, string>,
 }
 
 // USERS DO NOT NEED TO MODIFY BELOW THIS LINE
@@ -170,10 +171,7 @@ export const factIconMap: Record<keyof typeof homeIntroConfig.facts, IconType> =
  * Internal mapping of social platforms to their icons and labels
  * This is used internally by the Footer component - users don't need to modify this
  */
-export const socialIconMap: Record<
-  keyof typeof footerConfig.socialLinks,
-  { icon: IconType; label: string }
-> = {
+export const socialIconMap: Record<SocialPlatform, { icon: IconType; label: string }> = {
   github: { icon: FaGithub, label: "GitHub" },
   linkedin: { icon: FaLinkedin, label: "LinkedIn" },
   goodreads: { icon: FaGoodreads, label: "GoodReads" },
