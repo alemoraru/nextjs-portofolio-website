@@ -49,8 +49,15 @@ const eslintConfig = defineConfig([
           ],
         },
       ],
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+        },
+      ],
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/set-state-in-effect": "off", // Temporarily disable to avoid conflicts with custom hooks
     },
