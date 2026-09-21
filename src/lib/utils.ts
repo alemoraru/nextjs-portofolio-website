@@ -81,10 +81,13 @@ export function formatDateRange(start: string, end: string): string {
  * @param style - "long" for full month name, "short" for abbreviated month name.
  */
 export function formatBlogDate(date: string, style: "long" | "short" = "long"): string {
+  // ISO date-only strings ("YYYY-MM-DD") parse as UTC midnight; pinning the render to
+  // UTC too keeps the displayed date stable regardless of the reader's local timezone
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: style,
     day: "numeric",
+    timeZone: "UTC",
   })
 }
 
