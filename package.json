@@ -71,7 +71,7 @@
     "@types/react-dom": "19.2.7"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --max-warnings=0",
-    "*.{js,jsx,ts,tsx,mjs,cjs,json,css,md,mdx,yml,yaml}": "prettier --check"
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": "eslint --max-warnings=0",
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,json,css,md,mdx,yml,yaml}": "prettier --check"
   }
 }
