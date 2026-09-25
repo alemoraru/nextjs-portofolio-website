@@ -45,9 +45,9 @@ existing_id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -
   --jq ".[] | select(.body | startswith(\"${tag}\")) | .id" | head -n1)
 
 if [[ -n "$existing_id" ]]; then
-  gh api "repos/${GITHUB_REPOSITORY}/issues/comments/${existing_id}" -X PATCH -f body=@"${rendered}" >/dev/null
+  gh api "repos/${GITHUB_REPOSITORY}/issues/comments/${existing_id}" -X PATCH -F body=@"${rendered}" >/dev/null
   echo "Updated existing '${marker}' PR comment (#${existing_id})."
 else
-  gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -X POST -f body=@"${rendered}" >/dev/null
+  gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -X POST -F body=@"${rendered}" >/dev/null
   echo "Posted new '${marker}' PR comment."
 fi
