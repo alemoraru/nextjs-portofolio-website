@@ -74,7 +74,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           python3 .github/scripts/coverage_comment.py > coverage-comment.md
-          .github/scripts/post-pr-comment.sh coverage coverage-comment.md
+          .github/scripts/post-pr-comment.sh coverage-comment.md
 
   build:
     name: Build
@@ -122,7 +122,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: .github/scripts/post-pr-comment.sh bundle-size bundle-size-comment.md
+        run: .github/scripts/post-pr-comment.sh bundle-size-comment.md
 
       - name: Fail if bundle size exceeds budget
         if: steps.bundle_report.outcome == 'failure'
