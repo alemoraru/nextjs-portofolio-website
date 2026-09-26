@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Generate a minimal coverage report comment for PRs."""
+"""Render the test-coverage PR comment from coverage/coverage-summary.json."""
 
 import json
 import sys
 from pathlib import Path
+from string import Template
+
+TEMPLATE_PATH = Path(__file__).parent / "templates" / "coverage.md.tpl"
 
 
 def main():
@@ -17,23 +20,16 @@ def main():
         coverage = json.load(f)
 
     total = coverage.get("total", {})
+    template = Template(TEMPLATE_PATH.read_text())
 
-    lines = total.get("lines", {}).get("pct", 0)
-    statements = total.get("statements", {}).get("pct", 0)
-    functions = total.get("functions", {}).get("pct", 0)
-    branches = total.get("branches", {}).get("pct", 0)
-
-    comment = f"""## Test Coverage Report
-
-| Category | Coverage |
-|----------|----------|
-| Lines | {lines}% |
-| Statements | {statements}% |
-| Functions | {functions}% |
-| Branches | {branches}% |
-"""
-
-    print(comment)
+    print(
+        template.substitute(
+            LINES=total.get("lines", {}).get("pct", 0),
+            STATEMENTS=total.get("statements", {}).get("pct", 0),
+            FUNCTIONS=total.get("functions", {}).get("pct", 0),
+            BRANCHES=total.get("branches", {}).get("pct", 0),
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -34,7 +34,6 @@
     "next": "16.3.4",
     "next-mdx-remote": "6.0.0",
     "next-themes": "0.4.6",
-    "radix-ui": "1.6.1",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-icons": "5.5.0",
@@ -72,7 +71,7 @@
     "@types/react-dom": "19.2.7"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --max-warnings=0",
-    "*.{js,jsx,ts,tsx,mjs,cjs,json,css,md,mdx,yml,yaml}": "prettier --check"
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": "eslint --max-warnings=0",
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,json,css,md,mdx,yml,yaml}": "prettier --check"
   }
 }

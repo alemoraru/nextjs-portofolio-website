@@ -71,6 +71,61 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          COMMENT=$(python3 .github/scripts/coverage_comment.py)
-          gh pr comment ${{ github.event.pull_request.number }} --body "$COMMENT"
+          python3 .github/scripts/coverage_comment.py > coverage-comment.md
+          .github/scripts/post-pr-comment.sh coverage-comment.md
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    # Skip on release commits pushed by the Prepare Release workflow, since it already ran these checks
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }}
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # actions/checkout@v6
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # pnpm/setup@v2
+        with:
+          version: 11
+          runtime: node@26
+          cache: true
+          install: false
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+
+      # Lint/types/tests don't catch build-time failures: bad MDX frontmatter, a broken
+      # import, or an opengraph-image regression all only throw during `next build`.
+      - name: Build
+        run: pnpm build
+
+      # `continue-on-error` so a budget breach still lets the comment post below - the
+      # report should show up whether the size is within budget or not. The "Fail if
+      # bundle size exceeds budget" step after posting gives the run its ❌ if needed.
+      - name: Render bundle-size report
+        id: bundle_report
+        continue-on-error: true
+        run: |
+          python3 .github/scripts/bundle_size.py stats .next/static > bundle-size.json
+          python3 .github/scripts/bundle_size.py comment \
+            --stats bundle-size.json \
+            --budget-kb 2048 > bundle-size-comment.md
+
+      - name: Post bundle-size comment
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: .github/scripts/post-pr-comment.sh bundle-size-comment.md
+
+      - name: Fail if bundle size exceeds budget
+        if: steps.bundle_report.outcome == 'failure'
+        run: |
+          echo "::error::Bundle size exceeds the configured budget - see bundle-size-comment.md / the PR comment for details."
+          exit 1
