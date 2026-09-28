@@ -18,6 +18,13 @@ const csp = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Turbopack auto-detects the project root by walking up for a lockfile, and picks up
+  // an unrelated `pnpm-lock.yaml` in the user's home directory (outside this repo) first.
+  // Pin the root explicitly so dev/build don't depend on what else happens to live above
+  // this checkout. See node_modules/next/dist/docs/.../turbopack.md#root-directory.
+  turbopack: {
+    root: __dirname,
+  },
   images: {
     // Serve AVIF (then WebP) where the browser supports it; the default is WebP only.
     formats: ["image/avif", "image/webp"],
