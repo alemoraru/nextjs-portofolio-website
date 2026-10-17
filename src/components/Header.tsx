@@ -108,7 +108,7 @@ export default function Header() {
         "sticky top-0 z-50 w-full transition-all duration-300",
         "text-black dark:text-white",
         "bg-zinc-50/75 dark:bg-zinc-950/75",
-        "border-b border-gray-300 dark:border-gray-800",
+        "border-b border-gray-200 dark:border-gray-900",
         "backdrop-blur-md backdrop-saturate-150",
         "shadow-sm hover:shadow-md"
       )}
