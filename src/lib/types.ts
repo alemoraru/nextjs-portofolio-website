@@ -15,8 +15,6 @@ export interface BlogPostProps {
   readingTime?: number
 }
 
-export type { BlogPostFrontmatter } from "@/lib/schemas"
-
 /**
  * @description This interface defines the structure (i.e., contents) of a project card.
  */
@@ -34,8 +32,6 @@ export interface ProjectProps {
   paperUrl?: string
 }
 
-export type { ProjectFrontmatter } from "@/lib/schemas"
-
 /**
  * @description This interface defines the structure (i.e., contents) of a work experience item.
  */
@@ -51,8 +47,6 @@ export interface WorkItemProps {
   companyUrl?: string
   techStack?: string[]
 }
-
-export type { WorkItemFrontmatter } from "@/lib/schemas"
 
 /**
  * @description This type is used to define the params for a dynamic tag route in Next.js.
