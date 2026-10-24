@@ -52,11 +52,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-theme={siteMetadata.theme}
-      className={`${gabarito.className} ${gabarito.variable}`}
+      className={gabarito.variable}
       suppressHydrationWarning
     >
       <body
-        className={`antialiased flex flex-col min-h-screen transition-colors overscroll-none ${gabarito.className} ${gabarito.variable}`}
+        className={`antialiased flex flex-col min-h-screen transition-colors overscroll-none ${gabarito.className}`}
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="system">
