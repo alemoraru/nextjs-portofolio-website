@@ -20,8 +20,9 @@ import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllProjects } from "@/lib/mdx"
 import { headingLinkRehypePlugins } from "@/lib/mdx-plugins"
-import { pageParams, ProjectFrontmatter } from "@/lib/types"
+import { pageParams } from "@/lib/types"
 import { formatDuration } from "@/lib/utils"
+import type { ProjectFrontmatter } from "@/lib/schemas"
 import type { CreativeWork, WithContext } from "schema-dts"
 
 /**

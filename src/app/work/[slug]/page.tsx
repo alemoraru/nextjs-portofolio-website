@@ -20,8 +20,9 @@ import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
 import { getAllWorkItems } from "@/lib/mdx"
 import { headingLinkRehypePlugins } from "@/lib/mdx-plugins"
-import { pageParams, WorkItemFrontmatter } from "@/lib/types"
+import { pageParams } from "@/lib/types"
 import { calculateDuration, formatDateRange } from "@/lib/utils"
+import type { WorkItemFrontmatter } from "@/lib/schemas"
 import type { EmployeeRole, WithContext } from "schema-dts"
 
 /**
