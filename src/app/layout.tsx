@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 )}
               />
               <Header />
-              <main className="grow container mx-auto px-4 py-6">
+              <main className="grow container mx-auto px-4 py-6 flex flex-col *:w-full">
                 {children}
                 <Analytics />
                 <SpeedInsights />
