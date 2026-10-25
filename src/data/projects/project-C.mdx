@@ -34,12 +34,28 @@ Project FinAI is a mobile application that uses artificial intelligence to provi
 - **Mobile App**: Created a cross-platform app using React Native for iOS and Android.
 - **Database**: Used MongoDB for storing user data securely and efficiently.
 
+| Model       | Input                        | Output                                 |
+| ----------- | ---------------------------- | -------------------------------------- |
+| Categorizer | Raw transaction descriptions | Spending category                      |
+| Forecaster  | Spending history             | Expected expenses for the coming weeks |
+| Advisor     | User goals and patterns      | Personalized, explainable suggestions  |
+
 ## Challenges and Solutions
 
-- **Data Privacy**: Implemented encryption and anonymization techniques to protect user data.
-- **Accuracy**: Trained AI models on diverse datasets to improve prediction accuracy.
-- **Integration**: Ensured seamless integration of AI features with the mobile app.
+- **Data Privacy**: Implemented encryption and anonymization techniques to protect user data. Sensitive fields were encrypted at rest, and training data was anonymized so models never saw personally identifiable information.
+- **Accuracy**: Trained AI models on diverse datasets to improve prediction accuracy. Cross-validation, regular retraining, and per-segment evaluation helped catch cases where the model worked well on average but poorly for specific user groups.
+- **Integration**: Ensured seamless integration of AI features with the mobile app. A versioned Flask API with clear response schemas let the mobile and ML work progress in parallel without breaking each other.
+- **Transaction Categorization**: Bank descriptions are messy and inconsistent. Combining rule-based cleaning, merchant matching, and an ML classifier with user corrections fed back as training data improved categorization over time.
+- **Cold Start**: New users had no history for the models to learn from. Starting with sensible defaults based on similar user profiles and gradually personalizing as data accumulated gave useful advice from day one.
+- **Explainability**: Users were reluctant to follow advice they did not understand. Showing the reasoning behind each recommendation, such as which spending categories drove a suggestion, increased trust.
+- **Mobile Performance**: Large transaction lists made the app feel sluggish on older phones. List virtualization, local caching, and incremental sync kept scrolling smooth and the app usable offline.
 
 ## Outcome
 
 Project FinAI was launched on app stores and received positive feedback for its user-friendly interface and accurate financial insights. It helped users save an average of 15% on monthly expenses.
+
+- **User Engagement**: Features like goal tracking and the AI chatbot kept users coming back regularly, rather than only checking in at the end of the month.
+- **Model Quality**: Continuous retraining on new, anonymized data steadily improved how well transactions were categorized and how closely expense forecasts matched reality.
+- **Trust and Privacy**: Clear data handling and end-to-end encryption were frequently mentioned in feedback as a reason users felt comfortable linking their financial data.
+- **Cross-Platform Delivery**: A single React Native codebase let a team of three ship to both iOS and Android without duplicating effort.
+- **Future Directions**: Planned improvements include investment insights, bill reminders, and more explainable recommendations that show users why a suggestion was made.

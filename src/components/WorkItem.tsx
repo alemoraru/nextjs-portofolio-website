@@ -40,7 +40,7 @@ export default function WorkItem({
                 alt={`${company} logo`}
                 width={25}
                 height={25}
-                className="rounded-full"
+                className="rounded-sm h-[25px] w-auto"
               />
             </div>
           )}

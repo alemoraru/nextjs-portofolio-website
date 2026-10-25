@@ -35,12 +35,33 @@ Project YouNovate is a comprehensive collaboration platform tailored for softwar
 - **Cloud Infrastructure**: Hosted on AWS, leveraging services like EC2, S3, and RDS for deployment, storage, and database management.
 - **CI/CD Pipeline**: Implemented using GitHub Actions for automated testing, linting, and deployment.
 
+| Service      | Responsibility                                       |
+| ------------ | ---------------------------------------------------- |
+| Tasks        | Kanban boards, sprints, and milestones               |
+| Chat         | Real-time messaging and video calls over `WebSocket` |
+| Integrations | GitHub pull requests, issues, and review status      |
+| Analytics    | Velocity, code churn, and deployment frequency       |
+
 ## Challenges and Solutions
 
-- **Real-Time Communication**: Implemented WebSocket-based communication for chat and notifications, ensuring low latency.
-- **Scalability**: Designed the backend with a microservices architecture to handle increasing user loads.
-- **Security**: Integrated OAuth 2.0 for secure authentication and role-based access control.
+- **Real-Time Communication**: Implemented WebSocket-based communication for chat and notifications, ensuring low latency. Reconnection with exponential backoff and message queuing on the client kept conversations consistent through flaky networks and server restarts.
+- **Scalability**: Designed the backend with a microservices architecture to handle increasing user loads. Separating chat, task management, and analytics let each service scale independently, with a message queue decoupling the heavier background jobs.
+- **Security**: Integrated OAuth 2.0 for secure authentication and role-based access control. Permissions were enforced on the server for every request, and sensitive tokens were encrypted at rest.
+- **Keeping Boards in Sync**: Multiple people editing the same Kanban board led to conflicting updates. Optimistic UI updates combined with server-side versioning resolved conflicts predictably and kept the board feeling instant.
+- **Third-Party Rate Limits**: Heavy use of the GitHub API quickly hit rate limits. Caching responses, batching requests, and relying on webhooks instead of polling brought API usage down significantly.
+- **Dashboard Performance**: Analytics queries slowed down as data grew. Pre-aggregated metrics, proper indexing in PostgreSQL, and paginated queries kept the dashboard responsive.
+
+> ⚠️ **Lesson learned**: Most of the hard problems here, from conflicting edits to API rate limits, only showed up under _real_ team usage, never in local testing.
 
 ## Outcome
 
 Project YouNovate was successfully deployed and adopted by several development teams, improving their productivity and collaboration. The platform received positive feedback for its intuitive design and robust feature set.
+
+- **Adoption**: Teams moved their day-to-day planning, discussions, and code reviews into a single tool, reducing the need to switch between separate apps.
+- **Reliability**: The automated CI/CD pipeline enabled frequent, low-risk releases, and the architecture handled growth in users and data without major rework.
+- **Team Growth**: As a full-stack developer on a team of four, I owned features end to end, from database schema and API design to the React interface, and gained hands-on experience with real-time systems and cloud deployment.
+- **Lessons Learned**: Investing early in testing, observability, and clear service boundaries paid off as the platform grew, and is an approach I carry into every project since.
+- **Developer Experience**: Engineers could see the status of a task, its linked pull request, and the related discussion in one place, which shortened the loop between "ready for review" and "merged".
+- **Data-Driven Retrospectives**: The analytics dashboard gave teams concrete numbers on velocity, code churn, and deployment frequency to ground their sprint retrospectives in.
+- **Maintainability**: Clear service boundaries, typed APIs shared between frontend and backend, and automated tests made it straightforward for new contributors to onboard and ship changes safely.
+- **Future Directions**: Natural next steps include richer GitHub and GitLab integrations, customizable dashboards, and automated sprint summaries.

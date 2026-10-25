@@ -1,15 +1,25 @@
 import Link from "next/link"
-import React from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import { cn } from "@/lib/utils"
 
 interface PaginationControlsProps {
+  /** The currently active page (1-indexed). */
   currentPage: number
+  /** The total number of pages. Nothing is rendered when this is 1 or less. */
   totalPages: number
+  /** The path that page links point to (e.g. "/blog"). */
   baseUrl: string
+  /** Current query params (sort, filters, ...) to preserve across page links. */
   searchParams?: { [key: string]: string | string[] | undefined }
 }
 
+/**
+ * Builds the URL for a given page, preserving all other query params.
+ * Page 1 omits the `page` param so it maps to the canonical base URL.
+ * @param baseUrl - The path to link to.
+ * @param page - The target page number.
+ * @param searchParams - Existing query params to carry over (any `page` entry is replaced).
+ */
 function buildPageUrl(
   baseUrl: string,
   page: number,
@@ -33,16 +43,28 @@ function buildPageUrl(
   return query ? `${baseUrl}?${query}` : baseUrl
 }
 
-const PaginationControls: React.FC<PaginationControlsProps> = ({
+/**
+ * Accessible pagination nav with prev/next buttons, always-visible first and last pages,
+ * and a window around the current page, collapsed with ellipses.
+ * It sits at the bottom of its flex-column parent (`mt-auto`) and wraps on narrow screens.
+ * @param currentPage - The currently active page (1-indexed).
+ * @param totalPages - The total number of pages. Renders nothing when 1 or less.
+ * @param baseUrl - The path that page links point to.
+ * @param searchParams - Query params to preserve across page links.
+ */
+export default function PaginationControls({
   currentPage,
   totalPages,
   baseUrl,
   searchParams,
-}) => {
+}: PaginationControlsProps) {
   if (totalPages <= 1) return null
 
   return (
-    <nav aria-label="Pagination" className="flex justify-center items-center gap-2 mt-10">
+    <nav
+      aria-label="Pagination"
+      className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mt-auto pt-10 pb-2"
+    >
       {/* Prev Button */}
       <Link
         href={buildPageUrl(baseUrl, Math.max(1, currentPage - 1), searchParams)}
@@ -85,7 +107,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 
       {/* Left Ellipsis */}
       {currentPage > 3 && (
-        <span className="px-2 text-gray-500 dark:text-gray-400 select-none" aria-hidden="true">
+        <span
+          className="px-1 sm:px-2 text-gray-500 dark:text-gray-400 select-none"
+          aria-hidden="true"
+        >
           ···
         </span>
       )}
@@ -151,7 +176,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 
       {/* Right Ellipsis */}
       {currentPage < totalPages - 2 && (
-        <span className="px-2 text-gray-500 dark:text-gray-400 select-none" aria-hidden="true">
+        <span
+          className="px-1 sm:px-2 text-gray-500 dark:text-gray-400 select-none"
+          aria-hidden="true"
+        >
           ···
         </span>
       )}
@@ -200,5 +228,3 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
     </nav>
   )
 }
-
-export default PaginationControls

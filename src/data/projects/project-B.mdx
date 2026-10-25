@@ -34,12 +34,25 @@ Project VoteChain leverages blockchain technology to create a secure and transpa
 - **Storage**: Used IPFS for storing voter data securely and efficiently.
 - **Security**: Implemented multi-signature wallets for election administrators to prevent unauthorized access.
 
+> **Note**: Contracts are immutable once deployed, so every one of them went through testnet rehearsals before the pilot election.
+
 ## Challenges and Solutions
 
-- **Scalability**: Optimized smart contracts to reduce gas fees and improve transaction throughput.
-- **Security**: Conducted rigorous testing to prevent vulnerabilities like reentrancy attacks.
-- **User Experience**: Designed an intuitive UI to make blockchain technology accessible to non-technical users.
+- **Scalability**: Optimized smart contracts to reduce gas fees and improve transaction throughput. Packing storage variables, avoiding unnecessary on-chain loops, and batching registrations kept the cost per vote low.
+- **Security**: Conducted rigorous testing to prevent vulnerabilities like reentrancy attacks. Unit tests, fuzzing, and static analysis tools were run on every contract change, and the contracts followed well-reviewed patterns instead of custom logic.
+- **User Experience**: Designed an intuitive UI to make blockchain technology accessible to non-technical users. Guided wallet setup, plain-language status messages, and clear transaction confirmations hid most of the blockchain complexity.
+- **Voter Privacy vs. Verifiability**: Votes had to be both anonymous and publicly verifiable. Separating voter identity from ballot data and using cryptographic commitments let anyone verify the tally without linking a vote to a person.
+- **Immutability and Bugs**: Deployed contracts cannot be patched, so a mistake could invalidate an election. A staged rollout on testnets, a dry-run election, and a carefully scoped upgrade path for non-critical logic reduced that risk.
+- **Off-Chain Data Availability**: Relying on IPFS meant data could become unavailable if it was not pinned. Pinning services and redundant nodes kept election data accessible for the full election period.
+- **Network Congestion**: Gas prices spiked unpredictably, which risked blocking voters at crucial moments. Adjustable gas settings, transaction retries, and a longer voting window made the system resilient to congestion.
 
 ## Outcome
 
 Project VoteChain was successfully piloted in a university election, receiving praise for its transparency and ease of use. It demonstrated the potential of blockchain in revolutionizing traditional voting systems.
+
+- **Transparency and Trust**: Participants could independently verify that their vote was recorded and counted, which addressed the main trust concerns raised before the pilot.
+- **Security Review**: Contract audits and extensive testing found no critical vulnerabilities, and the multi-signature setup for administrators proved effective in keeping election controls safe.
+- **Cost Efficiency**: Gas optimizations kept the cost per vote low enough to make a larger-scale election realistic.
+- **Accessibility**: Many voters had never used a crypto wallet before, and the guided onboarding flow made participation feasible without technical knowledge.
+- **Research Impact**: The design and findings were written up in an accompanying paper, contributing to discussions on the practicality of blockchain-based voting.
+- **Future Directions**: Next steps include layer-2 deployment for better throughput, zero-knowledge proofs for stronger voter privacy, and integration with institutional identity systems.

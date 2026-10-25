@@ -104,7 +104,7 @@ export default function BlogClientUI({
   }
 
   return (
-    <section className="px-4 max-w-4xl mx-auto">
+    <section className="px-4 max-w-4xl mx-auto flex flex-col flex-1">
       <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
         {/* Tag Filter Dropdown - Left */}
         <div className="relative flex-grow md:flex-grow-0">

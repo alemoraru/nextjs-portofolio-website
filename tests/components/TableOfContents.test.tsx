@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { cleanup, render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
 import TableOfContents from "@/components/TableOfContents"
 
@@ -48,13 +48,16 @@ describe("TableOfContents", () => {
   })
 
   afterEach(() => {
+    // Unmount first: the ToC renders in a portal on <body>, so wiping the body before
+    // React unmounts would make React try to remove nodes that are already gone.
+    cleanup()
     document.body.innerHTML = ""
     vi.clearAllMocks()
   })
 
   it("renders nothing when no headings are found", () => {
-    const { container } = render(<TableOfContents />)
-    expect(container.firstChild).toBeNull()
+    render(<TableOfContents />)
+    expect(screen.queryByLabelText("Toggle table of contents")).toBeNull()
   })
 
   it("renders table of contents when article with headings exists", async () => {
@@ -69,10 +72,11 @@ describe("TableOfContents", () => {
 
   it("displays horizontal lines for each heading", async () => {
     createMockArticle()
-    const { container } = render(<TableOfContents />)
+    render(<TableOfContents />)
 
     await waitFor(() => {
-      const lines = container.querySelectorAll(".h-0\\.5")
+      // The ToC renders in a portal on <body>, so query the document rather than the container
+      const lines = document.body.querySelectorAll(".h-0\\.5")
       expect(lines.length).toBe(4) // 4 headings
     })
   })
@@ -303,12 +307,12 @@ describe("TableOfContents", () => {
 
   it("hides on mobile and tablet (lg breakpoint)", async () => {
     createMockArticle()
-    const { container } = render(<TableOfContents />)
+    render(<TableOfContents />)
 
     await waitFor(() => {
-      const button = container.querySelector("button")
-      expect(button?.className).toContain("hidden")
-      expect(button?.className).toContain("lg:block")
+      const button = screen.getByLabelText("Toggle table of contents")
+      expect(button.className).toContain("hidden")
+      expect(button.className).toContain("lg:block")
     })
   })
 })

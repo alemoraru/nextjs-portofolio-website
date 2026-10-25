@@ -69,7 +69,7 @@ export function TimelineItem({ title, duration, location, children }: TimelineIt
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
 
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-800/40 p-4 sm:p-5">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-900 p-4 sm:p-5">
         <h3 className="mt-0 text-lg sm:text-xl font-semibold mb-2 leading-snug">{title}</h3>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-gray-500 dark:text-gray-400 mb-3">
           <span className="flex items-center gap-1.5">

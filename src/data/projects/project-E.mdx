@@ -35,10 +35,22 @@ Project FitVR combines fitness and gaming to create an immersive workout experie
 
 ## Challenges and Solutions
 
-- **Motion Sickness**: Designed smooth transitions and optimized frame rates to minimize discomfort.
-- **User Engagement**: Added gamification elements to keep users motivated.
-- **Hardware Compatibility**: Ensured compatibility with multiple VR headsets.
+- **Motion Sickness**: Designed smooth transitions and optimized frame rates to minimize discomfort. Fixed reference points in the environment, vignetting during movement, and a stable 72+ FPS target noticeably reduced nausea.
+- **User Engagement**: Added gamification elements to keep users motivated. Short sessions, streaks, and achievements encouraged regular use, and playtests guided which rewards actually felt worthwhile.
+- **Hardware Compatibility**: Ensured compatibility with multiple VR headsets. An input abstraction layer and per-device performance profiles let the same experience run well across different hardware.
+- **Performance on Standalone Headsets**: Mobile-class hardware has a tight rendering budget. Baked lighting, texture atlases, level-of-detail models, and aggressive draw-call batching kept scenes beautiful without dropping frames.
+- **Multiplayer Synchronization**: Players needed to see each other's movements without lag or jitter. Sending compact pose updates, interpolating on the receiving side, and hosting sessions through Firebase kept shared workouts smooth.
+- **Accurate Exercise Tracking**: Measuring real exercise from headset and controller data is imprecise. Calibrating to each user's height and reach, and designing movements around what the sensors track reliably, made progress feel fair.
+- **Safety in Physical Space**: Users swing their arms while unable to see the room. Boundary warnings, a calibration step, and exercises that stay within a small area helped prevent bumps and collisions.
 
 ## Outcome
 
 Project FitVR was showcased at a tech expo and received positive feedback for its innovative approach to fitness. It attracted interest from fitness enthusiasts and VR developers alike.
+
+- **Audience Response**: Visitors at the expo repeatedly mentioned how quickly they forgot they were exercising, which validated the gamification approach.
+- **Comfort and Retention**: Frame-rate optimizations and gentle locomotion options noticeably reduced motion sickness, letting people stay in sessions longer.
+- **Community Interest**: The multiplayer mode and shared leaderboards sparked friendly competition, and several attendees asked about playing with friends remotely.
+- **Technical Takeaways**: The project strengthened my skills in performance profiling for VR, 3D asset optimization, and building responsive experiences around real-time user movement.
+- **Future Directions**: Planned additions include hand and body tracking, new workout environments, trainer-led classes, and integration with wearable heart-rate sensors.
+
+> 🎮 _If it feels like a game, people keep coming back._ That became the core design principle of the project.
