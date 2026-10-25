@@ -223,6 +223,9 @@ Create `.mdx` files in the respective folders to add your content:
 Each `.mdx` file should include frontmatter with metadata (title, date, tags, etc.). The site automatically discovers
 and renders all content from these files!
 
+> **Note:** The blog, project, and work content that comes with this template is dummy, artificially generated text. It
+> only exists to showcase what the website can do, so replace or delete it with your own content.
+
 ### 4. Update Visual Assets
 
 - **Favicon**: Replace `/public/icons/favicon.ico` with your own icon
