@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { FaArrowUp } from "react-icons/fa"
 import { cn } from "@/lib/utils"
 
@@ -13,10 +14,18 @@ const SHOW_THRESHOLD_PX = 400
  * work item). Fades in once the reader has scrolled past {@link SHOW_THRESHOLD_PX}
  * and smoothly scrolls back to the top of the page. Pinned to the bottom-right of
  * the viewport.
+ *
+ * Rendered in a portal on `document.body`: `fixed` positioning breaks inside transformed
+ * ancestors (e.g. the animated article), which made the button jump into place.
  */
 export default function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     let frame = 0
@@ -46,7 +55,9 @@ export default function BackToTopButton() {
     })
   }
 
-  return (
+  if (!isMounted) return null
+
+  return createPortal(
     <AnimatePresence>
       {isVisible && (
         <motion.button
@@ -75,6 +86,7 @@ export default function BackToTopButton() {
           <FaArrowUp className="w-4 h-4" />
         </motion.button>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }
