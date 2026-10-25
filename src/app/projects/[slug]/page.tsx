@@ -15,6 +15,7 @@ import JsonLd from "@/components/JsonLd"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
+import TableOfContents from "@/components/TableOfContents"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
@@ -231,7 +232,12 @@ export default async function ProjectPage(props: { params: pageParams }) {
       )}
 
       {/* Display the actual content of the .mdx file */}
-      <div className="max-w-4xl prose dark:prose-invert">{content}</div>
+      {/* Table of Contents (only lists headings from the MDX content below) */}
+      <TableOfContents contentSelector="[data-toc-content]" />
+
+      <div data-toc-content className="max-w-4xl prose dark:prose-invert">
+        {content}
+      </div>
       <BackToTopButton />
     </AnimatedArticle>
   )

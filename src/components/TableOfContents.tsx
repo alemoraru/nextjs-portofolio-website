@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import { useClickOutside } from "@/hooks/useClickOutside"
 import { cn } from "@/lib/utils"
 
@@ -20,12 +21,22 @@ const MAX_LINES_CONTAINER_HEIGHT = "50vh"
 /** Gradient that fades the last ~30% of the line-index to transparent when it overflows. */
 const OVERFLOW_FADE_MASK = "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)"
 
+interface TableOfContentsProps {
+  /**
+   * CSS selector of the element whose headings are listed. Defaults to the page's `article`.
+   * Use it to skip page chrome headings (e.g. the title or "Tech Stack") and only list MDX content.
+   */
+  contentSelector?: string
+}
+
 /**
  * Component that generates a table of contents based on the headings of an article.
  * Positioned on the left side of the page with a Substack-style design.
  * Hidden on mobile/tablet screens.
+ * Renders into a portal on `document.body` so it stays fixed to the viewport at all times.
+ * @param contentSelector - CSS selector of the element to read headings from (default: "article").
  */
-export default function TableOfContents() {
+export default function TableOfContents({ contentSelector = "article" }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<TocItem[]>([])
   const [isExpanded, setIsExpanded] = useState(false)
   const [activeId, setActiveId] = useState<string>("")
@@ -35,10 +46,10 @@ export default function TableOfContents() {
   const lineIndexRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const article = document.querySelector("article")
-    if (!article) return
+    const container = document.querySelector(contentSelector)
+    if (!container) return
 
-    const headingElements = article.querySelectorAll("h1, h2, h3, h4, h5, h6")
+    const headingElements = container.querySelectorAll("h1, h2, h3, h4, h5, h6")
     const tocItems: TocItem[] = []
 
     headingElements.forEach((heading, index) => {
@@ -63,7 +74,7 @@ export default function TableOfContents() {
     })
 
     setHeadings(tocItems)
-  }, [])
+  }, [contentSelector])
 
   // Track active heading based on scroll position
   useEffect(() => {
@@ -157,7 +168,9 @@ export default function TableOfContents() {
     }
   }
 
-  return (
+  // Rendered in a portal on <body>: `fixed` positioning breaks inside transformed ancestors
+  // (e.g. the animated article), which made the ToC appear in the content before jumping left.
+  return createPortal(
     <>
       {/* Horizontal lines - always visible on the left */}
       <button
@@ -230,6 +243,7 @@ export default function TableOfContents() {
           </nav>
         </div>
       )}
-    </>
+    </>,
+    document.body
   )
 }
