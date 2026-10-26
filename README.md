@@ -336,6 +336,33 @@ If you do decide to use Vercel, this repository includes by default Analytics an
 > Node.js, such as [Netlify](https://www.netlify.com), [Render](https://render.com),
 > [AWS Amplify](https://aws.amazon.com/amplify/), or much more.
 
+### Domain configuration (Vercel)
+
+Search engines need **one** canonical host. The `siteUrl` in `src/data/metadata.ts` drives every canonical tag, the
+sitemap, `robots.txt`, and the JSON-LD URLs, so your domain settings must redirect to that same host. If they point
+the other way (e.g. the apex redirects to `www`, but pages declare the apex as canonical), Google sees a redirect loop
+and leaves pages as "Discovered – currently not indexed" or "Alternative page with proper canonical tag".
+
+In **Vercel → Project → Settings → Domains**:
+
+1. Add both `yourdomain.com` and `www.yourdomain.com`.
+2. Pick the host that matches `siteUrl` as the primary (this guide assumes the apex, `yourdomain.com`).
+3. Set the other host to redirect to it with a **308 (Permanent)** redirect, not 307 (Temporary).
+4. Leave `yourdomain-com.vercel.app` redirecting to the primary host. A temporary redirect is fine there since it isn't
+   linked or in the sitemap, but make sure it targets the primary host directly to avoid an extra hop.
+
+Verify (each should match):
+
+```bash
+curl -sI https://www.yourdomain.com/blog | grep -i -E "^(HTTP|location)"   # 308 → https://yourdomain.com/blog
+curl -sI https://yourdomain.com/blog | grep -i -E "^HTTP"                  # 200
+curl -s https://yourdomain.com/blog | grep -o '<link rel="canonical"[^>]*>' # href="https://yourdomain.com/blog"
+```
+
+If you prefer `www` as primary, set `siteUrl` to `https://www.yourdomain.com` instead and flip the redirect. Never
+configure both directions. After changing domains, resubmit `sitemap.xml` in Google Search Console and use "Validate
+fix" on the affected reports.
+
 ---
 
 ## 🛠 Tech Stack
