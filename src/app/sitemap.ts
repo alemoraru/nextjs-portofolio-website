@@ -49,7 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const blogTagRoutes: MetadataRoute.Sitemap = tags.map(tag => ({
-    url: `${base}/blog/tag/${tag}`,
+    // Tags may contain spaces (e.g. "full-stack development"); sitemap URLs must be encoded.
+    url: `${base}/blog/tag/${encodeURIComponent(tag.toLowerCase())}`,
     lastModified: newest(posts.filter(p => p.tags?.includes(tag)).map(p => new Date(p.date))),
     changeFrequency: "weekly",
     priority: 0.5,
