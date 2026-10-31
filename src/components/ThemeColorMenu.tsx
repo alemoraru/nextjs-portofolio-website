@@ -46,7 +46,7 @@ export default function ThemeColorMenu({ isOpen, activeTheme, onSelect }: ThemeC
         "mt-2 w-[min(13rem,calc(100vw-2rem))]",
         "bg-white dark:bg-gray-800",
         "border border-gray-300 dark:border-gray-700",
-        "rounded-lg shadow-xl backdrop-blur-sm",
+        "rounded-xl shadow-xl backdrop-blur-sm",
         "p-3 z-50 @container"
       )}
     >

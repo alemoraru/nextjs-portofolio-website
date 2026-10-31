@@ -52,7 +52,7 @@ export default function NotFound() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.4 }}
         className={cn(
-          "mb-8 px-4 py-3 rounded-lg",
+          "mb-8 px-4 py-3 rounded-xl",
           "border border-gray-300 dark:border-gray-700",
           "bg-gray-50 dark:bg-gray-900",
           "shadow-sm"
@@ -71,7 +71,7 @@ export default function NotFound() {
         <Link
           href="/"
           className={cn(
-            "group inline-flex items-center gap-2 px-6 py-2 rounded-lg",
+            "group inline-flex items-center gap-2 px-6 py-2 rounded-xl",
             "bg-accent-600 dark:bg-accent-500 text-white font-semibold",
             "hover:bg-accent-700 dark:hover:bg-accent-600",
             "transition-all duration-200 shadow-md hover:shadow-lg",

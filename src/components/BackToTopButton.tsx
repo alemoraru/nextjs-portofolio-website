@@ -70,7 +70,7 @@ export default function BackToTopButton() {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           className={cn(
-            "fixed bottom-6 right-6 z-40 w-11 h-11 rounded-lg",
+            "fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl",
             "flex items-center justify-center cursor-pointer",
             "border border-gray-300 dark:border-gray-700",
             "bg-gray-100 dark:bg-gray-900",

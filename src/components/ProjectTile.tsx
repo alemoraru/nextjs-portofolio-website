@@ -5,8 +5,8 @@ import Link from "next/link"
 import { FaCalendarAlt } from "react-icons/fa"
 import AnimatedCard from "@/components/AnimatedCard"
 import TechBadge from "@/components/TechBadge"
-import { MAX_PROJECT_TILE_TECH_BADGES } from "@/lib/constants"
-import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
+import { MAX_PROJECT_TILE_TECH_BADGES, PRESENT } from "@/lib/constants"
+import { calculateDuration, cn, formatDateRange, formatDuration } from "@/lib/utils"
 
 interface ProjectTileProps {
   slug: string
@@ -17,6 +17,20 @@ interface ProjectTileProps {
   startDate?: string
   endDate?: string
   priority?: boolean
+}
+
+/**
+ * Formats a project's dates in a friendly way, e.g., "Jan – Jun 2023". Only "YYYY-MM" dates can
+ * be reformatted, so any other format is displayed as a plain range instead.
+ * @param start - the start date string.
+ * @param end - the end date string or "Present".
+ */
+function formatProjectDates(start: string, end: string) {
+  const isYearMonth = (date: string) => /^\d{4}-\d{2}$/.test(date)
+
+  return isYearMonth(start) && (isYearMonth(end) || end === PRESENT)
+    ? formatDuration(start, end)
+    : formatDateRange(start, end)
 }
 
 /**
@@ -35,18 +49,22 @@ export default function ProjectTile({
   priority = false,
 }: ProjectTileProps) {
   return (
-    <Link href={`/projects/${slug}`} className="block h-full">
+    <Link
+      href={`/projects/${slug}`}
+      className={cn(
+        "block h-full rounded-xl",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
+        "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+      )}
+    >
       <AnimatedCard
         className={cn(
-          "group relative overflow-hidden rounded-lg h-full flex flex-col",
+          "group relative overflow-hidden rounded-xl h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
           "bg-white dark:bg-gray-900",
           "shadow-sm hover:shadow-2xl hover:shadow-accent-500/20",
           "hover:border-accent-500 dark:hover:border-accent-500",
-          "transition-[border-color,box-shadow] duration-200",
-          "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
-          "dark:focus-visible:ring-offset-black"
+          "transition-[border-color,box-shadow] duration-200"
         )}
       >
         {/* Image Container */}
@@ -58,10 +76,7 @@ export default function ProjectTile({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={priority}
             loading={priority ? "eager" : "lazy"}
-            className={cn(
-              "object-cover transition-transform duration-300 group-hover:scale-110",
-              "rounded-b-lg border-b border-gray-300 dark:border-gray-700"
-            )}
+            className="object-cover"
           />
         </div>
 
@@ -95,7 +110,7 @@ export default function ProjectTile({
           {startDate && endDate && (
             <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
               <FaCalendarAlt className="w-3 h-3" />
-              <span>{formatDateRange(startDate, endDate)}</span>
+              <span>{formatProjectDates(startDate, endDate)}</span>
               <span>·</span>
               <span>{calculateDuration(startDate, endDate)}</span>
             </div>

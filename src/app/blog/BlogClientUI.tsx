@@ -7,8 +7,9 @@ import { FaFrown } from "react-icons/fa"
 import ActiveFilterChips from "@/components/ActiveFilterChips"
 import BlogPost from "@/components/BlogPost"
 import FilterDropdown from "@/components/FilterDropdown"
+import FilterToolbar from "@/components/FilterToolbar"
 import PaginationControls from "@/components/PaginationControls"
-import SortDropdown from "@/components/SortDropdown"
+import SortToggle from "@/components/SortToggle"
 import { BlogPostProps } from "@/lib/types"
 
 /**
@@ -105,36 +106,36 @@ export default function BlogClientUI({
 
   return (
     <section className="px-4 max-w-4xl mx-auto flex flex-col flex-1">
-      <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
-        {/* Tag Filter Dropdown - Left */}
-        <div className="relative flex-grow md:flex-grow-0">
+      <FilterToolbar
+        resultCount={filteredPosts.length}
+        resultLabel="post"
+        filter={
           <Suspense fallback={null}>
             <FilterDropdown
               items={uniqueTags.map(({ tag, count }) => ({ name: tag, count }))}
               selectedItems={tagDrafts}
+              appliedCount={selectedTags.length}
               onToggle={handleToggleTag}
               onApply={handleApplyTags}
               onClear={handleClearTags}
-              placeholder="Filter by Tag"
-              resultCount={filteredPosts.length}
+              onDismiss={() => setTagDrafts(selectedTags)}
+              label="Tags"
             />
           </Suspense>
-        </div>
-
-        {/* Sort Order Dropdown - Right */}
-        <div className="relative flex-grow md:flex-grow-0">
+        }
+        sort={
           <Suspense fallback={null}>
-            <SortDropdown
+            <SortToggle
               sortOrder={sortOrder}
               onChange={handleSortChange}
               options={[
-                { label: "Newest First", value: "desc" },
-                { label: "Oldest First", value: "asc" },
+                { label: "Newest first", value: "desc" },
+                { label: "Oldest first", value: "asc" },
               ]}
             />
           </Suspense>
-        </div>
-      </div>
+        }
+      />
 
       {/* Active Filter Chips */}
       <ActiveFilterChips

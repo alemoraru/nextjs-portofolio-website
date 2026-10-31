@@ -21,7 +21,7 @@ import { getReadingTime } from "@/lib/utils"
  */
 async function loadMDXDirectory<TFrontmatter, TProps>(
   dirPath: string,
-  schema: z.ZodSchema<TFrontmatter>,
+  schema: z.ZodType<TFrontmatter>,
   map: (slug: string, frontmatter: TFrontmatter, fileContent: string) => TProps,
   sort?: (a: TProps, b: TProps) => number
 ): Promise<TProps[]> {

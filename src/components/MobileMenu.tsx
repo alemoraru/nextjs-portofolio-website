@@ -87,7 +87,7 @@ export default function MobileMenu({
                 <Link
                   href={path}
                   className={cn(
-                    "block w-full px-4 py-3.5 rounded-lg text-base font-medium",
+                    "block w-full px-4 py-3.5 rounded-xl text-base font-medium",
                     "transition-all duration-200 border active:scale-98",
                     pathname === path
                       ? "bg-accent-500 dark:bg-accent-600 text-white border-accent-600 dark:border-accent-500 shadow-md"

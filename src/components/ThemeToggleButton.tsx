@@ -86,7 +86,7 @@ export default function ThemeToggleButton() {
     return (
       <div
         className={cn(
-          "w-11 h-11 rounded-lg border border-gray-300 dark:border-gray-700",
+          "w-11 h-11 rounded-xl border border-gray-300 dark:border-gray-700",
           "bg-gray-100 dark:bg-gray-800 animate-pulse"
         )}
       />
@@ -181,7 +181,7 @@ export default function ThemeToggleButton() {
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
         className={cn(
-          "relative w-11 h-11 rounded-lg transition-all duration-200",
+          "relative w-11 h-11 rounded-xl transition-all duration-200",
           "border border-gray-300 dark:border-gray-700",
           "bg-gray-100 dark:bg-gray-900",
           "hover:bg-gray-200 dark:hover:bg-gray-700",

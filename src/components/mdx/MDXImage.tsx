@@ -68,7 +68,7 @@ export function MDXImage({ src, alt = "", title, width, height, className }: MDX
             height={numericHeight}
             sizes="(max-width: 768px) 100vw, 720px"
             className={cn(
-              "block h-auto w-auto max-w-full rounded-lg",
+              "block h-auto w-auto max-w-full rounded-xl",
               "shadow-[0_0_18px_2px_rgba(0,0,0,0.15)] dark:shadow-[0_0_18px_2px_rgba(0,0,0,0.5)]",
               className
             )}
@@ -82,7 +82,7 @@ export function MDXImage({ src, alt = "", title, width, height, className }: MDX
             loading="lazy"
             decoding="async"
             className={cn(
-              "block h-auto w-full max-w-full rounded-lg",
+              "block h-auto w-full max-w-full rounded-xl",
               "shadow-[0_0_18px_2px_rgba(0,0,0,0.15)] dark:shadow-[0_0_18px_2px_rgba(0,0,0,0.5)]",
               className
             )}
