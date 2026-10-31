@@ -11,7 +11,14 @@ import { cn, formatBlogDate } from "@/lib/utils"
  */
 export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
   return (
-    <Link href={`/blog/${slug}`} className="block h-full">
+    <Link
+      href={`/blog/${slug}`}
+      className={cn(
+        "block h-full rounded-xl",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
+        "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+      )}
+    >
       <AnimatedCard
         className={cn(
           "group relative h-full flex flex-col",
@@ -20,10 +27,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
           "hover:shadow-xl hover:shadow-accent-500/10",
           "transition-[border-color,box-shadow,background-color] duration-200 cursor-pointer",
           "bg-gray-50 dark:bg-gray-900",
-          "hover:bg-white dark:hover:bg-gray-800",
-          "focus-visible:outline-none focus-visible:ring-2",
-          "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
-          "dark:focus-visible:ring-offset-black"
+          "hover:bg-white dark:hover:bg-gray-800"
         )}
       >
         {/* Title */}

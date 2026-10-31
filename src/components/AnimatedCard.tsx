@@ -20,7 +20,7 @@ export default function AnimatedCard({ className, children }: AnimatedCardProps)
       animate={{ opacity: 1 }}
       transition={{ opacity: { duration: 0.8 } }}
       whileHover={{
-        scale: 1.05,
+        scale: 1.04,
         transition: {
           type: "tween",
           ease: [0.22, 1, 0.36, 1],

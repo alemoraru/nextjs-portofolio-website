@@ -46,6 +46,11 @@ describe("ProjectTile", () => {
     expect(screen.getByText(/Jan 2024 – Mar 2024/)).toBeDefined()
   })
 
+  it("renders YYYY-MM dates in a friendly format", () => {
+    render(<ProjectTile {...defaultProps} startDate="2023-01" endDate="2023-06" />)
+    expect(screen.getByText("Jan – Jun 2023")).toBeDefined()
+  })
+
   it("renders the tech stack badges", () => {
     render(<ProjectTile {...defaultProps} />)
     expect(screen.getByText("React")).toBeDefined()

@@ -22,7 +22,14 @@ export default function WorkItem({
   logoUrl,
 }: WorkItemProps) {
   return (
-    <Link href={`/work/${slug}`} className="block group">
+    <Link
+      href={`/work/${slug}`}
+      className={cn(
+        "block group rounded-xl",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
+        "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
+      )}
+    >
       <AnimatedCard
         className={cn(
           "border border-gray-300 dark:border-gray-700 rounded-xl p-4 shadow-sm",
@@ -66,7 +73,7 @@ export default function WorkItem({
           )}
         </div>
 
-        <p className="mt-2 text-gray-700">{description}</p>
+        <p className="mt-2 text-gray-700 dark:text-gray-300">{description}</p>
       </AnimatedCard>
     </Link>
   )
