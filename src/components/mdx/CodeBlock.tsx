@@ -34,7 +34,7 @@ export function CodeBlock({ className = "", children }: CodeBlockProps) {
   return (
     <div
       className={cn(
-        "rounded-lg overflow-hidden w-full max-w-full",
+        "rounded-xl overflow-hidden w-full max-w-full",
         "border border-gray-700/50 bg-[#0d1117]",
         "shadow-lg text-sm"
       )}

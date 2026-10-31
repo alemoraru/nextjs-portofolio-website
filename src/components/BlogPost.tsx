@@ -15,7 +15,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
       <AnimatedCard
         className={cn(
           "group relative h-full flex flex-col",
-          "border border-gray-300 dark:border-gray-700 rounded-lg p-5 shadow-sm",
+          "border border-gray-300 dark:border-gray-700 rounded-xl p-5 shadow-sm",
           "hover:border-accent-500 dark:hover:border-accent-500",
           "hover:shadow-xl hover:shadow-accent-500/10",
           "transition-[border-color,box-shadow,background-color] duration-200 cursor-pointer",

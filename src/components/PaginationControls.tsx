@@ -69,7 +69,7 @@ export default function PaginationControls({
       <Link
         href={buildPageUrl(baseUrl, Math.max(1, currentPage - 1), searchParams)}
         className={cn(
-          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "w-9 h-9 flex items-center justify-center rounded-xl",
           "border border-gray-300 dark:border-gray-700",
           "bg-gray-100 dark:bg-gray-800",
           "text-gray-700 dark:text-gray-200",
@@ -91,7 +91,7 @@ export default function PaginationControls({
       <Link
         href={buildPageUrl(baseUrl, 1, searchParams)}
         className={cn(
-          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "w-9 h-9 flex items-center justify-center rounded-xl",
           "border transition-all duration-200 text-sm font-semibold",
           "focus-visible:outline-none focus-visible:ring-2",
           "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
@@ -120,7 +120,7 @@ export default function PaginationControls({
         <Link
           href={buildPageUrl(baseUrl, currentPage - 1, searchParams)}
           className={cn(
-            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "w-9 h-9 flex items-center justify-center rounded-xl",
             "border border-gray-300 dark:border-gray-700",
             "bg-gray-100 dark:bg-gray-800",
             "text-gray-700 dark:text-gray-200",
@@ -141,7 +141,7 @@ export default function PaginationControls({
       {currentPage !== 1 && currentPage !== totalPages && (
         <span
           className={cn(
-            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "w-9 h-9 flex items-center justify-center rounded-xl",
             "bg-accent-600 dark:bg-accent-500 text-white",
             "border border-accent-600 dark:border-accent-500",
             "text-sm font-semibold cursor-default shadow-sm"
@@ -157,7 +157,7 @@ export default function PaginationControls({
         <Link
           href={buildPageUrl(baseUrl, currentPage + 1, searchParams)}
           className={cn(
-            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "w-9 h-9 flex items-center justify-center rounded-xl",
             "border border-gray-300 dark:border-gray-700",
             "bg-gray-100 dark:bg-gray-800",
             "text-gray-700 dark:text-gray-200",
@@ -189,7 +189,7 @@ export default function PaginationControls({
         <Link
           href={buildPageUrl(baseUrl, totalPages, searchParams)}
           className={cn(
-            "w-9 h-9 flex items-center justify-center rounded-lg",
+            "w-9 h-9 flex items-center justify-center rounded-xl",
             "border transition-all duration-200 text-sm font-semibold",
             "focus-visible:outline-none focus-visible:ring-2",
             "focus-visible:ring-accent-500 focus-visible:ring-offset-2",
@@ -208,7 +208,7 @@ export default function PaginationControls({
       <Link
         href={buildPageUrl(baseUrl, Math.min(totalPages, currentPage + 1), searchParams)}
         className={cn(
-          "w-9 h-9 flex items-center justify-center rounded-lg",
+          "w-9 h-9 flex items-center justify-center rounded-xl",
           "border border-gray-300 dark:border-gray-700",
           "bg-gray-100 dark:bg-gray-800",
           "text-gray-700 dark:text-gray-200",

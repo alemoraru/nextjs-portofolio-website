@@ -37,7 +37,7 @@ function SocialLinks() {
           aria-label={label}
           target={href.startsWith("mailto") ? "_blank" : undefined}
           className={cn(
-            "flex items-center justify-center size-11 rounded-lg",
+            "flex items-center justify-center size-11 rounded-xl",
             "text-gray-600 dark:text-gray-400",
             "hover:bg-gray-200 dark:hover:bg-gray-800",
             "hover:text-accent-600 dark:hover:text-accent-400",

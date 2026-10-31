@@ -72,7 +72,7 @@ function CompanyHeader({ frontmatter }: { frontmatter: WorkItemFrontmatter }) {
           alt={`${frontmatter.company} logo`}
           width={48}
           height={48}
-          className="rounded-lg object-contain"
+          className="rounded-xl object-contain"
         />
       )}
       <h1 className="text-4xl font-bold">{frontmatter.company}</h1>

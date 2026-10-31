@@ -38,7 +38,7 @@ export default function ProjectTile({
     <Link href={`/projects/${slug}`} className="block h-full">
       <AnimatedCard
         className={cn(
-          "group relative overflow-hidden rounded-lg h-full flex flex-col",
+          "group relative overflow-hidden rounded-xl h-full flex flex-col",
           "border border-gray-300 dark:border-gray-700",
           "bg-white dark:bg-gray-900",
           "shadow-sm hover:shadow-2xl hover:shadow-accent-500/20",
