@@ -6,8 +6,9 @@ import { Suspense, useState, useEffect } from "react"
 import { FaFrown } from "react-icons/fa"
 import ActiveFilterChips from "@/components/ActiveFilterChips"
 import FilterDropdown from "@/components/FilterDropdown"
+import FilterToolbar from "@/components/FilterToolbar"
 import PaginationControls from "@/components/PaginationControls"
-import SortDropdown from "@/components/SortDropdown"
+import SortToggle from "@/components/SortToggle"
 import WorkItem from "@/components/WorkItem"
 import { WorkItemProps } from "@/lib/types"
 
@@ -108,39 +109,36 @@ export default function WorkClientUI({
 
   return (
     <section className="px-4 max-w-4xl mx-auto flex flex-col flex-1">
-      <div className="flex flex-wrap justify-between gap-4 mb-8 items-center w-full">
-        {/* Company Filter Dropdown - Left */}
-        <div className="relative grow md:grow-0">
+      <FilterToolbar
+        resultCount={filteredWorkItems.length}
+        resultLabel="role"
+        filter={
           <Suspense fallback={null}>
             <FilterDropdown
               items={uniqueCompanies.map(({ company, count }) => ({ name: company, count }))}
               selectedItems={companyDrafts}
+              appliedCount={selectedCompanies.length}
               onToggle={handleToggleCompany}
               onApply={handleApplyFilters}
               onClear={handleClearFilters}
-              placeholder="Filter by Company"
-              resultCount={filteredWorkItems.length}
+              onDismiss={() => setCompanyDrafts(selectedCompanies)}
+              label="Company"
             />
           </Suspense>
-        </div>
-
-        {/* Sort Order Dropdown - Right */}
-        <div className="relative grow md:grow-0 z-20">
+        }
+        sort={
           <Suspense fallback={null}>
-            <SortDropdown
+            <SortToggle
               sortOrder={sortOrder}
               onChange={handleSortChange}
               options={[
-                { label: "Newest First", value: "newest" },
-                {
-                  label: "Oldest First",
-                  value: "oldest",
-                },
+                { label: "Newest first", value: "newest" },
+                { label: "Oldest first", value: "oldest" },
               ]}
             />
           </Suspense>
-        </div>
-      </div>
+        }
+      />
 
       {/* Active Filter Chips */}
       <ActiveFilterChips

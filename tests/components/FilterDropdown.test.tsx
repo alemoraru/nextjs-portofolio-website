@@ -13,11 +13,11 @@ describe("FilterDropdown", () => {
   const defaultProps = {
     items: mockItems,
     selectedItems: [],
+    appliedCount: 0,
     onToggle: vi.fn(),
     onApply: vi.fn(),
     onClear: vi.fn(),
-    placeholder: "Filter by tags",
-    resultCount: 0,
+    label: "Filter by tags",
   }
 
   beforeEach(() => {
@@ -31,22 +31,18 @@ describe("FilterDropdown", () => {
     expect(button).toBeDefined()
   })
 
-  it("displays placeholder when no items are selected", () => {
+  it("displays its label", () => {
     render(<FilterDropdown {...defaultProps} />)
 
     expect(screen.getByText("Filter by tags")).toBeDefined()
   })
 
-  it("displays selected count when items are selected", () => {
+  it("displays the applied count, not unapplied ticks", () => {
     render(<FilterDropdown {...defaultProps} selectedItems={["React", "TypeScript"]} />)
+    expect(screen.queryByText("2")).toBeNull()
 
-    expect(screen.getByText("2 Selected")).toBeDefined()
-  })
-
-  it("displays result count badge when resultCount > 0", () => {
-    render(<FilterDropdown {...defaultProps} resultCount={5} />)
-
-    expect(screen.getByText("5")).toBeDefined()
+    render(<FilterDropdown {...defaultProps} appliedCount={2} />)
+    expect(screen.getByTitle("2 applied").textContent).toBe("2")
   })
 
   it("dropdown is initially closed", () => {
@@ -85,13 +81,64 @@ describe("FilterDropdown", () => {
     fireEvent.click(button)
 
     expect(screen.getByText(/React/)).toBeDefined()
-    expect(screen.getByText("(5)")).toBeDefined()
+    expect(screen.getByText("5")).toBeDefined()
     expect(screen.getByText(/TypeScript/)).toBeDefined()
-    expect(screen.getByText("(3)")).toBeDefined()
+    expect(screen.getByText("3")).toBeDefined()
     expect(screen.getByText(/Next.js/)).toBeDefined()
-    expect(screen.getByText("(2)")).toBeDefined()
+    expect(screen.getByText("2")).toBeDefined()
     expect(screen.getByText(/Tailwind/)).toBeDefined()
-    expect(screen.getByText("(4)")).toBeDefined()
+    expect(screen.getByText("4")).toBeDefined()
+  })
+
+  it("narrows the list to items matching the search", () => {
+    render(<FilterDropdown {...defaultProps} />)
+
+    fireEvent.click(screen.getByRole("button", { name: /Filter by tags/i }))
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "type" } })
+
+    expect(screen.getAllByRole("checkbox").length).toBe(1)
+    expect(screen.getByText("TypeScript")).toBeDefined()
+  })
+
+  it("shows a message when the search matches nothing", () => {
+    render(<FilterDropdown {...defaultProps} />)
+
+    fireEvent.click(screen.getByRole("button", { name: /Filter by tags/i }))
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "zzz" } })
+
+    expect(screen.getByText("No matches")).toBeDefined()
+  })
+
+  it("resets the search when reopened", () => {
+    render(<FilterDropdown {...defaultProps} />)
+
+    const button = screen.getByRole("button", { name: /Filter by tags/i })
+    fireEvent.click(button)
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "type" } })
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    expect(screen.getAllByRole("checkbox").length).toBe(mockItems.length)
+  })
+
+  it("calls onDismiss when closed without applying", () => {
+    const mockOnDismiss = vi.fn()
+    render(<FilterDropdown {...defaultProps} onDismiss={mockOnDismiss} />)
+
+    fireEvent.click(screen.getByRole("button", { name: /Filter by tags/i }))
+    fireEvent.keyDown(document, { key: "Escape" })
+
+    expect(mockOnDismiss).toHaveBeenCalledTimes(1)
+  })
+
+  it("does not call onDismiss when applying", () => {
+    const mockOnDismiss = vi.fn()
+    render(<FilterDropdown {...defaultProps} onDismiss={mockOnDismiss} />)
+
+    fireEvent.click(screen.getByRole("button", { name: /Filter by tags/i }))
+    fireEvent.click(screen.getByText("Apply"))
+
+    expect(mockOnDismiss).not.toHaveBeenCalled()
   })
 
   it("renders checkboxes for all items", () => {
@@ -226,12 +273,5 @@ describe("FilterDropdown", () => {
     fireEvent.keyDown(document, { key: "Escape" })
 
     expect(screen.queryByText("Apply")).toBeNull()
-  })
-
-  it("displays result count badge with correct title attribute", () => {
-    render(<FilterDropdown {...defaultProps} resultCount={7} />)
-
-    const badge = screen.getByText("7")
-    expect(badge.getAttribute("title")).toBe("7 results")
   })
 })
