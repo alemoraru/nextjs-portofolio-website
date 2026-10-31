@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import React from "react"
+import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa"
 import { PRESENT } from "@/lib/constants"
 import { cn, formatDuration } from "@/lib/utils"
 
@@ -101,9 +102,15 @@ export function TimelineItem({ title, duration, location, children }: TimelineIt
           </span>
         )}
       </h3>
-      <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-600 dark:text-gray-400">
-        <span>{formatRoleDuration(duration)}</span>
-        <span>{location}</span>
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-gray-600 dark:text-gray-400">
+        <span className="flex items-center gap-1.5">
+          <FaCalendarAlt className="w-3.5 h-3.5 shrink-0" />
+          <span>{formatRoleDuration(duration)}</span>
+        </span>
+        <span className="flex items-center gap-1.5">
+          <FaMapMarkerAlt className="w-3.5 h-3.5 shrink-0" />
+          <span>{location}</span>
+        </span>
       </div>
       <div className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{children}</div>
     </motion.div>
