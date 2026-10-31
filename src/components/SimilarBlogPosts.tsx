@@ -73,8 +73,8 @@ export default function SimilarBlogPosts({
         : "@[480px]:grid-cols-2 @[800px]:grid-cols-3"
 
   return (
-    <section className="w-full mt-14 border-t pt-10 border-zinc-600">
-      <h2 className="text-2xl font-semibold mb-6 text-center">{heading}</h2>
+    <section className="w-full mt-14 mb-8 border-t pt-10 border-zinc-600">
+      <h2 className="text-2xl font-semibold mb-10 text-center">{heading}</h2>
       <div className="@container">
         <div className={`grid gap-4 ${gridCols}`}>
           {scoredPosts.map(sim => (
