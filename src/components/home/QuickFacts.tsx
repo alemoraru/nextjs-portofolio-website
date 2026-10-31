@@ -6,7 +6,9 @@ import { factIconMap, homeIntroConfig } from "@/data/content"
 import { cn } from "@/lib/utils"
 
 /**
- * Simple component which renders pill-like quick facts about the user, based on the homeIntroConfig data.
+ * Simple component which renders quick facts about the user, based on the homeIntroConfig data.
+ * Facts are pills on larger screens and a grid of equal tiles on phones, where the last tile
+ * spans both columns if the number of facts is odd.
  */
 export default function QuickFacts() {
   const allFacts = [
@@ -25,7 +27,7 @@ export default function QuickFacts() {
       whileInView="visible"
       variants={fadeUpVariants}
       viewport={{ once: true, margin: "-50px" }}
-      className="mt-12 text-center"
+      className="mt-12 text-left sm:text-center"
     >
       <motion.h2
         initial={{ opacity: 0, y: 10 }}
@@ -37,7 +39,12 @@ export default function QuickFacts() {
         Quick &amp; Fun Facts
       </motion.h2>
 
-      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-4 max-w-4xl mx-auto">
+      <div
+        className={cn(
+          "grid grid-cols-2 auto-rows-fr gap-2 max-w-4xl mx-auto",
+          "sm:flex sm:flex-wrap sm:justify-center sm:gap-3 sm:px-4"
+        )}
+      >
         {allFacts.map((fact, i) => {
           const Icon = fact.icon
           return (
@@ -49,16 +56,18 @@ export default function QuickFacts() {
               transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               whileHover={{ scale: 1.05, transition: { duration: 0.2, ease: "easeOut" } }}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 sm:gap-2 sm:px-4 sm:py-2 rounded-full",
+                "flex items-center gap-2.5 min-h-13 px-3 py-2 rounded-xl last:odd:col-span-2",
+                "sm:gap-2 sm:min-h-0 sm:px-4 sm:py-2 sm:rounded-full",
                 "border border-gray-300 dark:border-gray-700",
-                "bg-gray-50 dark:bg-gray-800",
-                "text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300",
-                "shadow-sm hover:shadow-md",
+                "sm:bg-gray-50 sm:dark:bg-gray-800",
+                "text-[13px] leading-tight sm:text-sm sm:leading-5",
+                "font-medium text-gray-700 dark:text-gray-300",
+                "sm:shadow-sm sm:hover:shadow-md",
                 "hover:border-accent-400 dark:hover:border-accent-600",
                 "transition-all duration-200 cursor-default"
               )}
             >
-              <Icon className="text-accent-600 dark:text-accent-400 text-xs sm:text-base shrink-0" />
+              <Icon className="text-accent-600 dark:text-accent-400 text-sm sm:text-base shrink-0" />
               <span>{fact.label}</span>
             </motion.div>
           )
