@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
+import { FaClock, FaRegCalendarAlt } from "react-icons/fa"
 import AnimatedCard from "@/components/AnimatedCard"
 import BlogTag from "@/components/BlogTag"
 import HoverArrow from "@/components/HoverArrow"
@@ -51,7 +51,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
             {readingTime && (
               <span className="flex items-center gap-2 whitespace-nowrap">
                 <span aria-hidden="true">·</span>
-                <FaBookOpen className="w-3.5 h-3.5 shrink-0" />
+                <FaClock className="w-3.5 h-3.5 shrink-0" />
                 {readingTime} min read
               </span>
             )}

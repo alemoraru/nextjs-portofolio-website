@@ -5,7 +5,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { ReactElement } from "react"
-import { FaBookOpen, FaRegCalendarAlt } from "react-icons/fa"
+import { FaClock, FaRegCalendarAlt } from "react-icons/fa"
 import rehypeHighlight from "rehype-highlight"
 import remark_gfm from "remark-gfm"
 import AnimatedArticle from "@/components/AnimatedArticle"
@@ -17,6 +17,7 @@ import { CodeBlock } from "@/components/mdx/CodeBlock"
 import { InlineCode } from "@/components/mdx/InlineCode"
 import { MDXImage } from "@/components/mdx/MDXImage"
 import PageHeaderSync from "@/components/PageHeaderSync"
+import ShareButton from "@/components/ShareButton"
 import SimilarBlogPosts from "@/components/SimilarBlogPosts"
 import TableOfContents from "@/components/TableOfContents"
 import { homeIntroConfig } from "@/data/content"
@@ -149,6 +150,8 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     },
   }
 
+  const shareUrl = `${siteMetadata.siteUrl}/blog/${post.slug}`
+
   const displayName = homeIntroConfig.shortName || homeIntroConfig.name
   const headerSubtitle = `${displayName}'s Blog · ${formatBlogDate(post.date, "short")}`
 
@@ -156,7 +159,13 @@ export default async function BlogPostPage(props: { params: pageParams }) {
     <AnimatedArticle>
       <PageHeaderSync title={post.title} subtitle={headerSubtitle} />
       <JsonLd data={jsonLd} />
-      <BackToPageButton pageUrl="/blog" />
+      {/* Narrow screens: Share sits on the back-link row, as the meta row has no room for it */}
+      <div className="flex w-full items-center justify-between gap-4 mb-8 sm:justify-center">
+        <BackToPageButton pageUrl="/blog" className="mb-0" />
+        <div className="sm:hidden">
+          <ShareButton url={shareUrl} title={post.title} />
+        </div>
+      </div>
       <div className="text-3xl font-bold mb-4">{post.title}</div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mb-8">
         <span className="flex items-center gap-1.5 whitespace-nowrap">
@@ -164,9 +173,13 @@ export default async function BlogPostPage(props: { params: pageParams }) {
           {formatBlogDate(post.date)}
         </span>
         <span className="flex items-center gap-1.5 whitespace-nowrap">
-          <FaBookOpen className="shrink-0" />
+          <FaClock className="shrink-0" />
           {readingTime} min read
         </span>
+        {/* Wider screens: Share joins the meta row */}
+        <div className="hidden sm:block">
+          <ShareButton url={shareUrl} title={post.title} />
+        </div>
       </div>
 
       {/* Display current blog post tags */}
