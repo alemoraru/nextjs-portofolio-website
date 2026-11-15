@@ -357,3 +357,27 @@ body {
     content: "";
   }
 }
+
+/* Popover open/close (ui/popover.tsx). Radix keeps the element mounted until the exit
+   animation finishes, so a plain CSS animation keyed on data-state is enough. */
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popover-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+}
