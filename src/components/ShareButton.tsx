@@ -5,6 +5,7 @@ import { FaCheck, FaEnvelope, FaLink, FaLinkedin, FaShareAlt } from "react-icons
 import { FaXTwitter } from "react-icons/fa6"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { NEW_TAB_HINT } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 interface ShareButtonProps {
@@ -126,6 +127,12 @@ export default function ShareButton({ url, title }: ShareButtonProps) {
             >
               <Icon className="w-4 h-4 shrink-0" />
               <span>{label}</span>
+              {external && (
+                <>
+                  {" "}
+                  <span className="sr-only">{NEW_TAB_HINT}</span>
+                </>
+              )}
             </a>
           ))}
         </div>

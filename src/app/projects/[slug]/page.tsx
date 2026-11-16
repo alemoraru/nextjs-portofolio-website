@@ -112,7 +112,10 @@ export default async function ProjectPage(props: { params: pageParams }) {
     imageFiles.forEach((filename, index) => {
       projectImages.push({
         src: `/projects/${slug}/${filename}`,
-        alt: `${frontmatter.title} ${index + 1}`,
+        // Prefer a real description from the frontmatter; the fallback at least says what it is
+        alt:
+          frontmatter.imageAlts?.[filename] ??
+          `${frontmatter.title} screenshot ${index + 1} of ${imageFiles.length}`,
       })
     })
   }
@@ -152,7 +155,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
       <div className="flex flex-wrap items-center gap-3 mb-6">
         {frontmatter.teamSize && (
           <div className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
-            <FaUsers className="size-4" />
+            <FaUsers aria-hidden="true" className="size-4" />
             <span>
               <strong>Team Size:</strong> {frontmatter.teamSize}
             </span>
@@ -160,14 +163,14 @@ export default async function ProjectPage(props: { params: pageParams }) {
         )}
         {frontmatter.role && (
           <div className="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm">
-            <FaUserTie className="size-4" />
+            <FaUserTie aria-hidden="true" className="size-4" />
             <span>
               <strong>Role:</strong> {frontmatter.role}
             </span>
           </div>
         )}
         <div className="flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-          <FaClock className="w-4 h-4" />
+          <FaClock aria-hidden="true" className="w-4 h-4" />
           <span>
             <strong>Duration:</strong> {duration}
           </span>
@@ -179,10 +182,13 @@ export default async function ProjectPage(props: { params: pageParams }) {
             className="group flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
             <span className="relative size-4 shrink-0 overflow-hidden">
-              <FaGithub className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0" />
-              <FaExternalLinkAlt
-                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+              <FaGithub
                 aria-hidden="true"
+                className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0"
+              />
+              <FaExternalLinkAlt
+                aria-hidden="true"
+                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
               />
             </span>
             <span>View on GitHub</span>
@@ -195,10 +201,13 @@ export default async function ProjectPage(props: { params: pageParams }) {
             className="group flex items-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm transition"
           >
             <span className="relative size-4 shrink-0 overflow-hidden">
-              <FaBook className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0" />
-              <FaExternalLinkAlt
-                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+              <FaBook
                 aria-hidden="true"
+                className="absolute inset-0 size-4 transition-all duration-200 ease-in-out group-hover:translate-x-4 group-hover:opacity-0"
+              />
+              <FaExternalLinkAlt
+                aria-hidden="true"
+                className="absolute inset-0 m-auto size-3 -translate-x-4 opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
               />
             </span>
             <span>Read Paper</span>
@@ -208,7 +217,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
 
       {/* Tech Stack Section */}
       <div className="flex items-center gap-2 mb-4">
-        <BsStack />
+        <BsStack aria-hidden="true" />
         <h2 className="text-xl font-semibold">Tech Stack</h2>
       </div>
       <div className="flex flex-wrap gap-3 mb-8">
@@ -224,7 +233,7 @@ export default async function ProjectPage(props: { params: pageParams }) {
             className="flex items-center justify-center gap-2 mb-4"
             style={{ fontSize: "1.25rem" }}
           >
-            <BsCardImage />
+            <BsCardImage aria-hidden="true" />
             <h2 className="text-xl font-semibold">Project Gallery</h2>
           </div>
           <ProjectImageCarousel images={projectImages} />

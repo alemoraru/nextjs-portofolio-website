@@ -29,7 +29,12 @@ export default function BlogPreview({ blog }: BlogPreviewProps) {
       viewport={{ once: true, margin: "-100px" }}
       className="mt-20 mb-12"
     >
-      <ViewAllHeader title="Recent Blog Posts" pageUrl="/blog" itemCount={blog.length} />
+      <ViewAllHeader
+        title="Recent Blog Posts"
+        pageUrl="/blog"
+        itemCount={blog.length}
+        itemLabel="blog posts"
+      />
       <div className="@container">
         <motion.div
           initial="hidden"

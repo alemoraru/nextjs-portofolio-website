@@ -25,17 +25,16 @@ describe("WorkItem", () => {
     expect(link?.getAttribute("href")).toBe("/work/test-work-item")
   })
 
-  it("renders the company logo when provided", () => {
-    render(<WorkItem {...defaultProps} />)
-    const logo = screen.getByAltText("Test Company logo")
-    expect(logo).toBeDefined()
-    expect(logo.getAttribute("src")).toBe("/company-logo.png")
+  it("renders the company logo as decorative (the title already names the company)", () => {
+    const { container } = render(<WorkItem {...defaultProps} />)
+    const logo = container.querySelector("img")
+    expect(logo?.getAttribute("src")).toBe("/company-logo.png")
+    expect(logo?.getAttribute("alt")).toBe("")
   })
 
   it("does not render company logo when not provided", () => {
-    render(<WorkItem {...defaultProps} logoUrl={undefined} />)
-    const logo = screen.queryByAltText("Test Company logo")
-    expect(logo).toBeNull()
+    const { container } = render(<WorkItem {...defaultProps} logoUrl={undefined} />)
+    expect(container.querySelector("img")).toBeNull()
   })
 
   it("renders the start and end dates", () => {
@@ -97,5 +96,13 @@ describe("WorkItem", () => {
       screen.getByRole("heading", { level: 2, name: "Senior Software Engineer @ Test Company" })
     ).toBeDefined()
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
+  })
+
+  it("names the card link after its title alone, not all of its text", () => {
+    render(<WorkItem {...defaultProps} />)
+    expect(screen.getByRole("link").getAttribute("aria-labelledby")).toBeTruthy()
+    expect(
+      screen.getByRole("link", { name: "Senior Software Engineer @ Test Company" })
+    ).toBeDefined()
   })
 })

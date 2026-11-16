@@ -30,6 +30,16 @@ describe("ShareButton", () => {
     expect(screen.getByRole("button", { name: /copy link/i })).toBeDefined()
   })
 
+  it("tells screen readers which share links open in a new tab", () => {
+    render(<ShareButton url={URL} title={TITLE} />)
+    fireEvent.click(screen.getByRole("button", { name: /share/i }))
+
+    expect(screen.getByRole("link", { name: "LinkedIn (opens in a new tab)" })).toBeDefined()
+    expect(screen.getByRole("link", { name: "X (Twitter) (opens in a new tab)" })).toBeDefined()
+    // Email opens the mail app in place, so it gets no hint
+    expect(screen.getByRole("link", { name: "Email" })).toBeDefined()
+  })
+
   it("closes on Escape", async () => {
     render(<ShareButton url={URL} title={TITLE} />)
     fireEvent.click(screen.getByRole("button", { name: /share/i }))

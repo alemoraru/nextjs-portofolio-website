@@ -24,11 +24,11 @@ describe("ProjectTile", () => {
     expect(link?.getAttribute("href")).toBe("/projects/test-project")
   })
 
-  it("renders the project image with correct src and alt", () => {
-    render(<ProjectTile {...defaultProps} />)
-    const image = screen.getByAltText("Test Project")
-    expect(image).toBeDefined()
-    expect(image.getAttribute("src")).toBe("/test-image.png")
+  it("renders the project image as decorative (the title already names it)", () => {
+    const { container } = render(<ProjectTile {...defaultProps} />)
+    const image = container.querySelector("img")
+    expect(image?.getAttribute("src")).toBe("/test-image.png")
+    expect(image?.getAttribute("alt")).toBe("")
   })
 
   it("renders the project description when provided", () => {
@@ -103,5 +103,11 @@ describe("ProjectTile", () => {
     render(<ProjectTile {...defaultProps} headingLevel={2} />)
     expect(screen.getByRole("heading", { level: 2, name: "Test Project" })).toBeDefined()
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
+  })
+
+  it("names the card link after its title alone, not all of its text", () => {
+    render(<ProjectTile {...defaultProps} />)
+    expect(screen.getByRole("link").getAttribute("aria-labelledby")).toBeTruthy()
+    expect(screen.getByRole("link", { name: "Test Project" })).toBeDefined()
   })
 })

@@ -27,12 +27,13 @@ describe("Footer", () => {
     render(<Footer />)
     expect(screen.getByLabelText("GitHub")).toBeDefined()
     expect(screen.getByLabelText("LinkedIn")).toBeDefined()
-    expect(screen.getByLabelText("Email")).toBeDefined()
+    // Email opens in a new tab, and says so
+    expect(screen.getByLabelText("Email (opens in a new tab)")).toBeDefined()
   })
 
   it("renders the email link with a mailto: prefix", () => {
     render(<Footer />)
-    const emailLink = screen.getByLabelText("Email")
+    const emailLink = screen.getByLabelText("Email (opens in a new tab)")
     const expectedEmail = footerConfig.socialLinks.email.startsWith("mailto:")
       ? footerConfig.socialLinks.email
       : `mailto:${footerConfig.socialLinks.email}`

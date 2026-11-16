@@ -42,15 +42,25 @@ export interface ProjectProps {
  * @description This interface defines the structure (i.e., contents) of a work experience item.
  */
 export interface WorkItemProps {
+  /** The role's URL slug; the card links to `/work/{slug}`. */
   slug: string
+  /** Company name, shown after the job title in the card's heading ("Title @ Company"). */
   company: string
+  /** Job title, shown at the start of the card's heading. */
   title: string
+  /** Start date in a human-readable form (e.g. `Aug 2024`). */
   start: string
+  /** End date in the same form as `start`, or `PRESENT` for a current role. */
   end: string
+  /** Short summary of the role, shown at the bottom of the card. */
   description: string
+  /** Where the role was based (e.g. `Remote`), shown comma-separated next to the dates. */
   locations: string[]
+  /** Path or URL of the company logo, shown before the heading; omitted when not set. */
   logoUrl?: string
+  /** Company website, linked from the role's detail page (not used on the card). */
   companyUrl?: string
+  /** Technologies used in the role, listed on the detail page (not used on the card). */
   techStack?: string[]
 }
 

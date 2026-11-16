@@ -11,7 +11,7 @@ import { calculateDuration, cn, formatDateRange, formatDuration } from "@/lib/ut
 interface ProjectTileProps {
   /** The project's URL slug; the tile links to `/projects/{slug}`. */
   slug: string
-  /** The project name, shown as the tile's heading and used as the image's alt text. */
+  /** The project name, shown as the tile's heading. */
   title: string
   /** Path or URL of the cover image shown at the top of the tile. */
   image: string
@@ -60,9 +60,12 @@ export default function ProjectTile({
   headingLevel = 3,
 }: ProjectTileProps) {
   const Heading = headingLevel === 2 ? "h2" : "h3"
+  // The card is one big link: name it after the title alone, not every piece of text inside it
+  const titleId = `project-card-title-${slug}`
   return (
     <Link
       href={`/projects/${slug}`}
+      aria-labelledby={titleId}
       className={cn(
         "block h-full rounded-xl",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
@@ -83,7 +86,8 @@ export default function ProjectTile({
         <div className="relative w-full h-48 overflow-hidden bg-gray-100 dark:bg-gray-900">
           <Image
             src={image}
-            alt={title}
+            // Decorative: the title is right below, so naming the image would only repeat it
+            alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={priority}
@@ -103,6 +107,7 @@ export default function ProjectTile({
         >
           <div className="flex flex-col gap-2">
             <Heading
+              id={titleId}
               className={cn(
                 "text-lg font-bold text-gray-900 dark:text-white",
                 "group-hover:text-accent-600 dark:group-hover:text-accent-400",

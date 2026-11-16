@@ -30,6 +30,11 @@ export const ProjectFrontmatterSchema = z.object({
   role: z.string().optional(),
   githubUrl: z.string().optional(),
   paperUrl: z.string().optional(),
+  /**
+   * Alt text for the gallery images in `public/projects/{slug}/`, keyed by file name
+   * (e.g. `picture-1.jpg: "Workout scene on a virtual beach"`). Describe what each image shows.
+   */
+  imageAlts: z.record(z.string(), z.string()).optional(),
 })
 
 export type BlogPostFrontmatter = z.infer<typeof BlogFrontmatterSchema>

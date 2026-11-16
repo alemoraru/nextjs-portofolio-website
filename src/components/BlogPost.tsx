@@ -24,9 +24,12 @@ export default function BlogPost({
   headingLevel = 3,
 }: BlogPostCardProps) {
   const Heading = headingLevel === 2 ? "h2" : "h3"
+  // The card is one big link: name it after the title alone, not every piece of text inside it
+  const titleId = `blog-card-title-${slug}`
   return (
     <Link
       href={`/blog/${slug}`}
+      aria-labelledby={titleId}
       className={cn(
         "block h-full rounded-xl",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
@@ -46,6 +49,7 @@ export default function BlogPost({
       >
         {/* Title */}
         <Heading
+          id={titleId}
           className={cn(
             "text-lg font-bold text-gray-900 dark:text-white",
             "group-hover:text-accent-600 dark:group-hover:text-accent-400",
@@ -59,13 +63,13 @@ export default function BlogPost({
         {date && (
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
             <span className="flex items-center gap-2 whitespace-nowrap">
-              <FaRegCalendarAlt className="w-3.5 h-3.5 shrink-0" />
+              <FaRegCalendarAlt aria-hidden="true" className="w-3.5 h-3.5 shrink-0" />
               <time dateTime={date}>{formatBlogDate(date, "short")}</time>
             </span>
             {readingTime && (
               <span className="flex items-center gap-2 whitespace-nowrap">
                 <span aria-hidden="true">·</span>
-                <FaClock className="w-3.5 h-3.5 shrink-0" />
+                <FaClock aria-hidden="true" className="w-3.5 h-3.5 shrink-0" />
                 {readingTime} min read
               </span>
             )}

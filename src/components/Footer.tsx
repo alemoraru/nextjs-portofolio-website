@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { FaCodeBranch } from "react-icons/fa"
 import { footerConfig, socialIconMap } from "@/data/content"
-import { appVersion } from "@/lib/constants"
+import { appVersion, NEW_TAB_HINT } from "@/lib/constants"
 import { SocialPlatform } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
@@ -34,7 +34,7 @@ function SocialLinks() {
         <Link
           key={label}
           href={href}
-          aria-label={label}
+          aria-label={href.startsWith("mailto") ? `${label} ${NEW_TAB_HINT}` : label}
           target={href.startsWith("mailto") ? "_blank" : undefined}
           className={cn(
             "flex items-center justify-center size-11 rounded-xl",
@@ -47,7 +47,7 @@ function SocialLinks() {
             "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black"
           )}
         >
-          <Icon className="size-[24px] md:size-[22px]" />
+          <Icon aria-hidden="true" className="size-[24px] md:size-[22px]" />
         </Link>
       ))}
     </>
@@ -74,7 +74,7 @@ export default function Footer() {
             <p className="text-lg font-bold text-black dark:text-white">
               {footerConfig.copyrightName}
             </p>
-            <p className="text-[13px] mt-0.5 text-gray-600 dark:text-gray-400">
+            <p className="text-[0.8125rem] mt-0.5 text-gray-600 dark:text-gray-400">
               © {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
@@ -99,7 +99,8 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 hover:underline"
             >
-              <FaCodeBranch className="w-3 h-3" />
+              <FaCodeBranch aria-hidden="true" className="w-3 h-3" />
+              <span className="sr-only">Release notes for version</span>{" "}
               <span className="font-semibold text-accent-600 dark:text-accent-400">
                 {appVersion}
               </span>

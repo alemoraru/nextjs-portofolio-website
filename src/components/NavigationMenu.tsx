@@ -72,7 +72,7 @@ export default function NavigationMenu() {
                 href={path}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "relative flex items-center justify-center px-3 py-1.5 rounded-full text-[15px]",
+                  "relative flex items-center justify-center px-3 py-1.5 rounded-full text-[0.9375rem]",
                   "font-medium text-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
                   "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black min-w-18",
                   "text-ellipsis whitespace-nowrap overflow-hidden select-none active:scale-95",
@@ -80,7 +80,6 @@ export default function NavigationMenu() {
                     ? "text-accent-600 dark:text-accent-400 font-semibold"
                     : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800/50"
                 )}
-                tabIndex={0}
               >
                 {name}
               </Link>

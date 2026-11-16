@@ -8,10 +8,13 @@ import AnimatedCard from "@/components/AnimatedCard"
 import { WorkItemProps } from "@/lib/types"
 import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
 
+interface WorkItemCardProps extends WorkItemProps {
+  /** The title's heading level: 2 directly under the page `<h1>`, 3 (default) under a section `<h2>`. */
+  headingLevel?: 2 | 3
+}
+
 /**
  * A functional component that renders a work item with a link, title, company, start and end dates, description, and locations.
- * @param headingLevel - the title's heading level: 2 directly under the page `<h1>`, 3 (default)
- *   under a section `<h2>`.
  */
 export default function WorkItem({
   slug,
@@ -23,11 +26,14 @@ export default function WorkItem({
   locations,
   logoUrl,
   headingLevel = 3,
-}: WorkItemProps & { headingLevel?: 2 | 3 }) {
+}: WorkItemCardProps) {
   const Heading = headingLevel === 2 ? "h2" : "h3"
+  // The card is one big link: name it after the title alone, not every piece of text inside it
+  const titleId = `work-card-title-${slug}`
   return (
     <Link
       href={`/work/${slug}`}
+      aria-labelledby={titleId}
       className={cn(
         "block group rounded-xl",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
@@ -48,14 +54,18 @@ export default function WorkItem({
             <div className="mr-4 flex items-center">
               <Image
                 src={logoUrl}
-                alt={`${company} logo`}
+                // Decorative: the company name is in the title right next to it
+                alt=""
                 width={25}
                 height={25}
                 className="rounded-sm h-[25px] w-auto"
               />
             </div>
           )}
-          <Heading className="text-xl font-semibold group-hover:text-accent-500 transition">
+          <Heading
+            id={titleId}
+            className="text-xl font-semibold group-hover:text-accent-500 transition"
+          >
             {title} @ {company}
           </Heading>
         </div>

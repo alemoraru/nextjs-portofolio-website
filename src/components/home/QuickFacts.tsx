@@ -60,7 +60,7 @@ export default function QuickFacts() {
                 "sm:gap-2 sm:min-h-0 sm:px-4 sm:py-2 sm:rounded-full",
                 "border border-gray-300 dark:border-gray-700",
                 "sm:bg-gray-50 sm:dark:bg-gray-800",
-                "text-[13px] leading-tight sm:text-sm sm:leading-5",
+                "text-[0.8125rem] leading-tight sm:text-sm sm:leading-5",
                 "font-medium text-gray-700 dark:text-gray-300",
                 "sm:shadow-sm sm:hover:shadow-md",
                 "hover:border-accent-400 dark:hover:border-accent-600",

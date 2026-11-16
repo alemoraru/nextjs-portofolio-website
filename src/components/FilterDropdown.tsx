@@ -77,9 +77,10 @@ export default function FilterDropdown({
             : "border-gray-300 dark:border-gray-700"
         )}
       >
-        <FaTag className="w-3.5 h-3.5" />
+        <FaTag aria-hidden="true" className="w-3.5 h-3.5" />
         <span className="truncate">{label}</span>
         <FaChevronDown
+          aria-hidden="true"
           className={cn(
             "w-3 h-3 transition-transform duration-200",
             isDropdownOpen && "rotate-180"
@@ -168,7 +169,10 @@ export default function FilterDropdown({
                         "transition-all duration-200"
                       )}
                     ></span>
-                    <FaCheck className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none" />
+                    <FaCheck
+                      aria-hidden="true"
+                      className="absolute top-0 left-0 w-full h-full p-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none"
+                    />
                   </span>
                   <span className="text-gray-800 dark:text-gray-200 text-sm font-medium group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
                     {name}

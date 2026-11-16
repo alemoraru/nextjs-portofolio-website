@@ -91,12 +91,12 @@ describe("NavigationMenu", () => {
     expect(currentPageLinks.length).toBe(1)
   })
 
-  it("has tabIndex={0} on all navigation links", () => {
+  it("leaves navigation links in their natural tab order (no redundant tabIndex)", () => {
     render(<NavigationMenu />)
 
     const links = screen.getAllByRole("link")
     links.forEach(link => {
-      expect(link.getAttribute("tabindex")).toBe("0")
+      expect(link.hasAttribute("tabindex")).toBe(false)
     })
   })
 

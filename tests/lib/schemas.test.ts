@@ -133,8 +133,15 @@ describe("ProjectFrontmatterSchema", () => {
       role: "Lead Developer",
       githubUrl: "https://github.com/x/y",
       paperUrl: "https://arxiv.org/abs/1234",
+      imageAlts: { "picture-1.jpg": "The dashboard's weekly summary" },
     }
     expect(ProjectFrontmatterSchema.parse(withOptionals)).toEqual(withOptionals)
+  })
+
+  it("rejects imageAlts values that aren't strings", () => {
+    expect(
+      ProjectFrontmatterSchema.safeParse({ ...valid, imageAlts: { "picture-1.jpg": 1 } }).success
+    ).toBe(false)
   })
 
   const requiredFields = [

@@ -17,7 +17,7 @@ export default function BlogTag({ tag, href }: { tag: string; href?: string }) {
         href && "hover:scale-105 hover:bg-accent-500/25 hover:shadow-md dark:hover:bg-accent-500/25"
       )}
     >
-      <FaTag className="w-3 h-3 mr-1" />
+      <FaTag aria-hidden="true" className="w-3 h-3 mr-1" />
       {tag}
     </span>
   )

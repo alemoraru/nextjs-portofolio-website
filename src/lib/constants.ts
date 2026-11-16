@@ -40,3 +40,9 @@ export const DEFAULT_SIMILAR_POSTS_COUNT = 3
  * a "+N more" chip.
  */
 export const MAX_PROJECT_TILE_TECH_BADGES = 5
+
+/**
+ * Text announced to screen readers on links that open in a new tab (`target="_blank"`),
+ * so the change of context doesn't come as a surprise.
+ */
+export const NEW_TAB_HINT = "(opens in a new tab)"

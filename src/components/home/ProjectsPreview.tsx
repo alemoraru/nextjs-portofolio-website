@@ -27,7 +27,12 @@ export default function ProjectsPreview({ projects }: ProjectsPreviewProps) {
       viewport={{ once: true, margin: "-100px" }}
       className="mt-20"
     >
-      <ViewAllHeader title="Recent Projects" pageUrl="/projects" itemCount={projects.length} />
+      <ViewAllHeader
+        title="Recent Projects"
+        pageUrl="/projects"
+        itemCount={projects.length}
+        itemLabel="projects"
+      />
       <motion.div
         initial="hidden"
         whileInView="visible"

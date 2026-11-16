@@ -169,11 +169,11 @@ export default async function BlogPostPage(props: { params: pageParams }) {
       <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mb-8">
         <span className="flex items-center gap-1.5 whitespace-nowrap">
-          <FaRegCalendarAlt className="shrink-0" />
-          {formatBlogDate(post.date)}
+          <FaRegCalendarAlt aria-hidden="true" className="shrink-0" />
+          <time dateTime={post.date}>{formatBlogDate(post.date)}</time>
         </span>
         <span className="flex items-center gap-1.5 whitespace-nowrap">
-          <FaClock className="shrink-0" />
+          <FaClock aria-hidden="true" className="shrink-0" />
           {readingTime} min read
         </span>
         {/* Wider screens: Share joins the meta row */}

@@ -84,4 +84,10 @@ describe("BlogPost", () => {
     expect(screen.getByRole("heading", { level: 2, name: "Test Blog Post" })).toBeDefined()
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
   })
+
+  it("names the card link after its title alone, not all of its text", () => {
+    render(<BlogPost {...defaultProps} />)
+    expect(screen.getByRole("link").getAttribute("aria-labelledby")).toBeTruthy()
+    expect(screen.getByRole("link", { name: "Test Blog Post" })).toBeDefined()
+  })
 })
