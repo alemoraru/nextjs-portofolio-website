@@ -7,23 +7,31 @@ import { useRef, useEffect } from "react"
 import { useClickOutside } from "@/hooks/useClickOutside"
 import { navItems } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import type { RefObject } from "react"
 
 /**
  * MobileMenu component that displays a collapsible menu for mobile devices.
  * @param isOpen - Indicates whether the menu is open or closed.
  * @param setIsOpenAction - Function to toggle the menu's open state.
+ * @param toggleRef - The button that opens and closes the menu; presses on it don't count as
+ *   "outside", so the button alone decides whether the menu opens or closes.
  */
 export default function MobileMenu({
   isOpen,
   setIsOpenAction,
+  toggleRef,
 }: {
   isOpen: boolean
   setIsOpenAction: (v: boolean) => void
+  toggleRef?: RefObject<HTMLElement | null>
 }) {
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement | null>(null)
 
-  useClickOutside(menuRef, () => setIsOpenAction(false), { enabled: isOpen, closeOnEscape: false })
+  useClickOutside(toggleRef ? [menuRef, toggleRef] : menuRef, () => setIsOpenAction(false), {
+    enabled: isOpen,
+    closeOnEscape: false,
+  })
 
   useEffect(() => {
     // Prevent scroll when menu is open

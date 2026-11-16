@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { describe, it, expect } from "vitest"
 import { AccentThemeProvider } from "@/components/AccentThemeProvider"
 import Header from "@/components/Header"
@@ -73,11 +74,48 @@ describe("Header", () => {
     renderHeader()
     const menuButton = screen.getByLabelText("Open menu")
 
-    // The button uses onMouseDown, so fire that event
-    fireEvent.mouseDown(menuButton)
+    fireEvent.click(menuButton)
 
     // After toggle, the aria-label should change
     expect(screen.getByLabelText("Close menu")).toBeDefined()
+  })
+
+  it("opens and closes the mobile menu from the keyboard", async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    const menuButton = screen.getByLabelText("Open menu")
+
+    menuButton.focus()
+    await user.keyboard("{Enter}")
+    expect(menuButton.getAttribute("aria-expanded")).toBe("true")
+
+    await user.keyboard("{Enter}")
+    expect(menuButton.getAttribute("aria-expanded")).toBe("false")
+  })
+
+  it("closes the open menu with one press of its button, without reopening it", async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    const menuButton = screen.getByLabelText("Open menu")
+
+    // A real pointer press: mousedown (seen by the menu's click-outside listener) then click
+    await user.click(menuButton)
+    expect(menuButton.getAttribute("aria-expanded")).toBe("true")
+
+    await user.click(menuButton)
+    expect(menuButton.getAttribute("aria-expanded")).toBe("false")
+  })
+
+  it("closes the open menu when pressing elsewhere on the page", async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    const menuButton = screen.getByLabelText("Open menu")
+
+    await user.click(menuButton)
+    expect(menuButton.getAttribute("aria-expanded")).toBe("true")
+
+    fireEvent.mouseDown(document.body)
+    expect(menuButton.getAttribute("aria-expanded")).toBe("false")
   })
 
   it("does not mark any navigation item as active on the home page", () => {

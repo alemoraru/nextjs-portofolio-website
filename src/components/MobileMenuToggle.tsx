@@ -2,19 +2,27 @@
 
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import type { Ref } from "react"
+
+interface MobileMenuToggleProps {
+  /** Forwarded to the `<button>`, so the menu's click-outside handler can ignore presses on it. */
+  ref?: Ref<HTMLButtonElement>
+  /** Whether the mobile menu is open; drives the icon (hamburger ↔ X), `aria-label` and `aria-expanded`. */
+  isOpen: boolean
+  /** Called on every activation (click, tap, Enter or Space) to open or close the menu. */
+  onToggleAction: () => void
+}
 
 /**
  * A functional component that renders a mobile menu toggle button with an animated hamburger icon.
+ * It toggles on `click`, so it works with a mouse, touch, Enter/Space, screen readers and voice
+ * control alike.
  */
-export default function MobileMenuToggle({
-  isOpen,
-  onToggleAction,
-}: {
-  isOpen: boolean
-  onToggleAction: () => void
-}) {
+export default function MobileMenuToggle({ ref, isOpen, onToggleAction }: MobileMenuToggleProps) {
   return (
     <button
+      ref={ref}
+      type="button"
       className={cn(
         "md:hidden w-11 h-11 flex items-center justify-center rounded-xl",
         "bg-gray-100 dark:bg-gray-900",
@@ -27,10 +35,7 @@ export default function MobileMenuToggle({
         "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black",
         "shadow-sm hover:shadow-md"
       )}
-      onMouseDown={e => {
-        e.stopPropagation()
-        onToggleAction()
-      }}
+      onClick={onToggleAction}
       aria-label={isOpen ? "Close menu" : "Open menu"}
       aria-expanded={isOpen}
     >
