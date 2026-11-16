@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import React from "react"
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import ProjectImageCarousel from "@/components/ProjectImageCarousel"
@@ -94,6 +94,40 @@ describe("ProjectImageCarousel", () => {
       render(<ProjectImageCarousel images={TWO_IMAGES} />)
       fireEvent.click(screen.getByLabelText("Go to slide 2"))
       expect(mockScrollTo).toHaveBeenCalledWith(1)
+    })
+  })
+
+  describe("lightbox", () => {
+    it("opens the current slide in a modal dialog", () => {
+      mockSelectedScrollSnap.mockReturnValue(1)
+      render(<ProjectImageCarousel images={TWO_IMAGES} />)
+
+      fireEvent.click(screen.getByLabelText("Expand image: Beta"))
+
+      expect(screen.getByRole("dialog", { name: "Image preview: Beta" })).toBeDefined()
+      expect(screen.getByText("Image 2 of 2")).toBeDefined()
+    })
+
+    it("scrolls the carousel to the image the reader stopped on when it closes", async () => {
+      render(<ProjectImageCarousel images={TWO_IMAGES} />)
+
+      fireEvent.click(screen.getByLabelText("Expand image: Alpha"))
+      fireEvent.click(screen.getByRole("button", { name: "Next image" }))
+      fireEvent.click(screen.getByRole("button", { name: "Close image preview" }))
+
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      expect(mockScrollTo).toHaveBeenCalledWith(1)
+    })
+
+    it("returns focus to the expand button when it closes", async () => {
+      render(<ProjectImageCarousel images={TWO_IMAGES} />)
+      const expand = screen.getByLabelText("Expand image: Alpha")
+
+      fireEvent.click(expand)
+      fireEvent.keyDown(document.activeElement ?? document.body, { key: "Escape" })
+
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
+      expect(document.activeElement).toBe(expand)
     })
   })
 

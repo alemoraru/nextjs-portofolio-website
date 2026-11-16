@@ -371,6 +371,25 @@ body {
   }
 }
 
+/* Image lightbox open/close (ImageLightbox.tsx), same data-state approach as the popover. */
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes popover-out {
   from {
     opacity: 1;
