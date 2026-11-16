@@ -4,6 +4,9 @@ import { defineConfig } from "vitest/config"
 export default defineConfig({
   test: {
     environment: "jsdom",
+    // Reuse one jsdom per worker instead of building a fresh one per test file, while
+    // still running every file in its own VM context (so test files stay isolated).
+    pool: "vmThreads",
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
     coverage: {
