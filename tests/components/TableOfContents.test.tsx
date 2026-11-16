@@ -215,6 +215,30 @@ describe("TableOfContents", () => {
     )
   })
 
+  it("jumps to the heading instead of smooth-scrolling when reduced motion is on", async () => {
+    createMockArticle()
+    const mockScrollTo = vi.fn()
+    window.scrollTo = mockScrollTo
+    const matchMediaSpy = vi.spyOn(window, "matchMedia").mockImplementation(
+      query =>
+        ({
+          matches: query === "(prefers-reduced-motion: reduce)",
+          media: query,
+        }) as MediaQueryList
+    )
+
+    render(<TableOfContents />)
+
+    await waitFor(() => fireEvent.click(screen.getByLabelText("Toggle table of contents")))
+    await waitFor(() => {
+      const tocHeading = screen.getAllByText("Getting Started").find(el => el.tagName === "BUTTON")
+      if (tocHeading) fireEvent.click(tocHeading)
+    })
+
+    expect(mockScrollTo).toHaveBeenCalledWith(expect.objectContaining({ behavior: "auto" }))
+    matchMediaSpy.mockRestore()
+  })
+
   it("closes panel after clicking a heading", async () => {
     createMockArticle()
     render(<TableOfContents />)

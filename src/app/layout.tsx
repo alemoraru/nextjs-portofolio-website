@@ -7,6 +7,7 @@ import React, { ReactNode } from "react"
 import { AccentThemeProvider } from "@/components/AccentThemeProvider"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
+import MotionProvider from "@/components/MotionProvider"
 import { PageHeaderProvider } from "@/components/PageHeaderProvider"
 import { siteMetadata } from "@/data/metadata"
 
@@ -60,15 +61,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           <AccentThemeProvider>
-            <PageHeaderProvider>
-              <Header />
-              <main className="grow container mx-auto px-4 py-6 flex flex-col *:w-full">
-                {children}
-                <Analytics />
-                <SpeedInsights />
-              </main>
-              <Footer />
-            </PageHeaderProvider>
+            <MotionProvider>
+              <PageHeaderProvider>
+                <Header />
+                <main className="grow container mx-auto px-4 py-6 flex flex-col *:w-full">
+                  {children}
+                  <Analytics />
+                  <SpeedInsights />
+                </main>
+                <Footer />
+              </PageHeaderProvider>
+            </MotionProvider>
           </AccentThemeProvider>
         </ThemeProvider>
       </body>

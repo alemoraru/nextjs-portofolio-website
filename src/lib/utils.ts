@@ -12,6 +12,17 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Whether the visitor has asked their OS/browser to reduce motion. Read at call time, for
+ * imperative effects outside React rendering (view transitions, `window.scrollTo`); inside
+ * components, framer-motion's `useReducedMotion` or the root `MotionConfig` covers it.
+ * Returns `false` on the server or where `matchMedia` is unavailable.
+ */
+export function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches === true
+}
+
+/**
  * Generates initials from a name (e.g., "John Doe" -> "JD").
  * @param name - the full name to abbreviate.
  */

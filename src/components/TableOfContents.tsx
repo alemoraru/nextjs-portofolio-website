@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { useClickOutside } from "@/hooks/useClickOutside"
-import { cn } from "@/lib/utils"
+import { cn, prefersReducedMotion } from "@/lib/utils"
 
 /**
  * Table of Contents item interface.
@@ -127,7 +127,7 @@ export default function TableOfContents({ contentSelector = "article" }: TableOf
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth",
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
       })
       setIsExpanded(false)
     }
