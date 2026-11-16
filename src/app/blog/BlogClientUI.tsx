@@ -106,6 +106,8 @@ export default function BlogClientUI({
 
   return (
     <section className="px-4 max-w-4xl mx-auto flex flex-col flex-1">
+      {/* No visible page title in this design (the nav marks the section), so give assistive tech one */}
+      <h1 className="sr-only">Blog</h1>
       <FilterToolbar
         resultCount={filteredPosts.length}
         resultLabel="post"
@@ -156,7 +158,7 @@ export default function BlogClientUI({
             transition={{ duration: 0.2 }}
           >
             {paginatedPosts.map(post => (
-              <BlogPost key={post.slug} {...post} />
+              <BlogPost key={post.slug} {...post} headingLevel={2} />
             ))}
           </motion.div>
         ) : (

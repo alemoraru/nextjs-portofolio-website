@@ -9,14 +9,24 @@ import { MAX_PROJECT_TILE_TECH_BADGES, PRESENT } from "@/lib/constants"
 import { calculateDuration, cn, formatDateRange, formatDuration } from "@/lib/utils"
 
 interface ProjectTileProps {
+  /** The project's URL slug; the tile links to `/projects/{slug}`. */
   slug: string
+  /** The project name, shown as the tile's heading and used as the image's alt text. */
   title: string
+  /** Path or URL of the cover image shown at the top of the tile. */
   image: string
+  /** Short summary shown under the title, clamped to two lines. */
   description?: string
+  /** Technologies shown as badges, capped at `MAX_PROJECT_TILE_TECH_BADGES` plus a "+ N more" badge. */
   techStack?: string[]
+  /** Project start date; the date range and duration only show when both dates are set. */
   startDate?: string
+  /** Project end date, or `PRESENT` for ongoing projects. */
   endDate?: string
+  /** Loads the cover image eagerly with high priority; set it for the first, above-the-fold tile. */
   priority?: boolean
+  /** The title's heading level: 2 directly under the page `<h1>`, 3 (default) under a section `<h2>`. */
+  headingLevel?: 2 | 3
 }
 
 /**
@@ -36,7 +46,7 @@ function formatProjectDates(start: string, end: string) {
 /**
  * A functional component that renders a project tile with a link, image, title, dates, duration, and tech stack.
  *
- * @param {Object} props - The prop object for the component.
+ * @param {Object} props - The props for the component.
  */
 export default function ProjectTile({
   slug,
@@ -47,7 +57,9 @@ export default function ProjectTile({
   startDate,
   endDate,
   priority = false,
+  headingLevel = 3,
 }: ProjectTileProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3"
   return (
     <Link
       href={`/projects/${slug}`}
@@ -90,7 +102,7 @@ export default function ProjectTile({
           )}
         >
           <div className="flex flex-col gap-2">
-            <h3
+            <Heading
               className={cn(
                 "text-lg font-bold text-gray-900 dark:text-white",
                 "group-hover:text-accent-600 dark:group-hover:text-accent-400",
@@ -98,7 +110,7 @@ export default function ProjectTile({
               )}
             >
               {title}
-            </h3>
+            </Heading>
             {description && (
               <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed text-center">
                 {description}

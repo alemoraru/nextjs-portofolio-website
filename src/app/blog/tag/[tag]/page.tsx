@@ -110,19 +110,19 @@ export default async function BlogTagPage({ params }: { params: tagPageParams })
         <FaTag className="w-6 h-6 text-accent-500" />
 
         {/* Responsive header: stacked on mobile, inline on md+ */}
-        <div className="flex flex-col md:flex-row md:items-center">
-          <span className="text-2xl font-bold leading-tight md:mr-2">Posts tagged with</span>
+        <h1 className="flex flex-col md:flex-row md:items-center">
+          <span className="text-2xl font-bold leading-tight md:mr-2">Posts tagged with</span>{" "}
           <span className="text-accent-600 text-xl font-bold leading-tight">
-            &quot;{decodedTag}&quot;
-            <span className="ml-2 text-base font-semibold text-gray-500 align-middle">
+            &quot;{decodedTag}&quot;{" "}
+            <span className="ml-1 text-base font-semibold text-gray-500 align-middle">
               ({filteredPosts.length} post{filteredPosts.length !== 1 ? "s" : ""})
             </span>
           </span>
-        </div>
+        </h1>
       </div>
       <div className="grid grid-cols-1 gap-6">
         {filteredPosts.map(post => (
-          <BlogPost key={post.slug} {...post} />
+          <BlogPost key={post.slug} {...post} headingLevel={2} />
         ))}
       </div>
     </div>

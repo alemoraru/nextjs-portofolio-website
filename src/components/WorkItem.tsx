@@ -10,6 +10,8 @@ import { calculateDuration, cn, formatDateRange } from "@/lib/utils"
 
 /**
  * A functional component that renders a work item with a link, title, company, start and end dates, description, and locations.
+ * @param headingLevel - the title's heading level: 2 directly under the page `<h1>`, 3 (default)
+ *   under a section `<h2>`.
  */
 export default function WorkItem({
   slug,
@@ -20,7 +22,9 @@ export default function WorkItem({
   description,
   locations,
   logoUrl,
-}: WorkItemProps) {
+  headingLevel = 3,
+}: WorkItemProps & { headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3"
   return (
     <Link
       href={`/work/${slug}`}
@@ -51,9 +55,9 @@ export default function WorkItem({
               />
             </div>
           )}
-          <h3 className="text-xl font-semibold group-hover:text-accent-500 transition">
+          <Heading className="text-xl font-semibold group-hover:text-accent-500 transition">
             {title} @ {company}
-          </h3>
+          </Heading>
         </div>
 
         {/* Duration and Locations */}

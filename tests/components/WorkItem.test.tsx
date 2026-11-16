@@ -83,4 +83,19 @@ describe("WorkItem", () => {
     expect(datesContainer?.textContent).toMatch(/Jan 2023 – Dec 2023/)
     expect(datesContainer?.textContent).toMatch(/·/)
   })
+
+  it("titles the card with an <h3> by default (cards under a section <h2>)", () => {
+    render(<WorkItem {...defaultProps} />)
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Senior Software Engineer @ Test Company" })
+    ).toBeDefined()
+  })
+
+  it("titles the card with an <h2> when it sits right under the page <h1>", () => {
+    render(<WorkItem {...defaultProps} headingLevel={2} />)
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Senior Software Engineer @ Test Company" })
+    ).toBeDefined()
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
+  })
 })

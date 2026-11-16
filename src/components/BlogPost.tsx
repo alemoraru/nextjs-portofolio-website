@@ -6,10 +6,24 @@ import HoverArrow from "@/components/HoverArrow"
 import { BlogPostProps } from "@/lib/types"
 import { cn, formatBlogDate } from "@/lib/utils"
 
+interface BlogPostCardProps extends BlogPostProps {
+  /** The title's heading level: 2 directly under the page `<h1>`, 3 (default) under a section `<h2>`. */
+  headingLevel?: 2 | 3
+}
+
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
  */
-export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
+export default function BlogPost({
+  slug,
+  title,
+  summary,
+  date,
+  tags,
+  readingTime,
+  headingLevel = 3,
+}: BlogPostCardProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3"
   return (
     <Link
       href={`/blog/${slug}`}
@@ -31,7 +45,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
         )}
       >
         {/* Title */}
-        <h3
+        <Heading
           className={cn(
             "text-lg font-bold text-gray-900 dark:text-white",
             "group-hover:text-accent-600 dark:group-hover:text-accent-400",
@@ -39,7 +53,7 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
           )}
         >
           {title}
-        </h3>
+        </Heading>
 
         {/* Date and Reading Time */}
         {date && (

@@ -93,4 +93,15 @@ describe("ProjectTile", () => {
     // TechBadge components should not be rendered
     expect(container.textContent).not.toContain("React")
   })
+
+  it("titles the card with an <h3> by default (cards under a section <h2>)", () => {
+    render(<ProjectTile {...defaultProps} />)
+    expect(screen.getByRole("heading", { level: 3, name: "Test Project" })).toBeDefined()
+  })
+
+  it("titles the card with an <h2> when it sits right under the page <h1>", () => {
+    render(<ProjectTile {...defaultProps} headingLevel={2} />)
+    expect(screen.getByRole("heading", { level: 2, name: "Test Project" })).toBeDefined()
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
+  })
 })

@@ -73,4 +73,15 @@ describe("BlogPost", () => {
     const { container } = render(<BlogPost {...defaultProps} date="" />)
     expect(container.querySelector("time")).toBeNull()
   })
+
+  it("titles the card with an <h3> by default (cards under a section <h2>)", () => {
+    render(<BlogPost {...defaultProps} />)
+    expect(screen.getByRole("heading", { level: 3, name: "Test Blog Post" })).toBeDefined()
+  })
+
+  it("titles the card with an <h2> when it sits right under the page <h1>", () => {
+    render(<BlogPost {...defaultProps} headingLevel={2} />)
+    expect(screen.getByRole("heading", { level: 2, name: "Test Blog Post" })).toBeDefined()
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull()
+  })
 })

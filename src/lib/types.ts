@@ -7,11 +7,17 @@ export type pageParams = Promise<{ slug: string }>
  * @description This interface defines the structure (i.e., contents) of a blog post card.
  */
 export interface BlogPostProps {
+  /** The post's URL slug; the card links to `/blog/{slug}`. */
   slug: string
+  /** The post title, shown as the card's heading. */
   title: string
+  /** Short summary shown under the tags, clamped to two lines. */
   summary: string
+  /** Publication date as an ISO date string (e.g. `2024-01-15`); the date row is hidden when empty. */
   date: string
+  /** Topic tags shown as chips on the card and used to find similar posts. */
   tags?: string[]
+  /** Estimated reading time in minutes, shown next to the date. */
   readingTime?: number
 }
 

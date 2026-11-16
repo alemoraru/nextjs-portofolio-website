@@ -109,6 +109,8 @@ export default function WorkClientUI({
 
   return (
     <section className="px-4 max-w-4xl mx-auto flex flex-col flex-1">
+      {/* No visible page title in this design (the nav marks the section), so give assistive tech one */}
+      <h1 className="sr-only">Work</h1>
       <FilterToolbar
         resultCount={filteredWorkItems.length}
         resultLabel="role"
@@ -158,7 +160,7 @@ export default function WorkClientUI({
             exit={{ opacity: 0 }}
           >
             {paginatedWorkItems.map(item => (
-              <WorkItem key={item.slug} {...item} />
+              <WorkItem key={item.slug} {...item} headingLevel={2} />
             ))}
           </motion.div>
         ) : (
