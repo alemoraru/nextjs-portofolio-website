@@ -2,15 +2,19 @@ import { render, screen } from "@testing-library/react"
 import { describe, it, expect } from "vitest"
 import PaginationControls from "@/components/PaginationControls"
 
-/** Returns the visible page-number elements (links or the current-page span), in DOM order. */
+/**
+ * Returns the page-number elements (links or the current-page span), in DOM order. Each reads
+ * as "Page N": a visually hidden "Page " followed by the visible number.
+ */
 const getPageNumbers = () => {
   const nav = screen.getByRole("navigation", { name: /pagination/i })
   return Array.from(nav.querySelectorAll("a, span")).filter(el =>
-    /^\d+$/.test(el.textContent ?? "")
+    /^Page \d+$/.test(el.textContent ?? "")
   )
 }
 
-const getPageLabels = () => getPageNumbers().map(el => el.textContent)
+/** The visible numbers of the page items. */
+const getPageLabels = () => getPageNumbers().map(el => el.textContent?.replace("Page ", ""))
 
 describe("PaginationControls", () => {
   describe("visibility", () => {
@@ -74,52 +78,64 @@ describe("PaginationControls", () => {
       render(<PaginationControls currentPage={5} totalPages={10} baseUrl="/blog" />)
       const current = getPageNumbers().filter(el => el.getAttribute("aria-current") === "page")
       expect(current).toHaveLength(1)
-      expect(current[0].textContent).toBe("5")
+      expect(current[0].textContent).toBe("Page 5")
     })
 
-    it("marks the first page as current on page 1", () => {
+    it('reads every page number as "Page N"', () => {
+      render(<PaginationControls currentPage={1} totalPages={3} baseUrl="/blog" />)
+      expect(screen.getByRole("link", { name: "Page 2" })).toBeDefined()
+      expect(screen.getByRole("link", { name: "Page 3" })).toBeDefined()
+    })
+
+    it("marks the first page as current on page 1, as text rather than a link", () => {
       render(<PaginationControls currentPage={1} totalPages={5} baseUrl="/blog" />)
-      expect(screen.getByRole("link", { name: "1" }).getAttribute("aria-current")).toBe("page")
+      expect(screen.queryByRole("link", { name: "Page 1" })).toBeNull()
+      expect(getPageNumbers()[0].getAttribute("aria-current")).toBe("page")
     })
 
-    it("marks the last page as current on the last page", () => {
+    it("marks the last page as current on the last page, as text rather than a link", () => {
       render(<PaginationControls currentPage={5} totalPages={5} baseUrl="/blog" />)
-      expect(screen.getByRole("link", { name: "5" }).getAttribute("aria-current")).toBe("page")
+      expect(screen.queryByRole("link", { name: "Page 5" })).toBeNull()
+      expect(getPageNumbers().at(-1)?.getAttribute("aria-current")).toBe("page")
     })
 
     it("renders the current page in the middle as a non-link", () => {
       render(<PaginationControls currentPage={5} totalPages={10} baseUrl="/blog" />)
-      expect(screen.queryByRole("link", { name: "5" })).toBeNull()
+      expect(screen.queryByRole("link", { name: "Page 5" })).toBeNull()
     })
   })
 
   describe("previous and next buttons", () => {
-    it("disables the previous button on the first page", () => {
-      render(<PaginationControls currentPage={1} totalPages={3} baseUrl="/blog" />)
-      const prev = screen.getByRole("link", { name: /previous page/i })
-      expect(prev.getAttribute("aria-disabled")).toBe("true")
-      expect(prev.className).toContain("pointer-events-none")
+    it("has no previous link on the first page (just a greyed-out arrow)", () => {
+      const { container } = render(
+        <PaginationControls currentPage={1} totalPages={3} baseUrl="/blog" />
+      )
+      expect(screen.queryByRole("link", { name: /previous page/i })).toBeNull()
+      const placeholder = container.querySelector('nav > span[aria-hidden="true"]')
+      expect(placeholder?.className).toContain("opacity-40")
     })
 
-    it("enables the previous button after the first page", () => {
+    it("links the previous arrow after the first page", () => {
       render(<PaginationControls currentPage={2} totalPages={3} baseUrl="/blog" />)
-      const prev = screen.getByRole("link", { name: /previous page/i })
-      expect(prev.getAttribute("aria-disabled")).toBe("false")
-      expect(prev.className).not.toContain("pointer-events-none")
+      expect(screen.getByRole("link", { name: /previous page/i })).toBeDefined()
     })
 
-    it("disables the next button on the last page", () => {
+    it("has no next link on the last page (just a greyed-out arrow)", () => {
       render(<PaginationControls currentPage={3} totalPages={3} baseUrl="/blog" />)
-      const next = screen.getByRole("link", { name: /next page/i })
-      expect(next.getAttribute("aria-disabled")).toBe("true")
-      expect(next.className).toContain("pointer-events-none")
+      expect(screen.queryByRole("link", { name: /next page/i })).toBeNull()
     })
 
-    it("enables the next button before the last page", () => {
+    it("links the next arrow before the last page", () => {
       render(<PaginationControls currentPage={2} totalPages={3} baseUrl="/blog" />)
-      const next = screen.getByRole("link", { name: /next page/i })
-      expect(next.getAttribute("aria-disabled")).toBe("false")
-      expect(next.className).not.toContain("pointer-events-none")
+      expect(screen.getByRole("link", { name: /next page/i })).toBeDefined()
+    })
+
+    it("keeps keyboard focus off items that go nowhere", () => {
+      const { container } = render(
+        <PaginationControls currentPage={1} totalPages={3} baseUrl="/blog" />
+      )
+      // Only links are focusable: page 2, page 3 and Next (not the current page or Previous)
+      expect(container.querySelectorAll("a")).toHaveLength(3)
     })
 
     it("links previous and next to the adjacent pages", () => {
@@ -133,50 +149,48 @@ describe("PaginationControls", () => {
     })
 
     it("does not link past the first or last page", () => {
-      const { unmount } = render(
+      const { container, unmount } = render(
         <PaginationControls currentPage={1} totalPages={3} baseUrl="/blog" />
       )
-      expect(screen.getByRole("link", { name: /previous page/i }).getAttribute("href")).toBe(
-        "/blog"
-      )
+      const hrefs = () =>
+        Array.from(container.querySelectorAll("a")).map(a => a.getAttribute("href"))
+      expect(hrefs()).not.toContain("/blog?page=0")
       unmount()
 
       render(<PaginationControls currentPage={3} totalPages={3} baseUrl="/blog" />)
-      expect(screen.getByRole("link", { name: /next page/i }).getAttribute("href")).toBe(
-        "/blog?page=3"
-      )
+      expect(screen.queryByRole("link", { name: /next page/i })).toBeNull()
     })
   })
 
   describe("URLs", () => {
     it("omits the page param for page 1", () => {
       render(<PaginationControls currentPage={2} totalPages={3} baseUrl="/work" />)
-      expect(screen.getByRole("link", { name: "1" }).getAttribute("href")).toBe("/work")
+      expect(screen.getByRole("link", { name: "Page 1" }).getAttribute("href")).toBe("/work")
     })
 
     it("sets the page param for pages after the first", () => {
       render(<PaginationControls currentPage={1} totalPages={3} baseUrl="/work" />)
-      expect(screen.getByRole("link", { name: "2" }).getAttribute("href")).toBe("/work?page=2")
-      expect(screen.getByRole("link", { name: "3" }).getAttribute("href")).toBe("/work?page=3")
+      expect(screen.getByRole("link", { name: "Page 2" }).getAttribute("href")).toBe("/work?page=2")
+      expect(screen.getByRole("link", { name: "Page 3" }).getAttribute("href")).toBe("/work?page=3")
     })
 
     it("preserves other query params on every link", () => {
       render(
         <PaginationControls
-          currentPage={1}
+          currentPage={2}
           totalPages={3}
           baseUrl="/projects"
           searchParams={{ sort: "newest" }}
         />
       )
-      expect(screen.getByRole("link", { name: "1" }).getAttribute("href")).toBe(
+      expect(screen.getByRole("link", { name: "Page 1" }).getAttribute("href")).toBe(
         "/projects?sort=newest"
       )
-      expect(screen.getByRole("link", { name: "2" }).getAttribute("href")).toBe(
-        "/projects?sort=newest&page=2"
+      expect(screen.getByRole("link", { name: "Page 3" }).getAttribute("href")).toBe(
+        "/projects?sort=newest&page=3"
       )
       expect(screen.getByRole("link", { name: /next page/i }).getAttribute("href")).toBe(
-        "/projects?sort=newest&page=2"
+        "/projects?sort=newest&page=3"
       )
     })
 
@@ -189,7 +203,7 @@ describe("PaginationControls", () => {
           searchParams={{ tags: ["react", "css"] }}
         />
       )
-      expect(screen.getByRole("link", { name: "2" }).getAttribute("href")).toBe(
+      expect(screen.getByRole("link", { name: "Page 2" }).getAttribute("href")).toBe(
         "/blog?tags=react&tags=css&page=2"
       )
     })
@@ -203,10 +217,12 @@ describe("PaginationControls", () => {
           searchParams={{ page: "2", sort: "asc" }}
         />
       )
-      expect(screen.getByRole("link", { name: "3" }).getAttribute("href")).toBe(
+      expect(screen.getByRole("link", { name: "Page 3" }).getAttribute("href")).toBe(
         "/blog?sort=asc&page=3"
       )
-      expect(screen.getByRole("link", { name: "1" }).getAttribute("href")).toBe("/blog?sort=asc")
+      expect(screen.getByRole("link", { name: "Page 1" }).getAttribute("href")).toBe(
+        "/blog?sort=asc"
+      )
     })
 
     it("ignores undefined query params", () => {
@@ -218,7 +234,7 @@ describe("PaginationControls", () => {
           searchParams={{ sort: undefined }}
         />
       )
-      expect(screen.getByRole("link", { name: "2" }).getAttribute("href")).toBe("/blog?page=2")
+      expect(screen.getByRole("link", { name: "Page 2" }).getAttribute("href")).toBe("/blog?page=2")
     })
   })
 })

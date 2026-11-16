@@ -37,6 +37,7 @@ export default function SortToggle({ sortOrder, onChange, options }: SortToggleP
     >
       {label}
       <FaChevronDown
+        aria-hidden="true"
         className={cn(
           "w-3 h-3 transition-transform duration-200",
           currentIndex > 0 && "rotate-180"

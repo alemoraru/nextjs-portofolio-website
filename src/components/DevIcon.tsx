@@ -15,6 +15,7 @@ interface DevIconProps {
 /**
  * DevIcon component to display a development technology icon with optional text.
  * If the SVG at `/dev/{name}.svg` fails to load, it falls back to rendering the FiCpu icon.
+ * The icon is decorative (so empty alt): it always appears next to the technology's name.
  * @param name - Name of the technology (used to fetch the corresponding SVG icon).
  * @param text - Optional text to display alongside the icon.
  * @param className - Optional additional CSS classes for the container.
@@ -43,7 +44,7 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
       <div className={cn("flex items-center space-x-2", className)}>
         <Image
           src={`/dev/${name}.svg`}
-          alt={`${name} icon`}
+          alt=""
           width={24}
           height={24}
           className={cn("h-6 w-6", iconClassName)}
@@ -56,7 +57,7 @@ export default function DevIcon({ name, text, className, iconClassName }: DevIco
     return (
       <Image
         src={`/dev/${name}.svg`}
-        alt={`${name} icon`}
+        alt=""
         width={24}
         height={24}
         className={cn("h-6 w-6", iconClassName, className)}

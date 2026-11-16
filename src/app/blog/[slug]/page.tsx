@@ -166,14 +166,14 @@ export default async function BlogPostPage(props: { params: pageParams }) {
           <ShareButton url={shareUrl} title={post.title} />
         </div>
       </div>
-      <div className="text-3xl font-bold mb-4">{post.title}</div>
+      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mb-8">
         <span className="flex items-center gap-1.5 whitespace-nowrap">
-          <FaRegCalendarAlt className="shrink-0" />
-          {formatBlogDate(post.date)}
+          <FaRegCalendarAlt aria-hidden="true" className="shrink-0" />
+          <time dateTime={post.date}>{formatBlogDate(post.date)}</time>
         </span>
         <span className="flex items-center gap-1.5 whitespace-nowrap">
-          <FaClock className="shrink-0" />
+          <FaClock aria-hidden="true" className="shrink-0" />
           {readingTime} min read
         </span>
         {/* Wider screens: Share joins the meta row */}
@@ -190,10 +190,12 @@ export default async function BlogPostPage(props: { params: pageParams }) {
           ))}
       </div>
 
-      {/* Table of Contents */}
-      <TableOfContents />
+      {/* Table of Contents (only lists headings from the MDX content below, not the post's <h1>) */}
+      <TableOfContents contentSelector="[data-toc-content]" />
 
-      <div className="prose dark:prose-invert max-w-full overflow-hidden">{content}</div>
+      <div data-toc-content className="prose dark:prose-invert max-w-full overflow-hidden">
+        {content}
+      </div>
       <SimilarBlogPosts allPosts={posts} currentPostPlug={slug} maxPosts={3} />
       <BackToTopButton />
     </AnimatedArticle>

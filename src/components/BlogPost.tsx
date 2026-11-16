@@ -6,13 +6,30 @@ import HoverArrow from "@/components/HoverArrow"
 import { BlogPostProps } from "@/lib/types"
 import { cn, formatBlogDate } from "@/lib/utils"
 
+interface BlogPostCardProps extends BlogPostProps {
+  /** The title's heading level: 2 directly under the page `<h1>`, 3 (default) under a section `<h2>`. */
+  headingLevel?: 2 | 3
+}
+
 /**
  * A functional component that renders a blog post card with a link, title, summary, date, and tags.
  */
-export default function BlogPost({ slug, title, summary, date, tags, readingTime }: BlogPostProps) {
+export default function BlogPost({
+  slug,
+  title,
+  summary,
+  date,
+  tags,
+  readingTime,
+  headingLevel = 3,
+}: BlogPostCardProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3"
+  // The card is one big link: name it after the title alone, not every piece of text inside it
+  const titleId = `blog-card-title-${slug}`
   return (
     <Link
       href={`/blog/${slug}`}
+      aria-labelledby={titleId}
       className={cn(
         "block h-full rounded-xl",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
@@ -31,7 +48,8 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
         )}
       >
         {/* Title */}
-        <h3
+        <Heading
+          id={titleId}
           className={cn(
             "text-lg font-bold text-gray-900 dark:text-white",
             "group-hover:text-accent-600 dark:group-hover:text-accent-400",
@@ -39,19 +57,19 @@ export default function BlogPost({ slug, title, summary, date, tags, readingTime
           )}
         >
           {title}
-        </h3>
+        </Heading>
 
         {/* Date and Reading Time */}
         {date && (
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-sm text-gray-600 dark:text-gray-400">
             <span className="flex items-center gap-2 whitespace-nowrap">
-              <FaRegCalendarAlt className="w-3.5 h-3.5 shrink-0" />
+              <FaRegCalendarAlt aria-hidden="true" className="w-3.5 h-3.5 shrink-0" />
               <time dateTime={date}>{formatBlogDate(date, "short")}</time>
             </span>
             {readingTime && (
               <span className="flex items-center gap-2 whitespace-nowrap">
                 <span aria-hidden="true">·</span>
-                <FaClock className="w-3.5 h-3.5 shrink-0" />
+                <FaClock aria-hidden="true" className="w-3.5 h-3.5 shrink-0" />
                 {readingTime} min read
               </span>
             )}

@@ -9,7 +9,7 @@ import { FaMoon, FaSun } from "react-icons/fa6"
 import { useAccentTheme } from "@/components/AccentThemeProvider"
 import ThemeColorMenu from "@/components/ThemeColorMenu"
 import { useClickOutside } from "@/hooks/useClickOutside"
-import { cn } from "@/lib/utils"
+import { cn, prefersReducedMotion } from "@/lib/utils"
 import type { Theme } from "@/lib/types"
 
 const LONG_PRESS_DURATION_MS = 500
@@ -17,7 +17,8 @@ const LONG_PRESS_MOVE_THRESHOLD_PX = 10
 
 /**
  * Runs `apply` inside a circular view-transition reveal centered at (x, y),
- * falling back to applying it immediately if the browser doesn't support the API.
+ * falling back to applying it immediately if the browser doesn't support the API
+ * or the visitor has asked to reduce motion (the reveal sweeps the whole screen).
  * Returns a promise that resolves once the transition has fully finished — callers
  * should defer any other state changes (e.g. closing the color menu) until then,
  * since updates made while the transition is in flight are hidden inside its
@@ -29,7 +30,7 @@ const LONG_PRESS_MOVE_THRESHOLD_PX = 10
  * appears to freeze before the theme abruptly pops in.
  */
 function runViewTransitionReveal(x: number, y: number, apply: () => void): Promise<void> {
-  if (!document.startViewTransition) {
+  if (!document.startViewTransition || prefersReducedMotion()) {
     apply()
     return Promise.resolve()
   }

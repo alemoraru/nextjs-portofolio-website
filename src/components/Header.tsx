@@ -34,6 +34,9 @@ const FLIP_TRANSITION = { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }
  * Header component that serves as the top navigation bar for the portfolio.
  */
 export default function Header() {
+  // The hamburger button sits outside the menu panel, so the panel's click-outside handler
+  // is told to ignore it (otherwise pressing it would close the menu and the click reopen it).
+  const mobileMenuToggleRef = useRef<HTMLButtonElement>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -160,14 +163,19 @@ export default function Header() {
 
           {/* Hamburger Mobile Menu toggle */}
           <MobileMenuToggle
+            ref={mobileMenuToggleRef}
             isOpen={mobileMenuOpen}
-            onToggleAction={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onToggleAction={() => setMobileMenuOpen(open => !open)}
           />
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={mobileMenuOpen} setIsOpenAction={setMobileMenuOpen} />
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        setIsOpenAction={setMobileMenuOpen}
+        toggleRef={mobileMenuToggleRef}
+      />
 
       {/* Reading-progress bar on blog post / project / work detail pages: always shown on
           desktop, but on mobile it only appears once the reader starts scrolling (alongside

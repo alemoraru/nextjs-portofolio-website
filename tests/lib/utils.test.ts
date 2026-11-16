@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest"
+import { afterEach, describe, it, expect, vi } from "vitest"
 import {
   cn,
   getInitials,
@@ -20,6 +20,7 @@ import {
   filterProjects,
   sortProjects,
   paginateItems,
+  prefersReducedMotion,
 } from "@/lib/utils"
 import type { BlogPostProps, ProjectProps, WorkItemProps } from "@/lib/types"
 
@@ -1012,5 +1013,25 @@ describe("paginateItems", () => {
     const { items: page, totalPages } = paginateItems(items, -1, 3)
     expect(page).toEqual([])
     expect(totalPages).toBe(4)
+  })
+})
+
+describe("prefersReducedMotion", () => {
+  afterEach(() => vi.restoreAllMocks())
+
+  const stubMatches = (matches: boolean) =>
+    vi
+      .spyOn(window, "matchMedia")
+      .mockImplementation(query => ({ matches, media: query }) as MediaQueryList)
+
+  it("is true when the reduced-motion media query matches", () => {
+    const spy = stubMatches(true)
+    expect(prefersReducedMotion()).toBe(true)
+    expect(spy).toHaveBeenCalledWith("(prefers-reduced-motion: reduce)")
+  })
+
+  it("is false when it does not match", () => {
+    stubMatches(false)
+    expect(prefersReducedMotion()).toBe(false)
   })
 })

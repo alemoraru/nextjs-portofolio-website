@@ -28,12 +28,13 @@ export default function ActiveFilterChips({
         <span
           key={filter}
           className={cn(
-            "flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full text-[13px] font-medium",
+            "flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full text-[0.8125rem] font-medium",
             "bg-accent-500/15 text-accent-600 dark:bg-accent-500/20 dark:text-accent-400"
           )}
         >
           {filter}
           <button
+            type="button"
             onClick={() => onRemove(filter)}
             aria-label={`Remove filter ${filter}`}
             className={cn(
@@ -41,24 +42,22 @@ export default function ActiveFilterChips({
               "hover:bg-accent-500/25 transition-colors duration-200",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500"
             )}
-            tabIndex={0}
           >
-            <FaTimes className="w-3 h-3" />
+            <FaTimes aria-hidden="true" className="w-3 h-3" />
           </button>
         </span>
       ))}
 
       {onClearAll && filters.length > 1 && (
         <button
+          type="button"
           onClick={onClearAll}
           className={cn(
-            "px-1.5 py-1 rounded cursor-pointer text-[13px] font-medium",
+            "px-1.5 py-1 rounded cursor-pointer text-[0.8125rem] font-medium",
             "text-gray-600 dark:text-gray-400",
             "hover:text-gray-900 dark:hover:text-white hover:underline",
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500"
           )}
-          aria-label={clearAllLabel}
-          tabIndex={0}
         >
           {clearAllLabel}
         </button>

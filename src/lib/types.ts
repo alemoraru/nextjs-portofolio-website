@@ -7,11 +7,17 @@ export type pageParams = Promise<{ slug: string }>
  * @description This interface defines the structure (i.e., contents) of a blog post card.
  */
 export interface BlogPostProps {
+  /** The post's URL slug; the card links to `/blog/{slug}`. */
   slug: string
+  /** The post title, shown as the card's heading. */
   title: string
+  /** Short summary shown under the tags, clamped to two lines. */
   summary: string
+  /** Publication date as an ISO date string (e.g. `2024-01-15`); the date row is hidden when empty. */
   date: string
+  /** Topic tags shown as chips on the card and used to find similar posts. */
   tags?: string[]
+  /** Estimated reading time in minutes, shown next to the date. */
   readingTime?: number
 }
 
@@ -36,15 +42,25 @@ export interface ProjectProps {
  * @description This interface defines the structure (i.e., contents) of a work experience item.
  */
 export interface WorkItemProps {
+  /** The role's URL slug; the card links to `/work/{slug}`. */
   slug: string
+  /** Company name, shown after the job title in the card's heading ("Title @ Company"). */
   company: string
+  /** Job title, shown at the start of the card's heading. */
   title: string
+  /** Start date in a human-readable form (e.g. `Aug 2024`). */
   start: string
+  /** End date in the same form as `start`, or `PRESENT` for a current role. */
   end: string
+  /** Short summary of the role, shown at the bottom of the card. */
   description: string
+  /** Where the role was based (e.g. `Remote`), shown comma-separated next to the dates. */
   locations: string[]
+  /** Path or URL of the company logo, shown before the heading; omitted when not set. */
   logoUrl?: string
+  /** Company website, linked from the role's detail page (not used on the card). */
   companyUrl?: string
+  /** Technologies used in the role, listed on the detail page (not used on the card). */
   techStack?: string[]
 }
 

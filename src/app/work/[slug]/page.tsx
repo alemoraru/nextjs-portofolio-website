@@ -18,6 +18,7 @@ import PageHeaderSync from "@/components/PageHeaderSync"
 import TechBadge from "@/components/TechBadge"
 import { homeIntroConfig } from "@/data/content"
 import { siteMetadata } from "@/data/metadata"
+import { NEW_TAB_HINT } from "@/lib/constants"
 import { getAllWorkItems } from "@/lib/mdx"
 import { headingLinkRehypePlugins } from "@/lib/mdx-plugins"
 import { pageParams } from "@/lib/types"
@@ -143,7 +144,8 @@ export default async function WorkItemPage(props: { params: pageParams }) {
             rel="noopener noreferrer"
             className="flex items-center gap-4 hover:opacity-80 transition-opacity"
           >
-            <CompanyHeader frontmatter={frontmatter} />
+            <CompanyHeader frontmatter={frontmatter} />{" "}
+            <span className="sr-only">{NEW_TAB_HINT}</span>
           </Link>
         ) : (
           <div className="flex items-center gap-4">
@@ -160,7 +162,7 @@ export default async function WorkItemPage(props: { params: pageParams }) {
       {frontmatter.techStack && frontmatter.techStack.length > 0 && (
         <>
           <div className="flex items-center gap-2 mb-4">
-            <BsStack />
+            <BsStack aria-hidden="true" />
             <h2 className="text-xl font-semibold">Tech Stack</h2>
           </div>
           <div className="flex flex-wrap gap-4 mb-8">
